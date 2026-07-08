@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build web
+        run: flutter build web --release
+
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+          retention-days: 7
+
+      # Для авто-деплоя на pavelcrypto70.github.io добавьте secret PAGES_DEPLOY_TOKEN
+      # (classic PAT с правом repo) и раскомментируйте блок ниже:
+      #
+      # - name: Deploy to Pavelcrypto70.github.io
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     folder: build/web
+      #     repository-name: Pavelcrypto70/Pavelcrypto70.github.io
+      #     branch: main
+      #     token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+      #     clean: true
+      #     single-commit: true

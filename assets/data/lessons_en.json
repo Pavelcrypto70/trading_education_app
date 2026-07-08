@@ -1,0 +1,4279 @@
+[
+  {
+    "id": 1,
+    "module": "Introduction",
+    "title": "Intro: Where to start in trading? Part 1",
+    "subtitle": "Trader role, spot, futures, Binance, P2P",
+    "difficulty": "Beginner",
+    "durationMin": 28,
+    "outcome": "Understand spot vs futures and how to start safely on exchange.",
+    "content": "Trading is probability work with defined risk.",
+    "takeaway": "Traders earn through discipline and repeatable setups.",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Who is a trader"
+      },
+      {
+        "type": "text",
+        "body": "A trader buys and sells assets to profit from price moves. Horizon: seconds to weeks. Tools: chart, order book, risk per trade.\n\nPros know entry, stop, target before clicking. Amateurs hope."
+      },
+      {
+        "type": "heading",
+        "title": "Spot vs futures"
+      },
+      {
+        "type": "text",
+        "body": "Spot = you own the coin. Futures USDT-M = contract with leverage, shorts, liquidation risk.\n\nTerminals (TradingView, exchange UI) speed up execution."
+      },
+      {
+        "type": "market_note",
+        "title": "Your market (Mexico / LATAM)",
+        "body": "En México muchos entran por P2P USDT y Mercado Pago. Binance y Bitso son comunes. Regla CNBV: educación sí, asesoría personalizada no sin licencia.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Spot vs futures",
+        "chartType": "market_balance",
+        "caption": "Spot = ownership. Futures = leveraged contract."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView: Binance BTC setup",
+        "body": "Open BTC chart. Mark yesterday's high/low. Compare spot vs futures price.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Hands-on practice",
+        "body": "15 minutes observation only:",
+        "items": [
+          "Open Binance or TradingView paper account.",
+          "Compare BTC spot vs perpetual futures price.",
+          "Draw horizontal lines on yesterday high/low.",
+          "Write where your stop would be for a long."
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "500 USDT, 5x long ETH: +2% = +10% on margin. No stop = liquidation risk on dump."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Trading = rules + probabilities",
+          "Spot = coin on balance",
+          "Futures = long/short + leverage",
+          "P2P + KYC for funding in LATAM",
+          "Trade Master teaches setups, not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Trade journal",
+        "body": "Record after lesson:",
+        "items": [
+          "Exchange and account type",
+          "Deposit size and risk % per trade",
+          "One open question"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Explore the UI before first trade. Finera teaches savings — we teach chart setups with TradingView."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "module": "Introduction",
+    "title": "Intro: Where to start? Part 2",
+    "subtitle": "Intro: Where to start? Part 2",
+    "difficulty": "Beginner",
+    "durationMin": 26,
+    "outcome": "Break down 'Intro: Where to start? Part 2' on chart and TradingView.",
+    "content": "Exchange trading: limit/market orders, maker/taker fees, futures funding.\n\nTiger.Trade and Vataga gi",
+    "takeaway": "Scalping needs terminal + low fees",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Exchange trading: limit/market orders, maker/taker fees, futures funding.\n\nTiger.Trade and Vataga give order book, hotkeys — essential for scalping."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Scalping (seconds–minutes), swing (hours–days), position (weeks). First deposit = affordable loss. Risk 0.5–1% per trade."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "México: muchos usan TradingView + Binance.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Intro: Where to start? Part 2",
+        "chartType": "order_flow",
+        "caption": "Scalping (seconds–minutes), swing (hours–days), position (weeks). First deposit = affordab"
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "Open 5m BTC. Find spread in book. Calculate position size for 0.8% stop and 1% risk.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "1000 USDT, 1% risk = 10 USDT per trade. Tighter stop = larger position for same risk."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Scalping needs terminal + low fees",
+          "Risk 0.5–1% per trade",
+          "First deposit is tuition",
+          "Size before click",
+          "Trade Master + TV practice"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Don't scalp without order book skills — start on 15m swing."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "module": "Chart",
+    "title": "Price amplitude",
+    "subtitle": "Price amplitude",
+    "difficulty": "Beginner",
+    "durationMin": 20,
+    "outcome": "Break down 'Price amplitude' on chart and TradingView.",
+    "content": "Amplitude = move size in %. On BTC 1% is large on 1h; on low-cap alts 10%/hour is common.\n\nMeasure w",
+    "takeaway": "Amplitude = % move",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Amplitude = move size in %. On BTC 1% is large on 1h; on low-cap alts 10%/hour is common.\n\nMeasure with ATR or candle range. Size targets to amplitude."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "High amplitude → reduce leverage. Low → don't expect huge intraday targets."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "Altcoins en México siguen a BTC con beta alto.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Price amplitude",
+        "chartType": "momentum",
+        "caption": "High amplitude → reduce leverage. Low → don't expect huge intraday targets."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On 15m mark range of last 20 candles in %. That's your amplitude baseline for targets.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "SOL +4% in an hour — high amplitude. 0.5% target too small; 2% stop may be noise."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Amplitude = % move",
+          "Measure before entry",
+          "Alts move more than BTC",
+          "Target fits amplitude",
+          "ATR helps"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Log weekly average amplitude for your pair."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "module": "Chart",
+    "title": "Support by lows",
+    "subtitle": "Support by lows",
+    "difficulty": "Beginner",
+    "durationMin": 22,
+    "outcome": "Break down 'Support by lows' on chart and TradingView.",
+    "content": "Support by lows: horizontal through swing lows with 2+ bounces.\n\nMore touches = stronger level. Fals",
+    "takeaway": "2+ lows = level",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Support by lows: horizontal through swing lows with 2+ bounces.\n\nMore touches = stronger level. False break below low often signals long."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Build from bodies or wicks — stay consistent. 5m and 1h levels differ."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "Soporte en acciones MXN similar a crypto.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Support by lows",
+        "chartType": "support_resistance",
+        "caption": "Build from bodies or wicks — stay consistent. 5m and 1h levels differ."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "Find 3 lows on ETH 1h. Draw support. Mark current price.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "ETH bounced 3x at 3200 — support. Close below = broken."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "2+ lows = level",
+          "False break = setup",
+          "Consistent markup",
+          "Higher TF matters",
+          "Log levels"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Don't draw 20 lines — 3–5 key levels per session."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "module": "Chart",
+    "title": "Order book deep dive",
+    "subtitle": "Order book deep dive",
+    "difficulty": "Intermediate",
+    "durationMin": 28,
+    "outcome": "Break down 'Order book deep dive' on chart and TradingView.",
+    "content": "Order book: bids vs asks, walls, spoofing risk.\n\nTape speed shows buyer/seller aggression.",
+    "takeaway": "Bid/ask = demand/supply",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Order book: bids vs asks, walls, spoofing risk.\n\nTape speed shows buyer/seller aggression."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Read book with chart: break + ask vanishing = impulse."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "Book en Binance líder para MX.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Order book deep dive",
+        "chartType": "order_flow",
+        "caption": "Read book with chart: break + ask vanishing = impulse."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "Open BTC book. Find biggest wall. Watch 5 min — pulled or filled?",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "5",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=5"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open Binance Futures book",
+          "Screenshot density",
+          "Note spoofing if any",
+          "Journal observations"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "50 BTC ask wall pulled before touch — spoofing."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Bid/ask = demand/supply",
+          "Walls matter",
+          "Spoofing exists",
+          "Tape confirms",
+          "Scalp = book + chart"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Trade Master teaches order book — Finera/Coing don't. Your edge."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "module": "Chart",
+    "title": "Fast vs slow market",
+    "subtitle": "Fast vs slow market",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Fast vs slow market' on chart and TradingView.",
+    "content": "Fast market: wide candles, slippage. Slow: tight range, fake breaks.\n\nTrade Master: theory + Trading",
+    "takeaway": "Fast market: wide candles, slippage",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Fast market: wide candles, slippage. Slow: tight range, fake breaks.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Fast vs slow market",
+        "chartType": "momentum",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Fast market: wide candles, slippage",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "module": "Risk",
+    "title": "Beginner mistakes Part 1",
+    "subtitle": "Beginner mistakes Part 1",
+    "difficulty": "Beginner",
+    "durationMin": 22,
+    "outcome": "Break down 'Beginner mistakes Part 1' on chart and TradingView.",
+    "content": "No stop, all-in one coin, FOMO, copying chat signals.\n\nTrade Master: theory + TradingView + journal ",
+    "takeaway": "No stop, all-in one coin, FOMO, copying chat signals",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "No stop, all-in one coin, FOMO, copying chat signals.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Beginner mistakes Part 1",
+        "chartType": "risk_reward",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "No stop, all-in one coin, FOMO, copying chat signals",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "module": "Patterns",
+    "title": "Descending triangle",
+    "subtitle": "Descending triangle",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Descending triangle' on chart and TradingView.",
+    "content": "Descending triangle: flat support + lower highs. Breakdown = short.\n\nTrade Master: theory + TradingV",
+    "takeaway": "Descending triangle: flat support + lower highs",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Descending triangle: flat support + lower highs. Breakdown = short.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Descending triangle",
+        "chartType": "breakout",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open SOLUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:SOLUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ASOLUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:SOLUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Descending triangle: flat support + lower highs",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "module": "Patterns",
+    "title": "Ascending triangle",
+    "subtitle": "Ascending triangle",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Ascending triangle' on chart and TradingView.",
+    "content": "Ascending triangle: flat resistance + higher lows. Breakout up = long.\n\nTrade Master: theory + Tradi",
+    "takeaway": "Ascending triangle: flat resistance + higher lows",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Ascending triangle: flat resistance + higher lows. Breakout up = long.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Ascending triangle",
+        "chartType": "breakout",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open SOLUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:SOLUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ASOLUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:SOLUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Ascending triangle: flat resistance + higher lows",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "module": "Strategies",
+    "title": "Impulse trading strategy",
+    "subtitle": "Impulse trading strategy",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Break down 'Impulse trading strategy' on chart and TradingView.",
+    "content": "Impulse: volume breakout from range. Enter on retest or confirmed break.\n\nTrade Master: theory + Tra",
+    "takeaway": "Impulse: volume breakout from range",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Impulse: volume breakout from range. Enter on retest or confirmed break.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Impulse trading strategy",
+        "chartType": "breakout",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open ETHUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Impulse: volume breakout from range",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "module": "Market",
+    "title": "Delisting risk",
+    "subtitle": "Delisting risk",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Break down 'Delisting risk' on chart and TradingView.",
+    "content": "Delisting removes pair from exchange. Exit early.\n\nTrade Master: theory + TradingView + journal — no",
+    "takeaway": "Delisting removes pair from exchange",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Delisting removes pair from exchange. Exit early.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Delisting risk",
+        "chartType": "price_chart",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open PEPEUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:PEPEUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3APEPEUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:PEPEUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Delisting removes pair from exchange",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "module": "Market",
+    "title": "New listing",
+    "subtitle": "New listing",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Break down 'New listing' on chart and TradingView.",
+    "content": "Listing: extreme volatility first hours. Small size, mandatory stop.\n\nTrade Master: theory + Trading",
+    "takeaway": "Listing: extreme volatility first hours",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Listing: extreme volatility first hours. Small size, mandatory stop.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "New listing",
+        "chartType": "momentum",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open ARBUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:ARBUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AARBUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:ARBUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Listing: extreme volatility first hours",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "module": "Chart",
+    "title": "Channels",
+    "subtitle": "Channels",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Channels' on chart and TradingView.",
+    "content": "Channel = parallel support/resistance. Buy low, sell high in range.\n\nTrade Master: theory + TradingV",
+    "takeaway": "Channel = parallel support/resistance",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Channel = parallel support/resistance. Buy low, sell high in range.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Channels",
+        "chartType": "range_trading",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Channel = parallel support/resistance",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "module": "Chart",
+    "title": "Uptrend",
+    "subtitle": "Uptrend",
+    "difficulty": "Beginner",
+    "durationMin": 20,
+    "outcome": "Break down 'Uptrend' on chart and TradingView.",
+    "content": "Uptrend: HH + HL. Trade pullbacks to support.\n\nTrade Master: theory + TradingView + journal — not si",
+    "takeaway": "Uptrend: HH + HL",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Uptrend: HH + HL. Trade pullbacks to support.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Uptrend",
+        "chartType": "uptrend",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Uptrend: HH + HL",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "module": "Chart",
+    "title": "Downtrend",
+    "subtitle": "Downtrend",
+    "difficulty": "Beginner",
+    "durationMin": 20,
+    "outcome": "Break down 'Downtrend' on chart and TradingView.",
+    "content": "Downtrend: LH + LL. Shorts from resistance.\n\nTrade Master: theory + TradingView + journal — not sign",
+    "takeaway": "Downtrend: LH + LL",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Downtrend: LH + LL. Shorts from resistance.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Downtrend",
+        "chartType": "downtrend",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Downtrend: LH + LL",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "module": "Strategies",
+    "title": "Basic indicators",
+    "subtitle": "Basic indicators",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Break down 'Basic indicators' on chart and TradingView.",
+    "content": "MA for trend. RSI overbought in trend is normal. Volume confirms breaks.\n\nTrade Master: theory + Tra",
+    "takeaway": "MA for trend",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "MA for trend. RSI overbought in trend is normal. Volume confirms breaks.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Basic indicators",
+        "chartType": "momentum",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "MA for trend",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "module": "Market",
+    "title": "News trading",
+    "subtitle": "News trading",
+    "difficulty": "Advanced",
+    "durationMin": 22,
+    "outcome": "Break down 'News trading' on chart and TradingView.",
+    "content": "News = spikes and slippage. Don't enter 1 min before CPI/FOMC.\n\nTrade Master: theory + TradingView +",
+    "takeaway": "News = spikes and slippage",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "News = spikes and slippage. Don't enter 1 min before CPI/FOMC.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "News trading",
+        "chartType": "session_timeline",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "News = spikes and slippage",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "module": "Risk",
+    "title": "Deposit management",
+    "subtitle": "Deposit management",
+    "difficulty": "Beginner",
+    "durationMin": 22,
+    "outcome": "Break down 'Deposit management' on chart and TradingView.",
+    "content": "Risk 0.5–1% per trade. Max 3–5 positions. Don't use full margin.\n\nTrade Master: theory + TradingView",
+    "takeaway": "Risk 0",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Risk 0.5–1% per trade. Max 3–5 positions. Don't use full margin.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Deposit management",
+        "chartType": "risk_reward",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Risk 0",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "module": "Patterns",
+    "title": "Symmetrical triangle",
+    "subtitle": "Symmetrical triangle",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Symmetrical triangle' on chart and TradingView.",
+    "content": "Symmetrical triangle: compression. Wait for volume breakout.\n\nTrade Master: theory + TradingView + j",
+    "takeaway": "Symmetrical triangle: compression",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Symmetrical triangle: compression. Wait for volume breakout.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Symmetrical triangle",
+        "chartType": "breakout",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open LINKUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:LINKUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ALINKUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:LINKUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Symmetrical triangle: compression",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "module": "Market",
+    "title": "FUN / meme tokens",
+    "subtitle": "FUN / meme tokens",
+    "difficulty": "Intermediate",
+    "durationMin": 18,
+    "outcome": "Break down 'FUN / meme tokens' on chart and TradingView.",
+    "content": "Meme tokens: low liquidity, violent moves. Small size, tight stop.\n\nTrade Master: theory + TradingVi",
+    "takeaway": "Meme tokens: low liquidity, violent moves",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Meme tokens: low liquidity, violent moves. Small size, tight stop.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "FUN / meme tokens",
+        "chartType": "momentum",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open DOGEUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:DOGEUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ADOGEUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:DOGEUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Meme tokens: low liquidity, violent moves",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "module": "Strategies",
+    "title": "Hold until target",
+    "subtitle": "Hold until target",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Hold until target' on chart and TradingView.",
+    "content": "Plan before entry. Don't move stop from fear/greed. Partial at 1R optional.\n\nTrade Master: theory + ",
+    "takeaway": "Plan before entry",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Plan before entry. Don't move stop from fear/greed. Partial at 1R optional.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Hold until target",
+        "chartType": "pullback",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open ETHUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Plan before entry",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "module": "Chart",
+    "title": "Tick chart arrows",
+    "subtitle": "Tick chart arrows",
+    "difficulty": "Advanced",
+    "durationMin": 22,
+    "outcome": "Break down 'Tick chart arrows' on chart and TradingView.",
+    "content": "Tick chart shows every trade. Arrows = aggressive market orders.\n\nTrade Master: theory + TradingView",
+    "takeaway": "Tick chart shows every trade",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Tick chart shows every trade. Arrows = aggressive market orders.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Tick chart arrows",
+        "chartType": "order_flow",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Tick chart shows every trade",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "module": "Strategies",
+    "title": "Plan entry and exit before open",
+    "subtitle": "Plan entry and exit before open",
+    "difficulty": "Beginner",
+    "durationMin": 24,
+    "outcome": "Break down 'Plan entry and exit before open' on chart and TradingView.",
+    "content": "Before click: setup, entry, stop, targets, min 1:2 R:R. No plan = no trade.\n\nTrade Master: theory + ",
+    "takeaway": "Before click: setup, entry, stop, targets, min 1:2 R:R",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Before click: setup, entry, stop, targets, min 1:2 R:R. No plan = no trade.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Plan entry and exit before open",
+        "chartType": "risk_reward",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Before click: setup, entry, stop, targets, min 1:2 R:R",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "module": "Market",
+    "title": "Market cycles",
+    "subtitle": "Market cycles",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Market cycles' on chart and TradingView.",
+    "content": "Cycles: accumulation → markup → distribution → markdown. BTC leads alts.\n\nTrade Master: theory + Tra",
+    "takeaway": "Cycles: accumulation → markup → distribution → markdown",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Cycles: accumulation → markup → distribution → markdown. BTC leads alts.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Market cycles",
+        "chartType": "structure",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Cycles: accumulation → markup → distribution → markdown",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "module": "Market",
+    "title": "Altseason explained",
+    "subtitle": "Altseason explained",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Altseason explained' on chart and TradingView.",
+    "content": "Altseason: BTC dominance falls, alts outperform. Wait for BTC range + alt volume.\n\nTrade Master: the",
+    "takeaway": "Altseason: BTC dominance falls, alts outperform",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Altseason: BTC dominance falls, alts outperform. Wait for BTC range + alt volume.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Altseason explained",
+        "chartType": "correlation",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Altseason: BTC dominance falls, alts outperform",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "module": "Market",
+    "title": "Intraday BTC context",
+    "subtitle": "Intraday BTC context",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Break down 'Intraday BTC context' on chart and TradingView.",
+    "content": "Intraday: Asia quiet, London breaks, NY volatile. Check BTC 15m/1h before alts.\n\nTrade Master: theor",
+    "takeaway": "Intraday: Asia quiet, London breaks, NY volatile",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Intraday: Asia quiet, London breaks, NY volatile. Check BTC 15m/1h before alts.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Intraday BTC context",
+        "chartType": "session_timeline",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Intraday: Asia quiet, London breaks, NY volatile",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "module": "Strategies",
+    "title": "Trading BTC dumps",
+    "subtitle": "Trading BTC dumps",
+    "difficulty": "Advanced",
+    "durationMin": 24,
+    "outcome": "Break down 'Trading BTC dumps' on chart and TradingView.",
+    "content": "BTC dump: alts fall harder. Short leader or wait for BTC stabilize.\n\nTrade Master: theory + TradingV",
+    "takeaway": "BTC dump: alts fall harder",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "BTC dump: alts fall harder. Short leader or wait for BTC stabilize.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Trading BTC dumps",
+        "chartType": "reversal",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "BTC dump: alts fall harder",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "module": "Risk",
+    "title": "Recovery after big loss",
+    "subtitle": "Recovery after big loss",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Recovery after big loss' on chart and TradingView.",
+    "content": "Pause 24–72h. Cut size 2–3x. Journal review. No revenge.\n\nTrade Master: theory + TradingView + journ",
+    "takeaway": "Pause 24–72h",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Pause 24–72h. Cut size 2–3x. Journal review. No revenge.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Recovery after big loss",
+        "chartType": "price_chart",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Pause 24–72h",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "module": "Practice",
+    "title": "Marathon Block 1",
+    "subtitle": "Marathon Block 1",
+    "difficulty": "Advanced",
+    "durationMin": 32,
+    "outcome": "Break down 'Marathon Block 1' on chart and TradingView.",
+    "content": "Block 1: trend + levels + trade plan on ETH 15m. Full cycle dry-run then paper.\n\nTrade Master: theor",
+    "takeaway": "Block 1: trend + levels + trade plan on ETH 15m",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Block 1: trend + levels + trade plan on ETH 15m. Full cycle dry-run then paper.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Marathon Block 1",
+        "chartType": "structure",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open ETHUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Block 1: trend + levels + trade plan on ETH 15m",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "module": "Practice",
+    "title": "Marathon Block 2",
+    "subtitle": "Marathon Block 2",
+    "difficulty": "Advanced",
+    "durationMin": 32,
+    "outcome": "Break down 'Marathon Block 2' on chart and TradingView.",
+    "content": "Block 2: entry, management, exit, journal. Grade process not only PnL.\n\nTrade Master: theory + Tradi",
+    "takeaway": "Block 2: entry, management, exit, journal",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Block 2: entry, management, exit, journal. Grade process not only PnL.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Marathon Block 2",
+        "chartType": "risk_reward",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open ETHUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Block 2: entry, management, exit, journal",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "module": "Strategies",
+    "title": "Averaging down",
+    "subtitle": "Averaging down",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Averaging down' on chart and TradingView.",
+    "content": "Averaging without plan blows accounts. Only with max loss cap and intact thesis.\n\nTrade Master: theo",
+    "takeaway": "Averaging without plan blows accounts",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Averaging without plan blows accounts. Only with max loss cap and intact thesis.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Averaging down",
+        "chartType": "risk_reward",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Averaging without plan blows accounts",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "module": "Patterns",
+    "title": "Trend change up to down",
+    "subtitle": "Trend change up to down",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Trend change up to down' on chart and TradingView.",
+    "content": "Trend change: break last HL, LH, retest from below.\n\nTrade Master: theory + TradingView + journal — ",
+    "takeaway": "Trend change: break last HL, LH, retest from below",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Trend change: break last HL, LH, retest from below.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Trend change up to down",
+        "chartType": "reversal",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Trend change: break last HL, LH, retest from below",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "module": "Risk",
+    "title": "Analyze your trading",
+    "subtitle": "Analyze your trading",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Break down 'Analyze your trading' on chart and TradingView.",
+    "content": "Journal: date, pair, setup, R, emotion, screenshot. Weekly review by setup.\n\nTrade Master: theory + ",
+    "takeaway": "Journal: date, pair, setup, R, emotion, screenshot",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Journal: date, pair, setup, R, emotion, screenshot. Weekly review by setup.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Analyze your trading",
+        "chartType": "price_chart",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Journal: date, pair, setup, R, emotion, screenshot",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "module": "Market",
+    "title": "FOMC meeting",
+    "subtitle": "FOMC meeting",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'FOMC meeting' on chart and TradingView.",
+    "content": "FOMC moves DXY and BTC. Flat 30 min before. Trade reaction 15–30 min after.\n\nTrade Master: theory + ",
+    "takeaway": "FOMC moves DXY and BTC",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "FOMC moves DXY and BTC. Flat 30 min before. Trade reaction 15–30 min after.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "FOMC meeting",
+        "chartType": "session_timeline",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "FOMC moves DXY and BTC",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "module": "Introduction",
+    "title": "Scam signal chats",
+    "subtitle": "Scam signal chats",
+    "difficulty": "Beginner",
+    "durationMin": 18,
+    "outcome": "Break down 'Scam signal chats' on chart and TradingView.",
+    "content": "Scam: guaranteed profit, send funds to guru, pump groups.\n\nTrade Master: theory + TradingView + jour",
+    "takeaway": "Scam: guaranteed profit, send funds to guru, pump groups",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Scam: guaranteed profit, send funds to guru, pump groups.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Scam signal chats",
+        "chartType": "price_chart",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Scam: guaranteed profit, send funds to guru, pump groups",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "module": "Introduction",
+    "title": "Transfer between exchanges",
+    "subtitle": "Transfer between exchanges",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Break down 'Transfer between exchanges' on chart and TradingView.",
+    "content": "Check network. Test amount. Address from exchange UI only.\n\nTrade Master: theory + TradingView + jou",
+    "takeaway": "Check network",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Check network. Test amount. Address from exchange UI only.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Transfer between exchanges",
+        "chartType": "price_chart",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Check network",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "module": "Introduction",
+    "title": "API connection",
+    "subtitle": "API connection",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'API connection' on chart and TradingView.",
+    "content": "API: read-only for bots. Never withdraw permission. IP whitelist.\n\nTrade Master: theory + TradingVie",
+    "takeaway": "API: read-only for bots",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "API: read-only for bots. Never withdraw permission. IP whitelist.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "API connection",
+        "chartType": "order_flow",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "API: read-only for bots",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "module": "Risk",
+    "title": "Trading at work or home",
+    "subtitle": "Trading at work or home",
+    "difficulty": "Beginner",
+    "durationMin": 18,
+    "outcome": "Break down 'Trading at work or home' on chart and TradingView.",
+    "content": "Need focus, schedule, second monitor. Don't trade distracted.\n\nTrade Master: theory + TradingView + ",
+    "takeaway": "Need focus, schedule, second monitor",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Need focus, schedule, second monitor. Don't trade distracted.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Trading at work or home",
+        "chartType": "session_timeline",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Need focus, schedule, second monitor",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "module": "Introduction",
+    "title": "Futures Part 1",
+    "subtitle": "Futures Part 1",
+    "difficulty": "Beginner",
+    "durationMin": 28,
+    "outcome": "Break down 'Futures Part 1' on chart and TradingView.",
+    "content": "Leverage, margin, liquidation, funding. Isolated margin for beginners. Max 3–5x.\n\nTrade Master: theo",
+    "takeaway": "Leverage, margin, liquidation, funding",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Leverage, margin, liquidation, funding. Isolated margin for beginners. Max 3–5x.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Futures Part 1",
+        "chartType": "risk_reward",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Leverage, margin, liquidation, funding",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "module": "Risk",
+    "title": "Mistakes Part 2",
+    "subtitle": "Mistakes Part 2",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Mistakes Part 2' on chart and TradingView.",
+    "content": "Revenge, moving stops, overtrading, chopping in range.\n\nTrade Master: theory + TradingView + journal",
+    "takeaway": "Revenge, moving stops, overtrading, chopping in range",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Revenge, moving stops, overtrading, chopping in range.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Mistakes Part 2",
+        "chartType": "price_chart",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Revenge, moving stops, overtrading, chopping in range",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "module": "Introduction",
+    "title": "Useful apps",
+    "subtitle": "Useful apps",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Break down 'Useful apps' on chart and TradingView.",
+    "content": "TradingView, CoinGlass, exchange terminal, Trade Master for learning.\n\nTrade Master: theory + Tradin",
+    "takeaway": "TradingView, CoinGlass, exchange terminal, Trade Master for learning",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "TradingView, CoinGlass, exchange terminal, Trade Master for learning.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Useful apps",
+        "chartType": "price_chart",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "TradingView, CoinGlass, exchange terminal, Trade Master for learning",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "module": "Strategies",
+    "title": "Trader morning routine",
+    "subtitle": "Trader morning routine",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Trader morning routine' on chart and TradingView.",
+    "content": "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit.\n\nTrade Master: theory + Tradin",
+    "takeaway": "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Trader morning routine",
+        "chartType": "session_timeline",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "module": "Patterns",
+    "title": "Fibonacci retracement",
+    "subtitle": "Fibonacci retracement",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Fibonacci retracement' on chart and TradingView.",
+    "content": "0.382, 0.5, 0.618 retracement in trend. Enter with trend at fib.\n\nTrade Master: theory + TradingView",
+    "takeaway": "0",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "0.382, 0.5, 0.618 retracement in trend. Enter with trend at fib.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Fibonacci retracement",
+        "chartType": "pullback",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open ETHUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "0",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "module": "Market",
+    "title": "Airdrop and pre-market",
+    "subtitle": "Airdrop and pre-market",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Break down 'Airdrop and pre-market' on chart and TradingView.",
+    "content": "Airdrop farming is separate. Pre-market on new pairs = extreme risk.\n\nTrade Master: theory + Trading",
+    "takeaway": "Airdrop farming is separate",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Airdrop farming is separate. Pre-market on new pairs = extreme risk.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Airdrop and pre-market",
+        "chartType": "momentum",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Airdrop farming is separate",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "module": "Chart",
+    "title": "Candles Part 2",
+    "subtitle": "Candles Part 2",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Break down 'Candles Part 2' on chart and TradingView.",
+    "content": "Pin bar, engulfing, doji at levels. Wick = rejection.\n\nTrade Master: theory + TradingView + journal ",
+    "takeaway": "Pin bar, engulfing, doji at levels",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Pin bar, engulfing, doji at levels. Wick = rejection.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Candles Part 2",
+        "chartType": "candlestick",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open ETHUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Pin bar, engulfing, doji at levels",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "module": "Patterns",
+    "title": "Head & shoulders Part 1",
+    "subtitle": "Head & shoulders Part 1",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Break down 'Head & shoulders Part 1' on chart and TradingView.",
+    "content": "Head & shoulders: three peaks, middle highest. Neckline is key.\n\nTrade Master: theory + TradingView ",
+    "takeaway": "Head & shoulders: three peaks, middle highest",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Head & shoulders: three peaks, middle highest. Neckline is key.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Head & shoulders Part 1",
+        "chartType": "reversal",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Head & shoulders: three peaks, middle highest",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "module": "Patterns",
+    "title": "Head & shoulders Part 2",
+    "subtitle": "Head & shoulders Part 2",
+    "difficulty": "Advanced",
+    "durationMin": 24,
+    "outcome": "Break down 'Head & shoulders Part 2' on chart and TradingView.",
+    "content": "Neckline break + retest = short. Target = head-to-neck distance.\n\nTrade Master: theory + TradingView",
+    "takeaway": "Neckline break + retest = short",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Theory"
+      },
+      {
+        "type": "text",
+        "body": "Neckline break + retest = short. Target = head-to-neck distance.\n\nTrade Master: theory + TradingView + journal — not signal groups."
+      },
+      {
+        "type": "heading",
+        "title": "Application"
+      },
+      {
+        "type": "text",
+        "body": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "market_note",
+        "title": "LATAM market",
+        "body": "En México aplique en pares USDT líquidos.",
+        "market": "mx"
+      },
+      {
+        "type": "chart",
+        "title": "Head & shoulders Part 2",
+        "chartType": "reversal",
+        "caption": "Apply on live chart. Mark setup. Log entry/stop/target before click."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "On TradingView open BTCUSDT and find this pattern in last 7 days.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Practice",
+        "body": "Steps:",
+        "items": [
+          "Open TradingView from lesson link",
+          "Mark 3 levels on chart",
+          "Screenshot with entry/stop labels",
+          "Log in journal without trading"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Scenario",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Remember",
+        "items": [
+          "Neckline break + retest = short",
+          "TradingView breakdown",
+          "Journal required",
+          "Risk 0.5–1%",
+          "Setups not signals"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Journal",
+        "body": "Log setup:",
+        "items": [
+          "Pair & timeframe",
+          "Entry / stop / target",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Pro tip",
+        "body": "Competitors don't link lesson → TradingView → journal. You get the full loop."
+      }
+    ]
+  }
+]

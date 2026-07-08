@@ -1,0 +1,4279 @@
+[
+  {
+    "id": 1,
+    "module": "Introdução",
+    "title": "Intro: Por onde começar no trading? Parte 1",
+    "subtitle": "Trader, spot, futuros, Binance, PIX/P2P",
+    "difficulty": "Beginner",
+    "durationMin": 28,
+    "outcome": "Entenda spot vs futuros e início seguro na exchange.",
+    "content": "Trading é trabalho com probabilidades e risco definido.",
+    "takeaway": "Traders ganham com disciplina e setups repetíveis.",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Quem é o trader"
+      },
+      {
+        "type": "text",
+        "body": "Trader compra e vende ativos para lucrar com movimento. Ferramentas: gráfico, book, risco por trade.\n\nProfissional sabe entrada, stop e alvo antes do clique."
+      },
+      {
+        "type": "heading",
+        "title": "Spot vs futuros"
+      },
+      {
+        "type": "text",
+        "body": "Spot = você possui a moeda. Futuros USDT-M = contrato com alavancagem e risco de liquidação.\n\nNo Brasil, PIX + P2P é o caminho mais usado para USDT."
+      },
+      {
+        "type": "market_note",
+        "title": "Seu mercado (Brasil)",
+        "body": "No Brasil, 90%+ dos traders ativos usam Binance ou Bybit com PIX para depositar USDT. Comece com spot para entender ordens; depois migre para futuros USDT-M. Evite grupos de 'sinais VIP' no Telegram — golpe #1 em LATAM.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Spot vs futuros",
+        "chartType": "market_balance",
+        "caption": "Spot = posse. Futuros = contrato alavancado."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView: setup BTC Binance",
+        "body": "Abra BTC. Marque máxima/mínima de ontem. Compare spot vs futuro perpétuo.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática guiada",
+        "body": "15 minutos só observando:",
+        "items": [
+          "Abra Binance ou conta demo TradingView.",
+          "Compare preço spot vs futuro BTC.",
+          "Desenhe linhas no high/low de ontem.",
+          "Anote onde ficaria seu stop no long."
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "500 USDT, long 5x em ETH: +2% = +10% na margem. Sem stop = risco de liquidação."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Trading = regras + probabilidades",
+          "Spot = moeda na carteira",
+          "Futuros = long/short + alavancagem",
+          "PIX + P2P no Brasil",
+          "Trade Master ensina setups, não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Registre após a lição:",
+        "items": [
+          "Exchange e tipo de conta",
+          "Depósito e % de risco por trade",
+          "Uma dúvida em aberto"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica profissional",
+        "body": "Explore a interface antes do primeiro trade. Finera foca finanças pessoais — nós focamos setups no TradingView."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "module": "Introdução",
+    "title": "Intro: Por onde começar? Parte 2",
+    "subtitle": "Intro: Por onde começar? Parte 2",
+    "difficulty": "Beginner",
+    "durationMin": 26,
+    "outcome": "Dominar 'Intro: Por onde começar? Parte 2' no gráfico e TradingView.",
+    "content": "Trading na exchange: ordens limit/market, taxas, funding em futuros.\n\nTiger.Trade e terminais locais",
+    "takeaway": "Scalping precisa de terminal",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Trading na exchange: ordens limit/market, taxas, funding em futuros.\n\nTiger.Trade e terminais locais aceleram scalping no Brasil."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Scalping, médio prazo, longo prazo. Primeiro depósito = valor que pode perder. Risco 0,5–1% por trade."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "Brasil: Tiger Trade e TradingView são padrão entre scalpers.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Intro: Por onde começar? Parte 2",
+        "chartType": "order_flow",
+        "caption": "Scalping, médio prazo, longo prazo. Primeiro depósito = valor que pode perder. Risco 0,5–1"
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "Abra BTC 5m. Veja spread no book. Calcule tamanho com stop 0,8% e risco 1%.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "1000 USDT, 1% risk = 10 USDT per trade. Tighter stop = larger position for same risk."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Scalping precisa de terminal",
+          "Risco 0,5–1%",
+          "Primeiro depósito é aprendizado",
+          "Calcule antes do clique",
+          "Trade Master + TV"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Não faça scalping sem book — comece em 15m."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "module": "Gráfico",
+    "title": "Amplitude de movimento",
+    "subtitle": "Amplitude de movimento",
+    "difficulty": "Beginner",
+    "durationMin": 20,
+    "outcome": "Dominar 'Amplitude de movimento' no gráfico e TradingView.",
+    "content": "Amplitude = tamanho do movimento em %. Em alts brasileiras movimentos de 5–10% são comuns.",
+    "takeaway": "Amplitude = % movimento",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Amplitude = tamanho do movimento em %. Em alts brasileiras movimentos de 5–10% são comuns."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Alta amplitude → reduza alavancagem. Baixa → alvos menores."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "Em altcoins brasileiras volatilidade pode passar de 10% no dia.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Amplitude de movimento",
+        "chartType": "momentum",
+        "caption": "Alta amplitude → reduza alavancagem. Baixa → alvos menores."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No 15m marque range das últimas 20 velas em %.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "SOL +4% in an hour — high amplitude. 0.5% target too small; 2% stop may be noise."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Amplitude = % movimento",
+          "Meça antes",
+          "Alts > BTC",
+          "Alvo conforme amplitude",
+          "ATR ajuda"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Anote amplitude média semanal do seu par."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "module": "Gráfico",
+    "title": "Suporte pelos fundos",
+    "subtitle": "Suporte pelos fundos",
+    "difficulty": "Beginner",
+    "durationMin": 22,
+    "outcome": "Dominar 'Suporte pelos fundos' no gráfico e TradingView.",
+    "content": "Suporte pelos fundos: linha nos mínimos com 2+ reações.",
+    "takeaway": "2+ fundos = nível",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Suporte pelos fundos: linha nos mínimos com 2+ reações."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Use corpos ou pavios — seja consistente. 5m e 1h diferem."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "Suporte em PETR4 na B3 funciona igual — múltiplos toques em lows.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Suporte pelos fundos",
+        "chartType": "support_resistance",
+        "caption": "Use corpos ou pavios — seja consistente. 5m e 1h diferem."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "Ache 3 fundos no ETH 1h. Desenhe suporte.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "ETH bounced 3x at 3200 — support. Close below = broken."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "2+ fundos = nível",
+          "Falso rompimento",
+          "Marcação consistente",
+          "TF maior importa",
+          "Registre níveis"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Não desenhe 20 linhas — 3–5 níveis bastam."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "module": "Gráfico",
+    "title": "Book de ofertas",
+    "subtitle": "Book de ofertas",
+    "difficulty": "Intermediate",
+    "durationMin": 28,
+    "outcome": "Dominar 'Book de ofertas' no gráfico e TradingView.",
+    "content": "Book: bids/asks, paredes, risco de spoofing.",
+    "takeaway": "Bid/ask",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Book: bids/asks, paredes, risco de spoofing."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Leia book com gráfico: rompimento + sumiço de ask = impulso."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "Book da Binance é referência para altcoins no Brasil.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Book de ofertas",
+        "chartType": "order_flow",
+        "caption": "Leia book com gráfico: rompimento + sumiço de ask = impulso."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "Abra book BTC. Ache maior parede. Observe 5 min.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "5",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=5"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra book Futures",
+          "Print densidade",
+          "Anote spoofing",
+          "Diário"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "50 BTC ask wall pulled before touch — spoofing."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Bid/ask",
+          "Paredes importam",
+          "Spoofing existe",
+          "Fit confirma",
+          "Scalp = book + gráfico"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Trade Master ensina book — concorrentes não. Sua vantagem."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "module": "Gráfico",
+    "title": "Mercado rápido vs lento",
+    "subtitle": "Mercado rápido vs lento",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Mercado rápido vs lento' no gráfico e TradingView.",
+    "content": "Fast market: wide candles, slippage. Slow: tight range, fake breaks.\n\nTrade Master: teoria + Trading",
+    "takeaway": "Fast market: wide candles, slippage",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Fast market: wide candles, slippage. Slow: tight range, fake breaks.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Mercado rápido vs lento",
+        "chartType": "momentum",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Fast market: wide candles, slippage",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "module": "Risco",
+    "title": "Erros de iniciante Parte 1",
+    "subtitle": "Erros de iniciante Parte 1",
+    "difficulty": "Beginner",
+    "durationMin": 22,
+    "outcome": "Dominar 'Erros de iniciante Parte 1' no gráfico e TradingView.",
+    "content": "No stop, all-in one coin, FOMO, copying chat signals.\n\nTrade Master: teoria + TradingView + diário —",
+    "takeaway": "No stop, all-in one coin, FOMO, copying chat signals",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "No stop, all-in one coin, FOMO, copying chat signals.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Erros de iniciante Parte 1",
+        "chartType": "risk_reward",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "No stop, all-in one coin, FOMO, copying chat signals",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "module": "Padrões",
+    "title": "Triângulo descendente",
+    "subtitle": "Triângulo descendente",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Triângulo descendente' no gráfico e TradingView.",
+    "content": "Descending triangle: flat support + lower highs. Breakdown = short.\n\nTrade Master: teoria + TradingV",
+    "takeaway": "Descending triangle: flat support + lower highs",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Descending triangle: flat support + lower highs. Breakdown = short.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Triângulo descendente",
+        "chartType": "breakout",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra SOLUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:SOLUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ASOLUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:SOLUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Descending triangle: flat support + lower highs",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "module": "Padrões",
+    "title": "Triângulo ascendente",
+    "subtitle": "Triângulo ascendente",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Triângulo ascendente' no gráfico e TradingView.",
+    "content": "Ascending triangle: flat resistance + higher lows. Breakout up = long.\n\nTrade Master: teoria + Tradi",
+    "takeaway": "Ascending triangle: flat resistance + higher lows",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Ascending triangle: flat resistance + higher lows. Breakout up = long.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Triângulo ascendente",
+        "chartType": "breakout",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra SOLUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:SOLUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ASOLUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:SOLUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Ascending triangle: flat resistance + higher lows",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "module": "Estratégias",
+    "title": "Estratégia para impulsos",
+    "subtitle": "Estratégia para impulsos",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Dominar 'Estratégia para impulsos' no gráfico e TradingView.",
+    "content": "Impulse: volume breakout from range. Enter on retest or confirmed break.\n\nTrade Master: teoria + Tra",
+    "takeaway": "Impulse: volume breakout from range",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Impulse: volume breakout from range. Enter on retest or confirmed break.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Estratégia para impulsos",
+        "chartType": "breakout",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra ETHUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Impulse: volume breakout from range",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "module": "Mercado",
+    "title": "Delisting de moedas",
+    "subtitle": "Delisting de moedas",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Dominar 'Delisting de moedas' no gráfico e TradingView.",
+    "content": "Delisting removes pair from exchange. Exit early.\n\nTrade Master: teoria + TradingView + diário — dif",
+    "takeaway": "Delisting removes pair from exchange",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Delisting removes pair from exchange. Exit early.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Delisting de moedas",
+        "chartType": "price_chart",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra PEPEUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:PEPEUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3APEPEUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:PEPEUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Delisting removes pair from exchange",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "module": "Mercado",
+    "title": "Listagem",
+    "subtitle": "Listagem",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Dominar 'Listagem' no gráfico e TradingView.",
+    "content": "Listing: extreme volatility first hours. Small size, mandatory stop.\n\nTrade Master: teoria + Trading",
+    "takeaway": "Listing: extreme volatility first hours",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Listing: extreme volatility first hours. Small size, mandatory stop.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Listagem",
+        "chartType": "momentum",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra ARBUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:ARBUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AARBUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:ARBUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Listing: extreme volatility first hours",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "module": "Gráfico",
+    "title": "Canais",
+    "subtitle": "Canais",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Canais' no gráfico e TradingView.",
+    "content": "Channel = parallel support/resistance. Buy low, sell high in range.\n\nTrade Master: teoria + TradingV",
+    "takeaway": "Channel = parallel support/resistance",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Channel = parallel support/resistance. Buy low, sell high in range.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Canais",
+        "chartType": "range_trading",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Channel = parallel support/resistance",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "module": "Gráfico",
+    "title": "Tendência de alta",
+    "subtitle": "Tendência de alta",
+    "difficulty": "Beginner",
+    "durationMin": 20,
+    "outcome": "Dominar 'Tendência de alta' no gráfico e TradingView.",
+    "content": "Uptrend: HH + HL. Trade pullbacks to support.\n\nTrade Master: teoria + TradingView + diário — diferen",
+    "takeaway": "Uptrend: HH + HL",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Uptrend: HH + HL. Trade pullbacks to support.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Tendência de alta",
+        "chartType": "uptrend",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Uptrend: HH + HL",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "module": "Gráfico",
+    "title": "Tendência de baixa",
+    "subtitle": "Tendência de baixa",
+    "difficulty": "Beginner",
+    "durationMin": 20,
+    "outcome": "Dominar 'Tendência de baixa' no gráfico e TradingView.",
+    "content": "Downtrend: LH + LL. Shorts from resistance.\n\nTrade Master: teoria + TradingView + diário — diferente",
+    "takeaway": "Downtrend: LH + LL",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Downtrend: LH + LL. Shorts from resistance.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Tendência de baixa",
+        "chartType": "downtrend",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Downtrend: LH + LL",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "module": "Estratégias",
+    "title": "Indicadores básicos",
+    "subtitle": "Indicadores básicos",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Dominar 'Indicadores básicos' no gráfico e TradingView.",
+    "content": "MA for trend. RSI overbought in trend is normal. Volume confirms breaks.\n\nTrade Master: teoria + Tra",
+    "takeaway": "MA for trend",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "MA for trend. RSI overbought in trend is normal. Volume confirms breaks.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Indicadores básicos",
+        "chartType": "momentum",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "MA for trend",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "module": "Mercado",
+    "title": "Trading em notícias",
+    "subtitle": "Trading em notícias",
+    "difficulty": "Advanced",
+    "durationMin": 22,
+    "outcome": "Dominar 'Trading em notícias' no gráfico e TradingView.",
+    "content": "News = spikes and slippage. Don't enter 1 min before CPI/FOMC.\n\nTrade Master: teoria + TradingView +",
+    "takeaway": "News = spikes and slippage",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "News = spikes and slippage. Don't enter 1 min before CPI/FOMC.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Trading em notícias",
+        "chartType": "session_timeline",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "News = spikes and slippage",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "module": "Risco",
+    "title": "Gestão do depósito",
+    "subtitle": "Gestão do depósito",
+    "difficulty": "Beginner",
+    "durationMin": 22,
+    "outcome": "Dominar 'Gestão do depósito' no gráfico e TradingView.",
+    "content": "Risk 0.5–1% per trade. Max 3–5 positions. Don't use full margin.\n\nTrade Master: teoria + TradingView",
+    "takeaway": "Risk 0",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Risk 0.5–1% per trade. Max 3–5 positions. Don't use full margin.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Gestão do depósito",
+        "chartType": "risk_reward",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Risk 0",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "module": "Padrões",
+    "title": "Triângulo simétrico",
+    "subtitle": "Triângulo simétrico",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Triângulo simétrico' no gráfico e TradingView.",
+    "content": "Symmetrical triangle: compression. Wait for volume breakout.\n\nTrade Master: teoria + TradingView + d",
+    "takeaway": "Symmetrical triangle: compression",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Symmetrical triangle: compression. Wait for volume breakout.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Triângulo simétrico",
+        "chartType": "breakout",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra LINKUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:LINKUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ALINKUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:LINKUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Symmetrical triangle: compression",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "module": "Mercado",
+    "title": "Tokens FUN / meme",
+    "subtitle": "Tokens FUN / meme",
+    "difficulty": "Intermediate",
+    "durationMin": 18,
+    "outcome": "Dominar 'Tokens FUN / meme' no gráfico e TradingView.",
+    "content": "Meme tokens: low liquidity, violent moves. Small size, tight stop.\n\nTrade Master: teoria + TradingVi",
+    "takeaway": "Meme tokens: low liquidity, violent moves",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Meme tokens: low liquidity, violent moves. Small size, tight stop.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Tokens FUN / meme",
+        "chartType": "momentum",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra DOGEUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:DOGEUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ADOGEUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:DOGEUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Meme tokens: low liquidity, violent moves",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "module": "Estratégias",
+    "title": "Segurar até o alvo",
+    "subtitle": "Segurar até o alvo",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Segurar até o alvo' no gráfico e TradingView.",
+    "content": "Plan before entry. Don't move stop from fear/greed. Partial at 1R optional.\n\nTrade Master: teoria + ",
+    "takeaway": "Plan before entry",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Plan before entry. Don't move stop from fear/greed. Partial at 1R optional.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Segurar até o alvo",
+        "chartType": "pullback",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra ETHUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Plan before entry",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "module": "Gráfico",
+    "title": "Setas no gráfico de ticks",
+    "subtitle": "Setas no gráfico de ticks",
+    "difficulty": "Advanced",
+    "durationMin": 22,
+    "outcome": "Dominar 'Setas no gráfico de ticks' no gráfico e TradingView.",
+    "content": "Tick chart shows every trade. Arrows = aggressive market orders.\n\nTrade Master: teoria + TradingView",
+    "takeaway": "Tick chart shows every trade",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Tick chart shows every trade. Arrows = aggressive market orders.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Setas no gráfico de ticks",
+        "chartType": "order_flow",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Tick chart shows every trade",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "module": "Estratégias",
+    "title": "Plano antes de abrir",
+    "subtitle": "Plano antes de abrir",
+    "difficulty": "Beginner",
+    "durationMin": 24,
+    "outcome": "Dominar 'Plano antes de abrir' no gráfico e TradingView.",
+    "content": "Before click: setup, entry, stop, targets, min 1:2 R:R. No plan = no trade.\n\nTrade Master: teoria + ",
+    "takeaway": "Before click: setup, entry, stop, targets, min 1:2 R:R",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Before click: setup, entry, stop, targets, min 1:2 R:R. No plan = no trade.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Plano antes de abrir",
+        "chartType": "risk_reward",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Before click: setup, entry, stop, targets, min 1:2 R:R",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "module": "Mercado",
+    "title": "Ciclos de mercado",
+    "subtitle": "Ciclos de mercado",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Ciclos de mercado' no gráfico e TradingView.",
+    "content": "Cycles: accumulation → markup → distribution → markdown. BTC leads alts.\n\nTrade Master: teoria + Tra",
+    "takeaway": "Cycles: accumulation → markup → distribution → markdown",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Cycles: accumulation → markup → distribution → markdown. BTC leads alts.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Ciclos de mercado",
+        "chartType": "structure",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Cycles: accumulation → markup → distribution → markdown",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "module": "Mercado",
+    "title": "O que é altseason",
+    "subtitle": "O que é altseason",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'O que é altseason' no gráfico e TradingView.",
+    "content": "Altseason: BTC dominance falls, alts outperform. Wait for BTC range + alt volume.\n\nTrade Master: teo",
+    "takeaway": "Altseason: BTC dominance falls, alts outperform",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Altseason: BTC dominance falls, alts outperform. Wait for BTC range + alt volume.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "O que é altseason",
+        "chartType": "correlation",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Altseason: BTC dominance falls, alts outperform",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "module": "Mercado",
+    "title": "BTC intraday",
+    "subtitle": "BTC intraday",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Dominar 'BTC intraday' no gráfico e TradingView.",
+    "content": "Intraday: Asia quiet, London breaks, NY volatile. Check BTC 15m/1h before alts.\n\nTrade Master: teori",
+    "takeaway": "Intraday: Asia quiet, London breaks, NY volatile",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Intraday: Asia quiet, London breaks, NY volatile. Check BTC 15m/1h before alts.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "BTC intraday",
+        "chartType": "session_timeline",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Intraday: Asia quiet, London breaks, NY volatile",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "module": "Estratégias",
+    "title": "Operar quedas de BTC",
+    "subtitle": "Operar quedas de BTC",
+    "difficulty": "Advanced",
+    "durationMin": 24,
+    "outcome": "Dominar 'Operar quedas de BTC' no gráfico e TradingView.",
+    "content": "BTC dump: alts fall harder. Short leader or wait for BTC stabilize.\n\nTrade Master: teoria + TradingV",
+    "takeaway": "BTC dump: alts fall harder",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "BTC dump: alts fall harder. Short leader or wait for BTC stabilize.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Operar quedas de BTC",
+        "chartType": "reversal",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "BTC dump: alts fall harder",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "module": "Risco",
+    "title": "Voltar após grande perda",
+    "subtitle": "Voltar após grande perda",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Voltar após grande perda' no gráfico e TradingView.",
+    "content": "Pause 24–72h. Cut size 2–3x. Journal review. No revenge.\n\nTrade Master: teoria + TradingView + diári",
+    "takeaway": "Pause 24–72h",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Pause 24–72h. Cut size 2–3x. Journal review. No revenge.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Voltar após grande perda",
+        "chartType": "price_chart",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Pause 24–72h",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "module": "Prática",
+    "title": "Maratona Bloco 1",
+    "subtitle": "Maratona Bloco 1",
+    "difficulty": "Advanced",
+    "durationMin": 32,
+    "outcome": "Dominar 'Maratona Bloco 1' no gráfico e TradingView.",
+    "content": "Block 1: trend + levels + trade plan on ETH 15m. Full cycle dry-run then paper.\n\nTrade Master: teori",
+    "takeaway": "Block 1: trend + levels + trade plan on ETH 15m",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Block 1: trend + levels + trade plan on ETH 15m. Full cycle dry-run then paper.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Maratona Bloco 1",
+        "chartType": "structure",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra ETHUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Block 1: trend + levels + trade plan on ETH 15m",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "module": "Prática",
+    "title": "Maratona Bloco 2",
+    "subtitle": "Maratona Bloco 2",
+    "difficulty": "Advanced",
+    "durationMin": 32,
+    "outcome": "Dominar 'Maratona Bloco 2' no gráfico e TradingView.",
+    "content": "Block 2: entry, management, exit, journal. Grade process not only PnL.\n\nTrade Master: teoria + Tradi",
+    "takeaway": "Block 2: entry, management, exit, journal",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Block 2: entry, management, exit, journal. Grade process not only PnL.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Maratona Bloco 2",
+        "chartType": "risk_reward",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra ETHUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Block 2: entry, management, exit, journal",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "module": "Estratégias",
+    "title": "Média de preço",
+    "subtitle": "Média de preço",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Média de preço' no gráfico e TradingView.",
+    "content": "Averaging without plan blows accounts. Only with max loss cap and intact thesis.\n\nTrade Master: teor",
+    "takeaway": "Averaging without plan blows accounts",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Averaging without plan blows accounts. Only with max loss cap and intact thesis.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Média de preço",
+        "chartType": "risk_reward",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Averaging without plan blows accounts",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "module": "Padrões",
+    "title": "Mudança de tendência",
+    "subtitle": "Mudança de tendência",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Mudança de tendência' no gráfico e TradingView.",
+    "content": "Trend change: break last HL, LH, retest from below.\n\nTrade Master: teoria + TradingView + diário — d",
+    "takeaway": "Trend change: break last HL, LH, retest from below",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Trend change: break last HL, LH, retest from below.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Mudança de tendência",
+        "chartType": "reversal",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Trend change: break last HL, LH, retest from below",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "module": "Risco",
+    "title": "Analisar seus trades",
+    "subtitle": "Analisar seus trades",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Dominar 'Analisar seus trades' no gráfico e TradingView.",
+    "content": "Journal: date, pair, setup, R, emotion, screenshot. Weekly review by setup.\n\nTrade Master: teoria + ",
+    "takeaway": "Journal: date, pair, setup, R, emotion, screenshot",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Journal: date, pair, setup, R, emotion, screenshot. Weekly review by setup.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Analisar seus trades",
+        "chartType": "price_chart",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Journal: date, pair, setup, R, emotion, screenshot",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "module": "Mercado",
+    "title": "Reunião do FED",
+    "subtitle": "Reunião do FED",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Reunião do FED' no gráfico e TradingView.",
+    "content": "FOMC moves DXY and BTC. Flat 30 min before. Trade reaction 15–30 min after.\n\nTrade Master: teoria + ",
+    "takeaway": "FOMC moves DXY and BTC",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "FOMC moves DXY and BTC. Flat 30 min before. Trade reaction 15–30 min after.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Reunião do FED",
+        "chartType": "session_timeline",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "FOMC moves DXY and BTC",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "module": "Introdução",
+    "title": "Chats de golpe",
+    "subtitle": "Chats de golpe",
+    "difficulty": "Beginner",
+    "durationMin": 18,
+    "outcome": "Dominar 'Chats de golpe' no gráfico e TradingView.",
+    "content": "Scam: guaranteed profit, send funds to guru, pump groups.\n\nTrade Master: teoria + TradingView + diár",
+    "takeaway": "Scam: guaranteed profit, send funds to guru, pump groups",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Scam: guaranteed profit, send funds to guru, pump groups.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Chats de golpe",
+        "chartType": "price_chart",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Scam: guaranteed profit, send funds to guru, pump groups",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "module": "Introdução",
+    "title": "Transferir entre exchanges",
+    "subtitle": "Transferir entre exchanges",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Dominar 'Transferir entre exchanges' no gráfico e TradingView.",
+    "content": "Check network. Test amount. Address from exchange UI only.\n\nTrade Master: teoria + TradingView + diá",
+    "takeaway": "Check network",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Check network. Test amount. Address from exchange UI only.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Transferir entre exchanges",
+        "chartType": "price_chart",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Check network",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "module": "Introdução",
+    "title": "Conexão API",
+    "subtitle": "Conexão API",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Conexão API' no gráfico e TradingView.",
+    "content": "API: read-only for bots. Never withdraw permission. IP whitelist.\n\nTrade Master: teoria + TradingVie",
+    "takeaway": "API: read-only for bots",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "API: read-only for bots. Never withdraw permission. IP whitelist.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Conexão API",
+        "chartType": "order_flow",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "API: read-only for bots",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "module": "Risco",
+    "title": "Trading no trabalho ou casa",
+    "subtitle": "Trading no trabalho ou casa",
+    "difficulty": "Beginner",
+    "durationMin": 18,
+    "outcome": "Dominar 'Trading no trabalho ou casa' no gráfico e TradingView.",
+    "content": "Need focus, schedule, second monitor. Don't trade distracted.\n\nTrade Master: teoria + TradingView + ",
+    "takeaway": "Need focus, schedule, second monitor",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Need focus, schedule, second monitor. Don't trade distracted.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Trading no trabalho ou casa",
+        "chartType": "session_timeline",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Need focus, schedule, second monitor",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "module": "Introdução",
+    "title": "Futuros Parte 1",
+    "subtitle": "Futuros Parte 1",
+    "difficulty": "Beginner",
+    "durationMin": 28,
+    "outcome": "Dominar 'Futuros Parte 1' no gráfico e TradingView.",
+    "content": "Leverage, margin, liquidation, funding. Isolated margin for beginners. Max 3–5x.\n\nTrade Master: teor",
+    "takeaway": "Leverage, margin, liquidation, funding",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Leverage, margin, liquidation, funding. Isolated margin for beginners. Max 3–5x.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Futuros Parte 1",
+        "chartType": "risk_reward",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Leverage, margin, liquidation, funding",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "module": "Risco",
+    "title": "Erros Parte 2",
+    "subtitle": "Erros Parte 2",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Erros Parte 2' no gráfico e TradingView.",
+    "content": "Revenge, moving stops, overtrading, chopping in range.\n\nTrade Master: teoria + TradingView + diário ",
+    "takeaway": "Revenge, moving stops, overtrading, chopping in range",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Revenge, moving stops, overtrading, chopping in range.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Erros Parte 2",
+        "chartType": "price_chart",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Revenge, moving stops, overtrading, chopping in range",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "module": "Introdução",
+    "title": "Apps úteis",
+    "subtitle": "Apps úteis",
+    "difficulty": "Beginner",
+    "durationMin": 16,
+    "outcome": "Dominar 'Apps úteis' no gráfico e TradingView.",
+    "content": "TradingView, CoinGlass, exchange terminal, Trade Master for learning.\n\nTrade Master: teoria + Tradin",
+    "takeaway": "TradingView, CoinGlass, exchange terminal, Trade Master for learning",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "TradingView, CoinGlass, exchange terminal, Trade Master for learning.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Apps úteis",
+        "chartType": "price_chart",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "TradingView, CoinGlass, exchange terminal, Trade Master for learning",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "module": "Estratégias",
+    "title": "Rotina matinal do trader",
+    "subtitle": "Rotina matinal do trader",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Rotina matinal do trader' no gráfico e TradingView.",
+    "content": "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit.\n\nTrade Master: teoria + Tradin",
+    "takeaway": "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Rotina matinal do trader",
+        "chartType": "session_timeline",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Morning: news calendar, BTC/ETH levels, watchlist, daily trade limit",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "module": "Padrões",
+    "title": "Correção de Fibonacci",
+    "subtitle": "Correção de Fibonacci",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Correção de Fibonacci' no gráfico e TradingView.",
+    "content": "0.382, 0.5, 0.618 retracement in trend. Enter with trend at fib.\n\nTrade Master: teoria + TradingView",
+    "takeaway": "0",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "0.382, 0.5, 0.618 retracement in trend. Enter with trend at fib.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Correção de Fibonacci",
+        "chartType": "pullback",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra ETHUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "0",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "module": "Mercado",
+    "title": "Airdrop e pré-market",
+    "subtitle": "Airdrop e pré-market",
+    "difficulty": "Intermediate",
+    "durationMin": 20,
+    "outcome": "Dominar 'Airdrop e pré-market' no gráfico e TradingView.",
+    "content": "Airdrop farming is separate. Pre-market on new pairs = extreme risk.\n\nTrade Master: teoria + Trading",
+    "takeaway": "Airdrop farming is separate",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Airdrop farming is separate. Pre-market on new pairs = extreme risk.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Airdrop e pré-market",
+        "chartType": "momentum",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Airdrop farming is separate",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "module": "Gráfico",
+    "title": "Velas Parte 2",
+    "subtitle": "Velas Parte 2",
+    "difficulty": "Intermediate",
+    "durationMin": 24,
+    "outcome": "Dominar 'Velas Parte 2' no gráfico e TradingView.",
+    "content": "Pin bar, engulfing, doji at levels. Wick = rejection.\n\nTrade Master: teoria + TradingView + diário —",
+    "takeaway": "Pin bar, engulfing, doji at levels",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Pin bar, engulfing, doji at levels. Wick = rejection.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Velas Parte 2",
+        "chartType": "candlestick",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra ETHUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:ETHUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3AETHUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:ETHUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Pin bar, engulfing, doji at levels",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "module": "Padrões",
+    "title": "Ombro-cabeça-ombro Parte 1",
+    "subtitle": "Ombro-cabeça-ombro Parte 1",
+    "difficulty": "Intermediate",
+    "durationMin": 22,
+    "outcome": "Dominar 'Ombro-cabeça-ombro Parte 1' no gráfico e TradingView.",
+    "content": "Head & shoulders: three peaks, middle highest. Neckline is key.\n\nTrade Master: teoria + TradingView ",
+    "takeaway": "Head & shoulders: three peaks, middle highest",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Head & shoulders: three peaks, middle highest. Neckline is key.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Ombro-cabeça-ombro Parte 1",
+        "chartType": "reversal",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Head & shoulders: three peaks, middle highest",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "module": "Padrões",
+    "title": "Ombro-cabeça-ombro Parte 2",
+    "subtitle": "Ombro-cabeça-ombro Parte 2",
+    "difficulty": "Advanced",
+    "durationMin": 24,
+    "outcome": "Dominar 'Ombro-cabeça-ombro Parte 2' no gráfico e TradingView.",
+    "content": "Neckline break + retest = short. Target = head-to-neck distance.\n\nTrade Master: teoria + TradingView",
+    "takeaway": "Neckline break + retest = short",
+    "sections": [
+      {
+        "type": "heading",
+        "title": "Teoria"
+      },
+      {
+        "type": "text",
+        "body": "Neckline break + retest = short. Target = head-to-neck distance.\n\nTrade Master: teoria + TradingView + diário — diferente de apps de finanças pessoais."
+      },
+      {
+        "type": "heading",
+        "title": "Aplicação"
+      },
+      {
+        "type": "text",
+        "body": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "market_note",
+        "title": "Mercado Brasil",
+        "body": "No Brasil aplique em altcoins com liquidez em Binance.",
+        "market": "br"
+      },
+      {
+        "type": "chart",
+        "title": "Ombro-cabeça-ombro Parte 2",
+        "chartType": "reversal",
+        "caption": "Aplique no gráfico. Marque setup. Anote entrada/stop/alvo."
+      },
+      {
+        "type": "tradingview",
+        "title": "TradingView",
+        "body": "No TradingView abra BTCUSDT e ache o padrão nos últimos 7 dias.",
+        "symbol": "BINANCE:BTCUSDT",
+        "interval": "15",
+        "url": "https://www.tradingview.com/chart/?symbol=BINANCE%3ABTCUSDT&interval=15"
+      },
+      {
+        "type": "practice",
+        "title": "Prática",
+        "body": "Passos:",
+        "items": [
+          "Abra TradingView pelo link",
+          "Marque 3 níveis",
+          "Print com entrada/stop",
+          "Registre no diário sem operar"
+        ]
+      },
+      {
+        "type": "example",
+        "title": "Cenário",
+        "body": "Example on BINANCE:BTCUSDT: apply lesson rule with min 1:2 R:R. Plan only, no click."
+      },
+      {
+        "type": "bullets",
+        "title": "Lembre",
+        "items": [
+          "Neckline break + retest = short",
+          "TradingView",
+          "Diário obrigatório",
+          "Risco 0,5–1%",
+          "Setups não sinais"
+        ]
+      },
+      {
+        "type": "journal",
+        "title": "Diário",
+        "body": "Anote o setup:",
+        "items": [
+          "Par e timeframe",
+          "Entrada / stop / alvo",
+          "R:R"
+        ]
+      },
+      {
+        "type": "tip",
+        "title": "Dica",
+        "body": "Concorrentes não ligam lição → TradingView → diário. Você tem o ciclo completo."
+      }
+    ]
+  }
+]
