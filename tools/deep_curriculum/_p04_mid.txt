@@ -1,0 +1,87 @@
+71:     ["Abra TradingView no símbolo da aula.", "Marque níveis ou padrão.", "Anote entrada, stop e alvo.", "Print no diário.", "Sem trade real — só plano."],
+72: )
+73: 
+74: 
+75: LESSON_DATA = []
+76: # Lessons appended below via exec of _part04_data.py
+77: 
+78: exec((Path(__file__).parent / "_part04_data.py").read_text(encoding="utf-8"), globals())
+79: 
+80: HEADER = '''# Deep curriculum — lessons 37-47 (RU lecture / EN+PT substantive)
+81: # Export: LESSONS
+82: 
+83: MOD_INTRO = ("Введение", "Introduction", "Introdução")
+84: MOD_CHART = ("График", "Chart", "Gráfico")
+85: MOD_PAT = ("Паттерны", "Patterns", "Padrões")
+86: MOD_STR = ("Стратегии", "Strategies", "Estratégias")
+87: MOD_MKT = ("Рынок", "Market", "Mercado")
+88: MOD_RISK = ("Риск", "Risk", "Risco")
+89: MOD_PRAC = ("Практика", "Practice", "Prática")
+90: 
+91: 
+92: def _m(br, mx, ru, gl=""):
+93:     return {"br": br, "mx": mx, "ru": ru, "global": gl or br}
+94: 
+95: 
+96: def L(lid, mod, diff, mins, chart, sym, interval, markets, loc):
+97:     return {
+98:         "id": lid, "module": mod, "difficulty": diff, "durationMin": mins,
+99:         "chart": chart, "symbol": sym, "interval": interval,
+100:         "markets": markets, "loc": loc,
+101:     }
+102: 
+103: 
+104: '''
+105: 
+106: 
+107: def emit():
+108:     parts = [HEADER]
+109:     names = []
+110:     for d in LESSON_DATA:
+111:         lid = d["id"]
+112:         rb, eb, pb = f"L{lid}_RU_BLOCKS", f"L{lid}_EN_BLOCKS", f"L{lid}_PT_BLOCKS"
+113:         mk, vn = f"L{lid}_MARKETS", f"LESSON{lid}"
+114:         parts.append(f"# ─── Lesson {lid} ───────────────────────────────────────────────────────────────\n")
+115:         for bn, blocks in ((rb, d["ru_blocks"]), (eb, d["en_blocks"]), (pb, d["pt_blocks"])):
+116:             parts.append(f"_{bn} = [")
+117:             for b in blocks:
+118:                 parts.append(f"    {{'h': {b['h']!r}, 'body': {b['body']!r}}},")
+119:             parts.append("]\n")
+120:         m = d["markets"]
+121:         parts.append(f"_{mk} = _m({m['br']!r}, {m['mx']!r}, {m['ru']!r}, {m['global']!r})\n")
+122:         parts.append(f"_{vn} = L({lid}, {d['module']!r}, {d['difficulty']!r}, {d['durationMin']}, "
+123:                      f"{d['chart']!r}, {d['symbol']!r}, {d['interval']!r}, _{mk}, {{")
+124:         for lang, loc_key, bname in (("ru", "ru_loc", rb), ("en", "en_loc", eb), ("pt", "pt_loc", pb)):
+125:             loc = d[loc_key]
+126:             parts.append(f'    "{lang}": {{')
+127:             parts.append(f'        "title": {loc["title"]!r}, "subtitle": {loc["subtitle"]!r},')
+128:             parts.append(f'        "outcome": {loc["outcome"]!r}, "content": {loc["content"]!r},')
+129:             parts.append(f'        "takeaway": {loc["takeaway"]!r}, "blocks": _{bname},')
+130:             parts.append(f'        "market_title": {"Ваш рынок" if lang=="ru" else "Your market (LATAM)" if lang=="en" else "Seu mercado (Brasil)"!r},')
+131:             parts.append(f'        "chart_title": {loc["title"]!r}, "chart_cap": {loc["chart_cap"]!r},')
+132:             tv_t = "Разбор в TradingView" if lang == "ru" else "TradingView walkthrough" if lang == "en" else "Setup no TradingView"
+133:             parts.append(f'        "tv_title": {tv_t!r}, "tv_body": {loc["tv_body"]!r},')
+134:             pr_t = "Практика без риска" if lang == "ru" else "Hands-on practice" if lang == "en" else "Prática"
+135:             pr_i = "Выполните по шагам:" if lang == "ru" else "Follow these steps:" if lang == "en" else "Siga os passos:"
+136:             parts.append(f'        "practice_title": {pr_t!r}, "practice_intro": {pr_i!r},')
+137:             parts.append(f'        "practice_steps": {loc["practice_steps"]!r},')
+138:             ex_t = "Разбор сценария" if lang == "ru" else "Scenario walkthrough" if lang == "en" else "Cenário"
+139:             parts.append(f'        "example_title": {ex_t!r}, "example": {loc["example"]!r},')
+140:             bl_t = "Главное запомнить" if lang == "ru" else "Key takeaways" if lang == "en" else "Lembre"
+141:             parts.append(f'        "bullets_title": {bl_t!r}, "bullets": {loc["bullets"]!r},')
+142:             j_t = "Запись в журнал" if lang == "ru" else "Trade journal" if lang == "en" else "Diário"
+143:             j_b = "После урока зафиксируйте:" if lang == "ru" else "Record after the lesson:" if lang == "en" else "Registre após a aula:"
+144:             parts.append(f'        "journal_title": {j_t!r}, "journal_body": {j_b!r},')
+145:             parts.append(f'        "journal_items": {loc["journal_items"]!r},')
+146:             tip_t = "Совет профи" if lang == "ru" else "Pro tip" if lang == "en" else "Dica profissional"
+147:             parts.append(f'        "tip_title": {tip_t!r}, "tip": {loc["tip"]!r},')
+148:             parts.append("    },")
+149:         parts.append("})\n")
+150:         names.append(f"_{vn}")
+151:     parts.append(f"LESSONS = [{', '.join(names)}]\n")
+152:     OUT.write_text("\n".join(parts), encoding="utf-8")
+153:     print(f"Wrote {OUT} ({OUT.stat().st_size} bytes, {len(LESSON_DATA)} lessons)")
+154: 
+155: 
+156: if __name__ == "__main__":
+157:     emit()

@@ -1,0 +1,48 @@
+e diário", en_expand(
+                "Risco 0,5–1% por trade. Registre limites, entrada, stop, alvo e R:R antes do clique."
+            )),
+        ],
+        "tv_ru": "Откройте BTC/USDT 15m за 14 дней. Найдите участок боковика, проведите параллельный канал, отметьте три касания каждой границы.",
+        "tv_en": "Open BTC/USDT 15m for 14 days. Find a sideways segment, draw a parallel channel, mark three touches per side.",
+        "tv_pt": "Abra BTC/USDT 15m por 14 dias. Ache lateralização, desenhe canal paralelo com três toques por lado.",
+        "example_ru": (
+            "BTC торгуется между $94 200 и $96 800 десять дней. Цена касается $94 300, печатает молот на 15m, "
+            "RSI не в экстремуме — контекст range. Лонг $94 450, стоп $93 900 (ниже канала), цель $96 500 у сопротивления. "
+            "Риск 0.8% депозита, R:R ≈ 1:3.8. Пробой закрытием ниже $93 800 отменяет идею."
+        ),
+        "example_en": (
+            "BTC ranges $94,200–$96,800 for ten days. A 15m hammer at $94,300 supports a long at $94,450, "
+            "stop $93,900, target $96,500. Risk 0.8%, R:R ≈ 1:3.8. Close below $93,800 invalidates."
+        ),
+        "bullets_ru": [
+            "Канал = параллельные поддержка и сопротивление",
+            "Range: покупка у низа, продажа у верха",
+            "Стоп за границей канала, не внутри",
+            "Пробой закрытием меняет режим на тренд",
+            "Узкий канал + комиссия = пропуск",
+            "Журнал и R:R до клика обязательны",
+        ],
+        "bullets_en": [
+            "Channel = parallel support and resistance",
+            "Range trade boundaries, not the middle",
+            "Stop beyond the channel edge",
+            "Close outside = regime change",
+            "Log R:R before every click",
+        ],
+        "bullets_pt": [
+            "Canal = suporte e resistência paralelos",
+            "Opere as bordas, não o meio",
+            "Stop além da borda do canal",
+            "Fechamento fora = mudança de regime",
+            "R:R no diário antes do clique",
+        ],
+        "tip_ru": "Не торгуйте центр канала — там нет статистического преимущества, только шум и комиссия.",
+        "tip_en": "Avoid the middle of the channel — no edge, only noise and fees.",
+        "tip_pt": "Evite o meio do canal — sem vantagem, só ruído e taxa.",
+    },
+]
+
+# Truncate to 1 lesson for initial test - NO, need all 12
+# I'll add remaining lessons in the write script continuation
+
+print("Specs count:", len(LESSON_SPECS))

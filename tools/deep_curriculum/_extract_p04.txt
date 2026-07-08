@@ -1,0 +1,83 @@
+LESSON_DATA = []
+# Lessons appended below via exec of _part04_data.py
+
+exec((Path(__file__).parent / "_part04_data.py").read_text(encoding="utf-8"), globals())
+
+HEADER = '''# Deep curriculum — lessons 37-47 (RU lecture / EN+PT substantive)
+# Export: LESSONS
+
+MOD_INTRO = ("Введение", "Introduction", "Introdução")
+MOD_CHART = ("График", "Chart", "Gráfico")
+MOD_PAT = ("Паттерны", "Patterns", "Padrões")
+MOD_STR = ("Стратегии", "Strategies", "Estratégias")
+MOD_MKT = ("Рынок", "Market", "Mercado")
+MOD_RISK = ("Риск", "Risk", "Risco")
+MOD_PRAC = ("Практика", "Practice", "Prática")
+
+
+def _m(br, mx, ru, gl=""):
+    return {"br": br, "mx": mx, "ru": ru, "global": gl or br}
+
+
+def L(lid, mod, diff, mins, chart, sym, interval, markets, loc):
+    return {
+        "id": lid, "module": mod, "difficulty": diff, "durationMin": mins,
+        "chart": chart, "symbol": sym, "interval": interval,
+        "markets": markets, "loc": loc,
+    }
+
+
+'''
+
+
+def emit():
+    parts = [HEADER]
+    names = []
+    for d in LESSON_DATA:
+        lid = d["id"]
+        rb, eb, pb = f"L{lid}_RU_BLOCKS", f"L{lid}_EN_BLOCKS", f"L{lid}_PT_BLOCKS"
+        mk, vn = f"L{lid}_MARKETS", f"LESSON{lid}"
+        parts.append(f"# ─── Lesson {lid} ───────────────────────────────────────────────────────────────\n")
+        for bn, blocks in ((rb, d["ru_blocks"]), (eb, d["en_blocks"]), (pb, d["pt_blocks"])):
+            parts.append(f"_{bn} = [")
+            for b in blocks:
+                parts.append(f"    {{'h': {b['h']!r}, 'body': {b['body']!r}}},")
+            parts.append("]\n")
+        m = d["markets"]
+        parts.append(f"_{mk} = _m({m['br']!r}, {m['mx']!r}, {m['ru']!r}, {m['global']!r})\n")
+        parts.append(f"_{vn} = L({lid}, {d['module']!r}, {d['difficulty']!r}, {d['durationMin']}, "
+                     f"{d['chart']!r}, {d['symbol']!r}, {d['interval']!r}, _{mk}, {{")
+        for lang, loc_key, bname in (("ru", "ru_loc", rb), ("en", "en_loc", eb), ("pt", "pt_loc", pb)):
+            loc = d[loc_key]
+            parts.append(f'    "{lang}": {{')
+            parts.append(f'        "title": {loc["title"]!r}, "subtitle": {loc["subtitle"]!r},')
+            parts.append(f'        "outcome": {loc["outcome"]!r}, "content": {loc["content"]!r},')
+            parts.append(f'        "takeaway": {loc["takeaway"]!r}, "blocks": _{bname},')
+            parts.append(f'        "market_title": {"Ваш рынок" if lang=="ru" else "Your market (LATAM)" if lang=="en" else "Seu mercado (Brasil)"!r},')
+            parts.append(f'        "chart_title": {loc["title"]!r}, "chart_cap": {loc["chart_cap"]!r},')
+            tv_t = "Разбор в TradingView" if lang == "ru" else "TradingView walkthrough" if lang == "en" else "Setup no TradingView"
+            parts.append(f'        "tv_title": {tv_t!r}, "tv_body": {loc["tv_body"]!r},')
+            pr_t = "Практика без риска" if lang == "ru" else "Hands-on practice" if lang == "en" else "Prática"
+            pr_i = "Выполните по шагам:" if lang == "ru" else "Follow these steps:" if lang == "en" else "Siga os passos:"
+            parts.append(f'        "practice_title": {pr_t!r}, "practice_intro": {pr_i!r},')
+            parts.append(f'        "practice_steps": {loc["practice_steps"]!r},')
+            ex_t = "Разбор сценария" if lang == "ru" else "Scenario walkthrough" if lang == "en" else "Cenário"
+            parts.append(f'        "example_title": {ex_t!r}, "example": {loc["example"]!r},')
+            bl_t = "Главное запомнить" if lang == "ru" else "Key takeaways" if lang == "en" else "Lembre"
+            parts.append(f'        "bullets_title": {bl_t!r}, "bullets": {loc["bullets"]!r},')
+            j_t = "Запись в журнал" if lang == "ru" else "Trade journal" if lang == "en" else "Diário"
+            j_b = "После урока зафиксируйте:" if lang == "ru" else "Record after the lesson:" if lang == "en" else "Registre após a aula:"
+            parts.append(f'        "journal_title": {j_t!r}, "journal_body": {j_b!r},')
+            parts.append(f'        "journal_items": {loc["journal_items"]!r},')
+            tip_t = "Совет профи" if lang == "ru" else "Pro tip" if lang == "en" else "Dica profissional"
+            parts.append(f'        "tip_title": {tip_t!r}, "tip": {loc["tip"]!r},')
+            parts.append("    },")
+        parts.append("})\n")
+        names.append(f"_{vn}")
+    parts.append(f"LESSONS = [{', '.join(names)}]\n")
+    OUT.write_text("\n".join(parts), encoding="utf-8")
+    print(f"Wrote {OUT} ({OUT.stat().st_size} bytes, {len(LESSON_DATA)} lessons)")
+
+
+if __name__ == "__main__":
+    emit()

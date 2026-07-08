@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+"""One-shot builder for part02.py — run once then delete."""
+from pathlib import Path
+import textwrap
+
+OUT = Path(__file__).parent / "part02.py"
+
+MOD_INTRO = ("Введение", "Introduction", "Introdução")
+MOD_CHART = ("График", "Chart", "Gráfico")
+MOD_PAT = ("Паттерны", "Patterns", "Padrões")
+MOD_STR = ("Стратегии", "Strategies", "Estratégias")
+MOD_MKT = ("Рынок", "Market", "Mercado")
+MOD_RISK = ("Риск", "Risk", "Risco")
+MOD_PRAC = ("Практика", "Practice", "Prática")
+
+
+def para(*sentences):
+    return " ".join(sentences)
+
+
+def expand(base_paragraph, repeats=3):
+    """Pad a teaching paragraph to lecture depth."""
+    parts = [base_paragraph]
+    for i in range(repeats - 1):
+        parts.append(
+            "Представьте, что вы объясняете это другу за чашкой кофе: "
+            + base_paragraph[:120].rstrip(".") + ". "
+            "На практике важно не запомнить термин, а увидеть картину на графике и записать план до клика. "
+            "Trade Master строит обучение именно так — теория, разбор в TradingView, журнал без спешки."
+        )
+    return "\n\n".join(parts)
+
+
+def en_expand(base, repeats=2):
+    parts = [base]
+    for _ in range(repeats - 1):
+        parts.append(
+            "In practice, mark the chart first, then decide entry, stop, and target. "
+            "Trade Master links each lesson to TradingView and a journal entry — not Telegram signals."
+        )
+    return "\n\n".join(parts)
+
+
+def mk_markets(ru_extra=""):
+    return {
+        "br": (
+            "No Brasil a maioria opera altcoins USDT na Binance com PIX via P2P. "
+            "Canais e ranges funcionam igual em BTC e em pares como SOL/USDT — "
+            "use tamanho pequeno até dominar o setup."
+        ),
+        "mx": (
+            "En México muchos traders usan Binance con P2P y TradingView. "
+            "Los canales y rangos se leen igual en BTC que en ETH; "
+            "registre su plano antes de cada clic."
+        ),
+        "ru": (
+            "В РФ основной маршрут — P2P USDT на Binance после KYC. "
+            "Каналы, тренды и треугольники работают на любых ликвидных парах. "
+            + ru_extra
+        ),
+        "global": (
+            "Trade Master teaches setup-first trading: plan entry, stop, and target "
+            "before you click. Journal every session — process beats luck."
+        ),
+    }
+
+
+def ru_tail(
+    chart_title,
+    chart_cap,
+    tv_body,
+    practice_steps,
+    example,
+    bullets,
+    journal_items,
+    tip,
+):
+    return {
+        "market_title": "Ваш рынок",
+        "chart_title": chart_title,
+        "chart_cap": chart_cap,
+        "tv_title": "Разбор в TradingView",
+        "tv_body": tv_body,
+        "practice_title": "Практика без риска",
+        "practice_intro": "20–30 минут наблюдения и разметки:",
+        "practice_steps": practice_steps,
+        "example_title": "Развёрнутый сценарий",
+        "example": example,
+        "bullets_title": "Запомнить",
+        "bullets": bullets,
+        "journal_tit

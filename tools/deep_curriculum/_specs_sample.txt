@@ -1,0 +1,73 @@
+LESSON_SPECS = [
+    {
+        "id": 13, "module": MOD_CHART, "difficulty": "Intermediate", "durationMin": 36,
+        "chart": "range_trading", "symbol": "BINANCE:BTCUSDT", "interval": "15",
+        "ru_title": "Каналы: параллельная поддержка и сопротивление",
+        "en_title": "Channels: parallel support and resistance",
+        "pt_title": "Canais: suporte e resistência paralelos",
+        "ru_sub": "Range trading внутри коридора цены", "en_sub": "Range trading inside a price corridor",
+        "pt_sub": "Range trading dentro de um corredor",
+        "ru_outcome": "Научитесь строить канал, торговать от границ в боковике и распознавать пробой коридора.",
+        "en_outcome": "Build channels, trade range boundaries, and spot corridor breakouts.",
+        "pt_outcome": "Construir canais, operar limites do range e identificar rompimentos.",
+        "ru_content": "Канал — коридор, в котором цена отскакивает от двух параллельных границ.",
+        "en_content": "A channel is a corridor where price bounces between parallel boundaries.",
+        "pt_content": "Canal é um corredor onde o preço oscila entre bordas paralelas.",
+        "ru_takeaway": "В канале покупаем у поддержки, продаём у сопротивления — до пробоя.",
+        "en_takeaway": "Buy near support, sell near resistance — until a breakout.",
+        "pt_takeaway": "Compre no suporte, venda na resistência — até rompimento.",
+        "ru_raw": [
+            ("Что такое ценовой канал", para(
+                "Канал на графике — коридор со стенами сверху и снизу. Верхняя линия — сопротивление, "
+                "нижняя — поддержка. Когда линии параллельны, цена часто ходит между ними неделями в боковике. "
+                "Это не магия — это баланс покупателей и продавцов в узком диапазоне.")),
+            ("Как провести параллельные линии", para(
+                "Найдите два касания верха и два касания низа. Соедините экстремумы, используйте инструмент "
+                "«Параллельный канал» в TradingView. Линии — зоны, не лазер. Чем больше касаний без пробоя, тем сильнее канал.")),
+            ("Логика range trading", para(
+                "Range trading — покупка у нижней границы и продажа у верхней без ставки на глобальный тренд. "
+                "Вы берёте повторяющееся движение от стены к стене. Цели внутри коридора, не мечта о +20%.")),
+            ("Покупка у поддержки канала", para(
+                "Лонг у низа: цена касается поддержки, свечи сжимаются, появляются нижние тени. "
+                "Стоп ниже канала, цель — середина или верх. Риск 0.5–1%. Не входите в центре коридора.")),
+            ("Продажа у сопротивления", para(
+                "Шорт у верха — зеркальная логика. Стоп за каналом, цель — середина или низ. "
+                "В сильном аптренде на старшем ТФ шорты у сопротивления опаснее — смотрите контекст BTC.")),
+            ("Пробой и ложный пробой", para(
+                "Настоящий пробой — закрытие за границей и удержание. Ложный — длинная тень наружу и возврат. "
+                "После пробоя канал часто становится уровнем при ретесте. Высота канала — ориентир для цели.")),
+            ("Ошибки новичков", para(
+                "Канал по двум точкам, торговля в центре, стоп внутри коридора, игнор CPI/FOMC. "
+                "Не усредняйте лонг у низа, если канал уже пробит. Одна гипотеза — один план.")),
+            ("Как объяснить другу", para(
+                "«Качели между двумя столбами: покупаем у пола, продаём у потолка, пока мяч не пробил стену». "
+                "Пусть друг сам проведёт линии на TradingView — моторная память важнее чтения.")),
+            ("Риск и журнал", para(
+                "Записывайте границы канала, вход, стоп, цель, R:R до клика. Узкий канал 0.3% + комиссия = пропуск. "
+                "Журнал покажет, где range работал, а где выбивало пробоями.")),
+            ("Чек-лист перед входом", para(
+                "Канал на старшем ТФ? Три касания? Цена у границы? Стоп за каналом, риск ≤1%? Цель у противоположной стены? "
+                "Один «нет» — наблюдайте. Одна качественная сделка лучше пяти в центре.")),
+        ],
+        "en_raw": [
+            ("What is a channel", "A channel has parallel support and resistance. Price oscillates in sideways markets."),
+            ("Drawing lines", "Mark two touches per side. Use TradingView parallel channel tool. Zones beat precision."),
+            ("Range logic", "Buy near support, sell near resistance. Targets stay inside until breakout."),
+            ("Breakouts", "Real breaks close outside and hold. Wicks that return are traps."),
+            ("Risk", "Risk 0.5–1%. Log bounds, entry, stop, target, R:R before clicking."),
+        ],
+        "pt_raw": [
+            ("O que é um canal", "Canal = suporte e resistência paralelos. Preço oscila no range."),
+            ("Como desenhar", "Dois toques por borda. Ferramenta de canal paralelo no TradingView."),
+            ("Lógica do range", "Compre no suporte, venda na resistência até rompimento."),
+            ("Rompimentos", "Fechamento fora do canal com reteste válido confirma mudança."),
+            ("Risco", "Risco 0,5–1%. Diário com entrada, stop, alvo e R:R."),
+        ],
+        "chart_cap_ru": "BTC/USDT 15m: параллельный канал с касаниями границ",
+        "chart_cap_en": "BTC/USDT 15m: parallel channel with boundary touches",
+        "chart_cap_pt": "BTC/USDT 15m: canal paralelo com toques nas bordas",
+        "tv_ru": "Откройте BTC/USDT 15m за 14 дней. Найдите боковик, проведите параллельный канал, отметьте три касания каждой границы.",
+        "tv_en": "Open BTC/USDT 15m for 14 days. Find sideways action, draw a parallel channel, mark three touches per side.",
+        "tv_pt": "Abra BTC/USDT 15m por 14 dias. Ache lateralização, desenhe canal com três toques por lado.",
+        "example_ru": "BTC между $94 200 и $96 800 десять дней. Молот у $94 300 → лонг $94 450, стоп $93 900, цель $96 500. R:R ≈ 1:3.8, риск 0.8%.",
+        "example_en": "BTC ranges $94,200–$96,800. Hammer at 

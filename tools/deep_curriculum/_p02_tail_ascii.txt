@@ -1,0 +1,48 @@
+e di\xe1rio", en_expand(
+                "Risco 0,5\u20131% por trade. Registre limites, entrada, stop, alvo e R:R antes do clique."
+            )),
+        ],
+        "tv_ru": "\u041e\u0442\u043a\u0440\u043e\u0439\u0442\u0435 BTC/USDT 15m \u0437\u0430 14 \u0434\u043d\u0435\u0439. \u041d\u0430\u0439\u0434\u0438\u0442\u0435 \u0443\u0447\u0430\u0441\u0442\u043e\u043a \u0431\u043e\u043a\u043e\u0432\u0438\u043a\u0430, \u043f\u0440\u043e\u0432\u0435\u0434\u0438\u0442\u0435 \u043f\u0430\u0440\u0430\u043b\u043b\u0435\u043b\u044c\u043d\u044b\u0439 \u043a\u0430\u043d\u0430\u043b, \u043e\u0442\u043c\u0435\u0442\u044c\u0442\u0435 \u0442\u0440\u0438 \u043a\u0430\u0441\u0430\u043d\u0438\u044f \u043a\u0430\u0436\u0434\u043e\u0439 \u0433\u0440\u0430\u043d\u0438\u0446\u044b.",
+        "tv_en": "Open BTC/USDT 15m for 14 days. Find a sideways segment, draw a parallel channel, mark three touches per side.",
+        "tv_pt": "Abra BTC/USDT 15m por 14 dias. Ache lateraliza\xe7\xe3o, desenhe canal paralelo com tr\xeas toques por lado.",
+        "example_ru": (
+            "BTC \u0442\u043e\u0440\u0433\u0443\u0435\u0442\u0441\u044f \u043c\u0435\u0436\u0434\u0443 $94 200 \u0438 $96 800 \u0434\u0435\u0441\u044f\u0442\u044c \u0434\u043d\u0435\u0439. \u0426\u0435\u043d\u0430 \u043a\u0430\u0441\u0430\u0435\u0442\u0441\u044f $94 300, \u043f\u0435\u0447\u0430\u0442\u0430\u0435\u0442 \u043c\u043e\u043b\u043e\u0442 \u043d\u0430 15m, "
+            "RSI \u043d\u0435 \u0432 \u044d\u043a\u0441\u0442\u0440\u0435\u043c\u0443\u043c\u0435 \u2014 \u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442 range. \u041b\u043e\u043d\u0433 $94 450, \u0441\u0442\u043e\u043f $93 900 (\u043d\u0438\u0436\u0435 \u043a\u0430\u043d\u0430\u043b\u0430), \u0446\u0435\u043b\u044c $96 500 \u0443 \u0441\u043e\u043f\u0440\u043e\u0442\u0438\u0432\u043b\u0435\u043d\u0438\u044f. "
+            "\u0420\u0438\u0441\u043a 0.8% \u0434\u0435\u043f\u043e\u0437\u0438\u0442\u0430, R:R \u2248 1:3.8. \u041f\u0440\u043e\u0431\u043e\u0439 \u0437\u0430\u043a\u0440\u044b\u0442\u0438\u0435\u043c \u043d\u0438\u0436\u0435 $93 800 \u043e\u0442\u043c\u0435\u043d\u044f\u0435\u0442 \u0438\u0434\u0435\u044e."
+        ),
+        "example_en": (
+            "BTC ranges $94,200\u2013$96,800 for ten days. A 15m hammer at $94,300 supports a long at $94,450, "
+            "stop $93,900, target $96,500. Risk 0.8%, R:R \u2248 1:3.8. Close below $93,800 invalidates."
+        ),
+        "bullets_ru": [
+            "\u041a\u0430\u043d\u0430\u043b = \u043f\u0430\u0440\u0430\u043b\u043b\u0435\u043b\u044c\u043d\u044b\u0435 \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430 \u0438 \u0441\u043e\u043f\u0440\u043e\u0442\u0438\u0432\u043b\u0435\u043d\u0438\u0435",
+            "Range: \u043f\u043e\u043a\u0443\u043f\u043a\u0430 \u0443 \u043d\u0438\u0437\u0430, \u043f\u0440\u043e\u0434\u0430\u0436\u0430 \u0443 \u0432\u0435\u0440\u0445\u0430",
+            "\u0421\u0442\u043e\u043f \u0437\u0430 \u0433\u0440\u0430\u043d\u0438\u0446\u0435\u0439 \u043a\u0430\u043d\u0430\u043b\u0430, \u043d\u0435 \u0432\u043d\u0443\u0442\u0440\u0438",
+            "\u041f\u0440\u043e\u0431\u043e\u0439 \u0437\u0430\u043a\u0440\u044b\u0442\u0438\u0435\u043c \u043c\u0435\u043d\u044f\u0435\u0442 \u0440\u0435\u0436\u0438\u043c \u043d\u0430 \u0442\u0440\u0435\u043d\u0434",
+            "\u0423\u0437\u043a\u0438\u0439 \u043a\u0430\u043d\u0430\u043b + \u043a\u043e\u043c\u0438\u0441\u0441\u0438\u044f = \u043f\u0440\u043e\u043f\u0443\u0441\u043a",
+            "\u0416\u0443\u0440\u043d\u0430\u043b \u0438 R:R \u0434\u043e \u043a\u043b\u0438\u043a\u0430 \u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u044b",
+        ],
+        "bullets_en": [
+            "Channel = parallel support and resistance",
+            "Range trade boundaries, not the middle",
+            "Stop beyond the channel edge",
+            "Close outside = regime change",
+            "Log R:R before every click",
+        ],
+        "bullets_pt": [
+            "Canal = suporte e resist\xeancia paralelos",
+            "Opere as bordas, n\xe3o o meio",
+            "Stop al\xe9m da borda do canal",
+            "Fechamento fora = mudan\xe7a de regime",
+            "R:R no di\xe1rio antes do clique",
+        ],
+        "tip_ru": "\u041d\u0435 \u0442\u043e\u0440\u0433\u0443\u0439\u0442\u0435 \u0446\u0435\u043d\u0442\u0440 \u043a\u0430\u043d\u0430\u043b\u0430 \u2014 \u0442\u0430\u043c \u043d\u0435\u0442 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u043f\u0440\u0435\u0438\u043c\u0443\u0449\u0435\u0441\u0442\u0432\u0430, \u0442\u043e\u043b\u044c\u043a\u043e \u0448\u0443\u043c \u0438 \u043a\u043e\u043c\u0438\u0441\u0441\u0438\u044f.",
+        "tip_en": "Avoid the middle of the channel \u2014 no edge, only noise and fees.",
+        "tip_pt": "Evite o meio do canal \u2014 sem vantagem, s\xf3 ru\xeddo e taxa.",
+    },
+]
+
+# Truncate to 1 lesson for initial test - NO, need all 12
+# I'll add remaining lessons in the write script continuation
+
+print("Specs count:", len(LESSON_SPECS))

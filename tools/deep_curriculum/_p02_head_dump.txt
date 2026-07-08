@@ -1,0 +1,26 @@
+"""Deep curriculum part 2: lessons 13-24."""
+
+MOD_INTRO = ("Введение", "Introduction", "Introdução")
+MOD_CHART = ("График", "Chart", "Gráfico")
+MOD_PAT = ("Паттерны", "Patterns", "Padrões")
+MOD_STR = ("Стратегии", "Strategies", "Estratégias")
+MOD_MKT = ("Рынок", "Market", "Mercado")
+MOD_RISK = ("Риск", "Risk", "Risco")
+MOD_PRAC = ("Практика", "Practice", "Prática")
+
+
+def lesson(lid, module, difficulty, durationMin, chart, symbol, interval, markets, loc):
+    return {
+        "id": lid,
+        "module": module,
+        "difficulty": difficulty,
+        "durationMin": durationMin,
+        "chart": chart,
+        "symbol": symbol,
+        "interval": interval,
+        "markets": markets,
+        "loc": loc,
+    }
+
+
+LESSONS = [{'id': 13, 'module': ('График', 'Chart', 'Gráfico'), 'difficulty': 'Intermediate', 'durationMin': 36, 'chart': 'range_trading', 'symbol': 'BINANCE:BTCUSDT', 'interval': '15', 'markets': {'br': 'No Brasil a maioria opera altcoins USDT na Binance com PIX via P2P. Use tamanho pequeno até dominar o setup e registre cada plano no diário.', 'mx': 'En México muchos traders usan Binance con P2P y TradingView. Los mismos principios aplican a BTC y a pares líquidos; registre su plano antes de cada clic.', 'ru': 'В РФ основной маршрут — P2P USDT на Binance после KYC. Принципы работают на любых ликвидных парах. Каналы на BTC и альтах читаются одинаково после P2P.', 'global': 'Trade Master teaches setup-first trading: plan entry, stop, and target before you click. Journal every session — process beats luck.'}, 'loc': {'ru': {'title': 'Каналы: параллельная поддержка и сопротивление', 'subtitle': 'Range trading внутри коридора цены', 'outcome': 'Научитесь строить канал, торговать от границ в боковике и распознавать пробой коридора.', 'content': 'Канал — коридор, в котором цена отскакивает от двух параллельных границ.', 'takeaway': 'В канале покупаем у поддержки, продаём у сопротивления — до пробоя.', 'blocks': [{'h': 'Что такое ценовой канал', 'body': 'Канал на
