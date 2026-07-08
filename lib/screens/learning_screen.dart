@@ -97,7 +97,30 @@ class _LearningScreenState extends State<LearningScreen> {
         actions: [
 
           IconButton(
+            onPressed: () => context.push('/learning-path'),
+            icon: const Icon(Icons.account_tree_outlined),
+            tooltip: l10n.skillTree,
+          ),
 
+          IconButton(
+            onPressed: () => context.push('/module-quiz'),
+            icon: const Icon(Icons.assignment_outlined),
+            tooltip: l10n.moduleTests,
+          ),
+
+          IconButton(
+            onPressed: () => context.push('/syllabus'),
+            icon: const Icon(Icons.school_outlined),
+            tooltip: l10n.syllabusTitle,
+          ),
+
+          IconButton(
+            onPressed: () => context.push('/glossary'),
+            icon: const Icon(Icons.menu_book_outlined),
+            tooltip: l10n.glossaryTitle,
+          ),
+
+          IconButton(
             onPressed: () => context.push('/flashcards'),
 
             icon: const Icon(Icons.style_outlined),
@@ -355,6 +378,28 @@ class _LearningScreenState extends State<LearningScreen> {
                             borderRadius: BorderRadius.circular(18),
 
                             onTap: () async {
+
+                              final missing = lesson.prerequisites
+                                  .where((id) => !_completed.contains(id))
+                                  .toList();
+                              if (missing.isNotEmpty) {
+                                if (!context.mounted) return;
+                                await showDialog<void>(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    backgroundColor: AppTheme.surface,
+                                    title: Text(l10n.syllabusTitle),
+                                    content: Text(l10n.prerequisitesRequired(missing.join(', '))),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(ctx),
+                                        child: Text(l10n.continueBtn),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                return;
+                              }
 
                               await context.push('/lesson/${lesson.id}', extra: lesson);
 

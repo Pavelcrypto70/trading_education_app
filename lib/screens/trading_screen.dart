@@ -9,11 +9,16 @@ import 'package:flutter/material.dart';
 
 
 import '../services/gamification_service.dart';
+import '../models/journal_entry.dart';
+import '../models/trade_plan.dart';
+import '../services/journal_service.dart';
 import '../services/lesson_practice_service.dart';
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
+import '../services/trade_plan_service.dart';
 
 import '../theme.dart';
+import '../widgets/trade_plan_form.dart';
 
 
 
@@ -50,6 +55,7 @@ class _TradingScreenState extends State<TradingScreen> {
   bool _loading = true;
 
   LessonPracticeContext? _practice;
+  TradePlan? _plan;
 
 
 
@@ -80,6 +86,7 @@ class _TradingScreenState extends State<TradingScreen> {
     _entryPrice = await ProgressService.getEntryPrice();
 
     _practice = await LessonPracticeService.getActive();
+    _plan = await TradePlanService.getActive();
 
     if (!mounted) return;
 
@@ -153,7 +160,19 @@ class _TradingScreenState extends State<TradingScreen> {
 
 
 
+  bool get _planRequired => _practice != null;
+
+  bool get _hasValidPlan {
+    if (!_planRequired) return true;
+    if (_plan == null) return false;
+    return TradePlanService.validate(_plan!) == null;
+  }
+
   Future<void> _buy() async {
+    if (!_hasValidPlan) {
+      _showMsg(context.l10n.planRequiredMsg);
+      return;
+    }
 
     await _tickPrice();
 
@@ -194,6 +213,10 @@ class _TradingScreenState extends State<TradingScreen> {
 
 
   Future<void> _sell() async {
+    if (!_hasValidPlan) {
+      _showMsg(context.l10n.planRequiredMsg);
+      return;
+    }
 
     await _tickPrice();
 
@@ -225,11 +248,33 @@ class _TradingScreenState extends State<TradingScreen> {
     if (_position == null) return;
 
     final pnl = _unrealizedPnl;
+    final side = _position!;
+    final entry = _entryPrice;
+    final exit = _currentPrice;
     _balance += pnl;
 
     _position = null;
     _positionSize = 0;
     _entryPrice = 0;
+
+    final plan = _plan;
+    await JournalService.saveEntry(
+      JournalEntry(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        createdAt: DateTime.now(),
+        lessonId: _practice?.lessonId,
+        lessonTitle: _practice?.lessonTitle,
+        pair: _practice?.symbol ?? 'DEMO/USD',
+        setup: _practice?.scenario ?? 'Paper trade',
+        entry: plan?.entry.toStringAsFixed(2) ?? entry.toStringAsFixed(2),
+        stop: plan?.stop.toStringAsFixed(2) ?? '',
+        target: plan?.target.toStringAsFixed(2) ?? '',
+        emotion: 'practice',
+        notes: 'Paper $side @ \$${entry.toStringAsFixed(2)} → \$${exit.toStringAsFixed(2)}',
+        result: '\$${pnl.toStringAsFixed(2)}',
+      ),
+    );
+    await TradePlanService.clear();
 
     final practice = _practice;
     if (practice != null) {
@@ -237,7 +282,10 @@ class _TradingScreenState extends State<TradingScreen> {
       final xp = await GamificationService.addXp(GamificationService.xpPerCheckpoint);
       if (mounted) {
         _showMsg('${context.l10n.lessonPracticeComplete(practice.lessonId)} +$xp XP');
-        setState(() => _practice = null);
+        setState(() {
+          _practice = null;
+          _plan = null;
+        });
       }
     } else {
       _showMsg('${context.l10n.positionClosed} P&L: \$${pnl.toStringAsFixed(2)}');
@@ -373,6 +421,14 @@ class _TradingScreenState extends State<TradingScreen> {
               ),
             ),
           ],
+
+          TradePlanForm(
+            currentPrice: _currentPrice,
+            required: _planRequired,
+            onPlanChanged: (p) => setState(() => _plan = p),
+          ),
+
+          const SizedBox(height: 16),
 
           Container(
 

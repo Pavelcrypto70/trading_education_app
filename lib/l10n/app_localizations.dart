@@ -401,6 +401,49 @@ class AppLocalizations {
     }
   }
 
+  // ── University track ──
+  String get backToLearning => _t('Back to learning', 'К обучению', 'Voltar ao aprendizado');
+  String get sectionReferences => _t('References', 'Источники', 'Referências');
+  String get submitHomework => _t('Submit homework (Telegram)', 'Сдать домашку (Telegram)', 'Enviar tarefa (Telegram)');
+  String get homeworkOpenError => _t('Could not open Telegram', 'Не удалось открыть Telegram', 'Não foi possível abrir o Telegram');
+  String get syllabusTitle => _t('Course syllabus', 'Силлабус курса', 'Programa do curso');
+  String get glossaryTitle => _t('Glossary', 'Глоссарий', 'Glossário');
+  String get certificateTitle => _t('Certificate', 'Сертификат', 'Certificado');
+  String get exportCertificate => _t('Export progress', 'Экспорт прогресса', 'Exportar progresso');
+  String get moduleTests => _t('Module tests', 'Тесты по модулям', 'Testes por módulo');
+  String get caseStudies => _t('Case studies', 'Кейсы', 'Estudos de caso');
+  String prerequisitesRequired(String ids) =>
+      _t('Complete lessons $ids first', 'Сначала пройдите уроки $ids', 'Conclua as lições $ids primeiro');
+  String get checkpointPassHint =>
+      _t('Pass the checkpoint (70%+) to complete the lesson', 'Пройдите чекпоинт (70%+) чтобы завершить урок', 'Passe no checkpoint (70%+) para concluir a lição');
+  String get skillTree => _t('Skill tree', 'Дерево навыков', 'Árvore de habilidades');
+  String moduleProgress(int done, int total) =>
+      _t('$done/$total lessons', '$done/$total уроков', '$done/$total lições');
+  String moduleTestMeta(int questions, int minutes, int lessons) =>
+      _t('$questions Q · ~$minutes min · $lessons lessons', '$questions вопр. · ~$minutes мин · $lessons уроков', '$questions perg. · ~$minutes min · $lessons lições');
+  String get reviewQueue => _t('Review mistakes', 'Повтор ошибок', 'Revisar erros');
+  String get homeworkRubric => _t('Homework rubric', 'Критерии домашки', 'Rubrica da tarefa');
+  String homeworkSubmits(int n) => _t('Submitted: $n', 'Отправлено: $n', 'Enviado: $n');
+  String homeworkPassScore(int s) => _t('Pass score: $s/10', 'Проходной балл: $s/10', 'Nota mínima: $s/10');
+  String get tradePlanTitle => _t('Trade plan', 'План сделки', 'Plano de trade');
+  String get tradePlanRequired => _t('Plan required before trade', 'План обязателен до сделки', 'Plano obrigatório antes do trade');
+  String get planEntry => _t('Entry', 'Вход', 'Entrada');
+  String get planStop => _t('Stop', 'Стоп', 'Stop');
+  String get planTarget => _t('Target', 'Цель', 'Alvo');
+  String get planRisk => _t('Risk %', 'Риск %', 'Risco %');
+  String planRR(String rr) => _t('R:R 1:$rr', 'R:R 1:$rr', 'R:R 1:$rr');
+  String get saveTradePlan => _t('Save plan', 'Сохранить план', 'Salvar plano');
+  String get planErrorLevels => _t('Enter valid entry, stop and target', 'Укажите вход, стоп и цель', 'Informe entrada, stop e alvo');
+  String get planErrorRisk => _t('Risk must be 0.25–3%', 'Риск 0.25–3%', 'Risco 0.25–3%');
+  String get planErrorStopLong => _t('Long: stop must be below entry', 'Лонг: стоп ниже входа', 'Long: stop abaixo da entrada');
+  String get planErrorTargetLong => _t('Long: target above entry', 'Лонг: цель выше входа', 'Long: alvo acima da entrada');
+  String get planErrorStopShort => _t('Short: stop above entry', 'Шорт: стоп выше входа', 'Short: stop acima da entrada');
+  String get planErrorTargetShort => _t('Short: target below entry', 'Шорт: цель ниже входа', 'Short: alvo abaixo da entrada');
+  String get planErrorRR => _t('Minimum R:R 1:1.5 required', 'Минимум R:R 1:1.5', 'Mínimo R:R 1:1.5');
+  String get planRequiredMsg => _t('Save a valid trade plan first', 'Сначала сохраните план', 'Salve um plano válido primeiro');
+  String get certificateHash => _t('Verification ID', 'ID верификации', 'ID de verificação');
+  String get copyHash => _t('Copy verification ID', 'Скопировать ID', 'Copiar ID');
+
   String _t(String en, String ru, String pt) {
     switch (locale) {
       case AppLanguage.ru:

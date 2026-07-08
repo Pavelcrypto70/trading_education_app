@@ -1,0 +1,71 @@
+[
+  {
+    "id": "covid-crash-2020",
+    "date": "2020-03-12",
+    "title": {
+      "ru": "Чёрный четверг: обвал BTC −50% за день",
+      "en": "Black Thursday: BTC −50% in one day",
+      "pt": "Quinta-feira Negra: BTC −50% em um dia"
+    },
+    "summary": {
+      "ru": "Паника по COVID-19 вызвала каскад ликвидаций. Урок: стоп обязателен, плечо опасно в шоке.",
+      "en": "COVID panic caused liquidation cascade. Lesson: stops mandatory; leverage dangerous in shocks.",
+      "pt": "Pânico COVID causou cascata de liquidações. Lição: stops obrigatórios; alavancagem perigosa."
+    },
+    "lessonIds": [
+      7,
+      18,
+      27
+    ],
+    "source": {
+      "title": "CoinDesk Archive",
+      "url": "https://www.coindesk.com/markets/2020/03/12/"
+    }
+  },
+  {
+    "id": "ftx-2022",
+    "date": "2022-11-08",
+    "title": {
+      "ru": "Крах FTX: контрагентский риск",
+      "en": "FTX collapse: counterparty risk",
+      "pt": "Colapso FTX: risco de contraparte"
+    },
+    "summary": {
+      "ru": "Средства на бирже без due diligence — потеря депозита. Урок: self-custody и диверсификация площадок.",
+      "en": "Exchange funds without due diligence — total loss. Lesson: self-custody and venue diversification.",
+      "pt": "Fundos na exchange sem due diligence — perda total. Lição: autocustódia e diversificação."
+    },
+    "lessonIds": [
+      35,
+      36,
+      7
+    ],
+    "source": {
+      "title": "U.S. SEC FTX Case",
+      "url": "https://www.sec.gov/news/press-release/2022-219"
+    }
+  },
+  {
+    "id": "luna-2022",
+    "date": "2022-05-09",
+    "title": {
+      "ru": "Крах LUNA/UST: риск алгоритмического стейбла",
+      "en": "LUNA/UST crash: algo-stable risk",
+      "pt": "Crash LUNA/UST: risco de stable algorítmico"
+    },
+    "summary": {
+      "ru": "Плечо + вера в «безрисковый» доход → −99% за 48ч. Урок: размер позиции и скепсис к хайпу.",
+      "en": "Leverage + belief in 'risk-free' yield → −99% in 48h. Lesson: position sizing and hype skepticism.",
+      "pt": "Alavancagem + crença em rendimento 'sem risco' → −99% em 48h. Lição: tamanho e ceticismo."
+    },
+    "lessonIds": [
+      20,
+      31,
+      11
+    ],
+    "source": {
+      "title": "Investopedia LUNA Explainer",
+      "url": "https://www.investopedia.com/terra-luna-cryptocurrency-5217396"
+    }
+  }
+]

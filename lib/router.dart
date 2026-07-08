@@ -9,8 +9,13 @@ import 'screens/home_screen.dart';
 import 'screens/home_shell.dart';
 import 'screens/journal_screen.dart';
 import 'screens/learning_screen.dart';
+import 'screens/learning_path_screen.dart';
+import 'screens/module_quiz_screen.dart';
 import 'screens/lesson_screen.dart';
 import 'screens/market_screen.dart';
+import 'screens/certificate_screen.dart';
+import 'screens/glossary_screen.dart';
+import 'screens/syllabus_screen.dart';
 import 'screens/onboarding_goal_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/premium_screen.dart';
@@ -119,8 +124,30 @@ final GoRouter router = GoRouter(
           title: extra['title'] as String,
           questions: extra['questions'] as List<QuizQuestion>,
           isDailyChallenge: extra['isDailyChallenge'] as bool? ?? false,
+          moduleId: extra['moduleId'] as String?,
+          passPercent: extra['passPercent'] as int?,
         );
       },
+    ),
+    GoRoute(
+      path: '/syllabus',
+      builder: (context, state) => const SyllabusScreen(),
+    ),
+    GoRoute(
+      path: '/glossary',
+      builder: (context, state) => const GlossaryScreen(),
+    ),
+    GoRoute(
+      path: '/module-quiz',
+      builder: (context, state) => const ModuleQuizScreen(),
+    ),
+    GoRoute(
+      path: '/learning-path',
+      builder: (context, state) => const LearningPathScreen(),
+    ),
+    GoRoute(
+      path: '/certificate',
+      builder: (context, state) => const CertificateScreen(),
     ),
     GoRoute(
       path: '/quiz-result',

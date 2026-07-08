@@ -553,15 +553,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
           _SettingsTile(
+            icon: Icons.assignment_outlined,
+            title: l10n.moduleTests,
+            onTap: () => context.push('/module-quiz'),
+          ),
 
+          _SettingsTile(
+            icon: Icons.verified_outlined,
+            title: l10n.certificateTitle,
+            subtitle: l10n.exportCertificate,
+            onTap: () => context.push('/certificate'),
+          ),
+
+          _SettingsTile(
+            icon: Icons.school_outlined,
+            title: l10n.syllabusTitle,
+            onTap: () => context.push('/syllabus'),
+          ),
+
+          _SettingsTile(
             icon: Icons.language,
-
             title: l10n.language,
-
             subtitle: '${currentLang.flag} ${currentLang.label}',
-
             onTap: _showLanguagePicker,
-
           ),
 
           _SettingsTile(

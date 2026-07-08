@@ -484,7 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 12),
 
-                _MiniChart(),
+                _ActivityChart(),
 
                 const SizedBox(height: 12),
 
@@ -800,124 +800,81 @@ class _ActionCard extends StatelessWidget {
 
 
 
-class _MiniChart extends StatelessWidget {
+class _ActivityChart extends StatefulWidget {
+  @override
+  State<_ActivityChart> createState() => _ActivityChartState();
+}
+
+class _ActivityChartState extends State<_ActivityChart> {
+  List<int> _data = const [0, 0, 0, 0, 0, 0, 0];
 
   @override
-
-  Widget build(BuildContext context) {
-
-    final l10n = context.l10n;
-
-
-
-    return Container(
-
-      padding: const EdgeInsets.all(18),
-
-      decoration: AppTheme.cardDecoration(),
-
-      child: Column(
-
-        crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-
-          Text(l10n.learningActivity, style: const TextStyle(fontWeight: FontWeight.w700)),
-
-          const SizedBox(height: 4),
-
-          Text(l10n.weeklyMomentum, style: const TextStyle(color: Colors.white54, fontSize: 13)),
-
-          const SizedBox(height: 16),
-
-          SizedBox(
-
-            height: 100,
-
-            child: LineChart(
-
-              LineChartData(
-
-                gridData: const FlGridData(show: false),
-
-                titlesData: const FlTitlesData(show: false),
-
-                borderData: FlBorderData(show: false),
-
-                minY: 0,
-
-                maxY: 6,
-
-                lineBarsData: [
-
-                  LineChartBarData(
-
-                    spots: const [
-
-                      FlSpot(0, 1.5),
-
-                      FlSpot(1, 2.2),
-
-                      FlSpot(2, 1.8),
-
-                      FlSpot(3, 3.5),
-
-                      FlSpot(4, 3.0),
-
-                      FlSpot(5, 4.2),
-
-                      FlSpot(6, 4.8),
-
-                    ],
-
-                    isCurved: true,
-
-                    barWidth: 3,
-
-                    color: AppTheme.gold,
-
-                    dotData: const FlDotData(show: false),
-
-                    belowBarData: BarAreaData(
-
-                      show: true,
-
-                      gradient: LinearGradient(
-
-                        colors: [
-
-                          AppTheme.gold.withValues(alpha: 0.25),
-
-                          AppTheme.gold.withValues(alpha: 0.02),
-
-                        ],
-
-                        begin: Alignment.topCenter,
-
-                        end: Alignment.bottomCenter,
-
-                      ),
-
-                    ),
-
-                  ),
-
-                ],
-
-              ),
-
-            ),
-
-          ),
-
-        ],
-
-      ),
-
-    );
-
+  void initState() {
+    super.initState();
+    _load();
   }
 
+  Future<void> _load() async {
+    final data = await ProgressService.getWeeklyActivity();
+    if (!mounted) return;
+    setState(() => _data = data);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final maxY = (_data.isEmpty ? 1 : _data.reduce((a, b) => a > b ? a : b)).toDouble();
+    final chartMax = maxY < 1 ? 4.0 : maxY + 1;
+
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: AppTheme.cardDecoration(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.learningActivity, style: const TextStyle(fontWeight: FontWeight.w700)),
+          const SizedBox(height: 4),
+          Text(l10n.weeklyMomentum, style: const TextStyle(color: Colors.white54, fontSize: 13)),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 100,
+            child: LineChart(
+              LineChartData(
+                gridData: const FlGridData(show: false),
+                titlesData: const FlTitlesData(show: false),
+                borderData: FlBorderData(show: false),
+                minY: 0,
+                maxY: chartMax,
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: List.generate(
+                      _data.length,
+                      (i) => FlSpot(i.toDouble(), _data[i].toDouble()),
+                    ),
+                    isCurved: true,
+                    barWidth: 3,
+                    color: AppTheme.gold,
+                    dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      gradient: LinearGradient(
+                        colors: [
+                          AppTheme.gold.withValues(alpha: 0.25),
+                          AppTheme.gold.withValues(alpha: 0.02),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _XpCard extends StatelessWidget {

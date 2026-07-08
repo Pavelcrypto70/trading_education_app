@@ -18,6 +18,9 @@ class ProgressService {
   static const _dailyChallengeScoreKey = 'dailyChallengeScore';
   static const _isPremiumKey = 'isPremium';
   static const _flashcardsReviewedKey = 'flashcardsReviewed';
+  static const _dailyActivityKey = 'dailyActivity';
+  static const _moduleScoresKey = 'moduleQuizScores';
+  static const _homeworkSubmitKey = 'homeworkSubmitCounts';
 
   static Future<SharedPreferences> _prefs() => SharedPreferences.getInstance();
 
@@ -59,6 +62,7 @@ class ProgressService {
       completed.map((e) => e.toString()).toList(),
     );
     await recordActivity();
+    await recordDailyActivity();
   }
 
   static Future<bool> isLessonComplete(int lessonId) async {
@@ -202,6 +206,93 @@ class ProgressService {
   static Future<void> setPremium(bool value) async {
     final prefs = await _prefs();
     await prefs.setBool(_isPremiumKey, value);
+  }
+
+  static Future<void> recordDailyActivity({int amount = 1}) async {
+    final prefs = await _prefs();
+    final raw = prefs.getString(_dailyActivityKey);
+    final map = raw != null
+        ? Map<String, dynamic>.from(jsonDecode(raw) as Map)
+        : <String, dynamic>{};
+    final today = _todayKey();
+    map[today] = (map[today] as int? ?? 0) + amount;
+    final cutoff = DateTime.now().subtract(const Duration(days: 14));
+    map.removeWhere((key, _) {
+      final parts = key.split('-');
+      if (parts.length != 3) return true;
+      final d = DateTime.tryParse('$key');
+      return d != null && d.isBefore(cutoff);
+    });
+    await prefs.setString(_dailyActivityKey, jsonEncode(map));
+    await recordActivity();
+  }
+
+  static Future<List<int>> getWeeklyActivity() async {
+    final prefs = await _prefs();
+    final raw = prefs.getString(_dailyActivityKey);
+    final map = raw != null
+        ? Map<String, dynamic>.from(jsonDecode(raw) as Map)
+        : <String, dynamic>{};
+    final result = <int>[];
+    for (var i = 6; i >= 0; i--) {
+      final day = DateTime.now().subtract(Duration(days: i));
+      final key = '${day.year}-${day.month}-${day.day}';
+      result.add(map[key] as int? ?? 0);
+    }
+    return result;
+  }
+
+  static Future<void> markModulePassed(String moduleId, int score, int total) async {
+    final prefs = await _prefs();
+    final raw = prefs.getString(_moduleScoresKey);
+    final map = raw != null
+        ? Map<String, dynamic>.from(jsonDecode(raw) as Map)
+        : <String, dynamic>{};
+    map[moduleId] = {'score': score, 'total': total, 'date': DateTime.now().toIso8601String()};
+    await prefs.setString(_moduleScoresKey, jsonEncode(map));
+    await recordDailyActivity();
+  }
+
+  static Future<bool> isModulePassed(String moduleId) async {
+    final score = await getModuleScore(moduleId);
+    return score != null;
+  }
+
+  static Future<int?> getModuleScore(String moduleId) async {
+    final prefs = await _prefs();
+    final raw = prefs.getString(_moduleScoresKey);
+    if (raw == null) return null;
+    final map = Map<String, dynamic>.from(jsonDecode(raw) as Map);
+    final entry = map[moduleId] as Map<String, dynamic>?;
+    return entry?['score'] as int?;
+  }
+
+  static Future<Map<String, Map<String, dynamic>>> getModuleResults() async {
+    final prefs = await _prefs();
+    final raw = prefs.getString(_moduleScoresKey);
+    if (raw == null) return {};
+    final map = Map<String, dynamic>.from(jsonDecode(raw) as Map);
+    return map.map((k, v) => MapEntry(k, Map<String, dynamic>.from(v as Map)));
+  }
+
+  static Future<void> incrementHomeworkSubmit(int lessonId) async {
+    final prefs = await _prefs();
+    final raw = prefs.getString(_homeworkSubmitKey);
+    final map = raw != null
+        ? Map<String, dynamic>.from(jsonDecode(raw) as Map)
+        : <String, dynamic>{};
+    final key = lessonId.toString();
+    map[key] = (map[key] as int? ?? 0) + 1;
+    await prefs.setString(_homeworkSubmitKey, jsonEncode(map));
+    await recordDailyActivity();
+  }
+
+  static Future<int> getHomeworkSubmitCount(int lessonId) async {
+    final prefs = await _prefs();
+    final raw = prefs.getString(_homeworkSubmitKey);
+    if (raw == null) return 0;
+    final map = Map<String, dynamic>.from(jsonDecode(raw) as Map);
+    return map[lessonId.toString()] as int? ?? 0;
   }
 
   static Future<void> resetAll() async {

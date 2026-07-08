@@ -1,14 +1,10 @@
-import 'dart:math';
-
-
-
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
 
 
-import '../data/quiz_bank.dart';
+import '../data/unified_quiz_bank.dart';
 
 import '../models/quiz_question.dart';
 
@@ -78,30 +74,16 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
 
 
 
-  void _start() {
-
+  void _start() async {
     final l10n = context.l10n;
-
-    final seed = DateTime.now().day + DateTime.now().month * 31;
-
-    final random = Random(seed);
-
-    final questions = List<QuizQuestion>.from(QuizBank.allQuestions)..shuffle(random);
-
-    final daily = questions.take(5).toList();
-
-
-
+    await UnifiedQuizBank.ensureLoaded();
+    final daily = UnifiedQuizBank.dailyChallenge(count: 5);
+    if (!mounted) return;
     context.push('/quiz-play', extra: {
-
       'title': l10n.dailyChallenge,
-
       'questions': daily,
-
       'isDailyChallenge': true,
-
     });
-
   }
 
 

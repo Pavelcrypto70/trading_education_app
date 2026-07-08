@@ -4,6 +4,10 @@
 import json
 from pathlib import Path
 
+from content_cleaner import clean_body, clean_blocks
+from lesson_metadata import outcomes_for, prerequisites_for, references_for
+from translate_blocks import align_blocks, translate_text, _load_cache, _CYRILLIC
+
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "assets" / "data"
 
@@ -15,22 +19,38 @@ def tv_url(symbol: str, interval: str = "15") -> str:
 
 def build_sections(lang: str, d: dict) -> list:
     L = d["loc"][lang]
+    ru_L = d["loc"]["ru"]
     market_key = {"ru": "ru", "en": "mx", "pt": "br"}[lang]
     market = d["markets"].get(market_key, d["markets"].get("global", ""))
 
     sections = []
+    ru_blocks = clean_blocks(ru_L.get("blocks") or [])
+    cache = _load_cache() if lang != "ru" else {}
+
     blocks = L.get("blocks")
     if blocks:
-        for block in blocks:
+        if lang == "ru":
+            use_blocks = clean_blocks(blocks)
+        else:
+            use_blocks = align_blocks(ru_blocks, clean_blocks(blocks), lang, cache)
+        for block in use_blocks:
             sections.append({"type": "heading", "title": block["h"]})
             sections.append({"type": "text", "body": block["body"]})
     else:
         sections.extend([
             {"type": "heading", "title": L["h1"]},
-            {"type": "text", "body": L["theory"]},
+            {"type": "text", "body": clean_body(L["theory"])},
             {"type": "heading", "title": L["h2"]},
-            {"type": "text", "body": L["theory2"]},
+            {"type": "text", "body": clean_body(L["theory2"])},
         ])
+
+    refs = references_for(d["id"])
+    if refs:
+        sections.append({
+            "type": "references",
+            "title": {"ru": "Источники", "en": "References", "pt": "Referências"}[lang],
+            "items": refs,
+        })
 
     sections.extend([
         {
@@ -43,7 +63,7 @@ def build_sections(lang: str, d: dict) -> list:
             "type": "chart",
             "title": L["chart_title"],
             "chartType": d["chart"],
-            "caption": L["chart_cap"],
+            "caption": CHART_CAP_RU.get(d["id"], L["chart_cap"]) if lang == "ru" else L["chart_cap"],
         },
         {
             "type": "tradingview",
@@ -96,7 +116,7 @@ def lesson(
     }
 
 
-# Import deep curriculum (30–40 min lectures per topic)
+from chart_captions_ru import CHART_CAPTIONS as CHART_CAP_RU  # noqa: E402
 from deep_curriculum.part01 import LESSONS as DEEP_P1A  # noqa: E402
 from deep_curriculum.part01b import LESSONS as DEEP_P1B  # noqa: E402
 from deep_curriculum.part02 import LESSONS as DEEP_P2  # noqa: E402
@@ -107,20 +127,35 @@ ALL_LESSONS = DEEP_P1A + DEEP_P1B + DEEP_P2 + DEEP_P3 + DEEP_P4
 
 
 def export(lang: str) -> list:
+    cache = _load_cache() if lang != "ru" else {}
     out = []
     for d in ALL_LESSONS:
         L = d["loc"][lang]
+        ru_L = d["loc"]["ru"]
         mod = d["module"]
+
+        def _tr_field(key: str) -> str:
+            val = L.get(key, "")
+            ru_val = ru_L.get(key, "")
+            if lang == "ru" or not ru_val:
+                return val
+            if not val or _CYRILLIC.search(val) or len(val) < len(ru_val) * 0.4:
+                return translate_text(ru_val, lang, cache)
+            return val
+
         out.append({
             "id": d["id"],
             "module": mod[0] if lang == "ru" else mod[1] if lang == "en" else mod[2],
-            "title": L["title"],
-            "subtitle": L["subtitle"],
+            "title": _tr_field("title"),
+            "subtitle": _tr_field("subtitle"),
             "difficulty": d["difficulty"],
             "durationMin": d["durationMin"],
-            "outcome": L["outcome"],
-            "content": L["content"],
-            "takeaway": L["takeaway"],
+            "outcome": _tr_field("outcome"),
+            "content": _tr_field("content"),
+            "takeaway": _tr_field("takeaway"),
+            "prerequisites": prerequisites_for(d["id"]),
+            "learningOutcomes": outcomes_for(d["id"], lang),
+            "references": references_for(d["id"]),
             "sections": build_sections(lang, d),
         })
     return out
@@ -135,3 +170,5 @@ if __name__ == "__main__":
     full = ASSETS / "lessons_full.json"
     full.write_text(json.dumps(export("ru"), ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"lessons_full.json written")
+    import subprocess
+    subprocess.run(["python", str(ROOT / "tools" / "generate_academic_assets.py")], check=True)

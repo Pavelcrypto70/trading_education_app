@@ -1,0 +1,44 @@
+{
+  "version": "2026.1",
+  "maxScore": 10,
+  "criteria": [
+    {
+      "id": "setup",
+      "weight": 3,
+      "ru": "Сетап назван и соответствует уроку",
+      "en": "Setup named and matches lesson",
+      "pt": "Setup nomeado e alinhado à lição"
+    },
+    {
+      "id": "levels",
+      "weight": 3,
+      "ru": "Вход, стоп и цель размечены на скрине",
+      "en": "Entry, stop, target marked on screenshot",
+      "pt": "Entrada, stop e alvo marcados no print"
+    },
+    {
+      "id": "risk",
+      "weight": 2,
+      "ru": "Риск в % депозита указан",
+      "en": "Risk % of deposit stated",
+      "pt": "Risco % do depósito informado"
+    },
+    {
+      "id": "reflection",
+      "weight": 2,
+      "ru": "1–2 предложения: почему сетап валиден",
+      "en": "1–2 sentences: why setup is valid",
+      "pt": "1–2 frases: por que o setup é válido"
+    }
+  ],
+  "passScore": 7,
+  "telegram": {
+    "enabled": true,
+    "chatUrl": "https://t.me/trade_master_homework",
+    "instructions": {
+      "ru": "Нажмите «Сдать домашку» — откроется Telegram-чат. Прикрепите скрин TradingView и текст: Урок N, сетап, вход/стоп/цель, риск %.",
+      "en": "Tap 'Submit homework' to open our Telegram chat. Attach TradingView screenshot + text: Lesson N, setup, entry/stop/target, risk %.",
+      "pt": "Toque em 'Enviar tarefa' para abrir o Telegram. Anexe print do TradingView + texto: Lição N, setup, entrada/stop/alvo, risco %."
+    }
+  }
+}

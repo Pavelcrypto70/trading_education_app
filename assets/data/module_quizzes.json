@@ -1,0 +1,141 @@
+[
+  {
+    "moduleId": "intro",
+    "title": {
+      "ru": "Введение",
+      "en": "Introduction",
+      "pt": "Introdução"
+    },
+    "lessonIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "passPercent": 70,
+    "questionCount": 10,
+    "timeMin": 15
+  },
+  {
+    "moduleId": "chart",
+    "title": {
+      "ru": "График и структура",
+      "en": "Chart & Structure",
+      "pt": "Gráfico e Estrutura"
+    },
+    "lessonIds": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      22,
+      26,
+      42,
+      45
+    ],
+    "passPercent": 70,
+    "questionCount": 10,
+    "timeMin": 15
+  },
+  {
+    "moduleId": "patterns",
+    "title": {
+      "ru": "Паттерны",
+      "en": "Patterns",
+      "pt": "Padrões"
+    },
+    "lessonIds": [
+      8,
+      9,
+      19,
+      43,
+      46,
+      47
+    ],
+    "passPercent": 70,
+    "questionCount": 10,
+    "timeMin": 15
+  },
+  {
+    "moduleId": "strategy",
+    "title": {
+      "ru": "Стратегии",
+      "en": "Strategies",
+      "pt": "Estratégias"
+    },
+    "lessonIds": [
+      10,
+      21,
+      23,
+      30,
+      32
+    ],
+    "passPercent": 70,
+    "questionCount": 10,
+    "timeMin": 15
+  },
+  {
+    "moduleId": "market",
+    "title": {
+      "ru": "Рынок и макро",
+      "en": "Market & Macro",
+      "pt": "Mercado e Macro"
+    },
+    "lessonIds": [
+      11,
+      12,
+      20,
+      24,
+      25,
+      27,
+      34,
+      44
+    ],
+    "passPercent": 70,
+    "questionCount": 10,
+    "timeMin": 15
+  },
+  {
+    "moduleId": "risk",
+    "title": {
+      "ru": "Риск и этика",
+      "en": "Risk & Ethics",
+      "pt": "Risco e Ética"
+    },
+    "lessonIds": [
+      7,
+      18,
+      28,
+      31,
+      35,
+      36,
+      39,
+      40
+    ],
+    "passPercent": 70,
+    "questionCount": 10,
+    "timeMin": 15
+  },
+  {
+    "moduleId": "practice",
+    "title": {
+      "ru": "Практика и аттестация",
+      "en": "Practice & Assessment",
+      "pt": "Prática e Avaliação"
+    },
+    "lessonIds": [
+      29,
+      33,
+      37,
+      38,
+      41
+    ],
+    "passPercent": 70,
+    "questionCount": 10,
+    "timeMin": 15
+  }
+]

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../services/locale_service.dart';
@@ -15,6 +17,7 @@ class LessonChartCard extends StatelessWidget {
   final String exchange;
   final ChartVisualContext visual;
   final double height;
+  final int? lessonId;
 
   const LessonChartCard({
     super.key,
@@ -26,6 +29,7 @@ class LessonChartCard extends StatelessWidget {
     this.timeframe = '4H',
     this.exchange = 'Binance',
     this.height = 240,
+    this.lessonId,
   });
 
   @override
@@ -60,9 +64,9 @@ class LessonChartCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: SizedBox(
-                height: height,
+                height: lessonId != null ? math.max(height, 300) : height,
                 width: double.infinity,
-                child: LessonChartWidget(chartType: chartType),
+                child: LessonChartWidget(chartType: chartType, lessonId: lessonId),
               ),
             ),
           ),

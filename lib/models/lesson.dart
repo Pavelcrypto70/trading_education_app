@@ -1,4 +1,5 @@
 import 'lesson_section.dart';
+import 'lesson_reference.dart';
 
 class Lesson {
   final int id;
@@ -10,6 +11,9 @@ class Lesson {
   final String outcome;
   final String content;
   final String takeaway;
+  final List<int> prerequisites;
+  final List<String> learningOutcomes;
+  final List<LessonReference> references;
   final List<LessonSection> sections;
 
   Lesson({
@@ -22,13 +26,20 @@ class Lesson {
     required this.outcome,
     required this.content,
     required this.takeaway,
+    this.prerequisites = const [],
+    this.learningOutcomes = const [],
+    this.references = const [],
     this.sections = const [],
   });
 
   bool get hasRichContent => sections.isNotEmpty;
 
+  bool prerequisitesMet(Set<int> completedIds) =>
+      prerequisites.every(completedIds.contains);
+
   factory Lesson.fromJson(Map<String, dynamic> json) {
     final sectionsJson = json['sections'] as List?;
+    final refsJson = json['references'] as List?;
     return Lesson(
       id: json['id'] ?? 0,
       module: json['module'] ?? '',
@@ -39,6 +50,13 @@ class Lesson {
       outcome: json['outcome'] ?? '',
       content: json['content'] ?? '',
       takeaway: json['takeaway'] ?? '',
+      prerequisites: (json['prerequisites'] as List?)?.cast<int>() ?? const [],
+      learningOutcomes: (json['learningOutcomes'] as List?)?.cast<String>() ?? const [],
+      references: refsJson != null
+          ? refsJson
+              .map((r) => LessonReference.fromJson(Map<String, dynamic>.from(r as Map)))
+              .toList()
+          : const [],
       sections: sectionsJson != null
           ? sectionsJson
               .map((s) => LessonSection.fromJson(Map<String, dynamic>.from(s)))
@@ -58,6 +76,15 @@ class Lesson {
       'outcome': outcome,
       'content': content,
       'takeaway': takeaway,
+      'prerequisites': prerequisites,
+      'learningOutcomes': learningOutcomes,
+      'references': references.map((r) => {
+            'title': r.title,
+            'author': r.author,
+            'year': r.year,
+            'url': r.url,
+            'type': r.type,
+          }).toList(),
       'sections': sections.map((s) => s.toJson()).toList(),
     };
   }

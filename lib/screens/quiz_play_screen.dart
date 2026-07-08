@@ -10,6 +10,10 @@ import '../services/locale_service.dart';
 
 import '../services/progress_service.dart';
 
+import '../services/spaced_repetition_service.dart';
+
+import '../widgets/lesson_charts.dart';
+
 import '../theme.dart';
 
 
@@ -22,6 +26,10 @@ class QuizPlayScreen extends StatefulWidget {
 
   final bool isDailyChallenge;
 
+  final String? moduleId;
+
+  final int? passPercent;
+
 
 
   const QuizPlayScreen({
@@ -33,6 +41,10 @@ class QuizPlayScreen extends StatefulWidget {
     required this.questions,
 
     this.isDailyChallenge = false,
+
+    this.moduleId,
+
+    this.passPercent,
 
   });
 
@@ -62,15 +74,45 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
 
     if (answered) return;
 
+    final q = widget.questions[currentIndex];
+
     setState(() {
 
       selectedAnswerIndex = index;
 
       answered = true;
 
-      if (index == widget.questions[currentIndex].correctIndex) {
+      if (index == q.correctIndex) {
 
         score++;
+
+        if (q.sourceId != null) {
+
+          SpacedRepetitionService.recordCorrect(q.sourceId!);
+
+        }
+
+      } else if (q.sourceId != null) {
+
+        SpacedRepetitionService.recordWrong(
+
+          questionId: q.sourceId!,
+
+          question: q.question,
+
+          options: q.options,
+
+          correctIndex: q.correctIndex,
+
+          explanation: q.explanation,
+
+          category: q.category,
+
+          difficulty: q.difficulty,
+
+          lessonId: q.lessonId,
+
+        );
 
       }
 
@@ -98,7 +140,21 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
 
       );
 
+      if (widget.moduleId != null) {
+
+        final pass = widget.passPercent ?? 70;
+
+        if (score >= (widget.questions.length * pass / 100).ceil()) {
+
+          await ProgressService.markModulePassed(widget.moduleId!, score, widget.questions.length);
+
+        }
+
+      }
+
     }
+
+    await ProgressService.recordDailyActivity();
 
     if (!mounted) return;
 
@@ -249,6 +305,26 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
               ),
 
               const SizedBox(height: 12),
+
+              if (question.showChart && question.lessonId != null) ...[
+
+                ClipRRect(
+
+                  borderRadius: BorderRadius.circular(14),
+
+                  child: LessonChartWidget(
+
+                    chartType: 'lesson',
+
+                    lessonId: question.lessonId,
+
+                  ),
+
+                ),
+
+                const SizedBox(height: 16),
+
+              ],
 
               ClipRRect(
 

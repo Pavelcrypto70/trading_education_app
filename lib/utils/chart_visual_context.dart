@@ -12,7 +12,10 @@ class ChartVisualContext {
     this.showTradingViewNote = true,
   });
 
-  static ChartVisualContext forChartType(String chartType, AppLocalizations l10n) {
+  static ChartVisualContext forChartType(String chartType, AppLocalizations l10n, {int? lessonId}) {
+    if (lessonId != null) {
+      return const ChartVisualContext(showCryptoHeader: true, showTradingViewNote: true);
+    }
     switch (chartType) {
       case 'market_balance':
         return ChartVisualContext(

@@ -5,6 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../l10n/app_localizations.dart';
 import '../models/lesson.dart';
 import '../models/lesson_section.dart';
+import '../widgets/homework_rubric_card.dart';
+import '../services/homework_service.dart';
 import '../services/lesson_practice_service.dart';
 import '../services/locale_service.dart';
 import '../theme.dart';
@@ -220,6 +222,27 @@ class LessonPracticeCard extends StatelessWidget {
                 ),
           ],
           const SizedBox(height: 14),
+          HomeworkRubricCard(lessonId: lesson.id),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () async {
+                final ok = await HomeworkService.submitHomework(
+                  lessonId: lesson.id,
+                  lessonTitle: lesson.title,
+                );
+                if (!context.mounted) return;
+                if (!ok) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(context.l10n.homeworkOpenError)),
+                  );
+                }
+              },
+              icon: const Icon(Icons.send_outlined),
+              label: Text(l10n.submitHomework),
+            ),
+          ),
+          const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(

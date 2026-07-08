@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../models/lesson.dart';
+import '../data/lesson_quiz_repository.dart';
 import '../l10n/app_localizations.dart';
+import '../models/lesson.dart';
 import '../services/locale_service.dart';
+import '../services/spaced_repetition_service.dart';
 import '../theme.dart';
-
-class CheckpointQuestion {
-  final String question;
-  final List<String> options;
-  final int correctIndex;
-
-  const CheckpointQuestion({
-    required this.question,
-    required this.options,
-    required this.correctIndex,
-  });
-}
+import 'lesson_charts.dart';
 
 class LessonCheckpoint extends StatefulWidget {
   final Lesson lesson;
@@ -24,7 +14,23 @@ class LessonCheckpoint extends StatefulWidget {
 
   const LessonCheckpoint({super.key, required this.lesson, required this.onPassed});
 
-  static List<CheckpointQuestion> generate(Lesson lesson, AppLocalizations l10n) {
+  static Future<List<CheckpointQuestion>> generate(Lesson lesson, AppLocalizations l10n) async {
+    final bank = await LessonQuizRepository.forLesson(lesson.id);
+    if (bank.length >= 2) {
+      return bank
+          .take(3)
+          .map(
+            (q) => CheckpointQuestion(
+              question: q.question,
+              options: q.options,
+              correctIndex: q.correctIndex,
+              explanation: q.explanation,
+              showChart: q.id.endsWith('Q1'),
+            ),
+          )
+          .toList();
+    }
+
     final bullets = <String>[];
     for (final s in lesson.sections) {
       if (s.type == 'bullets' && s.items != null) {
@@ -50,7 +56,11 @@ class LessonCheckpoint extends StatefulWidget {
     return [
       CheckpointQuestion(
         question: l10n.checkpointQuestion2(lesson.title),
-        options: [lesson.takeaway, lesson.subtitle, lesson.outcome.substring(0, lesson.outcome.length.clamp(0, 60))],
+        options: [
+          lesson.takeaway,
+          lesson.subtitle,
+          lesson.outcome.length > 60 ? lesson.outcome.substring(0, 60) : lesson.outcome,
+        ],
         correctIndex: 0,
       ),
     ];
@@ -60,27 +70,66 @@ class LessonCheckpoint extends StatefulWidget {
   State<LessonCheckpoint> createState() => _LessonCheckpointState();
 }
 
+class CheckpointQuestion {
+  final String question;
+  final List<String> options;
+  final int correctIndex;
+  final String? explanation;
+  final bool showChart;
+
+  const CheckpointQuestion({
+    required this.question,
+    required this.options,
+    required this.correctIndex,
+    this.explanation,
+    this.showChart = false,
+  });
+}
+
 class _LessonCheckpointState extends State<LessonCheckpoint> {
   List<CheckpointQuestion>? _questions;
   int _qIndex = 0;
   int? _selected;
   bool _answered = false;
   int _correct = 0;
+  bool _loading = true;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _questions ??= LessonCheckpoint.generate(widget.lesson, context.l10n);
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final qs = await LessonCheckpoint.generate(widget.lesson, context.l10n);
+    if (!mounted) return;
+    setState(() {
+      _questions = qs;
+      _loading = false;
+    });
   }
 
   void _select(int index) {
-    if (_answered) return;
+    if (_answered || _questions == null) return;
+    final q = _questions![_qIndex];
     setState(() {
       _selected = index;
       _answered = true;
-      if (index == _questions![_qIndex].correctIndex) _correct++;
+      if (index == q.correctIndex) {
+        _correct++;
+      } else {
+        SpacedRepetitionService.recordWrong(
+          questionId: 'lesson-${widget.lesson.id}-$_qIndex',
+          question: q.question,
+          options: q.options,
+          correctIndex: q.correctIndex,
+          explanation: q.explanation ?? '',
+          category: 'Lesson',
+          difficulty: 'Easy',
+          lessonId: widget.lesson.id,
+        );
+      }
     });
-    HapticFeedback.lightImpact();
   }
 
   void _next() {
@@ -92,18 +141,30 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
         _answered = false;
       });
     } else {
-      final passed = _correct >= (questions.length * 0.5).ceil();
-      if (passed) widget.onPassed();
+      final passed = _correct >= (questions.length * 0.7).ceil();
+      if (passed) {
+        widget.onPassed();
+      } else {
+        setState(() {
+          _qIndex = 0;
+          _selected = null;
+          _answered = false;
+          _correct = 0;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    if (_loading || _questions == null) {
+      return const Center(child: Padding(padding: EdgeInsets.all(24), child: CircularProgressIndicator()));
+    }
     final questions = _questions!;
     final q = questions[_qIndex];
     final isLast = _qIndex == questions.length - 1;
-    final passed = _answered && isLast && _correct >= (questions.length * 0.5).ceil();
+    final passed = _answered && isLast && _correct >= (questions.length * 0.7).ceil();
 
     return Container(
       width: double.infinity,
@@ -138,6 +199,10 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
             ],
           ),
           const SizedBox(height: 16),
+          if (q.showChart) ...[
+            LessonChartWidget(chartType: 'lesson', lessonId: widget.lesson.id),
+            const SizedBox(height: 14),
+          ],
           Text(q.question, style: const TextStyle(fontWeight: FontWeight.w600, height: 1.4)),
           const SizedBox(height: 14),
           ...List.generate(q.options.length, (i) {
@@ -197,6 +262,10 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
               ),
             );
           }),
+          if (_answered && q.explanation != null && q.explanation!.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(q.explanation!, style: const TextStyle(color: Colors.white54, fontSize: 12, height: 1.4)),
+          ],
           if (_answered) ...[
             const SizedBox(height: 8),
             SizedBox(

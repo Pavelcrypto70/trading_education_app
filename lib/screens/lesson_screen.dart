@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../data/lessons_repository.dart';
 import '../models/lesson.dart';
@@ -13,6 +14,7 @@ import '../utils/chart_visual_context.dart';
 import '../utils/crypto_lesson_context.dart';
 import '../widgets/interactive_lesson_widgets.dart';
 import '../widgets/lesson_chart_card.dart';
+import '../widgets/lesson_case_studies.dart';
 import '../widgets/lesson_checkpoint.dart';
 import '../widgets/lesson_practice_cards.dart';
 
@@ -140,7 +142,8 @@ class _LessonScreenState extends State<LessonScreen> {
             block: block,
             chartType: chartType,
             crypto: crypto,
-            visual: ChartVisualContext.forChartType(chartType, l10n),
+            visual: ChartVisualContext.forChartType(chartType, l10n, lessonId: lesson.id),
+            lessonId: lesson.id,
           ),
         ));
       } else if (block.paragraphs.isNotEmpty || block.heading != null) {
@@ -159,6 +162,12 @@ class _LessonScreenState extends State<LessonScreen> {
       if (s.type == 'example') example = s;
       if (s.type == 'bullets') bullets = s;
       if (s.type == 'tip') tip = s;
+      if (s.type == 'references') {
+        steps.add(_LessonStep(
+          icon: Icons.menu_book_outlined,
+          builder: (ctx, l10n) => _ReferencesStep(lesson: lesson),
+        ));
+      }
       if (s.type == 'tradingview' ||
           s.type == 'practice' ||
           s.type == 'market_note' ||
@@ -188,8 +197,9 @@ class _LessonScreenState extends State<LessonScreen> {
           section: example!,
           crypto: crypto,
           chartType: primaryChart,
-          visual: ChartVisualContext.forChartType(primaryChart, l10n),
+          visual: ChartVisualContext.forChartType(primaryChart, l10n, lessonId: lesson.id),
           showChart: showChart,
+          lessonId: lesson.id,
         ),
       ));
     }
@@ -209,6 +219,11 @@ class _LessonScreenState extends State<LessonScreen> {
         builder: (ctx, l10n) => _TipStep(section: tipSection, takeaway: lesson.takeaway),
       ));
     }
+
+    steps.add(_LessonStep(
+      icon: Icons.history_edu,
+      builder: (ctx, l10n) => LessonCaseStudiesCard(lessonId: lesson.id),
+    ));
 
     steps.add(_LessonStep(
       icon: Icons.quiz_outlined,
@@ -310,6 +325,17 @@ class _LessonScreenState extends State<LessonScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          tooltip: l10n.backToLearning,
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/learning');
+            }
+          },
+        ),
         title: Text(l10n.moduleName(lesson.module)),
         actions: [
           if (_completed)
@@ -426,7 +452,15 @@ class _LessonScreenState extends State<LessonScreen> {
                       child: Text(l10n.practiceAfterLesson),
                     ),
                   ),
-                ] else if (!isLast)
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () => context.go('/learning'),
+                      child: Text(l10n.backToLearning),
+                    ),
+                  ),
+                ] else
                   Row(
                     children: [
                       if (_step > 0)
@@ -437,13 +471,22 @@ class _LessonScreenState extends State<LessonScreen> {
                           ),
                         ),
                       if (_step > 0) const SizedBox(width: 12),
-                      Expanded(
-                        flex: 2,
-                        child: ElevatedButton(
-                          onPressed: _nextStep,
-                          child: Text(l10n.next),
+                      if (!isLast)
+                        Expanded(
+                          flex: 2,
+                          child: ElevatedButton(
+                            onPressed: _nextStep,
+                            child: Text(l10n.next),
+                          ),
+                        )
+                      else if (!_checkpointPassed)
+                        Expanded(
+                          flex: 2,
+                          child: OutlinedButton(
+                            onPressed: _prevStep,
+                            child: Text(l10n.back),
+                          ),
                         ),
-                      ),
                     ],
                   ),
               ],
@@ -501,6 +544,22 @@ class _IntroStep extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(lesson.outcome, style: const TextStyle(height: 1.55, color: Colors.white70)),
+              if (lesson.learningOutcomes.isNotEmpty) ...[
+                const SizedBox(height: 14),
+                ...lesson.learningOutcomes.map(
+                  (o) => Padding(
+                    padding: const EdgeInsets.only(bottom: 6),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.check_circle_outline, size: 16, color: AppTheme.gold),
+                        const SizedBox(width: 8),
+                        Expanded(child: Text(o, style: const TextStyle(height: 1.45, color: Colors.white60, fontSize: 13))),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -572,12 +631,14 @@ class _ChartStep extends StatelessWidget {
   final String chartType;
   final CryptoLessonContext crypto;
   final ChartVisualContext visual;
+  final int lessonId;
 
   const _ChartStep({
     required this.block,
     required this.chartType,
     required this.crypto,
     required this.visual,
+    required this.lessonId,
   });
 
   @override
@@ -609,7 +670,8 @@ class _ChartStep extends StatelessWidget {
           pair: crypto.pair,
           timeframe: crypto.timeframe,
           exchange: crypto.exchange,
-          height: visual.showCryptoHeader ? 240 : 260,
+          lessonId: lessonId,
+          height: visual.showCryptoHeader ? 280 : 300,
         ),
       ],
     );
@@ -622,6 +684,7 @@ class _ExampleStep extends StatelessWidget {
   final String chartType;
   final ChartVisualContext visual;
   final bool showChart;
+  final int lessonId;
 
   const _ExampleStep({
     required this.section,
@@ -629,6 +692,7 @@ class _ExampleStep extends StatelessWidget {
     required this.chartType,
     required this.visual,
     required this.showChart,
+    required this.lessonId,
   });
 
   @override
@@ -675,6 +739,8 @@ class _ExampleStep extends StatelessWidget {
             pair: crypto.pair,
             timeframe: crypto.timeframe,
             exchange: crypto.exchange,
+            lessonId: lessonId,
+            height: 280,
           ),
         ],
       ],
@@ -723,6 +789,58 @@ class _TipStep extends StatelessWidget {
               const SizedBox(height: 8),
               Text(takeaway, style: const TextStyle(height: 1.55, color: Colors.white70)),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ReferencesStep extends StatelessWidget {
+  final Lesson lesson;
+
+  const _ReferencesStep({required this.lesson});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final refs = lesson.references;
+    if (refs.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.sectionReferences, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+        const SizedBox(height: 12),
+        ...refs.map(
+          (r) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: InkWell(
+              onTap: () => launchUrl(Uri.parse(r.url), mode: LaunchMode.externalApplication),
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(14),
+                decoration: AppTheme.cardDecoration(),
+                child: Row(
+                  children: [
+                    const Icon(Icons.link, color: AppTheme.gold, size: 20),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(r.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                          Text(
+                            '${r.author}${r.year != null ? ', ${r.year}' : ''}',
+                            style: const TextStyle(fontSize: 12, color: Colors.white54),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ],

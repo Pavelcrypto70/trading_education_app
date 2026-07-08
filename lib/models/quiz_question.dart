@@ -5,6 +5,9 @@ class QuizQuestion {
   final List<String> options;
   final int correctIndex;
   final String explanation;
+  final int? lessonId;
+  final bool showChart;
+  final String? sourceId;
 
   const QuizQuestion({
     required this.category,
@@ -13,5 +16,8 @@ class QuizQuestion {
     required this.options,
     required this.correctIndex,
     required this.explanation,
+    this.lessonId,
+    this.showChart = false,
+    this.sourceId,
   });
 }

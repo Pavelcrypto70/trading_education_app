@@ -24,13 +24,18 @@ class LessonSection {
   });
 
   factory LessonSection.fromJson(Map<String, dynamic> json) {
+    final rawItems = json['items'] as List?;
+    List<String>? items;
+    if (rawItems != null && rawItems.isNotEmpty && rawItems.first is String) {
+      items = rawItems.cast<String>();
+    }
     return LessonSection(
       type: json['type'] ?? 'text',
       title: json['title'],
       body: json['body'],
       chartType: json['chartType'],
       caption: json['caption'],
-      items: (json['items'] as List?)?.cast<String>(),
+      items: items,
       url: json['url'],
       symbol: json['symbol'],
       interval: json['interval'],

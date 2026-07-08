@@ -1,0 +1,182 @@
+[
+  {
+    "term": {
+      "ru": "Спот",
+      "en": "Spot",
+      "pt": "Spot"
+    },
+    "def": {
+      "ru": "Покупка актива на баланс без плеча.",
+      "en": "Buying the asset on balance without leverage.",
+      "pt": "Compra do ativo no saldo sem alavancagem."
+    }
+  },
+  {
+    "term": {
+      "ru": "Фьючерс",
+      "en": "Futures",
+      "pt": "Futuros"
+    },
+    "def": {
+      "ru": "Контракт с плечом, возможен шорт и ликвидация.",
+      "en": "Leveraged contract; shorting and liquidation possible.",
+      "pt": "Contrato alavancado; short e liquidação possíveis."
+    }
+  },
+  {
+    "term": {
+      "ru": "Поддержка",
+      "en": "Support",
+      "pt": "Suporte"
+    },
+    "def": {
+      "ru": "Уровень, где цена неоднократно отскакивала вверх.",
+      "en": "Level where price bounced up repeatedly.",
+      "pt": "Nível onde o preço repicou várias vezes."
+    }
+  },
+  {
+    "term": {
+      "ru": "Сопротивление",
+      "en": "Resistance",
+      "pt": "Resistência"
+    },
+    "def": {
+      "ru": "Уровень, где продавцы останавливали рост.",
+      "en": "Level where sellers halted the rise.",
+      "pt": "Nível onde vendedores pararam a alta."
+    }
+  },
+  {
+    "term": {
+      "ru": "Стоп-лосс",
+      "en": "Stop-loss",
+      "pt": "Stop-loss"
+    },
+    "def": {
+      "ru": "Цена выхода при неверном сценарии.",
+      "en": "Exit price when the scenario is wrong.",
+      "pt": "Preço de saída quando o cenário falha."
+    }
+  },
+  {
+    "term": {
+      "ru": "R:R",
+      "en": "R:R",
+      "pt": "R:R"
+    },
+    "def": {
+      "ru": "Соотношение риска к прибыли (1:2 = риск $1, цель $2).",
+      "en": "Risk-to-reward ratio (1:2 = risk $1, target $2).",
+      "pt": "Relação risco/recompensa (1:2 = risco $1, alvo $2)."
+    }
+  },
+  {
+    "term": {
+      "ru": "Funding",
+      "en": "Funding",
+      "pt": "Funding"
+    },
+    "def": {
+      "ru": "Периодический платёж между лонгами и шортами на perpetual.",
+      "en": "Periodic payment between longs and shorts on perpetuals.",
+      "pt": "Pagamento periódico entre longs e shorts em perpetual."
+    }
+  },
+  {
+    "term": {
+      "ru": "BTC.D",
+      "en": "BTC.D",
+      "pt": "BTC.D"
+    },
+    "def": {
+      "ru": "Доля капитализации BTC — индикатор ротации в альты.",
+      "en": "BTC market cap dominance — alt rotation indicator.",
+      "pt": "Dominância de cap. do BTC — indicador de rotação para alts."
+    }
+  },
+  {
+    "term": {
+      "ru": "Ликвидация",
+      "en": "Liquidation",
+      "pt": "Liquidação"
+    },
+    "def": {
+      "ru": "Принудительное закрытие позиции при нехватке маржи.",
+      "en": "Forced position close when margin is insufficient.",
+      "pt": "Fechamento forçado quando a margem acaba."
+    }
+  },
+  {
+    "term": {
+      "ru": "Ложный пробой",
+      "en": "False breakout",
+      "pt": "Falso rompimento"
+    },
+    "def": {
+      "ru": "Выход за уровень с быстрым возвратом — часто ловушка.",
+      "en": "Brief break beyond level then reversal — often a trap.",
+      "pt": "Rompimento breve e retorno — muitas vezes armadilha."
+    }
+  },
+  {
+    "term": {
+      "ru": "HH / HL",
+      "en": "HH / HL",
+      "pt": "HH / HL"
+    },
+    "def": {
+      "ru": "Higher High / Higher Low — признаки восходящего тренда.",
+      "en": "Higher High / Higher Low — uptrend structure.",
+      "pt": "Higher High / Higher Low — estrutura de alta."
+    }
+  },
+  {
+    "term": {
+      "ru": "LH / LL",
+      "en": "LH / LL",
+      "pt": "LH / LL"
+    },
+    "def": {
+      "ru": "Lower High / Lower Low — нисходящий тренд.",
+      "en": "Lower High / Lower Low — downtrend structure.",
+      "pt": "Lower High / Lower Low — estrutura de baixa."
+    }
+  },
+  {
+    "term": {
+      "ru": "ATR",
+      "en": "ATR",
+      "pt": "ATR"
+    },
+    "def": {
+      "ru": "Средний истинный диапазон — мера волатильности.",
+      "en": "Average True Range — volatility measure.",
+      "pt": "Average True Range — medida de volatilidade."
+    }
+  },
+  {
+    "term": {
+      "ru": "Спуфинг",
+      "en": "Spoofing",
+      "pt": "Spoofing"
+    },
+    "def": {
+      "ru": "Крупные фейковые заявки в стакане для манипуляции.",
+      "en": "Large fake orders in the book to manipulate price.",
+      "pt": "Ordens falsas grandes no book para manipular."
+    }
+  },
+  {
+    "term": {
+      "ru": "FOMO",
+      "en": "FOMO",
+      "pt": "FOMO"
+    },
+    "def": {
+      "ru": "Страх упустить — эмоциональный вход без плана.",
+      "en": "Fear of missing out — emotional entry without a plan.",
+      "pt": "Medo de perder — entrada emocional sem plano."
+    }
+  }
+]
