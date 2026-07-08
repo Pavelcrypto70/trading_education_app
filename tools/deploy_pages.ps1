@@ -4,7 +4,7 @@
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 $BuildDir = Join-Path $ProjectRoot "build\web"
-$DeployDir = Join-Path $env:TEMP "Pavelcrypto70.github.io-deploy"
+$DeployDir = Join-Path $ProjectRoot ".deploy\github-io\repo"
 
 Write-Host ">> flutter build web --release"
 Push-Location $ProjectRoot
@@ -16,11 +16,12 @@ if (-not (Test-Path $BuildDir)) {
     Write-Error "Build folder not found: $BuildDir"
 }
 
-if (Test-Path $DeployDir) {
-    Remove-Item -Recurse -Force $DeployDir
+if (Test-Path (Split-Path $DeployDir -Parent)) {
+    Remove-Item -Recurse -Force (Split-Path $DeployDir -Parent)
 }
 
 Write-Host ">> Clone Pavelcrypto70.github.io"
+New-Item -ItemType Directory -Path (Split-Path $DeployDir -Parent) -Force | Out-Null
 git clone --depth 1 https://github.com/Pavelcrypto70/Pavelcrypto70.github.io.git $DeployDir
 
 Get-ChildItem -Path $DeployDir -Force | Where-Object { $_.Name -ne ".git" } | Remove-Item -Recurse -Force
