@@ -24,11 +24,13 @@ class CandleData {
 class LessonChartWidget extends StatelessWidget {
   final String chartType;
   final int? lessonId;
+  final double? height;
 
   const LessonChartWidget({
     super.key,
     required this.chartType,
     this.lessonId,
+    this.height,
   });
 
   @override
@@ -36,9 +38,10 @@ class LessonChartWidget extends StatelessWidget {
     final setup = lessonId != null
         ? LessonChartSetups.forLesson(lessonId!, chartType)
         : LessonChartSetups.forChartType(chartType);
+    final h = height ?? (lessonId != null ? 300.0 : 220.0);
 
     return SizedBox(
-      height: lessonId != null ? 300 : 220,
+      height: h,
       width: double.infinity,
       child: CustomPaint(
         painter: _SetupChartPainter(setup: setup),

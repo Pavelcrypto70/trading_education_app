@@ -443,6 +443,15 @@ class AppLocalizations {
   String get planRequiredMsg => _t('Save a valid trade plan first', 'Сначала сохраните план', 'Salve um plano válido primeiro');
   String get certificateHash => _t('Verification ID', 'ID верификации', 'ID de verificação');
   String get copyHash => _t('Copy verification ID', 'Скопировать ID', 'Copiar ID');
+  String get watchVideo => _t('Watch video', 'Смотреть видео', 'Assistir vídeo');
+  String get videoOpenError => _t('Could not open video', 'Не удалось открыть видео', 'Não foi possível abrir o vídeo');
+  String readingPart(int n, int total) => _t('Part $n of $total', 'Часть $n из $total', 'Parte $n de $total');
+  String get textBlockAnalogy => _t('Think of it like this', 'Представьте', 'Imagine assim');
+  String get textBlockWarning => _t('Important', 'Важно', 'Importante');
+  String get textBlockMyth => _t('Myth', 'Миф', 'Mito');
+  String get textBlockCompare => _t('Compare', 'Сравнение', 'Comparar');
+  String get textBlockSteps => _t('Steps', 'Шаги', 'Passos');
+  String get reflectPrompt => _t('Pause: can you explain this in one sentence?', 'Пауза: объясни это одним предложением', 'Pausa: explique em uma frase');
 
   String _t(String en, String ru, String pt) {
     switch (locale) {

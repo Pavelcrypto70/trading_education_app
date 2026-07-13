@@ -14,6 +14,11 @@ import '../utils/chart_visual_context.dart';
 import '../utils/crypto_lesson_context.dart';
 import '../widgets/interactive_lesson_widgets.dart';
 import '../widgets/lesson_chart_card.dart';
+import '../data/lesson_media.dart';
+import '../utils/text_chunker.dart';
+import '../widgets/lesson_concept_visual.dart';
+import '../widgets/lesson_rich_text.dart';
+import '../widgets/lesson_video_card.dart';
 import '../widgets/lesson_case_studies.dart';
 import '../widgets/lesson_checkpoint.dart';
 import '../widgets/lesson_practice_cards.dart';
@@ -129,7 +134,7 @@ class _LessonScreenState extends State<LessonScreen> {
     final steps = <_LessonStep>[
       _LessonStep(
         icon: Icons.flag_outlined,
-        builder: (ctx, l10n) => _IntroStep(lesson: lesson, crypto: crypto),
+        builder: (ctx, l10n) => _IntroStep(lesson: lesson, crypto: crypto, showVideo: true),
       ),
     ];
 
@@ -147,10 +152,42 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
         ));
       } else if (block.paragraphs.isNotEmpty || block.heading != null) {
-        steps.add(_LessonStep(
-          icon: Icons.menu_book_outlined,
-          builder: (ctx, l10n) => _TextBlockStep(block: block),
-        ));
+        final chunks = <String>[];
+        for (final p in block.paragraphs) {
+          chunks.addAll(TextChunker.chunk(p));
+        }
+        if (chunks.isEmpty && block.heading != null) {
+          steps.add(_LessonStep(
+            icon: Icons.menu_book_outlined,
+            builder: (ctx, l10n) => _TextCardStep(
+              heading: block.heading,
+              text: '',
+              chunkIndex: 0,
+              chunkTotal: 1,
+              lesson: lesson,
+            ),
+          ));
+        } else {
+          for (var i = 0; i < chunks.length; i++) {
+            steps.add(_LessonStep(
+              icon: Icons.menu_book_outlined,
+              builder: (ctx, l10n) => _TextCardStep(
+                heading: i == 0 ? block.heading : null,
+                text: chunks[i],
+                chunkIndex: i,
+                chunkTotal: chunks.length,
+                lesson: lesson,
+              ),
+            ));
+            // Micro-reflect every 3 text chunks to break reading rhythm
+            if ((i + 1) % 3 == 0 && i < chunks.length - 1) {
+              steps.add(_LessonStep(
+                icon: Icons.psychology_outlined,
+                builder: (ctx, l10n) => _ReflectStep(prompt: l10n.reflectPrompt),
+              ));
+            }
+          }
+        }
       }
     }
 
@@ -514,18 +551,26 @@ class _TopicBlock {
 class _IntroStep extends StatelessWidget {
   final Lesson lesson;
   final CryptoLessonContext crypto;
+  final bool showVideo;
 
   const _IntroStep({
     required this.lesson,
     required this.crypto,
+    this.showVideo = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final media = showVideo ? LessonMedia.forLesson(lesson.id, lesson.module) : null;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        LessonConceptVisual(
+          type: conceptTypeFromText(lesson.title, lesson.module),
+          height: 110,
+        ),
+        const SizedBox(height: 16),
         Text(lesson.subtitle, style: const TextStyle(color: Colors.white54, height: 1.5, fontSize: 15)),
         const SizedBox(height: 20),
         Container(
@@ -564,6 +609,14 @@ class _IntroStep extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
+        if (media != null) ...[
+          LessonVideoCard(
+            title: media.title,
+            url: media.url,
+            thumbnailUrl: media.thumbnail,
+          ),
+          const SizedBox(height: 16),
+        ],
         Row(
           children: [
             _chip(Icons.speed, l10n.difficultyName(lesson.difficulty)),
@@ -597,31 +650,94 @@ class _IntroStep extends StatelessWidget {
   }
 }
 
-class _TextBlockStep extends StatelessWidget {
-  final _TopicBlock block;
+class _TextCardStep extends StatelessWidget {
+  final String? heading;
+  final String text;
+  final int chunkIndex;
+  final int chunkTotal;
+  final Lesson lesson;
 
-  const _TextBlockStep({required this.block});
+  const _TextCardStep({
+    required this.heading,
+    required this.text,
+    required this.chunkIndex,
+    required this.chunkTotal,
+    required this.lesson,
+  });
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final visualType = conceptTypeFromText(heading ?? text, lesson.module);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (block.heading != null)
+        if (heading != null)
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
-              l10n.translateSectionHeading(block.heading!),
+              l10n.translateSectionHeading(heading!),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
             ),
           ),
-        for (final p in block.paragraphs)
+        if (chunkIndex == 0)
           Padding(
             padding: const EdgeInsets.only(bottom: 14),
-            child: Text(p, style: const TextStyle(height: 1.65, color: Colors.white70, fontSize: 15)),
+            child: LessonConceptVisual(type: visualType, height: 96),
+          ),
+        if (text.isNotEmpty)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            decoration: AppTheme.cardDecoration(
+              border: Border.all(color: AppTheme.accent.withValues(alpha: 0.2)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (chunkTotal > 1)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Text(
+                      l10n.readingPart(chunkIndex + 1, chunkTotal),
+                      style: const TextStyle(color: AppTheme.gold, fontSize: 11, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                LessonRichText(text: text),
+              ],
+            ),
           ),
       ],
+    );
+  }
+}
+
+class _ReflectStep extends StatelessWidget {
+  final String prompt;
+
+  const _ReflectStep({required this.prompt});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: AppTheme.cardDecoration(
+        color: AppTheme.accent.withValues(alpha: 0.1),
+        border: Border.all(color: AppTheme.accent.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        children: [
+          const Icon(Icons.psychology_outlined, color: AppTheme.accent, size: 36),
+          const SizedBox(height: 12),
+          Text(
+            prompt,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.w600, height: 1.45, fontSize: 15),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -721,7 +837,7 @@ class _ExampleStep extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 14),
-              Text(section.body ?? '', style: const TextStyle(height: 1.65, color: Colors.white70, fontSize: 15)),
+              LessonRichText(text: section.body ?? ''),
             ],
           ),
         ),

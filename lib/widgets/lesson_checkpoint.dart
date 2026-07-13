@@ -200,7 +200,14 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
           ),
           const SizedBox(height: 16),
           if (q.showChart) ...[
-            LessonChartWidget(chartType: 'lesson', lessonId: widget.lesson.id),
+            SizedBox(
+              height: 160,
+              child: LessonChartWidget(
+                chartType: 'lesson',
+                lessonId: widget.lesson.id,
+                height: 160,
+              ),
+            ),
             const SizedBox(height: 14),
           ],
           Text(q.question, style: const TextStyle(fontWeight: FontWeight.w600, height: 1.4)),
