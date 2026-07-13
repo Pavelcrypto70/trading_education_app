@@ -5,8 +5,6 @@ $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 $BuildDir = Join-Path $ProjectRoot "build\web"
 $DeployDir = Join-Path $ProjectRoot ".deploy\github-io\repo"
-
-Write-Host ">> flutter build web --release"
 Push-Location $ProjectRoot
 flutter build web --release
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -28,6 +26,8 @@ Get-ChildItem -Path $DeployDir -Force | Where-Object { $_.Name -ne ".git" } | Re
 Copy-Item -Path (Join-Path $BuildDir "*") -Destination $DeployDir -Recurse -Force
 
 Push-Location $DeployDir
+git fetch origin main
+git reset --hard origin/main
 git add -A
 $status = git status --porcelain
 if (-not $status) {
@@ -37,7 +37,10 @@ if (-not $status) {
 }
 
 git commit -m "Deploy Trade Master web build $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+$remoteMain = git ls-remote origin refs/heads/main | ForEach-Object { ($_ -split '\s+')[0] }
 git push origin main
-Pop-Location
+if ($LASTEXITCODE -ne 0) {
+    git push --force-with-lease=main:$remoteMain origin main
+}Pop-Location
 
 Write-Host ">> Done: https://pavelcrypto70.github.io"
