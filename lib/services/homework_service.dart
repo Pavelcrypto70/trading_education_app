@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../utils/external_link.dart';
 
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
@@ -71,8 +71,7 @@ class HomeworkService {
       '#TradeMasterHW',
     );
     final base = await chatUrl();
-    final uri = Uri.parse('$base?text=$text');
-    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final ok = await openExternalLink('$base?text=$text');
     if (ok) await ProgressService.incrementHomeworkSubmit(lessonId);
     return ok;
   }

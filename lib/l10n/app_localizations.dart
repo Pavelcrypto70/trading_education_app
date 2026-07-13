@@ -445,6 +445,7 @@ class AppLocalizations {
   String get copyHash => _t('Copy verification ID', 'Скопировать ID', 'Copiar ID');
   String get watchVideo => _t('Watch video', 'Смотреть видео', 'Assistir vídeo');
   String get videoOpenError => _t('Could not open video', 'Не удалось открыть видео', 'Não foi possível abrir o vídeo');
+  String get videoOpensYouTube => _t('Opens in YouTube (new tab)', 'Откроется в YouTube (новая вкладка)', 'Abre no YouTube (nova aba)');
   String readingPart(int n, int total) => _t('Part $n of $total', 'Часть $n из $total', 'Parte $n de $total');
   String get textBlockAnalogy => _t('Think of it like this', 'Представьте', 'Imagine assim');
   String get textBlockWarning => _t('Important', 'Важно', 'Importante');

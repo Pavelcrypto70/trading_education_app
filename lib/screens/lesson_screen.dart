@@ -611,7 +611,7 @@ class _IntroStep extends StatelessWidget {
         const SizedBox(height: 16),
         if (media != null) ...[
           LessonVideoCard(
-            title: media.title,
+            title: LessonMedia.localizedTitle(media),
             url: media.url,
             thumbnailUrl: media.thumbnail,
           ),

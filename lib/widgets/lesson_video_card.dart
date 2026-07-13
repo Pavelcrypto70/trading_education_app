@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../services/locale_service.dart';
 import '../theme.dart';
+import '../utils/external_link.dart';
 
 class LessonVideoCard extends StatelessWidget {
   final String title;
@@ -17,12 +17,17 @@ class LessonVideoCard extends StatelessWidget {
   });
 
   Future<void> _open(BuildContext context) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else if (context.mounted) {
+    final ok = await openExternalLink(url);
+    if (!ok && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.videoOpenError)),
+        SnackBar(
+          content: Text('${context.l10n.videoOpenError}\n$url'),
+          duration: const Duration(seconds: 5),
+          action: SnackBarAction(
+            label: 'YouTube',
+            onPressed: () => openExternalLink(url),
+          ),
+        ),
       );
     }
   }
@@ -69,20 +74,30 @@ class LessonVideoCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(14),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.ondemand_video, color: Colors.redAccent, size: 18),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(l10n.watchVideo, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
-                          Text(title, style: const TextStyle(color: Colors.white70, fontSize: 13)),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        const Icon(Icons.ondemand_video, color: Colors.redAccent, size: 18),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(l10n.watchVideo, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
+                              Text(title, style: const TextStyle(color: Colors.white70, fontSize: 13)),
+                            ],
+                          ),
+                        ),
+                        const Icon(Icons.open_in_new, size: 16, color: Colors.white38),
+                      ],
                     ),
-                    const Icon(Icons.open_in_new, size: 16, color: Colors.white38),
+                    const SizedBox(height: 6),
+                    Text(
+                      l10n.videoOpensYouTube,
+                      style: const TextStyle(color: Colors.white38, fontSize: 11),
+                    ),
                   ],
                 ),
               ),

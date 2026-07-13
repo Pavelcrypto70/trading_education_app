@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../utils/external_link.dart';
 
 import '../l10n/app_localizations.dart';
 import '../models/lesson.dart';
@@ -57,10 +57,8 @@ class LessonTradingViewCard extends StatelessWidget {
   Future<void> _open(BuildContext context) async {
     final url = section.url ??
         'https://www.tradingview.com/chart/?symbol=BINANCE:${section.symbol ?? 'BTCUSDT'}';
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else if (context.mounted) {
+    final ok = await openExternalLink(url);
+    if (!ok && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.tradingViewOpenError)),
       );

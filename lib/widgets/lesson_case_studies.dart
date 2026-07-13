@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../utils/external_link.dart';
 
 import '../data/case_studies_repository.dart';
 import '../services/locale_service.dart';
@@ -50,12 +50,7 @@ class LessonCaseStudiesCard extends StatelessWidget {
                         if (c.sourceUrl != null) ...[
                           const SizedBox(height: 8),
                           TextButton.icon(
-                            onPressed: () async {
-                              final uri = Uri.parse(c.sourceUrl!);
-                              if (await canLaunchUrl(uri)) {
-                                await launchUrl(uri, mode: LaunchMode.externalApplication);
-                              }
-                            },
+                            onPressed: () => openExternalLink(c.sourceUrl!),
                             icon: const Icon(Icons.open_in_new, size: 14),
                             label: Text(c.sourceTitle ?? 'Source', style: const TextStyle(fontSize: 12)),
                           ),
