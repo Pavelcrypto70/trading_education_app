@@ -28,7 +28,7 @@ class HomeworkService {
   static Future<String> chatUrl() async {
     final data = await loadRubrics();
     final tg = data['telegram'] as Map<String, dynamic>;
-    return tg['chatUrl'] as String? ?? 'https://t.me/trade_master_homework';
+    return tg['chatUrl'] as String? ?? 'https://t.me/Desk_Club';
   }
 
   /// Opens Telegram with pre-filled homework template for the lesson.
@@ -57,17 +57,19 @@ class HomeworkService {
   }) async {
     final lang = LocaleService.instance.languageCode;
     final labels = switch (lang) {
-      'ru' => ('Урок', 'Сетап', 'Вход', 'Стоп', 'Цель', 'Риск %'),
-      'pt' => ('Lição', 'Setup', 'Entrada', 'Stop', 'Alvo', 'Risco %'),
-      _ => ('Lesson', 'Setup', 'Entry', 'Stop', 'Target', 'Risk %'),
+      'ru' => ('Урок', 'Темы урока', 'Как я понял', 'Что непонятно'),
+      'pt' => ('Aula', 'Tópicos', 'Como entendi', 'O que não ficou claro'),
+      'es' => ('Clase', 'Temas', 'Cómo lo entendí', 'Qué no quedó claro'),
+      _ => ('Lesson', 'Topics covered', 'How I understood', 'Still unclear'),
     };
     final text = Uri.encodeComponent(
-      '${labels.$1} $lessonId: $lessonTitle\n'
-      '${labels.$2}: \n'
-      '${labels.$3}: \n'
-      '${labels.$4}: \n'
-      '${labels.$5}: \n'
-      '${labels.$6}: \n'
+      '${labels.$1} $lessonId: $lessonTitle\n\n'
+      '${labels.$2}:\n'
+      '• \n'
+      '• \n'
+      '• \n\n'
+      '${labels.$3}:\n\n'
+      '${labels.$4}:\n\n'
       '#TradeMasterHW',
     );
     final base = await chatUrl();
