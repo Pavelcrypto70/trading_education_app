@@ -6,8 +6,9 @@ import '../l10n/app_localizations.dart';
 
 enum AppLanguage {
   en('en', 'English', '🇬🇧'),
-  ru('ru', 'Русский', '🇷🇺'),
-  pt('pt', 'Português', '🇧🇷');
+  es('es', 'Español', '🇲🇽'),
+  pt('pt', 'Português', '🇧🇷'),
+  ru('ru', 'Русский', '🇷🇺');
 
   const AppLanguage(this.code, this.label, this.flag);
   final String code;
