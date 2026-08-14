@@ -9,6 +9,8 @@ import '../services/gamification_service.dart';
 import '../services/locale_service.dart';
 import '../services/onboarding_service.dart';
 import '../services/progress_service.dart';
+import '../widgets/community_banner.dart';
+import '../services/program_service.dart';
 import '../services/referral_service.dart';
 import '../theme.dart';
 
@@ -32,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _completed = 0;
 
-  int _totalLessons = 100;
+  int _totalLessons = 47;
 
   int _streak = 0;
 
@@ -46,6 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _loading = true;
   int _xp = 0;
   int _level = 1;
+  int _programDay = 1;
+  bool _programOnTrack = true;
 
 
 
@@ -77,6 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final completedSet = await ProgressService.getCompletedLessons();
     final xp = await GamificationService.getXp();
     final level = await GamificationService.getLevel();
+    final programDay = await ProgramService.getCurrentDay();
+    final onTrack = ProgramService.isOnTrack(completed, programDay, lessons.length);
 
 
 
@@ -115,6 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _continueLesson = next;
       _xp = xp;
       _level = level;
+      _programDay = programDay;
+      _programOnTrack = onTrack;
       _loading = false;
 
     });
@@ -274,7 +282,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 16),
+
+                const CommunityBanner(),
+
+                const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ActionCard(
+                        title: l10n.homeworkTitle,
+                        subtitle: l10n.homeworkHomeSubtitle,
+                        icon: Icons.assignment_outlined,
+                        color: AppTheme.accentCommunity,
+                        onTap: () => context.push('/homework'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _ActionCard(
+                        title: l10n.certificateTitle,
+                        subtitle: l10n.certificateHomeSubtitle,
+                        icon: Icons.verified_outlined,
+                        color: AppTheme.gold,
+                        onTap: () => context.push('/certificate'),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
+                _ProgramDayCard(
+                  day: _programDay,
+                  completed: _completed,
+                  total: _totalLessons,
+                  onTrack: _programOnTrack,
+                ),
+
+                const SizedBox(height: 16),
 
                 Container(
 
@@ -426,56 +473,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 12),
 
-                _ActionCard(
-
-                  title: l10n.dailyChallenge,
-
-                  subtitle: _dailyDone
-
-                      ? l10n.dailyChallengeDone(_dailyScore ?? 0)
-
-                      : l10n.dailyChallengeNew,
-
-                  icon: Icons.bolt,
-
-                  color: const Color(0xFF2563EB),
-
-                  badge: _dailyDone ? l10n.done : l10n.newBadge,
-
-                  onTap: () => context.push('/daily-challenge'),
-
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ActionCard(
+                        title: l10n.dailyChallenge,
+                        subtitle: _dailyDone
+                            ? l10n.dailyChallengeDone(_dailyScore ?? 0)
+                            : l10n.dailyChallengeNew,
+                        icon: Icons.bolt,
+                        color: AppTheme.accentQuizzes,
+                        badge: _dailyDone ? l10n.done : l10n.newBadge,
+                        onTap: () => context.push('/daily-challenge'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _ActionCard(
+                        title: l10n.flashcards,
+                        subtitle: l10n.flashcardsSubtitle,
+                        icon: Icons.style,
+                        color: AppTheme.accent,
+                        onTap: () => context.push('/flashcards'),
+                      ),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 12),
 
                 _ActionCard(
-
-                  title: l10n.flashcards,
-
-                  subtitle: l10n.flashcardsSubtitle,
-
-                  icon: Icons.style,
-
-                  color: const Color(0xFF7C3AED),
-
-                  onTap: () => context.push('/flashcards'),
-
-                ),
-
-                const SizedBox(height: 12),
-
-                _ActionCard(
-
                   title: l10n.paperTrading,
-
                   subtitle: l10n.paperTradingSubtitle,
-
                   icon: Icons.candlestick_chart,
-
-                  color: const Color(0xFF059669),
-
+                  color: AppTheme.accentLessons,
                   onTap: () => context.go('/practice'),
-
                 ),
 
                 const SizedBox(height: 20),
@@ -489,17 +521,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 12),
 
                 _ActionCard(
-
                   title: l10n.marketConcepts,
-
                   subtitle: l10n.marketConceptsSubtitle,
-
                   icon: Icons.show_chart,
-
-                  color: const Color(0xFF0891B2),
-
+                  color: AppTheme.accentPath,
                   onTap: () => context.push('/market'),
-
                 ),
 
               ],
@@ -608,7 +634,10 @@ class _ContinueCard extends StatelessWidget {
 
         padding: const EdgeInsets.all(18),
 
-        decoration: AppTheme.cardDecoration(color: AppTheme.gold.withValues(alpha: 0.08)),
+        decoration: AppTheme.accentCardDecoration(
+          AppTheme.gold,
+          color: AppTheme.gold.withValues(alpha: 0.08),
+        ),
 
         child: Row(
 
@@ -718,73 +747,97 @@ class _ActionCard extends StatelessWidget {
 
       child: Container(
 
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(14),
 
-        decoration: AppTheme.cardDecoration(),
+        decoration: AppTheme.accentCardDecoration(color),
 
-        child: Row(
+        child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
 
-            Container(
+            Row(
 
-              width: 48,
+              children: [
 
-              height: 48,
+                Container(
 
-              decoration: BoxDecoration(
+                  width: 40,
 
-                color: color.withValues(alpha: 0.15),
+                  height: 40,
 
-                borderRadius: BorderRadius.circular(14),
+                  decoration: BoxDecoration(
 
-              ),
+                    color: color.withValues(alpha: 0.15),
 
-              child: Icon(icon, color: color),
+                    borderRadius: BorderRadius.circular(12),
 
-            ),
+                  ),
 
-            const SizedBox(width: 14),
-
-            Expanded(
-
-              child: Column(
-
-                crossAxisAlignment: CrossAxisAlignment.start,
-
-                children: [
-
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-
-                  Text(subtitle, style: const TextStyle(color: Colors.white54, fontSize: 13)),
-
-                ],
-
-              ),
-
-            ),
-
-            if (badge != null)
-
-              Container(
-
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-
-                decoration: BoxDecoration(
-
-                  color: color.withValues(alpha: 0.2),
-
-                  borderRadius: BorderRadius.circular(999),
+                  child: Icon(icon, color: color, size: 22),
 
                 ),
 
-                child: Text(badge!, style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.w700)),
+                const Spacer(),
 
-              ),
+                if (badge != null)
 
-            const SizedBox(width: 8),
+                  Container(
 
-            const Icon(Icons.chevron_right, color: Colors.white38),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+
+                    decoration: BoxDecoration(
+
+                      color: color.withValues(alpha: 0.2),
+
+                      borderRadius: BorderRadius.circular(999),
+
+                      border: Border.all(color: color.withValues(alpha: 0.35)),
+
+                    ),
+
+                    child: Text(
+
+                      badge!,
+
+                      style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w700),
+
+                    ),
+
+                  ),
+
+              ],
+
+            ),
+
+            const SizedBox(height: 12),
+
+            Text(
+
+              title,
+
+              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+
+              maxLines: 2,
+
+              overflow: TextOverflow.ellipsis,
+
+            ),
+
+            const SizedBox(height: 4),
+
+            Text(
+
+              subtitle,
+
+              style: const TextStyle(color: Colors.white54, fontSize: 12, height: 1.3),
+
+              maxLines: 2,
+
+              overflow: TextOverflow.ellipsis,
+
+            ),
 
           ],
 
@@ -828,7 +881,7 @@ class _ActivityChartState extends State<_ActivityChart> {
 
     return Container(
       padding: const EdgeInsets.all(18),
-      decoration: AppTheme.cardDecoration(),
+      decoration: AppTheme.accentCardDecoration(AppTheme.gold),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -877,6 +930,53 @@ class _ActivityChartState extends State<_ActivityChart> {
   }
 }
 
+class _ProgramDayCard extends StatelessWidget {
+  final int day;
+  final int completed;
+  final int total;
+  final bool onTrack;
+
+  const _ProgramDayCard({
+    required this.day,
+    required this.completed,
+    required this.total,
+    required this.onTrack,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final expected = ProgramService.expectedLessonsByDay(day, total);
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: AppTheme.accentCardDecoration(
+        onTrack ? AppTheme.accentLessons : Colors.orangeAccent,
+        color: onTrack ? Colors.greenAccent.withValues(alpha: 0.06) : Colors.orangeAccent.withValues(alpha: 0.06),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(onTrack ? Icons.flag : Icons.flag_outlined,
+                  color: onTrack ? Colors.greenAccent : Colors.orangeAccent, size: 22),
+              const SizedBox(width: 8),
+              Text(l10n.programDayTitle(day, ProgramService.programDays),
+                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            l10n.programDaySubtitle(completed, expected, total),
+            style: const TextStyle(color: Colors.white54, fontSize: 13, height: 1.4),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _XpCard extends StatelessWidget {
   final int xp;
   final int level;
@@ -890,7 +990,7 @@ class _XpCard extends StatelessWidget {
     final title = GamificationService.levelTitle(level, lang);
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: AppTheme.cardDecoration(),
+      decoration: AppTheme.accentCardDecoration(AppTheme.gold),
       child: Row(children: [
         Container(
           width: 52, height: 52,

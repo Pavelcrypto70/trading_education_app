@@ -1,0 +1,13 @@
+{
+  "name": "trade-master-tools",
+  "private": true,
+  "scripts": {
+    "setup": "powershell -ExecutionPolicy Bypass -File tools/setup_backend.ps1",
+    "deploy:web": "powershell -ExecutionPolicy Bypass -File tools/deploy_pages.ps1",
+    "supabase:push": "supabase db push",
+    "supabase:functions": "supabase functions deploy verify-purchase && supabase functions deploy stripe-checkout && supabase functions deploy stripe-webhook"
+  },
+  "devDependencies": {
+    "supabase": "^2.20.12"
+  }
+}

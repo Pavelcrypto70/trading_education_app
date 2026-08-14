@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+
+import '../config/app_config.dart';
 import '../utils/external_link.dart';
 
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
 
-/// Homework submission via Telegram deep link (no bot token in client).
+/// Homework submission: copy a template, open the Desk Club homework topic.
 class HomeworkService {
   static Map<String, dynamic>? _rubrics;
 
@@ -26,12 +28,57 @@ class HomeworkService {
   }
 
   static Future<String> chatUrl() async {
-    final data = await loadRubrics();
-    final tg = data['telegram'] as Map<String, dynamic>;
-    return tg['chatUrl'] as String? ?? 'https://t.me/Desk_Club';
+    return AppConfig.homeworkTelegramUrl;
   }
 
-  /// Opens Telegram with pre-filled homework template for the lesson.
+  static String buildTemplate({
+    required int lessonId,
+    required String lessonTitle,
+    String? oneSentence,
+  }) {
+    final lang = LocaleService.instance.languageCode;
+    final labels = switch (lang) {
+      'ru' => (
+          'Урок',
+          'Одной фразой',
+          'Что сделал',
+          'Что ещё не ясно',
+          'Топик',
+        ),
+      'pt' => (
+          'Aula',
+          'Em uma frase',
+          'O que fiz',
+          'O que ainda não ficou claro',
+          'Tópico',
+        ),
+      'es' => (
+          'Lección',
+          'En una frase',
+          'Qué hice',
+          'Qué aún no está claro',
+          'Tema',
+        ),
+      _ => (
+          'Lesson',
+          'In one sentence',
+          'What I did',
+          'Still unclear',
+          'Topic',
+        ),
+    };
+    final one = (oneSentence ?? '').trim();
+    return '${labels.$1} $lessonId: $lessonTitle\n'
+        '${labels.$5}: ${AppConfig.homeworkTopicName} · ${AppConfig.communityTelegramHandle}\n\n'
+        '${labels.$2}:\n'
+        '${one.isEmpty ? '—' : one}\n\n'
+        '${labels.$3}:\n'
+        '• \n\n'
+        '${labels.$4}:\n'
+        '• \n\n'
+        '#hw-submitted #TradeMasterHW';
+  }
+
   static Future<List<Map<String, dynamic>>> criteria() async {
     final data = await loadRubrics();
     final list = data['criteria'] as List? ?? const [];
@@ -54,27 +101,16 @@ class HomeworkService {
   static Future<bool> submitHomework({
     required int lessonId,
     required String lessonTitle,
+    String? oneSentence,
   }) async {
-    final lang = LocaleService.instance.languageCode;
-    final labels = switch (lang) {
-      'ru' => ('Урок', 'Темы урока', 'Как я понял', 'Что непонятно'),
-      'pt' => ('Aula', 'Tópicos', 'Como entendi', 'O que não ficou claro'),
-      'es' => ('Clase', 'Temas', 'Cómo lo entendí', 'Qué no quedó claro'),
-      _ => ('Lesson', 'Topics covered', 'How I understood', 'Still unclear'),
-    };
-    final text = Uri.encodeComponent(
-      '${labels.$1} $lessonId: $lessonTitle\n\n'
-      '${labels.$2}:\n'
-      '• \n'
-      '• \n'
-      '• \n\n'
-      '${labels.$3}:\n\n'
-      '${labels.$4}:\n\n'
-      '#TradeMasterHW',
+    final text = buildTemplate(
+      lessonId: lessonId,
+      lessonTitle: lessonTitle,
+      oneSentence: oneSentence,
     );
+    await Clipboard.setData(ClipboardData(text: text));
+    await ProgressService.incrementHomeworkSubmit(lessonId);
     final base = await chatUrl();
-    final ok = await openExternalLink('$base?text=$text');
-    if (ok) await ProgressService.incrementHomeworkSubmit(lessonId);
-    return ok;
+    return openExternalLink(base);
   }
 }

@@ -4,15 +4,20 @@ import 'package:go_router/go_router.dart';
 
 
 
+import '../config/app_config.dart';
 import '../data/lessons_repository.dart';
 
 import '../models/lesson.dart';
 
+import '../services/entitlement_service.dart';
 import '../services/locale_service.dart';
 
 import '../services/progress_service.dart';
 
 import '../theme.dart';
+
+import '../widgets/community_banner.dart';
+import '../widgets/lesson_paywall_sheet.dart';
 
 
 
@@ -42,6 +47,8 @@ class _LearningScreenState extends State<LearningScreen> {
 
   Set<int> _completed = {};
 
+  bool _fullAccess = false;
+
 
 
   @override
@@ -59,6 +66,8 @@ class _LearningScreenState extends State<LearningScreen> {
   Future<List<Lesson>> _load() async {
 
     _completed = await ProgressService.getCompletedLessons();
+
+    _fullAccess = await EntitlementService.hasFullAccess();
 
     return _repository.loadLessons();
 
@@ -283,6 +292,10 @@ class _LearningScreenState extends State<LearningScreen> {
 
                         ),
 
+                        const SizedBox(height: 12),
+
+                        const CommunityBanner(compact: true),
+
                         const SizedBox(height: 16),
 
                         TextField(
@@ -369,6 +382,10 @@ class _LearningScreenState extends State<LearningScreen> {
 
                         final done = _completed.contains(lesson.id);
 
+                        final unlocked = _fullAccess || AppConfig.trialLessonIds.contains(lesson.id);
+
+                        final isTrial = !_fullAccess && AppConfig.trialLessonIds.contains(lesson.id);
+
                         return Padding(
 
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
@@ -379,26 +396,37 @@ class _LearningScreenState extends State<LearningScreen> {
 
                             onTap: () async {
 
-                              final missing = lesson.prerequisites
-                                  .where((id) => !_completed.contains(id))
-                                  .toList();
-                              if (missing.isNotEmpty) {
-                                if (!context.mounted) return;
-                                await showDialog<void>(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    backgroundColor: AppTheme.surface,
-                                    title: Text(l10n.syllabusTitle),
-                                    content: Text(l10n.prerequisitesRequired(missing.join(', '))),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(ctx),
-                                        child: Text(l10n.continueBtn),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                              if (!unlocked) {
+
+                                await showLessonPaywallIfNeeded(context, lesson.id);
+
                                 return;
+
+                              }
+
+                              // Full access (admin/premium): skip sequential prerequisites.
+                              if (!_fullAccess) {
+                                final missing = lesson.prerequisites
+                                    .where((id) => !_completed.contains(id))
+                                    .toList();
+                                if (missing.isNotEmpty) {
+                                  if (!context.mounted) return;
+                                  await showDialog<void>(
+                                    context: context,
+                                    builder: (ctx) => AlertDialog(
+                                      backgroundColor: AppTheme.surface,
+                                      title: Text(l10n.syllabusTitle),
+                                      content: Text(l10n.prerequisitesRequired(missing.join(', '))),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(ctx),
+                                          child: Text(l10n.continueBtn),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                  return;
+                                }
                               }
 
                               await context.push('/lesson/${lesson.id}', extra: lesson);
@@ -411,10 +439,19 @@ class _LearningScreenState extends State<LearningScreen> {
 
                               padding: const EdgeInsets.all(16),
 
-                              decoration: AppTheme.cardDecoration(
-
-                                color: done ? AppTheme.gold.withValues(alpha: 0.06) : AppTheme.card,
-
+                              decoration: AppTheme.accentCardDecoration(
+                                done
+                                    ? AppTheme.gold
+                                    : isTrial
+                                        ? AppTheme.accentLessons
+                                        : unlocked
+                                            ? AppTheme.accentQuizzes.withValues(alpha: 0.85)
+                                            : Colors.white24,
+                                color: done
+                                    ? AppTheme.gold.withValues(alpha: 0.06)
+                                    : unlocked
+                                        ? AppTheme.card
+                                        : AppTheme.card.withValues(alpha: 0.55),
                               ),
 
                               child: Row(
@@ -447,7 +484,11 @@ class _LearningScreenState extends State<LearningScreen> {
 
                                           ? const Icon(Icons.check, color: AppTheme.gold, size: 20)
 
-                                          : Text('${lesson.id}', style: const TextStyle(fontWeight: FontWeight.w700)),
+                                          : !unlocked
+
+                                              ? const Icon(Icons.lock_outline, color: Colors.white38, size: 20)
+
+                                              : Text('${lesson.id}', style: const TextStyle(fontWeight: FontWeight.w700)),
 
                                     ),
 
@@ -498,6 +539,8 @@ class _LearningScreenState extends State<LearningScreen> {
                                             _chip('${lesson.durationMin} ${l10n.min}'),
 
                                             if (lesson.hasRichContent) _chip(l10n.interactive, accent: true),
+
+                                            if (isTrial) _chip(l10n.trialBadge, accent: true),
 
                                           ],
 

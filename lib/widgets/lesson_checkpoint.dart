@@ -26,6 +26,7 @@ class LessonCheckpoint extends StatefulWidget {
               correctIndex: q.correctIndex,
               explanation: q.explanation,
               showChart: q.id.endsWith('Q1'),
+              cardIndex: _lastCardIndex(lesson),
             ),
           )
           .toList();
@@ -39,31 +40,75 @@ class LessonCheckpoint extends StatefulWidget {
     }
 
     if (bullets.length >= 3) {
+      final a = _shuffleOptions([bullets[0], bullets[1], bullets[2]], 0, lesson.id * 41);
+      final b = _shuffleOptions(
+        [lesson.takeaway, bullets.last, bullets.length > 1 ? bullets[1] : bullets[0]],
+        0,
+        lesson.id * 43,
+      );
       return [
         CheckpointQuestion(
           question: l10n.checkpointQuestion1,
-          options: [bullets[0], bullets[1], bullets[2]],
-          correctIndex: 0,
+          options: a.$1,
+          correctIndex: a.$2,
+          cardIndex: _lastCardIndex(lesson),
         ),
         CheckpointQuestion(
           question: l10n.checkpointQuestion2(lesson.title),
-          options: [lesson.takeaway, bullets.last, bullets.length > 1 ? bullets[1] : bullets[0]],
-          correctIndex: 0,
+          options: b.$1,
+          correctIndex: b.$2,
+          cardIndex: _lastCardIndex(lesson),
+          showChart: true,
         ),
       ];
     }
 
+    final fallback = _shuffleOptions(
+      [
+        lesson.takeaway,
+        lesson.subtitle,
+        lesson.outcome.length > 60 ? lesson.outcome.substring(0, 60) : lesson.outcome,
+      ],
+      0,
+      lesson.id * 47,
+    );
     return [
       CheckpointQuestion(
         question: l10n.checkpointQuestion2(lesson.title),
-        options: [
-          lesson.takeaway,
-          lesson.subtitle,
-          lesson.outcome.length > 60 ? lesson.outcome.substring(0, 60) : lesson.outcome,
-        ],
-        correctIndex: 0,
+        options: fallback.$1,
+        correctIndex: fallback.$2,
+        cardIndex: _lastCardIndex(lesson),
+        showChart: true,
       ),
     ];
+  }
+
+  static int _lastCardIndex(Lesson lesson) {
+    var max = 0;
+    for (final s in lesson.sections) {
+      final i = s.cardIndex;
+      if (i != null && i > max) max = i;
+    }
+    return max;
+  }
+
+  static (List<String>, int) _shuffleOptions(List<String> options, int correctIndex, int seed) {
+    final indexed = List.generate(options.length, (i) => i);
+    // Deterministic Fisher–Yates
+    var state = seed & 0x7fffffff;
+    int next() {
+      state = (1103515245 * state + 12345) & 0x7fffffff;
+      return state;
+    }
+    for (var i = indexed.length - 1; i > 0; i--) {
+      final j = next() % (i + 1);
+      final tmp = indexed[i];
+      indexed[i] = indexed[j];
+      indexed[j] = tmp;
+    }
+    final shuffled = indexed.map((i) => options[i]).toList();
+    final newCorrect = indexed.indexOf(correctIndex.clamp(0, options.length - 1));
+    return (shuffled, newCorrect < 0 ? 0 : newCorrect);
   }
 
   @override
@@ -76,6 +121,7 @@ class CheckpointQuestion {
   final int correctIndex;
   final String? explanation;
   final bool showChart;
+  final int cardIndex;
 
   const CheckpointQuestion({
     required this.question,
@@ -83,6 +129,7 @@ class CheckpointQuestion {
     required this.correctIndex,
     this.explanation,
     this.showChart = false,
+    this.cardIndex = 0,
   });
 }
 
@@ -203,8 +250,9 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
             SizedBox(
               height: 160,
               child: LessonChartWidget(
-                chartType: 'lesson',
+                chartType: 'candlestick',
                 lessonId: widget.lesson.id,
+                cardIndex: q.cardIndex,
                 height: 160,
               ),
             ),

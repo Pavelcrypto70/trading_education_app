@@ -27,6 +27,14 @@ class _HomeworkRubricCardState extends State<HomeworkRubricCard> {
     _load();
   }
 
+  @override
+  void didUpdateWidget(HomeworkRubricCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.lessonId != widget.lessonId) {
+      _load();
+    }
+  }
+
   Future<void> _load() async {
     final criteria = await HomeworkService.criteria();
     final instructions = await HomeworkService.instructions();

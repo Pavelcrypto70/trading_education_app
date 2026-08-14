@@ -4,21 +4,39 @@
 class AppConfig {
   AppConfig._();
 
-  /// Five trial lessons chosen for max conversion:
-  /// 1–2 intro hook, 3 chart skill, 7 mistakes (trust), 10 first strategy (FOMO).
+  /// Five trial lessons for the new linear start:
+  /// 1–3 spot, 7 spot vs futures, 10 green/red candles.
   static const trialLessonIds = {1, 2, 3, 7, 10};
 
   /// Full admin access — all lessons, premium features, no paywall.
-  static const adminEmails = {
-    'pavelcryptoclub@gmail.com',
-  };
+  /// Override via `--dart-define=ADMIN_EMAILS=a@x.com,b@y.com`.
+  static Set<String> get adminEmails {
+    const raw = String.fromEnvironment(
+      'ADMIN_EMAILS',
+      defaultValue: 'pavelcryptoclub@gmail.com',
+    );
+    return raw
+        .split(',')
+        .map((e) => e.trim().toLowerCase())
+        .where((e) => e.isNotEmpty)
+        .toSet();
+  }
 
-  /// Main EN community hub (Desk Club). Topics: general, academy, homework, etc.
+  /// Main community hub (Desk Club forum).
   static const communityTelegramUrl = 'https://t.me/Desk_Club';
   static const communityTelegramHandle = '@Desk_Club';
 
-  /// Homework: prefer Desk Club topic `homework`; legacy chat kept as fallback URL.
-  static const homeworkTelegramUrl = 'https://t.me/Desk_Club';
+  /// Forum topic 📝 homework / Домашки.
+  /// Public topic link is https://t.me/Desk_Club/<threadId>.
+  /// Empty thread id → open the hub; the homework template names the topic.
+  static const homeworkTopicId = String.fromEnvironment('HW_TOPIC_ID');
+  static const homeworkTopicName = 'homework';
+
+  static String get homeworkTelegramUrl {
+    final id = homeworkTopicId.trim();
+    if (id.isEmpty) return communityTelegramUrl;
+    return '$communityTelegramUrl/$id';
+  }
 
   // ── Lifetime pricing: entry ~$10 for LATAM + global ──
   static const marketPriceUsd = 14.99;

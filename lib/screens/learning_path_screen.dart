@@ -5,6 +5,7 @@ import '../data/lessons_repository.dart';
 import '../data/module_quiz_repository.dart';
 import '../data/syllabus_repository.dart';
 import '../models/lesson.dart';
+import '../services/entitlement_service.dart';
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
 import '../theme.dart';
@@ -18,6 +19,7 @@ class LearningPathScreen extends StatefulWidget {
 
 class _LearningPathScreenState extends State<LearningPathScreen> {
   bool _loading = true;
+  bool _fullAccess = false;
   List<Map<String, dynamic>> _modules = [];
   Map<int, Lesson> _lessons = {};
   Set<int> _completed = {};
@@ -31,12 +33,12 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
 
   Future<void> _load() async {
     final syllabus = await SyllabusRepository.load();
-    final lang = LocaleService.instance.languageCode;
     final modules = List<Map<String, dynamic>>.from(syllabus['modules'] as List? ?? const []);
     modules.sort((a, b) => (a['order'] as int? ?? 0).compareTo(b['order'] as int? ?? 0));
     final allLessons = await LessonsRepository().loadLessons();
     final lessonMap = {for (final l in allLessons) l.id: l};
     final completed = await ProgressService.getCompletedLessons();
+    final fullAccess = await EntitlementService.hasFullAccess();
     final meta = await ModuleQuizRepository.loadModules();
     final scores = <String, int?>{};
     for (final m in meta) {
@@ -47,12 +49,14 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
       _modules = modules;
       _lessons = lessonMap;
       _completed = completed;
+      _fullAccess = fullAccess;
       _moduleScores = scores;
       _loading = false;
     });
   }
 
   bool _isLocked(Lesson lesson) {
+    if (_fullAccess) return false;
     return lesson.prerequisites.any((id) => !_completed.contains(id));
   }
 

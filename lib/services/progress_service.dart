@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'analytics_service.dart';
+import 'sync_service.dart';
 
 class ProgressService {
   static const _completedLessonsKey = 'completedLessons';
@@ -16,13 +20,28 @@ class ProgressService {
   static const _dailyChallengeDateKey = 'dailyChallengeDate';
   static const _dailyChallengeDoneKey = 'dailyChallengeDone';
   static const _dailyChallengeScoreKey = 'dailyChallengeScore';
-  static const _isPremiumKey = 'isPremium';
   static const _flashcardsReviewedKey = 'flashcardsReviewed';
   static const _dailyActivityKey = 'dailyActivity';
   static const _moduleScoresKey = 'moduleQuizScores';
   static const _homeworkSubmitKey = 'homeworkSubmitCounts';
+  static const _lessonStepPrefix = 'lessonStep_';
 
   static Future<SharedPreferences> _prefs() => SharedPreferences.getInstance();
+
+  static Future<void> saveLessonStep(int lessonId, int step) async {
+    final prefs = await _prefs();
+    await prefs.setInt('$_lessonStepPrefix$lessonId', step);
+  }
+
+  static Future<int> getLessonStep(int lessonId) async {
+    final prefs = await _prefs();
+    return prefs.getInt('$_lessonStepPrefix$lessonId') ?? 0;
+  }
+
+  static Future<void> clearLessonStep(int lessonId) async {
+    final prefs = await _prefs();
+    await prefs.remove('$_lessonStepPrefix$lessonId');
+  }
 
   static Future<void> recordActivity() async {
     final prefs = await _prefs();
@@ -40,6 +59,7 @@ class ProgressService {
 
     await prefs.setInt(_streakKey, streak);
     await prefs.setString(_lastActiveKey, today);
+    SyncService.schedulePush();
   }
 
   static Future<int> getStreak() async {
@@ -61,8 +81,11 @@ class ProgressService {
       _completedLessonsKey,
       completed.map((e) => e.toString()).toList(),
     );
+    await prefs.remove('$_lessonStepPrefix$lessonId');
     await recordActivity();
     await recordDailyActivity();
+    AnalyticsService.lessonComplete(lessonId);
+    SyncService.schedulePush();
   }
 
   static Future<bool> isLessonComplete(int lessonId) async {
@@ -94,6 +117,7 @@ class ProgressService {
     if (history.length > 50) history.removeLast();
     await prefs.setStringList(_quizHistoryKey, history);
     await recordActivity();
+    SyncService.schedulePush();
   }
 
   static Future<List<Map<String, dynamic>>> getQuizHistory() async {
@@ -148,6 +172,7 @@ class ProgressService {
     String? position,
     double positionSize = 0,
     double entryPrice = 0,
+    bool recordActivityOnSave = true,
   }) async {
     final prefs = await _prefs();
     await prefs.setDouble(_balanceKey, balance);
@@ -163,7 +188,10 @@ class ProgressService {
     }
     await prefs.setDouble(_positionSizeKey, positionSize);
     await prefs.setDouble(_entryPriceKey, entryPrice);
-    await recordActivity();
+    if (recordActivityOnSave) {
+      await recordActivity();
+    }
+    SyncService.schedulePush();
   }
 
   static Future<bool> isDailyChallengeDone() async {
@@ -184,6 +212,7 @@ class ProgressService {
     await prefs.setBool(_dailyChallengeDoneKey, true);
     await prefs.setInt(_dailyChallengeScoreKey, score);
     await saveQuizResult(title: 'Daily Challenge', score: score, total: total);
+    SyncService.schedulePush();
   }
 
   static Future<int> getFlashcardsReviewed() async {
@@ -196,16 +225,18 @@ class ProgressService {
     final count = prefs.getInt(_flashcardsReviewedKey) ?? 0;
     await prefs.setInt(_flashcardsReviewedKey, count + 1);
     await recordActivity();
+    SyncService.schedulePush();
   }
 
   static Future<bool> isPremium() async {
+    // Deprecated: use PremiumService.isPremium(). Kept for compatibility.
     final prefs = await _prefs();
-    return prefs.getBool(_isPremiumKey) ?? false;
+    return prefs.getBool('serverPremium') ?? false;
   }
 
+  @Deprecated('Premium is granted server-side via PurchaseService')
   static Future<void> setPremium(bool value) async {
-    final prefs = await _prefs();
-    await prefs.setBool(_isPremiumKey, value);
+    // No-op: premium cannot be set locally anymore.
   }
 
   static Future<void> recordDailyActivity({int amount = 1}) async {
@@ -220,7 +251,7 @@ class ProgressService {
     map.removeWhere((key, _) {
       final parts = key.split('-');
       if (parts.length != 3) return true;
-      final d = DateTime.tryParse('$key');
+      final d = DateTime.tryParse(key);
       return d != null && d.isBefore(cutoff);
     });
     await prefs.setString(_dailyActivityKey, jsonEncode(map));
@@ -251,6 +282,7 @@ class ProgressService {
     map[moduleId] = {'score': score, 'total': total, 'date': DateTime.now().toIso8601String()};
     await prefs.setString(_moduleScoresKey, jsonEncode(map));
     await recordDailyActivity();
+    SyncService.schedulePush();
   }
 
   static Future<bool> isModulePassed(String moduleId) async {
@@ -285,14 +317,30 @@ class ProgressService {
     map[key] = (map[key] as int? ?? 0) + 1;
     await prefs.setString(_homeworkSubmitKey, jsonEncode(map));
     await recordDailyActivity();
+    SyncService.schedulePush();
   }
 
   static Future<int> getHomeworkSubmitCount(int lessonId) async {
+    final map = await getHomeworkSubmitMap();
+    return map[lessonId] ?? 0;
+  }
+
+  static Future<Map<int, int>> getHomeworkSubmitMap() async {
     final prefs = await _prefs();
     final raw = prefs.getString(_homeworkSubmitKey);
-    if (raw == null) return 0;
+    if (raw == null) return {};
     final map = Map<String, dynamic>.from(jsonDecode(raw) as Map);
-    return map[lessonId.toString()] as int? ?? 0;
+    return {
+      for (final e in map.entries)
+        if (int.tryParse(e.key) != null)
+          int.parse(e.key): (e.value as num).toInt(),
+    };
+  }
+
+  /// Unique lessons with at least one homework send.
+  static Future<int> getHomeworkLessonsSubmitted() async {
+    final map = await getHomeworkSubmitMap();
+    return map.values.where((v) => v > 0).length;
   }
 
   static Future<void> resetAll() async {

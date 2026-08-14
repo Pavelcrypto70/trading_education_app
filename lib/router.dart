@@ -14,10 +14,12 @@ import 'screens/module_quiz_screen.dart';
 import 'screens/lesson_screen.dart';
 import 'screens/market_screen.dart';
 import 'screens/certificate_screen.dart';
+import 'screens/homework_screen.dart';
 import 'screens/glossary_screen.dart';
 import 'screens/syllabus_screen.dart';
 import 'screens/onboarding_goal_screen.dart';
 import 'screens/onboarding_screen.dart';
+import 'screens/auth_screen.dart';
 import 'screens/premium_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/quiz_play_screen.dart';
@@ -105,6 +107,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const MarketScreen(),
     ),
     GoRoute(
+      path: '/auth',
+      builder: (context, state) => const AuthScreen(),
+    ),
+    GoRoute(
       path: '/premium',
       builder: (context, state) => const PremiumScreen(),
     ),
@@ -148,6 +154,13 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/certificate',
       builder: (context, state) => const CertificateScreen(),
+    ),
+    GoRoute(
+      path: '/homework',
+      builder: (context, state) {
+        final lessonId = int.tryParse(state.uri.queryParameters['lessonId'] ?? '');
+        return HomeworkScreen(initialLessonId: lessonId);
+      },
     ),
     GoRoute(
       path: '/quiz-result',

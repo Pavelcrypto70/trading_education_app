@@ -13,8 +13,21 @@ class ChartVisualContext {
   });
 
   static ChartVisualContext forChartType(String chartType, AppLocalizations l10n, {int? lessonId}) {
+    if (chartType.startsWith('pattern_') ||
+        chartType == 'ascending_triangle' ||
+        chartType == 'descending_triangle' ||
+        chartType == 'symmetric_triangle' ||
+        chartType == 'head_shoulders' ||
+        chartType == 'fibonacci' ||
+        chartType == 'channel') {
+      return ChartVisualContext(
+        showCryptoHeader: false,
+        conceptTitle: l10n.sectionChartExample,
+        showTradingViewNote: false,
+      );
+    }
     if (lessonId != null) {
-      return const ChartVisualContext(showCryptoHeader: true, showTradingViewNote: true);
+      return const ChartVisualContext(showCryptoHeader: true, showTradingViewNote: false);
     }
     switch (chartType) {
       case 'market_balance':
@@ -24,6 +37,15 @@ class ChartVisualContext {
           showTradingViewNote: false,
         );
       case 'order_flow':
+      case 'order_book':
+      case 'order_book_spread':
+      case 'order_book_wall':
+      case 'order_book_bid_wall':
+      case 'order_book_spoof':
+      case 'ask_wall':
+      case 'bid_wall':
+      case 'spoof':
+      case 'spread':
         return ChartVisualContext(
           showCryptoHeader: false,
           conceptTitle: l10n.chartConceptOrderBook,
@@ -44,10 +66,10 @@ class ChartVisualContext {
       case 'risk_reward':
         return ChartVisualContext(
           showCryptoHeader: true,
-          showTradingViewNote: true,
+          showTradingViewNote: false,
         );
       default:
-        return const ChartVisualContext(showCryptoHeader: true, showTradingViewNote: true);
+        return const ChartVisualContext(showCryptoHeader: true, showTradingViewNote: false);
     }
   }
 

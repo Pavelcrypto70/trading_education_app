@@ -18,6 +18,7 @@ class LessonChartCard extends StatelessWidget {
   final ChartVisualContext visual;
   final double height;
   final int? lessonId;
+  final int cardIndex;
 
   const LessonChartCard({
     super.key,
@@ -30,6 +31,7 @@ class LessonChartCard extends StatelessWidget {
     this.exchange = 'Binance',
     this.height = 240,
     this.lessonId,
+    this.cardIndex = 0,
   });
 
   @override
@@ -66,7 +68,11 @@ class LessonChartCard extends StatelessWidget {
               child: SizedBox(
                 height: lessonId != null ? math.max(height, 300) : height,
                 width: double.infinity,
-                child: LessonChartWidget(chartType: chartType, lessonId: lessonId),
+                child: LessonChartWidget(
+                  chartType: chartType,
+                  lessonId: lessonId,
+                  cardIndex: cardIndex,
+                ),
               ),
             ),
           ),

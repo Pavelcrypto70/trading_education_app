@@ -1,0 +1,24 @@
+PLAY / APP STORE — Trade Master
+Package: com.trademaster.education
+Version: 1.0.0+1
+Flavor (Play AAB): play
+IAP: trade_master_lifetime_full (lifetime, $9.99, not a subscription)
+Category: Education
+Contact: pavelcryptoclub@gmail.com
+Privacy: https://pavelcrypto70.github.io/privacy.html
+Terms: https://pavelcrypto70.github.io/terms.html
+Website: https://t.me/Desk_Club
+
+Paste long copy from store/PLAY_STORE_LISTING.md (RU / PT-BR / ES-MX / EN).
+
+Files:
+store/icon-512.png
+store/feature-graphic.png
+store/screenshots/          Play phone 1080x1920
+store/screenshots-iphone67/ App Store 1290x2796
+
+Review notes:
+Trial lessons 1, 2, 3, 7, 10 work without sign-in.
+Purchase requires email OTP. Provide a demo account in App Review Information.
+Hide/remove third-party login — email OTP only.
+Education only. Not a broker.

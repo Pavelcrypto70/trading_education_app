@@ -1,0 +1,15 @@
+{
+  "issues": [],
+  "ideas": [
+    "Chart captions still generic visualExampleCaption — make per-card caption from topic",
+    "Intro still has concept visual + chart — may feel heavy; optional slim intro",
+    "Choice correct always index 0 for phrase — shuffle options for harder quiz feel",
+    "Homework items still include full takeaway — fine for template, but UI may look long",
+    "Pattern lessons: pattern diagram only on even cards — odd still generic candles",
+    "Case studies orphaned (not in player) — either wire selectively or delete from assets",
+    "EN/PT/ES loc['outcome']/sub overridden by RU-style UI strings — OK; verify naturalness",
+    "Paper practice default scenario still mentions stop/target before trade module",
+    "No progress resume mid-lesson step index",
+    "Checkpoint can still show chart with lessonId cardIndex 0 — may mismatch last card"
+  ]
+}

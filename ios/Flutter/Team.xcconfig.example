@@ -1,0 +1,3 @@
+# Optional: set DEVELOPMENT_TEAM here or in Xcode UI.
+# Example: DEVELOPMENT_TEAM = ABCD123456
+#include? "Generated.xcconfig"

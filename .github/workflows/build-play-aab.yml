@@ -1,0 +1,47 @@
+name: Build Play AAB
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Decode upload keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEY_PROPERTIES: ${{ secrets.ANDROID_KEY_PROPERTIES }}
+          DART_DEFINES_JSON: ${{ secrets.DART_DEFINES_JSON }}
+        run: |
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ] || [ -z "$ANDROID_KEY_PROPERTIES" ]; then
+            echo "Missing ANDROID_KEYSTORE_BASE64 or ANDROID_KEY_PROPERTIES secrets"
+            exit 1
+          fi
+          mkdir -p android/keystore
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/keystore/upload-keystore.jks
+          printf '%s\n' "$ANDROID_KEY_PROPERTIES" > android/key.properties
+          printf '%s\n' "$DART_DEFINES_JSON" > dart_defines.json
+
+      - name: Pub get + brand assets
+        run: |
+          flutter pub get
+          dart run flutter_launcher_icons
+          dart run flutter_native_splash:create
+
+      - name: Build playRelease appbundle
+        run: flutter build appbundle --flavor play --release --dart-define-from-file=dart_defines.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-play-release-aab
+          path: build/app/outputs/bundle/playRelease/app-play-release.aab

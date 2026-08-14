@@ -9,6 +9,10 @@ class LessonSection {
   final String? symbol;
   final String? interval;
   final String? market;
+  /// For type == choice: index of the correct option in [items].
+  final int? correctIndex;
+  /// Unique chart variant within the lesson (0, 1, 2…).
+  final int? cardIndex;
 
   const LessonSection({
     required this.type,
@@ -21,6 +25,8 @@ class LessonSection {
     this.symbol,
     this.interval,
     this.market,
+    this.correctIndex,
+    this.cardIndex,
   });
 
   factory LessonSection.fromJson(Map<String, dynamic> json) {
@@ -40,6 +46,8 @@ class LessonSection {
       symbol: json['symbol'],
       interval: json['interval'],
       market: json['market'],
+      correctIndex: json['correctIndex'] as int?,
+      cardIndex: json['cardIndex'] as int?,
     );
   }
 
@@ -55,6 +63,8 @@ class LessonSection {
       if (symbol != null) 'symbol': symbol,
       if (interval != null) 'interval': interval,
       if (market != null) 'market': market,
+      if (correctIndex != null) 'correctIndex': correctIndex,
+      if (cardIndex != null) 'cardIndex': cardIndex,
     };
   }
 }

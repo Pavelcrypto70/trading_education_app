@@ -1,0 +1,18 @@
+{
+  "issues": [],
+  "backlog": [
+    "Slimmer intro (drop concept visual or merge with first topic)",
+    "Shorter homework item list",
+    "Case studies: wire selectively or delete",
+    "Native review EN/PT/ES UI outcome strings",
+    "Mid-lesson resume toast «Продолжить с шага N»",
+    "Accessibility: larger tap targets on choice",
+    "Offline indicator when Telegram homework fails",
+    "Analytics events for choice wrong/right"
+  ],
+  "quiz_zero": {
+    "q1": 24,
+    "q2": 16
+  },
+  "phrase_zero": 24
+}

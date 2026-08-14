@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../data/lesson_chart_setups.dart';
 import '../models/chart_setup.dart';
+import 'order_book_diagram.dart';
+import 'pattern_diagram_widget.dart';
 
 class CandleData {
   final double open;
@@ -24,20 +26,55 @@ class CandleData {
 class LessonChartWidget extends StatelessWidget {
   final String chartType;
   final int? lessonId;
+  final int cardIndex;
   final double? height;
 
   const LessonChartWidget({
     super.key,
     required this.chartType,
     this.lessonId,
+    this.cardIndex = 0,
     this.height,
   });
 
+  static bool _isPatternType(String t) =>
+      t.startsWith('pattern_') ||
+      t == 'ascending_triangle' ||
+      t == 'descending_triangle' ||
+      t == 'symmetric_triangle' ||
+      t == 'head_shoulders' ||
+      t == 'inverse_head_shoulders' ||
+      t == 'fibonacci' ||
+      t == 'channel';
+
+  static bool _isOrderBookType(String t) =>
+      t == 'order_flow' ||
+      t == 'order_book' ||
+      t.startsWith('order_book_') ||
+      t == 'ask_wall' ||
+      t == 'bid_wall' ||
+      t == 'spoof' ||
+      t == 'spread';
+
   @override
   Widget build(BuildContext context) {
+    if (_isPatternType(chartType)) {
+      final h = height ?? 260.0;
+      return PatternDiagramWidget(patternType: chartType, height: h);
+    }
+            if (_isOrderBookType(chartType)) {
+      final h = height ?? 340.0;
+      final scenario = OrderBookDiagram.fromChartType(chartType);
+      final pair = scenario == OrderBookScenario.spread ? 'ALT/USDT' : 'BTC/USDT';
+      return OrderBookDiagram(
+        scenario: scenario,
+        height: h,
+        pair: pair,
+      );
+    }
     final setup = lessonId != null
-        ? LessonChartSetups.forLesson(lessonId!, chartType)
-        : LessonChartSetups.forChartType(chartType);
+        ? LessonChartSetups.forLesson(lessonId!, chartType, cardIndex: cardIndex)
+        : LessonChartSetups.forChartType(chartType, cardIndex: cardIndex);
     final h = height ?? (lessonId != null ? 300.0 : 220.0);
 
     return SizedBox(

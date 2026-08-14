@@ -1,14 +1,36 @@
 # Деплой web-сборки на https://pavelcrypto70.github.io
-# Использование: .\tools\deploy_pages.ps1
+# Использование:
+#   1) Заполните dart_defines.json (или задайте env SUPABASE_URL / SUPABASE_ANON_KEY)
+#   2) .\tools\deploy_pages.ps1
 
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 $BuildDir = Join-Path $ProjectRoot "build\web"
 $DeployDir = Join-Path $ProjectRoot ".deploy\github-io\repo"
+$DefinesFile = Join-Path $ProjectRoot "dart_defines.json"
 
-Write-Host ">> flutter build web --release"
+$dartDefines = @()
+if ($env:SUPABASE_URL) {
+    $dartDefines += "--dart-define=SUPABASE_URL=$($env:SUPABASE_URL)"
+}
+if ($env:SUPABASE_ANON_KEY) {
+    $dartDefines += "--dart-define=SUPABASE_ANON_KEY=$($env:SUPABASE_ANON_KEY)"
+}
+if ($dartDefines.Count -eq 0 -and (Test-Path $DefinesFile)) {
+    $dartDefines += "--dart-define-from-file=$DefinesFile"
+    Write-Host ">> Using keys from dart_defines.json"
+} elseif ($dartDefines.Count -eq 0) {
+    Write-Host ">> Warning: no Supabase keys - building offline demo mode" -ForegroundColor Yellow
+}
+
+Write-Host ">> flutter build web --release (local CanvasKit, no Google CDN)"
 Push-Location $ProjectRoot
-flutter build web --release
+$buildArgs = @(
+    "build", "web", "--release",
+    "--tree-shake-icons",
+    "--no-web-resources-cdn"
+) + $dartDefines
+flutter @buildArgs
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 Pop-Location
 

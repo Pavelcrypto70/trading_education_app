@@ -2,32 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-
-
-import '../services/gamification_service.dart';
+import '../services/account_data_service.dart';
+import '../services/auth_service.dart';
+import '../services/entitlement_service.dart';
 import '../services/journal_service.dart';
 import '../services/locale_service.dart';
 import '../services/onboarding_service.dart';
+import '../services/premium_service.dart';
 import '../services/progress_service.dart';
 import '../services/referral_service.dart';
 
 import '../theme.dart';
-
-
+import '../utils/legal_links.dart';
+import '../widgets/community_banner.dart';
 
 class ProfileScreen extends StatefulWidget {
 
   const ProfileScreen({super.key});
-
-
 
   @override
 
   State<ProfileScreen> createState() => _ProfileScreenState();
 
 }
-
-
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
@@ -51,7 +48,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   bool _loading = true;
 
+  String? _email;
 
+  bool _isAdmin = false;
+
+  bool _fullAccess = false;
 
   @override
 
@@ -63,8 +64,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   }
 
-
-
   Future<void> _load() async {
 
     final completed = await ProgressService.getCompletedCount();
@@ -73,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final flashcards = await ProgressService.getFlashcardsReviewed();
 
-    final premium = await ProgressService.isPremium();
+    final premium = await PremiumService.isPremium();
 
     final goal = await OnboardingService.getGoal();
 
@@ -87,7 +86,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final journalCount = await JournalService.getCount();
 
+    final email = await AuthService.getEmail();
 
+    final isAdmin = await AuthService.isAdmin();
+
+    final fullAccess = await EntitlementService.hasFullAccess();
 
     if (!mounted) return;
 
@@ -111,13 +114,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       _journalCount = journalCount;
 
+      _email = email;
+
+      _isAdmin = isAdmin;
+
+      _fullAccess = fullAccess;
+
       _loading = false;
 
     });
 
   }
-
-
 
   Future<void> _redeemReferral() async {
     final l10n = context.l10n;
@@ -169,8 +176,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-
-
   Future<void> _resetOnboarding() async {
 
     await OnboardingService.reset();
@@ -180,8 +185,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     context.go('/onboarding');
 
   }
-
-
 
   Future<void> _resetProgress() async {
 
@@ -227,7 +230,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   }
 
+  Future<void> _exportMyData() async {
+    final l10n = context.l10n;
+    await AccountDataService.copyExportToClipboard();
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.exportMyDataDone)),
+    );
+  }
 
+  Future<void> _deleteAccount() async {
+    final l10n = context.l10n;
+    final controller = TextEditingController();
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.deleteAccount),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l10n.deleteAccountBody),
+            const SizedBox(height: 12),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(hintText: l10n.deleteAccountConfirmHint),
+              autofocus: true,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
+          TextButton(
+            onPressed: () {
+              if (controller.text.trim().toUpperCase() == 'DELETE') {
+                Navigator.pop(ctx, true);
+              }
+            },
+            child: Text(l10n.deleteAccount, style: const TextStyle(color: Colors.redAccent)),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (confirmed != true) return;
+
+    final result = await AccountDataService.deleteAccountAndWipeLocal();
+    if (!mounted) return;
+    if (result == AccountDeleteResult.failed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.deleteAccountFailed)),
+      );
+      return;
+    }
+    await OnboardingService.markCompleted();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.deleteAccountDone)),
+    );
+    context.go('/');
+  }
 
   Future<void> _showLanguagePicker() async {
 
@@ -331,15 +392,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   }
 
-
-
   @override
 
   Widget build(BuildContext context) {
 
     final l10n = context.l10n;
-
-
 
     if (_loading) {
 
@@ -347,11 +404,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     }
 
-
-
     final currentLang = LocaleService.instance.language;
-
-
 
     return Scaffold(
 
@@ -417,9 +470,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       Text(l10n.trader, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
 
+                      if (_email != null)
+                        Text(_email!, style: const TextStyle(color: Colors.white54, fontSize: 12)),
                       Text(l10n.goalLabel(_goal), style: const TextStyle(color: Colors.white54, fontSize: 13)),
 
-                      if (_premium)
+                      if (_isAdmin)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(l10n.adminBadge, style: const TextStyle(color: Colors.orangeAccent, fontSize: 12, fontWeight: FontWeight.w700)),
+                        )
+                      else if (_fullAccess)
 
                         Padding(
 
@@ -515,6 +575,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           const SizedBox(height: 24),
 
+          _SettingsTile(
+            icon: _email == null ? Icons.login : Icons.email_outlined,
+            title: _email == null ? l10n.signIn : l10n.email,
+            subtitle: _email,
+            onTap: () async {
+              if (_email == null) {
+                final ok = await context.push<bool>('/auth');
+                if (ok == true) _load();
+              } else {
+                final signOut = await showDialog<bool>(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text(l10n.signOut),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
+                      TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.signOut)),
+                    ],
+                  ),
+                );
+                if (signOut == true) {
+                  await AuthService.signOut();
+                  await PremiumService.clear();
+                  _load();
+                }
+              }
+            },
+          ),
+
+          const SizedBox(height: 12),
+
+          _SettingsTile(
+            icon: Icons.privacy_tip_outlined,
+            title: l10n.legalSection,
+            subtitle: l10n.privacyPolicy,
+            onTap: LegalLinks.openPrivacy,
+          ),
+          _SettingsTile(
+            icon: Icons.description_outlined,
+            title: l10n.termsOfService,
+            onTap: LegalLinks.openTerms,
+          ),
+
+          const SizedBox(height: 12),
+
+          const CommunityBanner(compact: true),
+
+          const SizedBox(height: 24),
+
           Container(
             padding: const EdgeInsets.all(18),
             decoration: AppTheme.cardDecoration(color: AppTheme.accent.withValues(alpha: 0.08)),
@@ -559,9 +667,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
           _SettingsTile(
+            icon: Icons.assignment_outlined,
+            title: l10n.homeworkTitle,
+            subtitle: l10n.homeworkHomeSubtitle,
+            onTap: () => context.push('/homework'),
+          ),
+
+          _SettingsTile(
             icon: Icons.verified_outlined,
             title: l10n.certificateTitle,
-            subtitle: l10n.exportCertificate,
+            subtitle: l10n.certificateHomeSubtitle,
             onTap: () => context.push('/certificate'),
           ),
 
@@ -599,17 +714,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
           _SettingsTile(
-
-            icon: Icons.delete_outline,
-
-            title: l10n.resetAllProgress,
-
-            onTap: _resetProgress,
-
-            destructive: true,
-
+            icon: Icons.download_outlined,
+            title: l10n.exportMyData,
+            onTap: _exportMyData,
           ),
-
+          _SettingsTile(
+            icon: Icons.delete_outline,
+            title: l10n.resetAllProgress,
+            onTap: _resetProgress,
+            destructive: true,
+          ),
+          if (_email != null)
+            _SettingsTile(
+              icon: Icons.person_off_outlined,
+              title: l10n.deleteAccount,
+              onTap: _deleteAccount,
+              destructive: true,
+            ),
           const SizedBox(height: 24),
 
           Text(
@@ -632,19 +753,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 }
 
-
-
 class _StatCard extends StatelessWidget {
 
   final String label;
 
   final String value;
 
-
-
   const _StatCard({required this.label, required this.value});
-
-
 
   @override
 
@@ -674,8 +789,6 @@ class _StatCard extends StatelessWidget {
 
 }
 
-
-
 class _SettingsTile extends StatelessWidget {
 
   final IconData icon;
@@ -687,8 +800,6 @@ class _SettingsTile extends StatelessWidget {
   final VoidCallback onTap;
 
   final bool destructive;
-
-
 
   const _SettingsTile({
 
@@ -703,8 +814,6 @@ class _SettingsTile extends StatelessWidget {
     this.destructive = false,
 
   });
-
-
 
   @override
 
@@ -749,5 +858,4 @@ class _SettingsTile extends StatelessWidget {
   }
 
 }
-
 

@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'sync_service.dart';
+
 class GamificationService {
   static const _xpKey = 'totalXp';
   static const _levelKey = 'userLevel';
@@ -49,14 +51,16 @@ class GamificationService {
     final updated = current + amount;
     await prefs.setInt(_xpKey, updated);
     await prefs.setInt(_levelKey, levelFromXp(updated));
+    SyncService.schedulePush();
     return updated;
   }
 
   static String levelTitle(int level, String lang) {
     final titles = {
       'en': ['Novice', 'Apprentice', 'Student', 'Analyst', 'Trader', 'Pro Trader', 'Expert', 'Master'],
+      'es': ['Novato', 'Aprendiz', 'Estudiante', 'Analista', 'Trader', 'Pro', 'Experto', 'Master'],
       'ru': ['Новичок', 'Ученик', 'Студент', 'Аналитик', 'Трейдер', 'Про', 'Эксперт', 'Мастер'],
-      'pt': ['Novato', 'Aprendiz', 'Estudante', 'Analista', 'Trader', 'Pro', 'Expert', 'Mestre'],
+      'pt': ['Iniciante', 'Aprendiz', 'Estudante', 'Analista', 'Trader', 'Pro', 'Expert', 'Mestre'],
     };
     final list = titles[lang] ?? titles['en']!;
     final idx = (level - 1).clamp(0, list.length - 1);

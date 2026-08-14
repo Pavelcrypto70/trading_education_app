@@ -25,8 +25,9 @@ class TradeMasterApp extends StatelessWidget {
           locale: localeService.locale,
           supportedLocales: const [
             Locale('en'),
-            Locale('ru'),
+            Locale('es'),
             Locale('pt'),
+            Locale('ru'),
           ],
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,

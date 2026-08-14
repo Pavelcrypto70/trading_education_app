@@ -301,10 +301,10 @@ class AppLocalizations {
         'Contenido de la lección',
       );
   String get keyTakeaway => _t(
-        'Key takeaway',
-        'Главный вывод',
-        'Conclusão principal',
-        'Conclusión clave',
+        'In one sentence',
+        'Одной фразой',
+        'Em uma frase',
+        'En una frase',
       );
   String get markComplete => _t(
         'Mark as complete',
@@ -525,10 +525,10 @@ class AppLocalizations {
         '¿Qué afirmación es más precisa?',
       );
   String checkpointQuestion2(String title) => _t(
-        'Key takeaway from "$title"?',
-        'Главный вывод урока?',
-        'Conclusão importante de "$title"?',
-        '¿Conclusión clave de "$title"?',
+        'In one sentence, "$title" is…',
+        'Одной фразой, урок «$title» — это…',
+        'Em uma frase, "$title" é…',
+        'En una frase, "$title" es…',
       );
   String get checkpointComplete => _t(
         'Passed! Complete lesson',
@@ -1136,6 +1136,48 @@ class AppLocalizations {
         'Redefinir todo o progresso',
         'Restablecer todo el progreso',
       );
+  String get exportMyData => _t(
+        'Export my data',
+        'Экспорт моих данных',
+        'Exportar meus dados',
+        'Exportar mis datos',
+      );
+  String get exportMyDataDone => _t(
+        'Data copied to clipboard (JSON)',
+        'Данные скопированы в буфер (JSON)',
+        'Dados copiados para a área de transferência (JSON)',
+        'Datos copiados al portapapeles (JSON)',
+      );
+  String get deleteAccount => _t(
+        'Delete account',
+        'Удалить аккаунт',
+        'Excluir conta',
+        'Eliminar cuenta',
+      );
+  String get deleteAccountBody => _t(
+        'This permanently deletes your Trade Master account, cloud progress, and local data. Purchases remain restorable via the store on a new account. Type DELETE to confirm.',
+        'Это навсегда удалит аккаунт Trade Master, облачный прогресс и локальные данные. Покупки можно восстановить через магазин на новом аккаунте. Введите DELETE для подтверждения.',
+        'Isso apaga permanentemente sua conta Trade Master, progresso na nuvem e dados locais. Compras podem ser restauradas pela loja em uma nova conta. Digite DELETE para confirmar.',
+        'Esto elimina permanentemente tu cuenta Trade Master, el progreso en la nube y los datos locales. Las compras se pueden restaurar desde la tienda en una cuenta nueva. Escribe DELETE para confirmar.',
+      );
+  String get deleteAccountConfirmHint => _t(
+        'Type DELETE',
+        'Введите DELETE',
+        'Digite DELETE',
+        'Escribe DELETE',
+      );
+  String get deleteAccountDone => _t(
+        'Account deleted',
+        'Аккаунт удалён',
+        'Conta excluída',
+        'Cuenta eliminada',
+      );
+  String get deleteAccountFailed => _t(
+        'Could not delete account. Check connection and try again.',
+        'Не удалось удалить аккаунт. Проверьте сеть и попробуйте снова.',
+        'Não foi possível excluir a conta. Verifique a conexão e tente de novo.',
+        'No se pudo eliminar la cuenta. Revisa la conexión e inténtalo de nuevo.',
+      );
   String get resetProgressTitle => _t(
         'Reset all progress?',
         'Сбросить весь прогресс?',
@@ -1528,13 +1570,54 @@ class AppLocalizations {
         'Voltar ao aprendizado',
         'volver al aprendizaje',
       );
+  String backToLesson(int id) => _t(
+        'Back to lesson $id',
+        'Вернуться к уроку $id',
+        'Voltar à aula $id',
+        'Volver a la lección $id',
+      );
+  String resumeLessonStep(int step) => _t(
+        'Continuing from step $step',
+        'Продолжаем с шага $step',
+        'Continuando do passo $step',
+        'Continuamos desde el paso $step',
+      );
+  String get choiceCorrect => _t(
+        'Right. Lock that sentence.',
+        'Верно. Запомни эту фразу.',
+        'Certo. Guarde essa frase.',
+        'Correcto. Quédate con esa frase.',
+      );
+  String get choiceWrong => _t(
+        'Not that one. Look at the green option.',
+        'Не то. Смотри зелёный вариант.',
+        'Não essa. Olhe a opção verde.',
+        'No esa. Mira la opción verde.',
+      );
   String get sectionReferences => _t(
         'References',
         'Источники',
         'Referências',
         'Referencias',
       );
-  String get submitHomework => _t('Submit homework (Telegram)', 'Сдать домашку (Telegram)', 'Enviar tarefa (Telegram)');
+  String get submitHomework => _t(
+        'Copy homework and open Telegram',
+        'Скопировать домашку и открыть Telegram',
+        'Copiar a tarefa e abrir o Telegram',
+        'Copiar la tarea y abrir Telegram',
+      );
+  String get homeworkCopied => _t(
+        'Copied. Paste it in the homework topic.',
+        'Скопировано. Вставь в топик homework.',
+        'Copiado. Cole no tópico homework.',
+        'Copiado. Pégalo en el tema homework.',
+      );
+  String get homeworkBody => _t(
+        'Write in one sentence, then send it to the Desk Club homework topic.',
+        'Напиши одной фразой и отправь в топик homework чата Desk Club.',
+        'Escreva em uma frase e envie no tópico homework do Desk Club.',
+        'Escribe en una frase y envíalo al tema homework de Desk Club.',
+      );
   String get homeworkOpenError => _t(
         'Could not open Telegram',
         'Не удалось открыть Telegram',
@@ -1625,10 +1708,10 @@ class AppLocalizations {
         'Enviado: $n',
       );
   String homeworkPassScore(int s) => _t(
-        'Pass score: \$s/10',
-        'Проходной балл: \$s/10',
-        'Nota mínima: \$s/10',
-        'Puntaje de aprobación: \$s/10',
+        'Pass score: $s/10',
+        'Проходной балл: $s/10',
+        'Nota mínima: $s/10',
+        'Puntaje de aprobación: $s/10',
       );
   String get tradePlanTitle => _t(
         'Trade plan',
@@ -2121,6 +2204,144 @@ class AppLocalizations {
         'Модульных тестов: $n / $min',
         'Testes de módulo: $n / $min',
         'Pruebas del módulo superadas: $n / $min',
+      );
+  String certificateReqLessonsCount(int done, int total) => _t(
+        'Lessons completed: $done / $total',
+        'Уроки пройдены: $done / $total',
+        'Aulas concluídas: $done / $total',
+        'Lecciones completadas: $done / $total',
+      );
+  String certificateReqHomework(int n, int min) => _t(
+        'Homework sent: $n / $min lessons',
+        'Домашка отправлена: $n / $min уроков',
+        'Tarefa enviada: $n / $min aulas',
+        'Tarea enviada: $n / $min lecciones',
+      );
+  String get homeworkTitle => _t(
+        'Homework',
+        'Домашка',
+        'Tarefa',
+        'Tarea',
+      );
+  String get homeworkDesk => _t(
+        'Open homework desk',
+        'Открыть экран домашки',
+        'Abrir a mesa de tarefa',
+        'Abrir el escritorio de tarea',
+      );
+  String get homeworkHowTitle => _t(
+        'How to submit',
+        'Как сдавать',
+        'Como enviar',
+        'Cómo entregar',
+      );
+  String get homeworkHowStep1 => _t(
+        'Write one sentence: what you did on this lesson.',
+        'Напиши одной фразой: что сделал по этому уроку.',
+        'Escreva em uma frase: o que fez nesta aula.',
+        'Escribe en una frase: qué hiciste en esta lección.',
+      );
+  String get homeworkHowStep2 => _t(
+        'Copy the template. It names the lesson and the homework topic.',
+        'Скопируй шаблон. В нём урок и топик homework.',
+        'Copie o modelo. Ele indica a aula e o tópico homework.',
+        'Copia la plantilla. Incluye la lección y el tema homework.',
+      );
+  String get homeworkHowStep3 => _t(
+        'Paste it in Desk Club → topic homework. Wait for a reply there.',
+        'Вставь в Desk Club → топик homework. Ответ придёт там.',
+        'Cole no Desk Club → tópico homework. A resposta chega lá.',
+        'Pégalo en Desk Club → tema homework. La respuesta llega allí.',
+      );
+  String homeworkAccepted(String topic) => _t(
+        'Accepted means a human reply in the $topic topic — not an in-app grade. The app counts that you sent it.',
+        'Принято = ответ человека в топике $topic, не оценка в приложении. Приложение считает, что ты отправил.',
+        'Aceito = resposta humana no tópico $topic, não uma nota no app. O app conta que você enviou.',
+        'Aceptado = respuesta humana en el tema $topic, no una nota en la app. La app cuenta que lo enviaste.',
+      );
+  String get homeworkOneSentenceHint => _t(
+        'In one sentence…',
+        'Одной фразой…',
+        'Em uma frase…',
+        'En una frase…',
+      );
+  String get homeworkSelectLesson => _t(
+        'Lesson',
+        'Урок',
+        'Aula',
+        'Lección',
+      );
+  String get homeworkEmpty => _t(
+        'Nothing sent yet. Submit from this screen after a lesson.',
+        'Пока ничего не отправлено. Сдай домашку с этого экрана после урока.',
+        'Nada enviado ainda. Envie por esta tela depois da aula.',
+        'Aún no hay envíos. Entrega desde esta pantalla después de la lección.',
+      );
+  String get homeworkSubmittedList => _t(
+        'Sent from this device',
+        'Отправлено с этого устройства',
+        'Enviado neste dispositivo',
+        'Enviado desde este dispositivo',
+      );
+  String get homeworkCopiedNoTelegram => _t(
+        'Copied. Open Desk Club and paste in the homework topic.',
+        'Скопировано. Открой Desk Club и вставь в топик homework.',
+        'Copiado. Abra o Desk Club e cole no tópico homework.',
+        'Copiado. Abre Desk Club y pégalo en el tema homework.',
+      );
+  String get homeworkHomeSubtitle => _t(
+        'Desk Club topic',
+        'Топик Desk Club',
+        'Tópico Desk Club',
+        'Tema Desk Club',
+      );
+  String get certificateHomeSubtitle => _t(
+        'Course diploma',
+        'Диплом курса',
+        'Diploma do curso',
+        'Diploma del curso',
+      );
+  String get certificateLocked => _t(
+        'Finish the course, module tests, journal, and homework to issue the diploma.',
+        'Пройди курс, модульные тесты, журнал и домашку — затем выпусти диплом.',
+        'Conclua o curso, testes de módulo, diário e tarefa para emitir o diploma.',
+        'Termina el curso, tests de módulo, diario y tarea para emitir el diploma.',
+      );
+  String get certificateIssueCta => _t(
+        'Issue certificate',
+        'Выпустить сертификат',
+        'Emitir certificado',
+        'Emitir certificado',
+      );
+  String get certificateHolderHint => _t(
+        'Name on the certificate',
+        'Имя на сертификате',
+        'Nome no certificado',
+        'Nombre en el certificado',
+      );
+  String get certificateIssueNeedName => _t(
+        'Enter the name to print on the certificate.',
+        'Введи имя, которое будет на сертификате.',
+        'Digite o nome para imprimir no certificado.',
+        'Escribe el nombre que irá en el certificado.',
+      );
+  String certificateIssuedOn(String date) => _t(
+        'Issued $date',
+        'Выдан $date',
+        'Emitido $date',
+        'Emitido $date',
+      );
+  String get shareCertificate => _t(
+        'Copy certificate text',
+        'Скопировать текст сертификата',
+        'Copiar texto do certificado',
+        'Copiar texto del certificado',
+      );
+  String get certificateShareCopied => _t(
+        'Copied. Paste it in Telegram or email.',
+        'Скопировано. Вставь в Telegram или письмо.',
+        'Copiado. Cole no Telegram ou no e-mail.',
+        'Copiado. Pégalo en Telegram o en un correo.',
       );
 
   // ── Partner offers (post-certificate) ──

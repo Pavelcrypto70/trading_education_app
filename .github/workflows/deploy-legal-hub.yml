@@ -1,0 +1,25 @@
+name: Deploy legal HTML to github.io
+
+# Adds /legal/* without wiping the Flutter web site (clean: false).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - web/legal/**
+      - .github/workflows/deploy-legal-hub.yml
+
+jobs:
+  legal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: web/legal
+          target-folder: legal
+          repository-name: Pavelcrypto70/Pavelcrypto70.github.io
+          branch: main
+          token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          clean: false
+          single-commit: true

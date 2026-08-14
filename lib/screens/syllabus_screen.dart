@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../data/syllabus_repository.dart';
 import '../services/locale_service.dart';

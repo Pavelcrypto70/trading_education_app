@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup backend",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File tools/setup_backend.ps1",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Deploy web to GitHub Pages",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File tools/deploy_pages.ps1",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Supabase: push schema",
+      "type": "shell",
+      "command": "npx supabase db push",
+      "problemMatcher": []
+    },
+    {
+      "label": "Supabase: deploy functions",
+      "type": "shell",
+      "command": "npx supabase functions deploy verify-purchase && npx supabase functions deploy stripe-checkout && npx supabase functions deploy stripe-webhook",
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Galaxy Store (no billing)",
+      "type": "shell",
+      "command": "powershell -ExecutionPolicy Bypass -File tools/build_galaxy.ps1",
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

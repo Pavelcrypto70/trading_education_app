@@ -6,10 +6,42 @@ import '../l10n/app_localizations.dart';
 import '../models/lesson.dart';
 import '../models/lesson_section.dart';
 import '../widgets/homework_rubric_card.dart';
-import '../services/homework_service.dart';
 import '../services/lesson_practice_service.dart';
 import '../services/locale_service.dart';
 import '../theme.dart';
+import 'deposit_order_calculator.dart';
+import 'lesson_charts.dart';
+
+class LessonChartPlaceholderCard extends StatelessWidget {
+  final LessonSection section;
+
+  const LessonChartPlaceholderCard({super.key, required this.section});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: AppTheme.cardDecoration(color: const Color(0xFF131722)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (section.title != null)
+            Text(section.title!, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
+          const SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: LessonChartWidget(chartType: section.chartType ?? 'structure'),
+          ),
+          if (section.body != null) ...[
+            const SizedBox(height: 10),
+            Text(section.body!, style: const TextStyle(color: Colors.white70, height: 1.5, fontSize: 13)),
+          ],
+        ],
+      ),
+    );
+  }
+}
 
 class LessonInteractiveSection extends StatelessWidget {
   final Lesson lesson;
@@ -32,7 +64,8 @@ class LessonInteractiveSection extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (section.type) {
       case 'tradingview':
-        return LessonTradingViewCard(section: section);
+        // Legacy — TradingView removed; show thematic chart placeholder
+        return LessonChartPlaceholderCard(section: section);
       case 'practice':
         return LessonPracticeCard(
           section: section,
@@ -43,6 +76,12 @@ class LessonInteractiveSection extends StatelessWidget {
         return LessonMarketNoteCard(section: section);
       case 'journal':
         return LessonJournalCard(section: section, lesson: lesson);
+      case 'calculator':
+        return LessonCalculatorCard(section: section);
+      case 'link':
+        return LessonExternalLinkCard(section: section);
+      case 'homework':
+        return LessonHomeworkCard(lesson: lesson, section: section);
       default:
         return const SizedBox.shrink();
     }
@@ -141,7 +180,11 @@ class LessonPracticeCard extends StatelessWidget {
 
   Future<void> _startPaper(BuildContext context) async {
     final l10n = context.l10n;
-    final scenario = section.body ?? lesson.takeaway;
+    final scenario = section.body?.trim().isNotEmpty == true
+        ? section.body!
+        : (lesson.id <= 36
+            ? lesson.takeaway
+            : 'Plan entry, stop and take-profit before clicking. Lesson ${lesson.id}: ${lesson.takeaway}');
     await LessonPracticeService.startPractice(
       lessonId: lesson.id,
       lessonTitle: lesson.title,
@@ -152,7 +195,7 @@ class LessonPracticeCard extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.lessonPracticeStarted(lesson.id))),
       );
-      context.go('/practice');
+      context.go('/practice?returnLesson=${lesson.id}');
     }
   }
 
@@ -185,62 +228,7 @@ class LessonPracticeCard extends StatelessWidget {
             const SizedBox(height: 10),
             Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
           ],
-          if (section.items != null) ...[
-            const SizedBox(height: 12),
-            ...section.items!.asMap().entries.map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 22,
-                          height: 22,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.green.withValues(alpha: 0.2),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            '${e.key + 1}',
-                            style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.greenAccent,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(e.value, style: const TextStyle(height: 1.5, color: Colors.white70)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-          ],
           const SizedBox(height: 14),
-          HomeworkRubricCard(lessonId: lesson.id),
-          SizedBox(
-            width: double.infinity,
-            child: OutlinedButton.icon(
-              onPressed: () async {
-                final ok = await HomeworkService.submitHomework(
-                  lessonId: lesson.id,
-                  lessonTitle: lesson.title,
-                );
-                if (!context.mounted) return;
-                if (!ok) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(context.l10n.homeworkOpenError)),
-                  );
-                }
-              },
-              icon: const Icon(Icons.send_outlined),
-              label: Text(l10n.submitHomework),
-            ),
-          ),
-          const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
@@ -252,6 +240,11 @@ class LessonPracticeCard extends StatelessWidget {
                 foregroundColor: Colors.greenAccent,
               ),
             ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            l10n.backToLesson(lesson.id),
+            style: const TextStyle(color: Colors.white38, fontSize: 12),
           ),
         ],
       ),
@@ -310,6 +303,169 @@ class LessonMarketNoteCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+class LessonCalculatorCard extends StatelessWidget {
+  final LessonSection section;
+
+  const LessonCalculatorCard({super.key, required this.section});
+
+  @override
+  Widget build(BuildContext context) {
+    if (section.chartType == 'deposit_order') {
+      final items = section.items ?? const ['3', '5'];
+      final minP = double.tryParse(items.first) ?? 3;
+      final maxP = double.tryParse(items.length > 1 ? items[1] : items.first) ?? 5;
+      return DepositOrderCalculatorCard(
+        title: section.title,
+        body: section.body,
+        minPercent: minP,
+        maxPercent: maxP,
+      );
+    }
+    return const SizedBox.shrink();
+  }
+}
+
+class LessonExternalLinkCard extends StatelessWidget {
+  final LessonSection section;
+
+  const LessonExternalLinkCard({super.key, required this.section});
+
+  Future<void> _open(BuildContext context) async {
+    final url = section.url;
+    if (url == null || url.isEmpty) return;
+    final ok = await openExternalLink(url);
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.tradingViewOpenError)),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: AppTheme.cardDecoration(
+        color: const Color(0xFF13192B),
+        border: Border.all(color: AppTheme.accent.withValues(alpha: 0.4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.launch, color: AppTheme.accent, size: 18),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  section.title ?? 'Ссылка',
+                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+                ),
+              ),
+            ],
+          ),
+          if (section.body != null) ...[
+            const SizedBox(height: 10),
+            Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+          ],
+          if (section.url != null) ...[
+            const SizedBox(height: 14),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => _open(context),
+                icon: const Icon(Icons.open_in_new, size: 18),
+                label: const Text('Открыть'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.accent.withValues(alpha: 0.25),
+                  foregroundColor: AppTheme.accent,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class LessonHomeworkCard extends StatelessWidget {
+  final Lesson lesson;
+  final LessonSection? section;
+
+  const LessonHomeworkCard({super.key, required this.lesson, this.section});
+
+  void _openDesk(BuildContext context) {
+    context.push('/homework?lessonId=${lesson.id}');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: AppTheme.cardDecoration(
+        color: Colors.blue.withValues(alpha: 0.08),
+        border: Border.all(color: Colors.lightBlueAccent.withValues(alpha: 0.35)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.assignment_outlined, color: Colors.lightBlueAccent, size: 20),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  section?.title ?? l10n.homeworkRubric,
+                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            section?.body ?? l10n.homeworkBody,
+            style: const TextStyle(height: 1.6, color: Colors.white70),
+          ),
+          if (section?.items != null) ...[
+            const SizedBox(height: 12),
+            ...section!.items!.map(
+              (item) => Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('• ', style: TextStyle(color: AppTheme.gold)),
+                    Expanded(child: Text(item, style: const TextStyle(color: Colors.white60, height: 1.45))),
+                  ],
+                ),
+              ),
+            ),
+          ],
+          const SizedBox(height: 14),
+          HomeworkRubricCard(lessonId: lesson.id),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () => _openDesk(context),
+              icon: const Icon(Icons.assignment_turned_in_outlined, size: 18),
+              label: Text(l10n.homeworkDesk),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlueAccent.withValues(alpha: 0.2),
+                foregroundColor: Colors.lightBlueAccent,
+              ),
+            ),
+          ),
         ],
       ),
     );

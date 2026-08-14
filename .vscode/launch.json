@@ -1,0 +1,48 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Trade Master (Chrome)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "toolArgs": [
+        "--dart-define-from-file=dart_defines.json"
+      ]
+    },
+    {
+      "name": "Trade Master (Android)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "toolArgs": [
+        "--flavor",
+        "play",
+        "--dart-define-from-file=dart_defines.json",
+        "--dart-define=ENABLE_BILLING=true",
+        "--dart-define=STORE_CHANNEL=play"
+      ]
+    },
+    {
+      "name": "Trade Master Galaxy (no billing)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "toolArgs": [
+        "--flavor",
+        "galaxy",
+        "--dart-define-from-file=dart_defines.json",
+        "--dart-define=ENABLE_BILLING=false",
+        "--dart-define=STORE_CHANNEL=galaxy"
+      ]
+    },
+    {
+      "name": "Trade Master (offline demo)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome"
+    }
+  ]
+}

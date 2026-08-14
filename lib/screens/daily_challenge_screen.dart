@@ -6,8 +6,6 @@ import 'package:go_router/go_router.dart';
 
 import '../data/unified_quiz_bank.dart';
 
-import '../models/quiz_question.dart';
-
 import '../services/locale_service.dart';
 
 import '../services/progress_service.dart';

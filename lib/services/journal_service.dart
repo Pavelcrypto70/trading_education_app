@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'sync_service.dart';
+
 import '../models/journal_entry.dart';
 
 class JournalService {
@@ -23,6 +25,7 @@ class JournalService {
     entries.insert(0, entry);
     final encoded = entries.map((e) => jsonEncode(e.toJson())).toList();
     await prefs.setStringList(_entriesKey, encoded);
+    SyncService.schedulePush();
   }
 
   static Future<void> deleteEntry(String id) async {
@@ -33,6 +36,7 @@ class JournalService {
       _entriesKey,
       entries.map((e) => jsonEncode(e.toJson())).toList(),
     );
+    SyncService.schedulePush();
   }
 
   static Future<int> getCount() async {

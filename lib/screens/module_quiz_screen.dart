@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../data/module_quiz_repository.dart';
 import '../data/unified_quiz_bank.dart';
-import '../models/quiz_question.dart';
+import '../services/entitlement_service.dart';
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
 import '../theme.dart';
@@ -42,13 +42,16 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
   }
 
   Future<void> _start(ModuleQuizMeta module) async {
-    final completed = await ProgressService.getCompletedLessons();
-    final missing = module.lessonIds.where((id) => !completed.contains(id)).toList();
-    if (missing.isNotEmpty && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.prerequisitesRequired(missing.take(5).join(', ')))),
-      );
-      return;
+    final fullAccess = await EntitlementService.hasFullAccess();
+    if (!fullAccess) {
+      final completed = await ProgressService.getCompletedLessons();
+      final missing = module.lessonIds.where((id) => !completed.contains(id)).toList();
+      if (missing.isNotEmpty && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(context.l10n.prerequisitesRequired(missing.take(5).join(', ')))),
+        );
+        return;
+      }
     }
     final questions = await ModuleQuizRepository.questionsForModule(module);
     if (!mounted || questions.isEmpty) return;

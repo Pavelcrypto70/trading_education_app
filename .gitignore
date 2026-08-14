@@ -34,6 +34,20 @@ migrate_working_dir/
 /coverage/
 .deploy/
 
+# Local Node deps (Supabase CLI etc.) — never push
+node_modules/
+
+# Local secrets (copy from dart_defines.example.json)
+dart_defines.json
+supabase/.env
+supabase/.temp/
+
+# Android release signing (never commit)
+android/key.properties
+android/keystore/
+*.jks
+*.keystore
+
 # Symbolication related
 app.*.symbols
 
@@ -44,3 +58,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Local translation caches
+tools/.latam_l10n_cache.json
+tools/.translation_cache.json
+tools/.block_translation_cache.json

@@ -40,11 +40,25 @@ class CryptoLessonContext {
   }
 
   static String? _chartFromSections(Lesson lesson) {
+    String? first;
     for (final s in lesson.sections) {
       if (s.type == 'chart' && s.chartType != null) {
-        return s.chartType;
+        final t = s.chartType!;
+        first ??= t;
+        // Prefer animated pattern diagrams over generic candle types.
+        if (t.startsWith('pattern_') ||
+            t == 'ascending_triangle' ||
+            t == 'descending_triangle' ||
+            t == 'symmetric_triangle' ||
+            t == 'head_shoulders' ||
+            t == 'inverse_head_shoulders' ||
+            t == 'order_flow' ||
+            t == 'order_book' ||
+            t.startsWith('order_book_')) {
+          return t;
+        }
       }
     }
-    return null;
+    return first;
   }
 }

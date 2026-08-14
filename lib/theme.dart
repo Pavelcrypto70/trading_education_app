@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color gold = Color(0xFFD4AF37);
@@ -7,6 +6,14 @@ class AppTheme {
   static const Color bg = Color(0xFF0B0D12);
   static const Color surface = Color(0xFF141821);
   static const Color card = Color(0xFF171A21);
+
+  /// Soft module accents (muted — not neon).
+  static const Color accentLessons = Color(0xFF3DDC97);
+  static const Color accentPractice = gold;
+  static const Color accentCommunity = Color(0xFF229ED9);
+  static const Color accentQuizzes = Color(0xFF8B7CF6);
+  static const Color accentJournal = Color(0xFFE07A5F);
+  static const Color accentPath = Color(0xFF2DD4BF);
 
   static ThemeData get darkTheme {
     final base = ThemeData.dark(useMaterial3: true);
@@ -22,8 +29,8 @@ class AppTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor: bg,
       canvasColor: bg,
-      textTheme: GoogleFonts.interTextTheme(base.textTheme),
-      primaryTextTheme: GoogleFonts.interTextTheme(base.primaryTextTheme),
+      textTheme: base.textTheme,
+      primaryTextTheme: base.primaryTextTheme,
       appBarTheme: const AppBarTheme(
         backgroundColor: bg,
         centerTitle: true,
@@ -98,7 +105,7 @@ class AppTheme {
     return base.copyWith(
       colorScheme: scheme,
       scaffoldBackgroundColor: const Color(0xFFF7F8FC),
-      textTheme: GoogleFonts.interTextTheme(base.textTheme),
+      textTheme: base.textTheme,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: accent,
@@ -120,6 +127,19 @@ class AppTheme {
     );
   }
 
+  /// Accent card: brand dark surface + soft colored edge (no neon glow).
+  static BoxDecoration accentCardDecoration(
+    Color accentColor, {
+    Color? color,
+    double radius = 20,
+  }) {
+    return BoxDecoration(
+      color: color ?? card,
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(color: accentColor.withValues(alpha: 0.42)),
+    );
+  }
+
   static BoxDecoration heroGradient() {
     return BoxDecoration(
       gradient: const LinearGradient(
@@ -128,7 +148,7 @@ class AppTheme {
         end: Alignment.bottomRight,
       ),
       borderRadius: BorderRadius.circular(24),
-      border: Border.all(color: Colors.white12),
+      border: Border.all(color: gold.withValues(alpha: 0.35)),
     );
   }
 }

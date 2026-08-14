@@ -1,18 +1,61 @@
 /// Splits long lesson paragraphs into mobile-friendly chunks.
+/// Deduplicates repeated blocks and packs short paragraphs together.
 class TextChunker {
-  static const int defaultMaxChars = 200;
+  static const int defaultMaxChars = 520;
 
   static List<String> chunk(String text, {int maxChars = defaultMaxChars}) {
     final trimmed = text.trim();
     if (trimmed.isEmpty) return const [];
-    if (trimmed.length <= maxChars) return [trimmed];
 
-    final paragraphs = trimmed.split(RegExp(r'\n\s*\n')).where((p) => p.trim().isNotEmpty);
-    final result = <String>[];
+    final paragraphs = _uniqueParagraphs(trimmed);
+    if (paragraphs.isEmpty) return const [];
+
+    final packed = <String>[];
+    var buffer = '';
     for (final para in paragraphs) {
-      result.addAll(_chunkParagraph(para.trim(), maxChars));
+      if (para.length > maxChars) {
+        if (buffer.isNotEmpty) {
+          packed.add(buffer);
+          buffer = '';
+        }
+        packed.addAll(_chunkParagraph(para, maxChars));
+        continue;
+      }
+      final next = buffer.isEmpty ? para : '$buffer\n\n$para';
+      if (next.length <= maxChars) {
+        buffer = next;
+      } else {
+        if (buffer.isNotEmpty) packed.add(buffer);
+        buffer = para;
+      }
     }
-    return result;
+    if (buffer.isNotEmpty) packed.add(buffer);
+    return _uniqueChunks(packed);
+  }
+
+  static List<String> _uniqueParagraphs(String text) {
+    final parts = text.split(RegExp(r'\n\s*\n')).where((p) => p.trim().isNotEmpty);
+    final out = <String>[];
+    final seen = <String>{};
+    for (final p in parts) {
+      final key = p.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+      if (seen.contains(key)) continue;
+      seen.add(key);
+      out.add(p.trim());
+    }
+    return out;
+  }
+
+  static List<String> _uniqueChunks(List<String> chunks) {
+    final out = <String>[];
+    final seen = <String>{};
+    for (final c in chunks) {
+      final key = c.trim().toLowerCase().replaceAll(RegExp(r'\s+'), ' ');
+      if (seen.contains(key)) continue;
+      seen.add(key);
+      out.add(c);
+    }
+    return out;
   }
 
   static List<String> _chunkParagraph(String para, int maxChars) {

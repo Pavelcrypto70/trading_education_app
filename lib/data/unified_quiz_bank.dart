@@ -7,6 +7,7 @@ import '../models/quiz_question.dart';
 import '../services/locale_service.dart';
 import 'quiz_bank.dart';
 
+/// Quiz Arena + module tests: only questions from the current 58-lesson course.
 class UnifiedQuizBank {
   static List<QuizQuestion>? _cache;
   static bool _loading = false;
@@ -28,7 +29,7 @@ class UnifiedQuizBank {
         final difficulty = _mapDifficulty(m['difficulty'] as String? ?? 'Beginner');
         final category = _categoryForLesson(lessonId);
         final id = m['id'] as String? ?? 'L$lessonId';
-        final showChart = lessonId <= 47 && id.endsWith('Q1');
+        final showChart = id.endsWith('Q1');
         fromLessons.add(
           QuizQuestion(
             category: category,
@@ -43,20 +44,7 @@ class UnifiedQuizBank {
           ),
         );
       }
-      final legacy = QuizBank.allQuestions
-          .map(
-            (q) => QuizQuestion(
-              category: q.category,
-              difficulty: q.difficulty,
-              question: q.question,
-              options: q.options,
-              correctIndex: q.correctIndex,
-              explanation: q.explanation,
-              sourceId: 'legacy-${q.question.hashCode}',
-            ),
-          )
-          .toList();
-      _cache = [...fromLessons, ...legacy];
+      _cache = fromLessons;
     } catch (_) {
       _cache = QuizBank.allQuestions;
     } finally {
@@ -104,11 +92,11 @@ class UnifiedQuizBank {
 
   static String _categoryForLesson(int lessonId) {
     if (lessonId <= 7) return 'Basics';
-    if ({8, 9, 19, 43, 46, 47}.contains(lessonId)) return 'Patterns';
-    if ({10, 21, 23, 30, 32}.contains(lessonId)) return 'Strategy';
-    if ({7, 18, 28, 31, 35, 36, 39, 40}.contains(lessonId)) return 'Risk';
-    if ({11, 12, 20, 24, 25, 27, 34, 44}.contains(lessonId)) return 'Market';
-    if ({13, 14, 15, 16, 17, 22, 26, 42, 45}.contains(lessonId)) return 'Chart';
-    return 'Basics';
+    if (lessonId <= 14) return 'Chart';
+    if (lessonId <= 27) return 'Levels';
+    if (lessonId <= 36) return 'Patterns';
+    if (lessonId <= 46) return 'Strategy';
+    if (lessonId <= 51) return 'Market';
+    return 'Risk';
   }
 }

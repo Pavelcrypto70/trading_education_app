@@ -2,7 +2,10 @@ import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'auth_service.dart';
+import 'backend_service.dart';
 import 'gamification_service.dart';
+import 'sync_service.dart';
 
 class ReferralService {
   static const _myCodeKey = 'referralMyCode';
@@ -13,6 +16,17 @@ class ReferralService {
   static const redeemXpBonus = 100;
 
   static Future<String> getMyCode() async {
+    if (BackendService.isAvailable && AuthService.isSignedIn) {
+      try {
+        final code = await BackendService.client.rpc('ensure_referral_code');
+        if (code is String && code.isNotEmpty) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString(_myCodeKey, code);
+          return code;
+        }
+      } catch (_) {}
+    }
+
     final prefs = await SharedPreferences.getInstance();
     var code = prefs.getString(_myCodeKey);
     if (code == null || code.isEmpty) {
@@ -41,6 +55,15 @@ class ReferralService {
 
   static Future<int> getInviteCount() async {
     final myCode = await getMyCode();
+    if (BackendService.isAvailable && AuthService.isSignedIn) {
+      try {
+        final rows = await BackendService.client
+            .from('referral_redemptions')
+            .select('id')
+            .eq('referral_code', myCode);
+        return (rows as List).length;
+      } catch (_) {}
+    }
     final prefs = await SharedPreferences.getInstance();
     final list = prefs.getStringList(_allRedemptionsKey) ?? [];
     return list.where((c) => c == myCode).length;
@@ -53,6 +76,7 @@ class ReferralService {
     if (count > awarded) {
       await GamificationService.addXp((count - awarded) * referralXpReward);
       await prefs.setInt(_xpAwardedCountKey, count);
+      SyncService.schedulePush();
     }
   }
 
@@ -68,11 +92,31 @@ class ReferralService {
     final prefs = await SharedPreferences.getInstance();
     if (prefs.getString(_redeemedKey) != null) return 'already';
 
+    if (BackendService.isAvailable && AuthService.isSignedIn) {
+      try {
+        final result = await BackendService.client.rpc(
+          'redeem_referral_code',
+          params: {'p_code': code},
+        );
+        if (result is Map && result['ok'] == true) {
+          await prefs.setString(_redeemedKey, code);
+          await GamificationService.addXp(redeemXpBonus);
+          SyncService.schedulePush();
+          return null;
+        }
+        return result is Map ? (result['error'] as String? ?? 'error') : 'error';
+      } catch (_) {
+        return 'error';
+      }
+    }
+
+    // Offline fallback (local only, not cross-device)
     await prefs.setString(_redeemedKey, code);
     final list = prefs.getStringList(_allRedemptionsKey) ?? [];
     list.add(code);
     await prefs.setStringList(_allRedemptionsKey, list);
     await GamificationService.addXp(redeemXpBonus);
+    SyncService.schedulePush();
     return null;
   }
 

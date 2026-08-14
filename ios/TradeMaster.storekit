@@ -1,0 +1,40 @@
+{
+  "identifier" : "F5A2B8C1",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "9.99",
+      "familyShareable" : false,
+      "internalID" : "trade_master_lifetime_full",
+      "localizations" : [
+        {
+          "description" : "Lifetime access to all 58 lessons, practice, and certificate.",
+          "displayName" : "Trade Master Full Course",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "trade_master_lifetime_full",
+      "referenceName" : "Lifetime Full Course",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

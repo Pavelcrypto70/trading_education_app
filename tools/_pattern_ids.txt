@@ -1,0 +1,7 @@
+8|Нисходящий треугольник|['breakout', 'pattern_desc_triangle']
+9|Восходящий треугольник|['breakout', 'pattern_asc_triangle']
+19|Симметричный треугольник и пробой|['breakout', 'pattern_sym_triangle']
+32|Смена тренда: восходящий → нисходящий|['reversal', 'structure']
+43|Коррекция по Фибоначчи|['pullback', 'pattern_fibonacci']
+46|Голова. Часть 1|['reversal', 'pattern_head_shoulders']
+47|Голова. Часть 2|['reversal', 'pattern_head_shoulders']
