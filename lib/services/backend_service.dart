@@ -19,8 +19,18 @@ class BackendService {
       anonKey: BackendConfig.supabaseAnonKey,
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
+        // Manual warmup in main() decides whether refresh is safe.
+        autoRefreshToken: false,
       ),
     );
     _initialized = true;
+  }
+
+  /// Enable token auto-refresh only after a successful network touch.
+  static void enableAutoRefresh() {
+    if (!isAvailable) return;
+    try {
+      client.auth.startAutoRefresh();
+    } catch (_) {}
   }
 }
