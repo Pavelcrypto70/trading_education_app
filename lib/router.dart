@@ -186,7 +186,7 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
     return '/onboarding';
   }
   if (completed && onOnboarding) {
-    return '/';
+    return '/lesson/1';
   }
   return null;
 }

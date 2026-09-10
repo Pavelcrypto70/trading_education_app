@@ -1330,10 +1330,10 @@ class AppLocalizations {
         'Bienvenido a Trade Master',
       );
   String get welcomeSubtitle => _t(
-        'Your complete trading education platform — lessons, quizzes, flashcards, and paper trading.',
-        'Полная платформа для обучения трейдингу — уроки, тесты, карточки и бумажная торговля.',
-        'Sua plataforma completa de educação em trading — aulas, quizzes, flashcards e trading simulado.',
-        'Su plataforma completa de educación comercial: lecciones, cuestionarios, tarjetas didácticas y comercio en papel.',
+        'One short lesson on a chart. Then you try.',
+        'Один короткий урок на графике. Потом пробуешь сам.',
+        'Una lección corta en el gráfico. Luego lo pruebas.',
+        'Uma aula curta no gráfico. Depois você tenta.',
       );
   String get getStarted => _t(
         'Get started',

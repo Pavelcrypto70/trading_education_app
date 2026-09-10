@@ -124,7 +124,7 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
 
     if (!mounted) return;
 
-    context.go('/');
+    context.go('/lesson/1');
 
   }
 

@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'services/analytics_service.dart';
 import 'services/backend_service.dart';
+import 'services/fresh_start.dart';
 import 'services/locale_service.dart';
 import 'services/purchase_service.dart';
 import 'services/sync_service.dart';
@@ -14,6 +15,12 @@ import 'services/premium_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    await FreshStart.wipeIfNeeded();
+  } catch (e, st) {
+    debugPrint('FreshStart failed: $e\n$st');
+  }
 
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
