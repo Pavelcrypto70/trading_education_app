@@ -469,10 +469,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
 
                       Text(l10n.trader, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+                      const SizedBox(height: 4),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: AppTheme.accentDim,
+                          borderRadius: BorderRadius.circular(999),
+                          border: Border.all(color: AppTheme.accent.withValues(alpha: 0.45)),
+                        ),
+                        child: const Text(
+                          'Desk Trader · серия 47 дней',
+                          style: TextStyle(color: AppTheme.accent, fontSize: 11, fontWeight: FontWeight.w700),
+                        ),
+                      ),
 
                       if (_email != null)
                         Text(_email!, style: const TextStyle(color: Colors.white54, fontSize: 12)),
                       Text(l10n.goalLabel(_goal), style: const TextStyle(color: Colors.white54, fontSize: 13)),
+                      const SizedBox(height: 8),
+                      const Text('Ключ Tiger.com · активен (реферальная программа)', style: TextStyle(color: Colors.white54, fontSize: 12)),
+                      const Text('Диплом TM-2026-08421', style: TextStyle(color: AppTheme.accent, fontSize: 12, fontWeight: FontWeight.w600)),
 
                       if (_isAdmin)
                         Padding(
@@ -657,7 +673,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: Icons.edit_note,
             title: l10n.journalTitle,
             subtitle: '$_journalCount',
-            onTap: () => context.push('/journal'),
+            onTap: () => context.push('/journal/lesson'),
           ),
 
           _SettingsTile(

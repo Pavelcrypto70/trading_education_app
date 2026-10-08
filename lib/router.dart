@@ -5,7 +5,8 @@ import 'models/lesson.dart';
 import 'models/quiz_question.dart';
 import 'screens/daily_challenge_screen.dart';
 import 'screens/flashcards_screen.dart';
-import 'screens/home_screen.dart';
+import 'screens/path_hub_screen.dart';
+import 'journey/journey_routes_late.dart';
 import 'screens/home_shell.dart';
 import 'screens/journal_screen.dart';
 import 'screens/learning_screen.dart';
@@ -21,12 +22,14 @@ import 'screens/onboarding_goal_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/auth_screen.dart';
 import 'screens/premium_screen.dart';
+import 'screens/club_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/quiz_play_screen.dart';
 import 'screens/quiz_result_screen.dart';
 import 'screens/quiz_screen.dart';
 import 'screens/trading_screen.dart';
 import 'services/onboarding_service.dart';
+import 'journey/journey_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -44,25 +47,14 @@ final GoRouter router = GoRouter(
       path: '/onboarding/goal',
       builder: (context, state) => const OnboardingGoalScreen(),
     ),
+    ...journeyRoutes,
     ShellRoute(
       builder: (context, state, child) => HomeShell(child: child),
       routes: [
         GoRoute(
           path: '/',
           pageBuilder: (context, state) => const NoTransitionPage(
-            child: HomeScreen(),
-          ),
-        ),
-        GoRoute(
-          path: '/learning',
-          pageBuilder: (context, state) => const NoTransitionPage(
-            child: LearningScreen(),
-          ),
-        ),
-        GoRoute(
-          path: '/quiz',
-          pageBuilder: (context, state) => const NoTransitionPage(
-            child: QuizScreen(),
+            child: PathHubScreen(),
           ),
         ),
         GoRoute(
@@ -72,12 +64,26 @@ final GoRouter router = GoRouter(
           ),
         ),
         GoRoute(
+          path: '/club',
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: ClubScreen(),
+          ),
+        ),
+        GoRoute(
           path: '/profile',
           pageBuilder: (context, state) => const NoTransitionPage(
             child: ProfileScreen(),
           ),
         ),
       ],
+    ),
+    GoRoute(
+      path: '/learning',
+      builder: (context, state) => const LearningScreen(),
+    ),
+    GoRoute(
+      path: '/quiz',
+      builder: (context, state) => const QuizScreen(),
     ),
     GoRoute(
       path: '/lesson/:id',
@@ -92,7 +98,7 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/journal',
+      path: '/journal/lesson',
       builder: (context, state) {
         final lessonId = int.tryParse(state.uri.queryParameters['lessonId'] ?? '');
         final title = state.uri.queryParameters['title'];
@@ -162,6 +168,7 @@ final GoRouter router = GoRouter(
         return HomeworkScreen(initialLessonId: lessonId);
       },
     ),
+    ...journeyLateRoutes,
     GoRoute(
       path: '/quiz-result',
       builder: (context, state) {
@@ -186,7 +193,7 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
     return '/onboarding';
   }
   if (completed && onOnboarding) {
-    return '/lesson/1';
+    return '/';
   }
   return null;
 }

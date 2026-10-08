@@ -12,8 +12,8 @@
     "options": {
       "ru": [
         "Спот — это когда ставишь плечо на рост.",
-        "На споте монета не твоя, биржа просто рисует цифру.",
-        "Спот — купил монету за деньги. Монета твоя. Пока не продал — она лежит у тебя."
+        "На спотовом рынке монета не твоя, биржа просто рисует цифру.",
+        "Спотовый рынок — купил монету за деньги. Монета твоя. Пока не продал — она лежит у тебя."
       ],
       "en": [
         "Spot is when you put leverage on a rally.",
@@ -33,7 +33,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Спот — купил монету за деньги. Монета твоя. Пока не продал — она лежит у тебя.",
+      "ru": "Спотовый рынок — купил монету за деньги. Монета твоя. Пока не продал — она лежит у тебя.",
       "en": "Spot — you bought the coin with money. The coin is yours. Until you sell, it sits with you.",
       "pt": "Spot — você comprou a moeda com dinheiro. A moeda é sua. Enquanto não vender, ela fica com você.",
       "es": "Spot — compraste la moneda con dinero. La moneda es tuya. Hasta que no vendas, está contigo."
@@ -73,7 +73,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Спот — купил монету за деньги. Монета твоя. Пока не продал — она лежит у тебя.",
+      "ru": "Спотовый рынок — купил монету за деньги. Монета твоя. Пока не продал — она лежит у тебя.",
       "en": "Spot — you bought the coin with money. The coin is yours. Until you sell, it sits with you.",
       "pt": "Spot — você comprou a moeda com dinheiro. A moeda é sua. Enquanto não vender, ela fica com você.",
       "es": "Spot — compraste la moneda con dinero. La moneda es tuya. Hasta que no vendas, está contigo."
@@ -92,8 +92,8 @@
     "options": {
       "ru": [
         "Спот — это когда ставишь плечо на рост.",
-        "Ловушка: путать спот с пари. Спот — покупка, не ставка.",
-        "На споте монета не твоя, биржа просто рисует цифру."
+        "Ловушка: путать спот с пари. Спотовый рынок — покупка, не ставка.",
+        "На спотовом рынке монета не твоя, биржа просто рисует цифру."
       ],
       "en": [
         "Spot is when you put leverage on a rally.",
@@ -113,7 +113,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Ловушка: путать спот с пари. Спот — покупка, не ставка.",
+      "ru": "Ловушка: путать спот с пари. Спотовый рынок — покупка, не ставка.",
       "en": "Trap: mixing spot with a bet. Spot is a purchase, not a wager.",
       "pt": "Armadilha: misturar spot com aposta. Spot é compra, não aposta.",
       "es": "Trampa: mezclar spot con una apuesta. Spot es compra, no apuesta."
@@ -131,9 +131,9 @@
     },
     "options": {
       "ru": [
-        "На споте нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
-        "На споте нельзя потерять, цена всегда вернётся.",
-        "Ликвидация на споте такая же, как на фьючерсе."
+        "На спотовом рынке нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
+        "На спотовом рынке нельзя потерять, цена всегда вернётся.",
+        "Ликвидация на спотовом рынке такая же, как на фьючерсе."
       ],
       "en": [
         "On spot there is no liquidation. The dump hurts, but the exchange does not close you out.",
@@ -153,7 +153,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "На споте нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
+      "ru": "На спотовом рынке нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
       "en": "On spot there is no liquidation. The dump hurts, but the exchange does not close you out.",
       "pt": "No spot não tem liquidação. O tombo dói, mas a corretora não te fecha sozinha.",
       "es": "En spot no hay liquidación. El bajón duele, pero el exchange no te cierra solo."
@@ -193,7 +193,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "На споте нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
+      "ru": "На спотовом рынке нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
       "en": "On spot there is no liquidation. The dump hurts, but the exchange does not close you out.",
       "pt": "No spot não tem liquidação. O tombo dói, mas a corretora não te fecha sozinha.",
       "es": "En spot no hay liquidación. El bajón duele, pero el exchange no te cierra solo."
@@ -211,9 +211,9 @@
     },
     "options": {
       "ru": [
-        "На споте нельзя потерять, цена всегда вернётся.",
+        "На спотовом рынке нельзя потерять, цена всегда вернётся.",
         "Спот даёт время думать. Это и есть плюс.",
-        "Ликвидация на споте такая же, как на фьючерсе."
+        "Ликвидация на спотовом рынке такая же, как на фьючерсе."
       ],
       "en": [
         "On spot you cannot lose — price always comes back.",
@@ -251,9 +251,9 @@
     },
     "options": {
       "ru": [
-        "Деньги на споте свободны: монета куплена, USDT как будто на месте.",
-        "На споте плюс только если цена выросла. Падает — сидишь в минусе. Шортить нельзя. Деньги заняты в монете.",
-        "На споте всегда можно заработать на падении, как на фьючерсе."
+        "Деньги на спотовом рынке свободны: монета куплена, USDT как будто на месте.",
+        "На спотовом рынке плюс только если цена выросла. Падает — сидишь в минусе. Шортить нельзя. Деньги заняты в монете.",
+        "На спотовом рынке всегда можно заработать на падении, как на фьючерсе."
       ],
       "en": [
         "Money on spot is free: you bought the coin, USDT is still sitting there.",
@@ -273,7 +273,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "На споте плюс только если цена выросла. Падает — сидишь в минусе. Шортить нельзя. Деньги заняты в монете.",
+      "ru": "На спотовом рынке плюс только если цена выросла. Падает — сидишь в минусе. Шортить нельзя. Деньги заняты в монете.",
       "en": "On spot you are green only if price went up. It falls — you sit in the red. You cannot short. The money is tied up in the coin.",
       "pt": "No spot o plus só aparece se o preço subiu. Cai — você fica no vermelho. Não dá pra shortar. O dinheiro está preso na moeda.",
       "es": "En spot el plus solo llega si el precio subió. Cae — te quedas en rojo. No puedes hacer short. El dinero está atado en la moneda."
@@ -313,7 +313,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "На споте плюс только если цена выросла. Падает — сидишь в минусе. Шортить нельзя. Деньги заняты в монете.",
+      "ru": "На спотовом рынке плюс только если цена выросла. Падает — сидишь в минусе. Шортить нельзя. Деньги заняты в монете.",
       "en": "On spot you are green only if price went up. It falls — you sit in the red. You cannot short. The money is tied up in the coin.",
       "pt": "No spot o plus só aparece se o preço subiu. Cai — você fica no vermelho. Não dá pra shortar. O dinheiro está preso na moeda.",
       "es": "En spot el plus solo llega si el precio subió. Cae — te quedas en rojo. No puedes hacer short. El dinero está atado en la moneda."
@@ -331,9 +331,9 @@
     },
     "options": {
       "ru": [
-        "Деньги на споте свободны: монета куплена, USDT как будто на месте.",
-        "На споте всегда можно заработать на падении, как на фьючерсе.",
-        "Ловушка: «на споте безопасно» = можно не смотреть, что купил."
+        "Деньги на спотовом рынке свободны: монета куплена, USDT как будто на месте.",
+        "На спотовом рынке всегда можно заработать на падении, как на фьючерсе.",
+        "Ловушка: «на спотовом рынке безопасно» = можно не смотреть, что купил."
       ],
       "en": [
         "Money on spot is free: you bought the coin, USDT is still sitting there.",
@@ -353,7 +353,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Ловушка: «на споте безопасно» = можно не смотреть, что купил.",
+      "ru": "Ловушка: «на спотовом рынке безопасно» = можно не смотреть, что купил.",
       "en": "Trap: “spot is safe” means you can skip looking at what you bought.",
       "pt": "Armadilha: “spot é seguro” = posso nem olhar o que comprei.",
       "es": "Trampa: “spot es seguro” = puedo no mirar lo que compré."
@@ -1452,8 +1452,8 @@
     "options": {
       "ru": [
         "Лонг — это когда уже в плюсе.",
-        "Лонг на споте и шорт — одно и то же.",
-        "Лонг — купил и ждёшь рост. На споте это единственная сторона."
+        "Лонг на спотовом рынке и шорт — одно и то же.",
+        "Лонг — купил и ждёшь рост. На спотовом рынке это единственная сторона."
       ],
       "en": [
         "Long means you are already in profit.",
@@ -1473,7 +1473,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Лонг — купил и ждёшь рост. На споте это единственная сторона.",
+      "ru": "Лонг — купил и ждёшь рост. На спотовом рынке это единственная сторона.",
       "en": "Long — you bought and you wait for a rally. On spot this is the only side.",
       "pt": "Long — você comprou e espera a alta. No spot esse é o único lado.",
       "es": "Long — compraste y esperas la subida. En spot este es el único lado."
@@ -1513,7 +1513,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "Лонг — купил и ждёшь рост. На споте это единственная сторона.",
+      "ru": "Лонг — купил и ждёшь рост. На спотовом рынке это единственная сторона.",
       "en": "Long — you bought and you wait for a rally. On spot this is the only side.",
       "pt": "Long — você comprou e espera a alta. No spot esse é o único lado.",
       "es": "Long — compraste y esperas la subida. En spot este es el único lado."
@@ -1532,7 +1532,7 @@
     "options": {
       "ru": [
         "Лонг — это когда уже в плюсе.",
-        "Лонг на споте и шорт — одно и то же.",
+        "Лонг на спотовом рынке и шорт — одно и то же.",
         "Ловушка: назвать лонгом любую зелёную свечу без покупки."
       ],
       "en": [
@@ -1573,7 +1573,7 @@
       "ru": [
         "Шорт можно открыть на споте, если нажать Sell.",
         "Шорт безопаснее лонга, потому что падать быстрее.",
-        "Шорт — пари, что цена упадёт. На споте шорта нет. Это фьючерс."
+        "Шорт — пари, что цена упадёт. На спотовом рынке шорта нет. Это фьючерс."
       ],
       "en": [
         "You can open a short on spot if you hit Sell.",
@@ -1593,7 +1593,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Шорт — пари, что цена упадёт. На споте шорта нет. Это фьючерс.",
+      "ru": "Шорт — пари, что цена упадёт. На спотовом рынке шорта нет. Это фьючерс.",
       "en": "Short — a bet that price will fall. There is no short on spot. That is futures.",
       "pt": "Short — aposta de que o preço vai cair. No spot não tem short. Isso é futuros.",
       "es": "Short — apuesta a que el precio va a caer. En spot no hay short. Eso es futuros."
@@ -1604,7 +1604,7 @@
     "id": "L14-Q2",
     "difficulty": "Beginner",
     "question": {
-      "ru": "Где живёт шорт — на споте или на фьючерсе?",
+      "ru": "Где живёт шорт — на спотовом рынке или на фьючерсе?",
       "en": "Where does a short live — on spot or on futures?",
       "pt": "Onde mora o short — no spot ou nos futuros?",
       "es": "¿Dónde vive el short — en spot o en futuros?"
@@ -1633,7 +1633,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Шорт — пари, что цена упадёт. На споте шорта нет. Это фьючерс.",
+      "ru": "Шорт — пари, что цена упадёт. На спотовом рынке шорта нет. Это фьючерс.",
       "en": "Short — a bet that price will fall. There is no short on spot. That is futures.",
       "pt": "Short — aposta de que o preço vai cair. No spot não tem short. Isso é futuros.",
       "es": "Short — apuesta a que el precio va a caer. En spot no hay short. Eso es futuros."
@@ -3132,7 +3132,7 @@
     "options": {
       "ru": [
         "Стоп меньше обычного хода цены — его снесёт просто так, без ошибки идеи.",
-        "Альты ходят как биток, стоп тот же.",
+        "Альткоины ходят как биткоин, стоп тот же.",
         "Чем стоп короче, тем я умнее."
       ],
       "en": [
@@ -3213,7 +3213,7 @@
       "ru": [
         "Чем стоп короче, тем я умнее.",
         "Ловушка: стоп под ближайшим волоском в шумном рынке.",
-        "Альты ходят как биток, стоп тот же."
+        "Альткоины ходят как биткоин, стоп тот же."
       ],
       "en": [
         "The tighter the stop, the smarter I am.",
@@ -5891,9 +5891,9 @@
     },
     "options": {
       "ru": [
-        "Сначала комната цикла и биток. Альт читают рядом с битком. Если биток льёт — альт обычно льёт сильнее.",
-        "Альты всегда сильнее битка.",
-        "В проливе битка альты откупают первыми — надо лонг."
+        "Сначала комната цикла и биткоин. Альткоин читают рядом с биткоином. Если биткоин льёт — альткоин обычно льёт сильнее.",
+        "Альткоины всегда сильнее биткоина.",
+        "В проливе биткоина альткоины откупают первыми — надо лонг."
       ],
       "en": [
         "First the room of the cycle and BTC. You read an alt next to BTC. If BTC is dumping — the alt usually dumps harder.",
@@ -5913,7 +5913,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "Сначала комната цикла и биток. Альт читают рядом с битком. Если биток льёт — альт обычно льёт сильнее.",
+      "ru": "Сначала комната цикла и биткоин. Альткоин читают рядом с биткоином. Если биткоин льёт — альткоин обычно льёт сильнее.",
       "en": "First the room of the cycle and BTC. You read an alt next to BTC. If BTC is dumping — the alt usually dumps harder.",
       "pt": "Primeiro a sala do ciclo e o BTC. O alt se lê ao lado do BTC. Se o BTC está derramando — o alt geralmente derrama mais.",
       "es": "Primero el cuarto del ciclo y BTC. El alt se lee al lado de BTC. Si BTC está derramando — el alt suele derramar más."
@@ -5953,7 +5953,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Сначала комната цикла и биток. Альт читают рядом с битком. Если биток льёт — альт обычно льёт сильнее.",
+      "ru": "Сначала комната цикла и биткоин. Альткоин читают рядом с биткоином. Если биткоин льёт — альткоин обычно льёт сильнее.",
       "en": "First the room of the cycle and BTC. You read an alt next to BTC. If BTC is dumping — the alt usually dumps harder.",
       "pt": "Primeiro a sala do ciclo e o BTC. O alt se lê ao lado do BTC. Se o BTC está derramando — o alt geralmente derrama mais.",
       "es": "Primero el cuarto del ciclo y BTC. El alt se lee al lado de BTC. Si BTC está derramando — el alt suele derramar más."
@@ -5971,9 +5971,9 @@
     },
     "options": {
       "ru": [
-        "Сначала биток успокоился. Потом альт. Размер меньше.",
-        "В проливе битка альты откупают первыми — надо лонг.",
-        "Альты всегда сильнее битка."
+        "Сначала биткоин успокоился. Потом альткоин. Размер меньше.",
+        "В проливе биткоина альткоины откупают первыми — надо лонг.",
+        "Альткоины всегда сильнее биткоина."
       ],
       "en": [
         "First BTC calmed down. Then the alt. Smaller size.",
@@ -5993,7 +5993,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "Сначала биток успокоился. Потом альт. Размер меньше.",
+      "ru": "Сначала биткоин успокоился. Потом альткоин. Размер меньше.",
       "en": "First BTC calmed down. Then the alt. Smaller size.",
       "pt": "Primeiro o BTC sossegou. Depois o alt. Tamanho menor.",
       "es": "Primero BTC se calmó. Luego el alt. Tamaño más chico."

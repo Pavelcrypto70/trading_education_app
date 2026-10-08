@@ -184,7 +184,7 @@ class _CertificateScreenState extends State<CertificateScreen> {
         if (!status.journalOk) ...[
           const SizedBox(height: 8),
           OutlinedButton(
-            onPressed: () => context.push('/journal'),
+            onPressed: () => context.push('/journal/lesson'),
             child: Text(l10n.journalTitle),
           ),
         ],

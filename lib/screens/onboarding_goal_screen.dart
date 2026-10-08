@@ -1,353 +1,268 @@
 import 'package:flutter/material.dart';
-
 import 'package:go_router/go_router.dart';
 
-
-
-import '../services/locale_service.dart';
-
 import '../services/onboarding_service.dart';
-
 import '../theme.dart';
 
-
-
 class OnboardingGoalScreen extends StatefulWidget {
-
   const OnboardingGoalScreen({super.key});
 
-
-
   @override
-
   State<OnboardingGoalScreen> createState() => _OnboardingGoalScreenState();
-
 }
-
-
 
 class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
-
-  String? _selectedGoal;
-
+  String? _goal;
+  int _minutes = 30;
   bool _loading = false;
 
-
-
   static const _goals = [
-
-    _Goal(id: 'learn_trading', icon: Icons.school_outlined),
-
-    _Goal(id: 'practice_demo', icon: Icons.candlestick_chart_outlined),
-
-    _Goal(id: 'pass_quiz', icon: Icons.quiz_outlined),
-
-    _Goal(id: 'build_discipline', icon: Icons.psychology_outlined),
-
+    (
+      'from_zero',
+      'С нуля',
+      'Никогда не торговал, хочу понять основы',
+    ),
+    (
+      'lost_before',
+      'Пробовал и слил',
+      'Хочу систему и правила риска',
+    ),
+    (
+      'already_trading',
+      'Уже торгую',
+      'Хочу проверить себя и выйти на свой процесс',
+    ),
   ];
 
+  static const _times = [15, 30, 45];
 
-
-  String _goalTitle(String id) {
-
-    final l10n = context.l10n;
-
-    switch (id) {
-
-      case 'learn_trading':
-
-        return l10n.goalLearnTrading;
-
-      case 'practice_demo':
-
-        return l10n.goalDemoPractice;
-
-      case 'pass_quiz':
-
-        return l10n.goalTestKnowledge;
-
-      case 'build_discipline':
-
-        return l10n.goalBuildDiscipline;
-
-      default:
-
-        return id;
-
-    }
-
-  }
-
-
-
-  String _goalSubtitle(String id) {
-
-    final l10n = context.l10n;
-
-    switch (id) {
-
-      case 'learn_trading':
-
-        return l10n.goalLearnTradingSub;
-
-      case 'practice_demo':
-
-        return l10n.goalDemoPracticeSub;
-
-      case 'pass_quiz':
-
-        return l10n.goalTestKnowledgeSub;
-
-      case 'build_discipline':
-
-        return l10n.goalBuildDisciplineSub;
-
-      default:
-
-        return '';
-
-    }
-
-  }
-
-
-
-  Future<void> _finish() async {
-
-    if (_selectedGoal == null) return;
-
+  Future<void> _continue() async {
+    if (_goal == null) return;
     setState(() => _loading = true);
-
-    await OnboardingService.saveGoal(_selectedGoal!);
-
+    await OnboardingService.saveGoal(_goal!);
+    if (_goal == 'already_trading') {
+      await OnboardingService.markCompleted();
+      if (!mounted) return;
+      context.go('/placement');
+      return;
+    }
     await OnboardingService.markCompleted();
-
     if (!mounted) return;
-
     context.go('/lesson/1');
-
   }
-
-
 
   @override
-
   Widget build(BuildContext context) {
-
-    final l10n = context.l10n;
-
-
+    final textTheme = Theme.of(context).textTheme;
+    final weeks = (_minutes == 15)
+        ? '7–8'
+        : (_minutes == 30)
+            ? '5–6'
+            : '4–5';
 
     return Scaffold(
-
-      appBar: AppBar(title: Text(l10n.yourGoal)),
-
+      backgroundColor: AppTheme.bg,
       body: SafeArea(
-
         child: Padding(
-
-          padding: const EdgeInsets.all(24),
-
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
-
               Text(
-
-                l10n.goalQuestion,
-
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-
-                      fontWeight: FontWeight.w800,
-
-                    ),
-
+                'Шаг 2 из 2',
+                style: textTheme.labelLarge?.copyWith(color: AppTheme.faint),
               ),
-
-              const SizedBox(height: 8),
-
+              const SizedBox(height: 12),
               Text(
-
-                l10n.goalSubtitle,
-
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-
-                      color: Colors.white70,
-
-                    ),
-
+                'С чего ты начинаешь?',
+                style: textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.text,
+                ),
               ),
-
-              const SizedBox(height: 24),
-
-              Expanded(
-
-                child: ListView.separated(
-
-                  itemCount: _goals.length,
-
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-
-                  itemBuilder: (context, index) {
-
-                    final goal = _goals[index];
-
-                    final selected = _selectedGoal == goal.id;
-
-                    return InkWell(
-
-                      borderRadius: BorderRadius.circular(18),
-
-                      onTap: () => setState(() => _selectedGoal = goal.id),
-
-                      child: Container(
-
-                        padding: const EdgeInsets.all(18),
-
-                        decoration: BoxDecoration(
-
-                          color: selected
-
-                              ? AppTheme.gold.withValues(alpha: 0.12)
-
-                              : AppTheme.card,
-
-                          borderRadius: BorderRadius.circular(18),
-
-                          border: Border.all(
-
-                            color: selected ? AppTheme.gold : Colors.white12,
-
-                            width: selected ? 2 : 1,
-
-                          ),
-
-                        ),
-
-                        child: Row(
-
-                          children: [
-
-                            Icon(goal.icon, color: selected ? AppTheme.gold : Colors.white70),
-
-                            const SizedBox(width: 14),
-
-                            Expanded(
-
-                              child: Column(
-
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                children: [
-
-                                  Text(
-
-                                    _goalTitle(goal.id),
-
-                                    style: const TextStyle(
-
-                                      fontWeight: FontWeight.w700,
-
-                                      fontSize: 15,
-
-                                    ),
-
-                                  ),
-
-                                  const SizedBox(height: 4),
-
-                                  Text(
-
-                                    _goalSubtitle(goal.id),
-
-                                    style: const TextStyle(
-
-                                      color: Colors.white54,
-
-                                      fontSize: 13,
-
-                                    ),
-
-                                  ),
-
-                                ],
-
-                              ),
-
-                            ),
-
-                            if (selected)
-
-                              const Icon(Icons.check_circle, color: AppTheme.gold),
-
-                          ],
-
-                        ),
-
+              const SizedBox(height: 20),
+              for (final (id, title, sub) in _goals) ...[
+                _GoalOption(
+                  title: title,
+                  subtitle: sub,
+                  selected: _goal == id,
+                  onTap: () => setState(() => _goal = id),
+                ),
+                const SizedBox(height: 10),
+              ],
+              const SizedBox(height: 12),
+              Text(
+                'СКОЛЬКО ВРЕМЕНИ В ДЕНЬ',
+                style: textTheme.labelLarge?.copyWith(color: AppTheme.faint),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  for (final m in _times) ...[
+                    Expanded(
+                      child: _TimeChip(
+                        label: '$m мин',
+                        selected: _minutes == m,
+                        onTap: () => setState(() => _minutes = m),
                       ),
-
-                    );
-
-                  },
-
-                ),
-
+                    ),
+                    if (m != _times.last) const SizedBox(width: 8),
+                  ],
+                ],
               ),
-
-              SizedBox(
-
+              const SizedBox(height: 16),
+              Container(
                 width: double.infinity,
-
-                child: ElevatedButton(
-
-                  onPressed: _selectedGoal != null && !_loading ? _finish : null,
-
-                  child: _loading
-
-                      ? const SizedBox(
-
-                          width: 22,
-
-                          height: 22,
-
-                          child: CircularProgressIndicator(strokeWidth: 2),
-
-                        )
-
-                      : Text(l10n.continueBtn),
-
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: AppTheme.accentDim,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: const Color(0xFF1F5566)),
                 ),
-
+                child: Text(
+                  'При $_minutes минутах в день путь до реального счёта займёт около $weeks недель.',
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: AppTheme.text,
+                    height: 1.4,
+                  ),
+                ),
               ),
-
+              const Spacer(),
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: _goal == null || _loading ? null : _continue,
+                  child: _loading
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Text('Продолжить'),
+                ),
+              ),
             ],
-
           ),
-
         ),
-
       ),
-
     );
-
   }
-
 }
 
+class _GoalOption extends StatelessWidget {
+  const _GoalOption({
+    required this.title,
+    required this.subtitle,
+    required this.selected,
+    required this.onTap,
+  });
 
+  final String title;
+  final String subtitle;
+  final bool selected;
+  final VoidCallback onTap;
 
-class _Goal {
-
-  final String id;
-
-  final IconData icon;
-
-
-
-  const _Goal({required this.id, required this.icon});
-
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: selected ? AppTheme.accentDim : AppTheme.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: selected ? AppTheme.accent : AppTheme.lineSoft,
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 20,
+              height: 20,
+              margin: const EdgeInsets.only(top: 2),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: selected ? AppTheme.accent : AppTheme.line,
+                  width: 2,
+                ),
+                color: selected ? AppTheme.accent : Colors.transparent,
+              ),
+              child: selected
+                  ? const Icon(Icons.circle, size: 8, color: AppTheme.onAccent)
+                  : null,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: AppTheme.text,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      color: AppTheme.muted,
+                      fontSize: 13.5,
+                      height: 1.35,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
+class _TimeChip extends StatelessWidget {
+  const _TimeChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
 
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      child: Container(
+        height: 44,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: selected ? AppTheme.accentDim : AppTheme.surface2,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: selected ? AppTheme.accent : AppTheme.lineSoft,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: selected ? AppTheme.accent : AppTheme.text,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+}
