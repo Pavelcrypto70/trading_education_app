@@ -1882,6 +1882,73 @@ class AppLocalizations {
         'Comparar',
         'Comparar',
       );
+
+  // ── Order book diagram ──
+  String get obHeaderClassic => _t(
+        'Order book · Binance style',
+        'Стакан · как на Binance',
+        'Livro de ofertas · estilo Binance',
+        'Libro de órdenes · estilo Binance',
+      );
+  String get obHeaderSpread => _t(
+        'Look at the spread',
+        'Смотрим на спред',
+        'Observe o spread',
+        'Mira el spread',
+      );
+  String get obHeaderAskWall => _t(
+        'Ask wall (sellers)',
+        'Стена на продажу',
+        'Parede de venda',
+        'Muro de venta',
+      );
+  String get obHeaderBidWall => _t(
+        'Bid wall (buyers)',
+        'Стена на покупку',
+        'Parede de compra',
+        'Muro de compra',
+      );
+  String get obHeaderSpoof => _t(
+        'Possible spoof wall',
+        'Возможно, фейковая стена',
+        'Possível parede falsa',
+        'Posible muro falso',
+      );
+  String get obColPrice => _t('Price (USDT)', 'Цена (USDT)', 'Preço (USDT)', 'Precio (USDT)');
+  String get obColAmount => _t('Amount (BTC)', 'Объём (BTC)', 'Qtd. (BTC)', 'Cantidad (BTC)');
+  String get obColTotal => _t('Total', 'Сумма', 'Total', 'Total');
+  String get obWall => _t('WALL', 'СТЕНА', 'PAREDE', 'MURO');
+  String get obSpread => _t('Spread', 'Спред', 'Spread', 'Spread');
+  String get obCalloutClassic => _t(
+        'Binance layout: asks (red) on top, bids (green) below. Trades happen in the middle.',
+        'Как на Binance: продавцы (красные) сверху, покупатели (зелёные) снизу. Сделки проходят посередине.',
+        'Layout da Binance: vendas (vermelho) em cima, compras (verde) embaixo. Os negócios acontecem no meio.',
+        'Diseño de Binance: ventas (rojo) arriba, compras (verde) abajo. Las operaciones ocurren en el medio.',
+      );
+  String obCalloutSpread(String spread) => _t(
+        'Wide spread (~$spread USDT). A market order will burn several levels — expensive on thin alts.',
+        'Широкий спред (~$spread USDT). Рыночный ордер съест несколько уровней — на неликвидных альтах это дорого.',
+        'Spread largo (~$spread USDT). Uma ordem a mercado vai consumir vários níveis — caro em altcoins de baixa liquidez.',
+        'Spread amplio (~$spread USDT). Una orden de mercado consumirá varios niveles — caro en altcoins poco líquidas.',
+      );
+  String get obCalloutAskWall => _t(
+        'Ask wall ~48 BTC at 67205 — dense sellers. Do not short “from the wall” without the tape.',
+        'Стена ~48 BTC на 67205 — плотные продавцы. Не шорти «от стены», не глядя в ленту.',
+        'Parede de venda ~48 BTC em 67205 — vendedores densos. Não venda “da parede” sem olhar o fluxo.',
+        'Muro de venta ~48 BTC en 67205 — vendedores densos. No vendas “desde el muro” sin mirar la cinta.',
+      );
+  String get obCalloutBidWall => _t(
+        'Bid wall ~52 BTC — buyers in queue. May hold price… or cancel when price approaches.',
+        'Стена ~52 BTC на покупку — покупатели в очереди. Может удержать цену… а может исчезнуть, когда цена подойдёт.',
+        'Parede de compra ~52 BTC — compradores na fila. Pode segurar o preço… ou sumir quando o preço chegar.',
+        'Muro de compra ~52 BTC — compradores en cola. Puede sostener el precio… o cancelarse cuando el precio se acerque.',
+      );
+  String get obCalloutSpoof => _t(
+        'Huge wall far from mid + empty tape = spoofing risk. Wait for reaction — do not enter “because of the wall”.',
+        'Огромная стена далеко от цены + пустая лента = риск спуфинга. Дождись реакции — не входи «из-за стены».',
+        'Parede enorme longe do preço + fluxo vazio = risco de spoofing. Espere a reação — não entre “por causa da parede”.',
+        'Muro enorme lejos del precio + cinta vacía = riesgo de spoofing. Espera la reacción — no entres “por el muro”.',
+      );
   String get textBlockSteps => _t(
         'Steps',
         'Шаги',

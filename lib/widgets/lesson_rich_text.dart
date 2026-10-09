@@ -186,9 +186,9 @@ class _CompareCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.compare_arrows, color: Colors.lightBlueAccent, size: 18),
+              const Icon(Icons.compare_arrows, color: AppTheme.info, size: 18),
               const SizedBox(width: 8),
-              Text(l10n.textBlockCompare, style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.lightBlueAccent, fontSize: 12)),
+              Text(l10n.textBlockCompare, style: const TextStyle(fontWeight: FontWeight.w800, color: AppTheme.info, fontSize: 12)),
             ],
           ),
           const SizedBox(height: 10),
@@ -198,7 +198,7 @@ class _CompareCard extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('• ', style: TextStyle(color: Colors.lightBlueAccent, fontWeight: FontWeight.w700)),
+                      const Text('• ', style: TextStyle(color: AppTheme.info, fontWeight: FontWeight.w700)),
                       Expanded(child: Text(p.trim(), style: const TextStyle(height: 1.5, color: AppTheme.textSoft, fontSize: 13))),
                     ],
                   ),

@@ -61,7 +61,6 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: AppTheme.cardDecoration(
-        color: const Color(0xFF1A2332),
         border: Border.all(color: AppTheme.gold.withValues(alpha: 0.45)),
       ),
       child: Column(
@@ -96,7 +95,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
               labelStyle: const TextStyle(color: AppTheme.muted),
               prefixIcon: const Icon(Icons.account_balance_wallet_outlined, color: AppTheme.gold),
               filled: true,
-              fillColor: Colors.black26,
+              fillColor: AppTheme.surfaceLocked,
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),

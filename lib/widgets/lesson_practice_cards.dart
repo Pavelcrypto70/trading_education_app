@@ -110,10 +110,7 @@ class LessonTradingViewCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
-      decoration: AppTheme.cardDecoration(
-        color: const Color(0xFF13192B),
-        border: Border.all(color: const Color(0xFF2962FF).withValues(alpha: 0.45)),
-      ),
+      decoration: AppTheme.accentCardDecoration(AppTheme.lavender),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -122,10 +119,10 @@ class LessonTradingViewCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2962FF).withValues(alpha: 0.2),
+                  color: AppTheme.lavender.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.open_in_new, color: Color(0xFF2962FF), size: 18),
+                child: const Icon(Icons.open_in_new, color: AppTheme.lavender, size: 18),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -155,8 +152,8 @@ class LessonTradingViewCard extends StatelessWidget {
               icon: const Icon(Icons.candlestick_chart, size: 18),
               label: Text(l10n.openTradingView),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF2962FF),
-                foregroundColor: Colors.white,
+                backgroundColor: AppTheme.lavender,
+                foregroundColor: AppTheme.onPastel,
               ),
             ),
           ),
@@ -353,7 +350,6 @@ class LessonExternalLinkCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: AppTheme.cardDecoration(
-        color: const Color(0xFF13192B),
         border: Border.all(color: AppTheme.accent.withValues(alpha: 0.4)),
       ),
       child: Column(
@@ -414,14 +410,14 @@ class LessonHomeworkCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: AppTheme.cardDecoration(
         color: AppTheme.info.withValues(alpha: 0.08),
-        border: Border.all(color: Colors.lightBlueAccent.withValues(alpha: 0.35)),
+        border: Border.all(color: AppTheme.info.withValues(alpha: 0.35)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.assignment_outlined, color: Colors.lightBlueAccent, size: 20),
+              const Icon(Icons.assignment_outlined, color: AppTheme.info, size: 20),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -461,8 +457,8 @@ class LessonHomeworkCard extends StatelessWidget {
               icon: const Icon(Icons.assignment_turned_in_outlined, size: 18),
               label: Text(l10n.homeworkDesk),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightBlueAccent.withValues(alpha: 0.2),
-                foregroundColor: Colors.lightBlueAccent,
+                backgroundColor: AppTheme.info.withValues(alpha: 0.2),
+                foregroundColor: AppTheme.info,
               ),
             ),
           ),

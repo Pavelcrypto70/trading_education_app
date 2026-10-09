@@ -68,7 +68,7 @@ class _DemoChartPainter extends CustomPainter {
 
   static const _bullColor = AppTheme.bull;
   static const _bearColor = AppTheme.bear;
-  static const _gridColor = Color(0x22FFFFFF);
+  static const _gridColor = AppTheme.grid;
   static const _padRight = 60.0;
 
   @override
@@ -117,7 +117,7 @@ class _DemoChartPainter extends CustomPainter {
       currentPrice,
       lo,
       hi,
-      Colors.cyanAccent.withValues(alpha: 0.9),
+      AppTheme.lavender.withValues(alpha: 0.9),
       '',
       dashed: true,
       showLabel: false,

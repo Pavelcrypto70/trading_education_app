@@ -406,7 +406,8 @@ class _DiplomaCard extends StatelessWidget {
             style: const TextStyle(
               color: AppTheme.faint,
               fontSize: 11,
-              fontFamily: 'monospace',
+              letterSpacing: 0.6,
+              fontFeatures: [FontFeature.tabularFigures()],
             ),
             textAlign: TextAlign.center,
           ),

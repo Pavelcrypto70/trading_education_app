@@ -290,15 +290,11 @@ class _ProgressHero extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF0E8F74), Color(0xFF136B66), Color(0xFF2B3BA8)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        gradient: AppTheme.heroGradientColors,
         borderRadius: BorderRadius.circular(AppTheme.radiusXl),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.mint.withValues(alpha: 0.22),
+            color: AppTheme.accent.withValues(alpha: 0.28),
             blurRadius: 24,
             offset: const Offset(0, 10),
           ),
@@ -312,12 +308,7 @@ class _ProgressHero extends StatelessWidget {
               children: [
                 Text(
                   l10n.completedCount(done, total),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 21,
-                    letterSpacing: -0.3,
-                  ),
+                  style: AppTheme.display(21, color: Colors.white),
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -342,8 +333,8 @@ class _ProgressHero extends StatelessWidget {
                     value: progress,
                     strokeWidth: 6,
                     strokeCap: StrokeCap.round,
-                    color: AppTheme.warn,
-                    backgroundColor: Colors.white.withValues(alpha: 0.2),
+                    color: Colors.white,
+                    backgroundColor: Colors.white.withValues(alpha: 0.25),
                   ),
                 ),
                 Text(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../theme.dart';
 
 enum TmBannerTone { bull, warn, bear }
@@ -31,8 +29,8 @@ class TmKit {
         height: 1.45,
       );
 
-  static TextStyle get monoValue => TextStyle(
-        fontFamily: 'monospace',
+  static TextStyle get monoValue => const TextStyle(
+        fontFeatures: [FontFeature.tabularFigures()],
         fontWeight: FontWeight.w700,
         color: AppTheme.accent,
         fontSize: 15,
@@ -132,10 +130,11 @@ class TmCap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
-      style: GoogleFonts.jetBrainsMono(
+      style: TextStyle(
         fontSize: 11,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 1.2,
+        fontWeight: FontWeight.w800,
+        letterSpacing: 1.4,
+        fontFeatures: const [FontFeature.tabularFigures()],
         color: color ?? AppTheme.faint,
       ),
     );

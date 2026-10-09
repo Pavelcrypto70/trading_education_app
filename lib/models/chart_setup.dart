@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../theme.dart';
 import '../widgets/lesson_charts.dart';
 
 enum ChartMarkerKind { entry, stop, target, note, buy, sell }
@@ -13,7 +14,7 @@ class ChartLevel {
   const ChartLevel({
     required this.price,
     required this.label,
-    this.color = const Color(0xFFD4AF37),
+    this.color = AppTheme.lavender,
     this.dashed = false,
   });
 }
@@ -45,7 +46,7 @@ class ChartLine {
     required this.x2,
     required this.y2,
     this.label,
-    this.color = const Color(0xFFD4AF37),
+    this.color = AppTheme.lavender,
     this.dashed = false,
   });
 }
@@ -59,7 +60,7 @@ class ChartZone {
   const ChartZone({
     required this.top,
     required this.bottom,
-    this.color = const Color(0x3326A69A),
+    this.color = const Color(0x333FCB8A),
     this.label,
   });
 }
@@ -74,7 +75,7 @@ class ChartAnnotation {
     required this.text,
     required this.x,
     required this.y,
-    this.color = Colors.white70,
+    this.color = AppTheme.textSoft,
   });
 }
 

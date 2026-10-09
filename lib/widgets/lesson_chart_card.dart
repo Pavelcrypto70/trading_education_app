@@ -84,7 +84,7 @@ class LessonChartCard extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF070B12),
+                color: AppTheme.bg2,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: AppTheme.lineSoft),
               ),
@@ -150,7 +150,7 @@ class _CryptoHeader extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF0C121C), Color(0xFF0B2430)],
+          colors: [AppTheme.surface2, AppTheme.surface],
         ),
         border: Border(bottom: BorderSide(color: AppTheme.lineSoft)),
       ),

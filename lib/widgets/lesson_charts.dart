@@ -93,10 +93,10 @@ class _SetupChartPainter extends CustomPainter {
 
   _SetupChartPainter({required this.setup});
 
-  static const _bullColor = Color(0xFF2AD49A);
-  static const _bearColor = Color(0xFFFF5566);
-  static const _gridColor = Color(0x22FFFFFF);
-  static const _gold = Color(0xFF5AE2FF);
+  static const _bullColor = AppTheme.bull;
+  static const _bearColor = AppTheme.bear;
+  static const _gridColor = AppTheme.grid;
+  static const _targetColor = AppTheme.lavender;
 
   static const _chartPadRight = 44.0;
 
@@ -182,7 +182,7 @@ class _SetupChartPainter extends CustomPainter {
         text: TextSpan(
           text: price.toStringAsFixed(price >= 100 ? 0 : 1),
           style: const TextStyle(
-            color: Color(0xFF95A3B8),
+            color: AppTheme.muted,
             fontSize: 10,
             fontWeight: FontWeight.w600,
             fontFeatures: [FontFeature.tabularFigures()],
@@ -263,7 +263,7 @@ class _SetupChartPainter extends CustomPainter {
         size,
         zone.label!,
         Offset(10, (top + bottom) / 2 - 10),
-        const Color(0xFFF4F7FB),
+        AppTheme.text,
       );
     }
   }
@@ -301,7 +301,7 @@ class _SetupChartPainter extends CustomPainter {
     final color = switch (marker.kind) {
       ChartMarkerKind.entry || ChartMarkerKind.buy => _bullColor,
       ChartMarkerKind.stop => _bearColor,
-      ChartMarkerKind.target || ChartMarkerKind.sell => _gold,
+      ChartMarkerKind.target || ChartMarkerKind.sell => _targetColor,
       ChartMarkerKind.note => AppTheme.textSoft,
     };
 
@@ -313,7 +313,7 @@ class _SetupChartPainter extends CustomPainter {
     };
 
     final tip = Offset(x, tipY + 10);
-    canvas.drawCircle(tip, 6, Paint()..color = const Color(0xFF03050A));
+    canvas.drawCircle(tip, 6, Paint()..color = AppTheme.bg);
     canvas.drawCircle(tip, 5, Paint()..color = color);
     canvas.drawCircle(tip, 5, Paint()
       ..color = Colors.white.withValues(alpha: 0.35)
@@ -384,7 +384,7 @@ class _SetupChartPainter extends CustomPainter {
       text: TextSpan(
         text: text,
         style: const TextStyle(
-          color: Color(0xFFF4F7FB),
+          color: AppTheme.text,
           fontSize: 11.5,
           fontWeight: FontWeight.w700,
           height: 1.15,
@@ -411,7 +411,7 @@ class _SetupChartPainter extends CustomPainter {
       rect.shift(const Offset(0, 1.5)),
       Paint()..color = const Color(0x66000000),
     );
-    canvas.drawRRect(rect, Paint()..color = const Color(0xF20C121C));
+    canvas.drawRRect(rect, Paint()..color = AppTheme.bg2.withValues(alpha: 0.95));
     canvas.drawRRect(
       rect,
       Paint()

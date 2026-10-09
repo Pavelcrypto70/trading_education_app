@@ -6,6 +6,7 @@ class AppTheme {
   // Base surfaces (plum night).
   static const Color bg = Color(0xFF1B1530);
   static const Color bg2 = Color(0xFF221B38);
+  static const Color backdrop = Color(0xFF120E22);
   static const Color surface = Color(0xFF2A2242);
   static const Color surface2 = Color(0xFF312850);
   static const Color surface3 = Color(0xFF3A2F5C);
@@ -37,6 +38,7 @@ class AppTheme {
   static const Color warn = Color(0xFFFFC86B);
   static const Color warnSoft = Color(0xFF433422);
   static const Color info = Color(0xFF7FD4FF);
+  static const Color grid = Color(0x12FFFFFF);
 
   // Pastel palette for icon squares, stages and avatars.
   static const Color peach = Color(0xFFFFB38A);

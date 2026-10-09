@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../services/locale_service.dart';
 import '../theme.dart';
 
 /// Binance-style order book demo for lessons (bids / asks / spread / walls).
@@ -85,9 +86,9 @@ class _OrderBookDiagramState extends State<OrderBookDiagram>
           height: widget.height,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color(0xFF0B0E11),
+            color: AppTheme.bg2,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+            border: Border.all(color: AppTheme.lineSoft),
           ),
           clipBehavior: Clip.antiAlias,
           child: Column(
@@ -117,28 +118,29 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = LocaleService.instance.strings;
     final label = switch (scenario) {
-      OrderBookScenario.classic => 'Order book · Binance style',
-      OrderBookScenario.spread => 'Look at the spread',
-      OrderBookScenario.askWall => 'Ask wall (sellers)',
-      OrderBookScenario.bidWall => 'Bid wall (buyers)',
-      OrderBookScenario.spoof => 'Possible spoof wall',
+      OrderBookScenario.classic => l.obHeaderClassic,
+      OrderBookScenario.spread => l.obHeaderSpread,
+      OrderBookScenario.askWall => l.obHeaderAskWall,
+      OrderBookScenario.bidWall => l.obHeaderBidWall,
+      OrderBookScenario.spoof => l.obHeaderSpoof,
     };
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 8),
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0x14FFFFFF))),
+        border: Border(bottom: BorderSide(color: AppTheme.grid)),
       ),
       child: Row(
         children: [
           Text(
             pair,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppTheme.text,
               fontSize: 13,
               fontWeight: FontWeight.w700,
-              fontFamily: 'monospace',
+              fontFeatures: _tabular,
             ),
           ),
           const SizedBox(width: 8),
@@ -162,16 +164,17 @@ class _Header extends StatelessWidget {
 class _ColumnLabels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.fromLTRB(12, 6, 12, 4),
+    final l = LocaleService.instance.strings;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 4),
       child: Row(
         children: [
-          Expanded(child: Text('Price (USDT)', style: _labelStyle)),
+          Expanded(child: Text(l.obColPrice, style: _labelStyle)),
           Expanded(
-            child: Text('Amount (BTC)', textAlign: TextAlign.right, style: _labelStyle),
+            child: Text(l.obColAmount, textAlign: TextAlign.right, style: _labelStyle),
           ),
           Expanded(
-            child: Text('Total', textAlign: TextAlign.right, style: _labelStyle),
+            child: Text(l.obColTotal, textAlign: TextAlign.right, style: _labelStyle),
           ),
         ],
       ),
@@ -179,7 +182,9 @@ class _ColumnLabels extends StatelessWidget {
   }
 }
 
-const _labelStyle = TextStyle(color: Color(0x66FFFFFF), fontSize: 10, fontWeight: FontWeight.w500);
+const _tabular = [FontFeature.tabularFigures()];
+
+const _labelStyle = TextStyle(color: AppTheme.faint, fontSize: 10, fontWeight: FontWeight.w500);
 
 class _BookBody extends StatelessWidget {
   final _BookData book;
@@ -238,21 +243,21 @@ class _SpreadRow extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      color: highlight ? const Color(0x22D4AF37) : const Color(0x10FFFFFF),
+      color: highlight ? AppTheme.warn.withValues(alpha: 0.13) : AppTheme.grid,
       child: Row(
         children: [
           Text(
             book.lastPrice.toStringAsFixed(1),
             style: TextStyle(
-              color: highlight ? AppTheme.gold : const Color(0xFF0ECB81),
+              color: highlight ? AppTheme.gold : AppTheme.bull,
               fontSize: 15,
               fontWeight: FontWeight.w800,
-              fontFamily: 'monospace',
+              fontFeatures: _tabular,
             ),
           ),
           const SizedBox(width: 8),
           Text(
-            'Spread ${book.spread.toStringAsFixed(1)} USDT  (${book.spreadPct.toStringAsFixed(3)}%)',
+            '${LocaleService.instance.strings.obSpread} ${book.spread.toStringAsFixed(1)} USDT  (${book.spreadPct.toStringAsFixed(3)}%)',
             style: TextStyle(
               color: highlight ? AppTheme.gold : AppTheme.muted,
               fontSize: 11,
@@ -280,7 +285,7 @@ class _LevelRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isAsk ? const Color(0xFFF6465D) : const Color(0xFF0ECB81);
+    final color = isAsk ? AppTheme.bear : AppTheme.bull;
     final depth = (level.size / maxSize).clamp(0.0, 1.0) * progress;
     return Stack(
       children: [
@@ -312,7 +317,7 @@ class _LevelRow extends StatelessWidget {
                         color: color,
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
-                        fontFamily: 'monospace',
+                        fontFeatures: _tabular,
                       ),
                     ),
                     if (level.isWall) ...[
@@ -324,7 +329,7 @@ class _LevelRow extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          level.wallLabel ?? 'WALL',
+                          level.wallLabel ?? LocaleService.instance.strings.obWall,
                           style: const TextStyle(
                             color: AppTheme.gold,
                             fontSize: 9,
@@ -343,7 +348,7 @@ class _LevelRow extends StatelessWidget {
                   style: const TextStyle(
                     color: AppTheme.textSoft,
                     fontSize: 12,
-                    fontFamily: 'monospace',
+                    fontFeatures: _tabular,
                   ),
                 ),
               ),
@@ -354,7 +359,7 @@ class _LevelRow extends StatelessWidget {
                   style: const TextStyle(
                     color: AppTheme.muted,
                     fontSize: 12,
-                    fontFamily: 'monospace',
+                    fontFeatures: _tabular,
                   ),
                 ),
               ),
@@ -377,8 +382,8 @@ class _Callout extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
       decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Color(0x14FFFFFF))),
-        color: Color(0xFF12161C),
+        border: Border(top: BorderSide(color: AppTheme.grid)),
+        color: AppTheme.surface,
       ),
       child: Text(
         text,
@@ -478,7 +483,7 @@ class _BookData {
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 2.5,
-      callout: 'Binance layout: asks (red) on top, bids (green) below. Trades happen in the middle.',
+      callout: LocaleService.instance.strings.obCalloutClassic,
     );
   }
 
@@ -522,8 +527,7 @@ class _BookData {
       spreadPct: spread / bestBid * 100,
       maxSize: 420,
       highlightSpread: true,
-      callout:
-          'Wide spread (~${spread.toStringAsFixed(1)} USDT). A market order will burn several levels — expensive on thin alts.',
+      callout: LocaleService.instance.strings.obCalloutSpread(spread.toStringAsFixed(1)),
     );
   }
 
@@ -532,7 +536,7 @@ class _BookData {
       (67220.0, 0.50, false, null),
       (67215.0, 0.80, false, null),
       (67210.0, 1.10, false, null),
-      (67205.0, 48.0, true, 'WALL'), // huge ask wall
+      (67205.0, 48.0, true, null), // huge ask wall
       (67203.5, 1.60, false, null),
     ];
     final bidsRaw = <(double, double, bool, String?)>[
@@ -552,7 +556,7 @@ class _BookData {
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 48,
-      callout: 'Ask wall ~48 BTC at 67205 — dense sellers. Do not short “from the wall” without the tape.',
+      callout: LocaleService.instance.strings.obCalloutAskWall,
     );
   }
 
@@ -566,7 +570,7 @@ class _BookData {
     ];
     final bidsRaw = <(double, double, bool, String?)>[
       (67201.5, 1.80, false, null),
-      (67198.0, 52.0, true, 'WALL'),
+      (67198.0, 52.0, true, null),
       (67195.0, 1.10, false, null),
       (67192.0, 0.85, false, null),
       (67190.0, 1.60, false, null),
@@ -581,7 +585,7 @@ class _BookData {
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 52,
-      callout: 'Bid wall ~52 BTC — buyers in queue. May hold price… or cancel when price approaches.',
+      callout: LocaleService.instance.strings.obCalloutBidWall,
     );
   }
 
@@ -610,8 +614,7 @@ class _BookData {
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 85,
-      callout:
-          'Huge wall far from mid + empty tape = spoofing risk. Wait for reaction — do not enter “because of the wall”.',
+      callout: LocaleService.instance.strings.obCalloutSpoof,
     );
   }
 }

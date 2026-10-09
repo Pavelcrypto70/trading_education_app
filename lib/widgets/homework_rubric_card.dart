@@ -65,7 +65,7 @@ class _HomeworkRubricCardState extends State<HomeworkRubricCard> {
             onTap: () => setState(() => _expanded = !_expanded),
             child: Row(
               children: [
-                const Icon(Icons.fact_check_outlined, color: Colors.lightBlueAccent, size: 18),
+                const Icon(Icons.fact_check_outlined, color: AppTheme.info, size: 18),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(l10n.homeworkRubric, style: const TextStyle(fontWeight: FontWeight.w700)),

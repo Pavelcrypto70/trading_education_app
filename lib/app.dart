@@ -54,7 +54,7 @@ class _PhoneFrame extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     if (width <= _maxWidth + 40) return child;
     return ColoredBox(
-      color: const Color(0xFF05070F),
+      color: AppTheme.backdrop,
       child: Center(
         child: Container(
           width: _maxWidth,

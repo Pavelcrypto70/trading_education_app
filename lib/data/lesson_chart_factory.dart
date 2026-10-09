@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../models/chart_setup.dart';
+import '../theme.dart';
 import '../widgets/lesson_charts.dart';
 import 'chart_sequence_builder.dart';
 
@@ -11,10 +12,10 @@ import 'chart_sequence_builder.dart';
 class LessonChartFactory {
   LessonChartFactory._();
 
-  static const _bull = Color(0xFF2AD49A);
-  static const _bear = Color(0xFFFF5566);
-  static const _gold = Color(0xFF5AE2FF);
-  static const _purple = Color(0xFF7DD3FC);
+  static const _bull = AppTheme.bull;
+  static const _bear = AppTheme.bear;
+  static const _gold = AppTheme.lavender;
+  static const _purple = AppTheme.info;
 
   static ChartSetup forCard({
     required int lessonId,
