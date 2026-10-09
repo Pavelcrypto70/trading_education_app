@@ -29,6 +29,7 @@ class LessonChartWidget extends StatelessWidget {
   final int? lessonId;
   final int cardIndex;
   final double? height;
+  final String? pair;
 
   const LessonChartWidget({
     super.key,
@@ -36,6 +37,7 @@ class LessonChartWidget extends StatelessWidget {
     this.lessonId,
     this.cardIndex = 0,
     this.height,
+    this.pair,
   });
 
   static bool _isPatternType(String t) =>
@@ -66,11 +68,10 @@ class LessonChartWidget extends StatelessWidget {
             if (_isOrderBookType(chartType)) {
       final h = height ?? 340.0;
       final scenario = OrderBookDiagram.fromChartType(chartType);
-      final pair = scenario == OrderBookScenario.spread ? 'ALT/USDT' : 'BTC/USDT';
       return OrderBookDiagram(
         scenario: scenario,
         height: h,
-        pair: pair,
+        pair: pair ?? (scenario == OrderBookScenario.spread ? 'ALT/USDT' : 'BTC/USDT'),
       );
     }
     final setup = lessonId != null

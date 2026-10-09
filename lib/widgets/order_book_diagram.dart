@@ -77,7 +77,7 @@ class _OrderBookDiagramState extends State<OrderBookDiagram>
 
   @override
   Widget build(BuildContext context) {
-    final book = _BookData.forScenario(widget.scenario);
+    final book = _BookData.forScenario(widget.scenario).forPair(widget.pair);
     return AnimatedBuilder(
       animation: _ctrl,
       builder: (_, __) {
@@ -94,14 +94,14 @@ class _OrderBookDiagramState extends State<OrderBookDiagram>
           child: Column(
             children: [
               _Header(pair: widget.pair, scenario: widget.scenario),
-              _ColumnLabels(),
+              _ColumnLabels(base: book.base),
               Expanded(
                 child: Opacity(
                   opacity: t,
                   child: _BookBody(book: book, progress: t),
                 ),
               ),
-              if (book.callout != null) _Callout(text: book.callout!),
+              _Callout(text: book.callout),
             ],
           ),
         );
@@ -162,6 +162,10 @@ class _Header extends StatelessWidget {
 }
 
 class _ColumnLabels extends StatelessWidget {
+  final String base;
+
+  const _ColumnLabels({required this.base});
+
   @override
   Widget build(BuildContext context) {
     final l = LocaleService.instance.strings;
@@ -171,7 +175,7 @@ class _ColumnLabels extends StatelessWidget {
         children: [
           Expanded(child: Text(l.obColPrice, style: _labelStyle)),
           Expanded(
-            child: Text(l.obColAmount, textAlign: TextAlign.right, style: _labelStyle),
+            child: Text(l.obColAmount(base), textAlign: TextAlign.right, style: _labelStyle),
           ),
           Expanded(
             child: Text(l.obColTotal, textAlign: TextAlign.right, style: _labelStyle),
@@ -204,6 +208,7 @@ class _BookBody extends StatelessWidget {
                   child: _LevelRow(
                     level: book.asks[i],
                     maxSize: book.maxSize,
+                    decimals: book.decimals,
                     isAsk: true,
                     progress: progress,
                   ),
@@ -220,6 +225,7 @@ class _BookBody extends StatelessWidget {
                   child: _LevelRow(
                     level: book.bids[i],
                     maxSize: book.maxSize,
+                    decimals: book.decimals,
                     isAsk: false,
                     progress: progress,
                   ),
@@ -247,7 +253,7 @@ class _SpreadRow extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            book.lastPrice.toStringAsFixed(1),
+            book.lastPrice.toStringAsFixed(book.decimals),
             style: TextStyle(
               color: highlight ? AppTheme.gold : AppTheme.bull,
               fontSize: 15,
@@ -257,7 +263,7 @@ class _SpreadRow extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            '${LocaleService.instance.strings.obSpread} ${book.spread.toStringAsFixed(1)} USDT  (${book.spreadPct.toStringAsFixed(3)}%)',
+            '${LocaleService.instance.strings.obSpread} ${book.spread.toStringAsFixed(book.decimals)} USDT  (${book.spreadPct.toStringAsFixed(3)}%)',
             style: TextStyle(
               color: highlight ? AppTheme.gold : AppTheme.muted,
               fontSize: 11,
@@ -273,12 +279,14 @@ class _SpreadRow extends StatelessWidget {
 class _LevelRow extends StatelessWidget {
   final _Level level;
   final double maxSize;
+  final int decimals;
   final bool isAsk;
   final double progress;
 
   const _LevelRow({
     required this.level,
     required this.maxSize,
+    required this.decimals,
     required this.isAsk,
     required this.progress,
   });
@@ -312,7 +320,7 @@ class _LevelRow extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      level.price.toStringAsFixed(1),
+                      level.price.toStringAsFixed(decimals),
                       style: TextStyle(
                         color: color,
                         fontSize: 12,
@@ -343,7 +351,7 @@ class _LevelRow extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  level.size.toStringAsFixed(3),
+                  _formatSize(level.size),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
                     color: AppTheme.textSoft,
@@ -354,7 +362,7 @@ class _LevelRow extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  level.total.toStringAsFixed(3),
+                  _formatSize(level.total),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
                     color: AppTheme.muted,
@@ -409,7 +417,44 @@ class _Level {
   });
 }
 
+String _formatSize(double v) {
+  if (v >= 1e6) return '${(v / 1e6).toStringAsFixed(2)}M';
+  if (v >= 1e4) return '${(v / 1e3).toStringAsFixed(1)}K';
+  if (v >= 100) return v.toStringAsFixed(0);
+  if (v >= 10) return v.toStringAsFixed(2);
+  return v.toStringAsFixed(3);
+}
+
+String _approxSize(double v) {
+  if (v >= 1e6) return '${(v / 1e6).toStringAsFixed(1)}M';
+  if (v >= 1e4) return '${(v / 1e3).toStringAsFixed(0)}K';
+  return v.toStringAsFixed(v >= 10 ? 0 : 1);
+}
+
+class _Coin {
+  final double price;
+  final double tick;
+  final int decimals;
+
+  const _Coin(this.price, this.tick, this.decimals);
+}
+
+/// Reference prices and ticks so a BTC-shaped demo book reads like the lesson's coin.
+const _coins = <String, _Coin>{
+  'BTC': _Coin(67202.4, 0.1, 1),
+  'ETH': _Coin(3452.18, 0.01, 2),
+  'SOL': _Coin(168.42, 0.01, 2),
+  'BNB': _Coin(591.3, 0.1, 1),
+  'XRP': _Coin(0.6213, 0.0001, 4),
+  'ADA': _Coin(0.4521, 0.0001, 4),
+  'DOGE': _Coin(0.16214, 0.00001, 5),
+  'AVAX': _Coin(36.48, 0.01, 2),
+};
+
+const _btcTick = 0.1;
+
 class _BookData {
+  final OrderBookScenario scenario;
   final List<_Level> asks; // top → best ask last (near middle)
   final List<_Level> bids; // best bid first → deeper
   final double lastPrice;
@@ -417,9 +462,11 @@ class _BookData {
   final double spreadPct;
   final double maxSize;
   final bool highlightSpread;
-  final String? callout;
+  final String base;
+  final int decimals;
 
   const _BookData({
+    required this.scenario,
     required this.asks,
     required this.bids,
     required this.lastPrice,
@@ -427,8 +474,57 @@ class _BookData {
     required this.spreadPct,
     required this.maxSize,
     this.highlightSpread = false,
-    this.callout,
+    this.base = 'BTC',
+    this.decimals = 1,
   });
+
+  String get callout {
+    final l = LocaleService.instance.strings;
+    final wall = [...asks, ...bids].where((e) => e.isWall).firstOrNull;
+    return switch (scenario) {
+      OrderBookScenario.classic => l.obCalloutClassic,
+      OrderBookScenario.spread => l.obCalloutSpread(spread.toStringAsFixed(decimals)),
+      OrderBookScenario.askWall when wall != null =>
+        l.obCalloutAskWall(_approxSize(wall.size), base, wall.price.toStringAsFixed(decimals)),
+      OrderBookScenario.bidWall when wall != null => l.obCalloutBidWall(_approxSize(wall.size), base),
+      OrderBookScenario.askWall || OrderBookScenario.bidWall => l.obCalloutClassic,
+      OrderBookScenario.spoof => l.obCalloutSpoof,
+    };
+  }
+
+  /// Spread scenario scales by percent (the hole must stay wide); others keep tick distances.
+  _BookData forPair(String pair) {
+    final target = pair.split('/').first.toUpperCase();
+    final coin = _coins[target];
+    if (coin == null || target == base) return this;
+    final byPercent = scenario == OrderBookScenario.spread;
+    final ratio = coin.price / lastPrice;
+    double mapPrice(double p) => byPercent ? p * ratio : coin.price + (p - lastPrice) / _btcTick * coin.tick;
+    final sizeK = 1 / ratio;
+    List<_Level> mapLevels(List<_Level> src) => [
+          for (final e in src)
+            _Level(
+              price: mapPrice(e.price),
+              size: e.size * sizeK,
+              total: e.total * sizeK,
+              isWall: e.isWall,
+              wallLabel: e.wallLabel,
+            ),
+        ];
+    final newSpread = byPercent ? spread * ratio : spread / _btcTick * coin.tick;
+    return _BookData(
+      scenario: scenario,
+      asks: mapLevels(asks),
+      bids: mapLevels(bids),
+      lastPrice: coin.price,
+      spread: newSpread,
+      spreadPct: newSpread / coin.price * 100,
+      maxSize: maxSize * sizeK,
+      highlightSpread: highlightSpread,
+      base: target,
+      decimals: coin.decimals,
+    );
+  }
 
   static _BookData forScenario(OrderBookScenario scenario) {
     switch (scenario) {
@@ -477,13 +573,13 @@ class _BookData {
     final bestBid = 67202.4;
     final spread = bestAsk - bestBid;
     return _BookData(
+      scenario: OrderBookScenario.classic,
       asks: asksBinance,
       bids: bids,
       lastPrice: bestBid,
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 2.5,
-      callout: LocaleService.instance.strings.obCalloutClassic,
     );
   }
 
@@ -520,6 +616,7 @@ class _BookData {
     final bestBid = 178.10;
     final spread = bestAsk - bestBid;
     return _BookData(
+      scenario: OrderBookScenario.spread,
       asks: asks,
       bids: bids,
       lastPrice: bestBid,
@@ -527,7 +624,8 @@ class _BookData {
       spreadPct: spread / bestBid * 100,
       maxSize: 420,
       highlightSpread: true,
-      callout: LocaleService.instance.strings.obCalloutSpread(spread.toStringAsFixed(1)),
+      base: 'ALT',
+      decimals: 2,
     );
   }
 
@@ -550,13 +648,13 @@ class _BookData {
     final bestBid = 67202.4;
     final spread = bestAsk - bestBid;
     return _BookData(
+      scenario: OrderBookScenario.askWall,
       asks: _asksLikeBinance(asksRaw),
       bids: _withTotals(bidsRaw),
       lastPrice: bestBid,
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 48,
-      callout: LocaleService.instance.strings.obCalloutAskWall,
     );
   }
 
@@ -579,13 +677,13 @@ class _BookData {
     final bestBid = 67201.5;
     final spread = bestAsk - bestBid;
     return _BookData(
+      scenario: OrderBookScenario.bidWall,
       asks: _asksLikeBinance(asksRaw),
       bids: _withTotals(bidsRaw),
       lastPrice: bestBid,
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 52,
-      callout: LocaleService.instance.strings.obCalloutBidWall,
     );
   }
 
@@ -608,13 +706,13 @@ class _BookData {
     final bestBid = 67202.0;
     final spread = bestAsk - bestBid;
     return _BookData(
+      scenario: OrderBookScenario.spoof,
       asks: _asksLikeBinance(asksRaw),
       bids: _withTotals(bidsRaw),
       lastPrice: bestBid,
       spread: spread,
       spreadPct: spread / bestBid * 100,
       maxSize: 85,
-      callout: LocaleService.instance.strings.obCalloutSpoof,
     );
   }
 }

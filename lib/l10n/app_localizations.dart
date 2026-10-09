@@ -1915,7 +1915,7 @@ class AppLocalizations {
         'Posible muro falso',
       );
   String get obColPrice => _t('Price (USDT)', 'Цена (USDT)', 'Preço (USDT)', 'Precio (USDT)');
-  String get obColAmount => _t('Amount (BTC)', 'Объём (BTC)', 'Qtd. (BTC)', 'Cantidad (BTC)');
+  String obColAmount(String base) => _t('Amount ($base)', 'Объём ($base)', 'Qtd. ($base)', 'Cantidad ($base)');
   String get obColTotal => _t('Total', 'Сумма', 'Total', 'Total');
   String get obWall => _t('WALL', 'СТЕНА', 'PAREDE', 'MURO');
   String get obSpread => _t('Spread', 'Спред', 'Spread', 'Spread');
@@ -1931,17 +1931,17 @@ class AppLocalizations {
         'Spread largo (~$spread USDT). Uma ordem a mercado vai consumir vários níveis — caro em altcoins de baixa liquidez.',
         'Spread amplio (~$spread USDT). Una orden de mercado consumirá varios niveles — caro en altcoins poco líquidas.',
       );
-  String get obCalloutAskWall => _t(
-        'Ask wall ~48 BTC at 67205 — dense sellers. Do not short “from the wall” without the tape.',
-        'Стена ~48 BTC на 67205 — плотные продавцы. Не шорти «от стены», не глядя в ленту.',
-        'Parede de venda ~48 BTC em 67205 — vendedores densos. Não venda “da parede” sem olhar o fluxo.',
-        'Muro de venta ~48 BTC en 67205 — vendedores densos. No vendas “desde el muro” sin mirar la cinta.',
+  String obCalloutAskWall(String size, String base, String price) => _t(
+        'Ask wall ~$size $base at $price — dense sellers. Do not short “from the wall” without the tape.',
+        'Стена ~$size $base на $price — плотные продавцы. Не шорти «от стены», не глядя в ленту.',
+        'Parede de venda ~$size $base em $price — vendedores densos. Não venda “da parede” sem olhar o fluxo.',
+        'Muro de venta ~$size $base en $price — vendedores densos. No vendas “desde el muro” sin mirar la cinta.',
       );
-  String get obCalloutBidWall => _t(
-        'Bid wall ~52 BTC — buyers in queue. May hold price… or cancel when price approaches.',
-        'Стена ~52 BTC на покупку — покупатели в очереди. Может удержать цену… а может исчезнуть, когда цена подойдёт.',
-        'Parede de compra ~52 BTC — compradores na fila. Pode segurar o preço… ou sumir quando o preço chegar.',
-        'Muro de compra ~52 BTC — compradores en cola. Puede sostener el precio… o cancelarse cuando el precio se acerque.',
+  String obCalloutBidWall(String size, String base) => _t(
+        'Bid wall ~$size $base — buyers in queue. May hold price… or cancel when price approaches.',
+        'Стена ~$size $base на покупку — покупатели в очереди. Может удержать цену… а может исчезнуть, когда цена подойдёт.',
+        'Parede de compra ~$size $base — compradores na fila. Pode segurar o preço… ou sumir quando o preço chegar.',
+        'Muro de compra ~$size $base — compradores en cola. Puede sostener el precio… o cancelarse cuando el precio se acerque.',
       );
   String get obCalloutSpoof => _t(
         'Huge wall far from mid + empty tape = spoofing risk. Wait for reaction — do not enter “because of the wall”.',

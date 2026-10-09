@@ -96,6 +96,7 @@ class LessonChartCard extends StatelessWidget {
                   chartType: chartType,
                   lessonId: lessonId,
                   cardIndex: cardIndex,
+                  pair: visual.showCryptoHeader ? pair : null,
                 ),
               ),
             ),
