@@ -6,6 +6,7 @@ import '../data/lesson_chart_setups.dart';
 import '../models/chart_setup.dart';
 import 'order_book_diagram.dart';
 import 'pattern_diagram_widget.dart';
+import '../theme.dart';
 
 class CandleData {
   final double open;
@@ -92,10 +93,10 @@ class _SetupChartPainter extends CustomPainter {
 
   _SetupChartPainter({required this.setup});
 
-  static const _bullColor = Color(0xFF26A69A);
-  static const _bearColor = Color(0xFFEF5350);
+  static const _bullColor = Color(0xFF2AD49A);
+  static const _bearColor = Color(0xFFFF5566);
   static const _gridColor = Color(0x22FFFFFF);
-  static const _gold = Color(0xFFD4AF37);
+  static const _gold = Color(0xFF5AE2FF);
 
   static const _chartPadRight = 44.0;
 
@@ -153,7 +154,7 @@ class _SetupChartPainter extends CustomPainter {
   void _drawBackground(Canvas canvas, Size size) {
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, size.height),
-      Paint()..color = const Color(0xFF0D1117),
+      Paint()..color = AppTheme.bg2,
     );
   }
 
@@ -177,12 +178,19 @@ class _SetupChartPainter extends CustomPainter {
       final t = i / 4;
       final price = lo + (hi - lo) * (1 - t);
       final y = size.height * t;
-      _drawLabel(
-        canvas,
-        price.toStringAsFixed(price >= 100 ? 0 : 1),
-        Offset(size.width + 4, y - 6),
-        Colors.white38,
-      );
+      final tp = TextPainter(
+        text: TextSpan(
+          text: price.toStringAsFixed(price >= 100 ? 0 : 1),
+          style: const TextStyle(
+            color: Color(0xFF95A3B8),
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            fontFeatures: [FontFeature.tabularFigures()],
+          ),
+        ),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      tp.paint(canvas, Offset(size.width + 6, y - tp.height / 2));
     }
   }
 
@@ -232,14 +240,14 @@ class _SetupChartPainter extends CustomPainter {
   void _drawLevel(Canvas canvas, Size size, ChartLevel level, double lo, double hi) {
     final y = _y(size, level.price, lo, hi);
     final paint = Paint()
-      ..color = level.color
+      ..color = level.color.withValues(alpha: 0.9)
       ..strokeWidth = 1.5;
     if (level.dashed) {
       _drawDashedLine(canvas, Offset(0, y), Offset(size.width, y), paint);
     } else {
       canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
     }
-    _drawLabel(canvas, level.label, Offset(8, y - 16), level.color);
+    _drawLabel(canvas, size, level.label, Offset(8, y - 22), level.color);
   }
 
   void _drawZone(Canvas canvas, Size size, ChartZone zone, double lo, double hi) {
@@ -252,9 +260,10 @@ class _SetupChartPainter extends CustomPainter {
     if (zone.label != null) {
       _drawLabel(
         canvas,
+        size,
         zone.label!,
-        Offset(size.width * 0.52, (top + bottom) / 2 - 8),
-        Colors.white54,
+        Offset(10, (top + bottom) / 2 - 10),
+        const Color(0xFFF4F7FB),
       );
     }
   }
@@ -272,7 +281,7 @@ class _SetupChartPainter extends CustomPainter {
       canvas.drawLine(start, end, paint);
     }
     if (line.label != null) {
-      _drawLabel(canvas, line.label!, Offset(end.dx - 72, end.dy - 18), line.color);
+      _drawLabel(canvas, size, line.label!, Offset(end.dx - 80, end.dy - 24), line.color);
     }
   }
 
@@ -293,23 +302,32 @@ class _SetupChartPainter extends CustomPainter {
       ChartMarkerKind.entry || ChartMarkerKind.buy => _bullColor,
       ChartMarkerKind.stop => _bearColor,
       ChartMarkerKind.target || ChartMarkerKind.sell => _gold,
-      ChartMarkerKind.note => Colors.white70,
+      ChartMarkerKind.note => AppTheme.textSoft,
     };
 
-    final offsetY = switch (marker.kind) {
-      ChartMarkerKind.stop => _y(size, c.low, lo, hi) + 10,
-      ChartMarkerKind.target => _y(size, c.high, lo, hi) - 30,
-      ChartMarkerKind.sell => _y(size, c.high, lo, hi) - 22,
-      _ => _y(size, c.close, lo, hi) - 22,
+    // Prefer label above the candle so text does not sit on the body.
+    final tipY = switch (marker.kind) {
+      ChartMarkerKind.stop => _y(size, c.low, lo, hi) + 8,
+      ChartMarkerKind.target || ChartMarkerKind.sell => _y(size, c.high, lo, hi) - 28,
+      _ => _y(size, c.high, lo, hi) - 28,
     };
 
-    canvas.drawCircle(Offset(x, offsetY + 6), 5, Paint()..color = color);
-    _drawLabel(canvas, marker.label, Offset(x + 8, offsetY), color);
+    final tip = Offset(x, tipY + 10);
+    canvas.drawCircle(tip, 6, Paint()..color = const Color(0xFF03050A));
+    canvas.drawCircle(tip, 5, Paint()..color = color);
+    canvas.drawCircle(tip, 5, Paint()
+      ..color = Colors.white.withValues(alpha: 0.35)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1);
+
+    final labelX = (x + 10).clamp(8.0, size.width - 120);
+    _drawLabel(canvas, size, marker.label, Offset(labelX, tipY - 4), color);
   }
 
   void _drawAnnotation(Canvas canvas, Size size, ChartAnnotation ann) {
     _drawLabel(
       canvas,
+      size,
       ann.text,
       Offset(ann.x * size.width, ann.y * size.height),
       ann.color,
@@ -329,7 +347,13 @@ class _SetupChartPainter extends CustomPainter {
         Paint()..color = _bullColor.withValues(alpha: 0.55),
       );
     }
-    _drawLabel(canvas, 'Объём', Offset(8, chartH + 4), Colors.white38);
+    _drawLabel(
+      canvas,
+      Size(size.width, size.height),
+      'Объём',
+      Offset(8, chartH + 4),
+      AppTheme.textSoft,
+    );
   }
 
   void _drawDashedLine(Canvas canvas, Offset start, Offset end, Paint paint) {
@@ -354,20 +378,57 @@ class _SetupChartPainter extends CustomPainter {
     }
   }
 
-  void _drawLabel(Canvas canvas, String text, Offset pos, Color color) {
+  /// Prime chart labels: solid ink pill + white type, clamped inside the chart.
+  void _drawLabel(Canvas canvas, Size size, String text, Offset pos, Color accent) {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: TextStyle(
-          color: color,
-          fontSize: 10,
-          fontWeight: FontWeight.w600,
-          shadows: const [Shadow(color: Colors.black87, blurRadius: 4)],
+        style: const TextStyle(
+          color: Color(0xFFF4F7FB),
+          fontSize: 11.5,
+          fontWeight: FontWeight.w700,
+          height: 1.15,
+          letterSpacing: 0.15,
         ),
       ),
       textDirection: TextDirection.ltr,
-    )..layout(maxWidth: 150);
-    tp.paint(canvas, pos);
+      maxLines: 2,
+      ellipsis: '…',
+    )..layout(maxWidth: math.min(168, size.width - 20));
+
+    const padH = 9.0;
+    const padV = 5.0;
+    final w = tp.width + padH * 2;
+    final h = tp.height + padV * 2;
+    final x = pos.dx.clamp(4.0, math.max(4.0, size.width - w - 4)).toDouble();
+    final y = pos.dy.clamp(4.0, math.max(4.0, size.height - h - 4)).toDouble();
+    final rect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(x, y, w, h),
+      const Radius.circular(8),
+    );
+
+    canvas.drawRRect(
+      rect.shift(const Offset(0, 1.5)),
+      Paint()..color = const Color(0x66000000),
+    );
+    canvas.drawRRect(rect, Paint()..color = const Color(0xF20C121C));
+    canvas.drawRRect(
+      rect,
+      Paint()
+        ..color = accent.withValues(alpha: 0.75)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.2,
+    );
+    // Accent bar on the left edge of the pill.
+    canvas.drawRRect(
+      RRect.fromRectAndCorners(
+        Rect.fromLTWH(x, y, 3, h),
+        topLeft: const Radius.circular(8),
+        bottomLeft: const Radius.circular(8),
+      ),
+      Paint()..color = accent,
+    );
+    tp.paint(canvas, Offset(x + padH, y + padV));
   }
 
   @override

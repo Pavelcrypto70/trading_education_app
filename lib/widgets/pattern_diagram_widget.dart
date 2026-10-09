@@ -60,8 +60,8 @@ class _PatternPainter extends CustomPainter {
 
   _PatternPainter({required this.patternType, required this.progress});
 
-  static const _bull = Color(0xFF26A69A);
-  static const _bear = Color(0xFFEF5350);
+  static const _bull = AppTheme.bull;
+  static const _bear = AppTheme.bear;
   static const _gold = AppTheme.gold;
   static const _line = Color(0xAAFFFFFF);
   static const _grid = Color(0x18FFFFFF);
@@ -425,7 +425,7 @@ class _PatternPainter extends CustomPainter {
     final tp = TextPainter(
       text: TextSpan(
         text: text,
-        style: const TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w600),
+        style: const TextStyle(color: AppTheme.textSoft, fontSize: 11, fontWeight: FontWeight.w600),
       ),
       textDirection: TextDirection.ltr,
     )..layout(maxWidth: size.width);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../models/quiz_question.dart';
+import '../services/gamification_service.dart';
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
 import '../services/spaced_repetition_service.dart';
@@ -62,6 +63,7 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
   }
 
   Future<void> _finish() async {
+    GamificationService.lastAward = null;
     if (widget.isDailyChallenge) {
       await ProgressService.completeDailyChallenge(score, widget.questions.length);
     } else {
@@ -74,6 +76,7 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
         final pass = widget.passPercent ?? 70;
         if (score >= (widget.questions.length * pass / 100).ceil()) {
           await ProgressService.markModulePassed(widget.moduleId!, score, widget.questions.length);
+          await GamificationService.award(PointsReason.moduleTest, uniqueKey: 'mt-${widget.moduleId}');
         }
       }
     }
@@ -102,10 +105,10 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
   Color _optionColor(int index, QuizQuestion question) {
     if (!answered) return AppTheme.card;
     if (index == question.correctIndex) {
-      return Colors.green.withValues(alpha: 0.25);
+      return AppTheme.bull.withValues(alpha: 0.25);
     }
     if (selectedAnswerIndex == index) {
-      return Colors.red.withValues(alpha: 0.25);
+      return AppTheme.bear.withValues(alpha: 0.25);
     }
     return AppTheme.card;
   }
@@ -160,7 +163,7 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
                       value: progress,
                       minHeight: 6,
                       color: AppTheme.gold,
-                      backgroundColor: Colors.white12,
+                      backgroundColor: AppTheme.line,
                     ),
                   ),
                   if (question.showChart && question.lessonId != null) ...[
@@ -189,7 +192,7 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
                   const SizedBox(height: 6),
                   Text(
                     l10n.categoryName(question.category),
-                    style: const TextStyle(color: Colors.white54, fontSize: 13),
+                    style: const TextStyle(color: AppTheme.muted, fontSize: 13),
                   ),
                   const SizedBox(height: 16),
                   ...List.generate(question.options.length, (index) {
@@ -208,7 +211,7 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
                               children: [
                                 CircleAvatar(
                                   radius: 14,
-                                  backgroundColor: Colors.white12,
+                                  backgroundColor: AppTheme.line,
                                   child: Text(
                                     String.fromCharCode(65 + index),
                                     style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
@@ -235,13 +238,13 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
                         color: selectedAnswerIndex == question.correctIndex
-                            ? Colors.green.withValues(alpha: 0.12)
-                            : Colors.red.withValues(alpha: 0.12),
+                            ? AppTheme.bull.withValues(alpha: 0.12)
+                            : AppTheme.bear.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
                           color: selectedAnswerIndex == question.correctIndex
-                              ? Colors.green.withValues(alpha: 0.4)
-                              : Colors.red.withValues(alpha: 0.4),
+                              ? AppTheme.bull.withValues(alpha: 0.4)
+                              : AppTheme.bear.withValues(alpha: 0.4),
                         ),
                       ),
                       child: Column(
@@ -256,7 +259,7 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
                           const SizedBox(height: 4),
                           Text(
                             question.explanation,
-                            style: const TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
+                            style: const TextStyle(color: AppTheme.textSoft, fontSize: 13, height: 1.4),
                           ),
                         ],
                       ),

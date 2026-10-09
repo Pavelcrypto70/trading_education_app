@@ -30,7 +30,7 @@ Future<bool> showLessonPaywallIfNeeded(BuildContext context, int lessonId) async
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.white24,
+              color: AppTheme.faint,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -52,7 +52,7 @@ Future<bool> showLessonPaywallIfNeeded(BuildContext context, int lessonId) async
                 ? l10n.paywallLessonBody(EntitlementService.trialLessonCount)
                 : l10n.paywallLessonBodyCommunity(EntitlementService.trialLessonCount),
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white70, height: 1.5),
+            style: const TextStyle(color: AppTheme.textSoft, height: 1.5),
           ),
           if (billing) ...[
             const SizedBox(height: 8),

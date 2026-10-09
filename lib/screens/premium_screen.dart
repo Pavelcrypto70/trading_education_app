@@ -196,7 +196,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
             const SizedBox(height: 8),
             Text(
               l10n.premiumSubtitle,
-              style: const TextStyle(color: Colors.white54),
+              style: const TextStyle(color: AppTheme.muted),
             ),
             const SizedBox(height: 22),
             Container(
@@ -219,7 +219,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                         child: Text(
                           _marketLabel(lang),
                           style: const TextStyle(
-                            color: Colors.white38,
+                            color: AppTheme.faint,
                             fontSize: 16,
                             decoration: TextDecoration.lineThrough,
                           ),
@@ -231,17 +231,17 @@ class _PremiumScreenState extends State<PremiumScreen> {
                     margin: const EdgeInsets.only(top: 8, bottom: 12),
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.greenAccent.withValues(alpha: 0.15),
+                      color: AppTheme.bull.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       l10n.priceBelowMarket,
-                      style: const TextStyle(color: Colors.greenAccent, fontSize: 12, fontWeight: FontWeight.w700),
+                      style: const TextStyle(color: AppTheme.bull, fontSize: 12, fontWeight: FontWeight.w700),
                     ),
                   ),
                   Text(
                     l10n.paywallLessonBody(EntitlementService.trialLessonCount),
-                    style: const TextStyle(color: Colors.white70, fontSize: 13, height: 1.45),
+                    style: const TextStyle(color: AppTheme.textSoft, fontSize: 13, height: 1.45),
                   ),
                   const SizedBox(height: 18),
                   ...features.map(
@@ -249,7 +249,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Row(
                         children: [
-                          const Icon(Icons.check, color: Colors.greenAccent, size: 20),
+                          const Icon(Icons.check, color: AppTheme.bull, size: 20),
                           const SizedBox(width: 10),
                           Expanded(child: Text(f, style: const TextStyle(fontSize: 14))),
                         ],
@@ -317,7 +317,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
             const SizedBox(height: 12),
             Text(
               l10n.communityFullAccessBody,
-              style: const TextStyle(color: Colors.white70, height: 1.5),
+              style: const TextStyle(color: AppTheme.textSoft, height: 1.5),
             ),
             const SizedBox(height: 22),
             Container(
@@ -329,7 +329,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
                 children: [
                   Text(
                     l10n.paywallLessonBodyCommunity(EntitlementService.trialLessonCount),
-                    style: const TextStyle(color: Colors.white70, fontSize: 14, height: 1.45),
+                    style: const TextStyle(color: AppTheme.textSoft, fontSize: 14, height: 1.45),
                   ),
                   const SizedBox(height: 16),
                   Text(

@@ -39,7 +39,7 @@ class LessonVideoCard extends StatelessWidget {
 
     return Container(
       decoration: AppTheme.cardDecoration(
-        border: Border.all(color: Colors.redAccent.withValues(alpha: 0.35)),
+        border: Border.all(color: AppTheme.bear.withValues(alpha: 0.35)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,14 +71,14 @@ class LessonVideoCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.ondemand_video, color: Colors.redAccent, size: 18),
+                    const Icon(Icons.ondemand_video, color: AppTheme.bear, size: 18),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(l10n.watchVideo, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12)),
-                          Text(title, style: const TextStyle(color: Colors.white70, fontSize: 13)),
+                          Text(title, style: const TextStyle(color: AppTheme.textSoft, fontSize: 13)),
                         ],
                       ),
                     ),
@@ -88,12 +88,12 @@ class LessonVideoCard extends StatelessWidget {
                 if (showEmbed)
                   Text(
                     l10n.videoPlaysInline,
-                    style: const TextStyle(color: Colors.white38, fontSize: 11),
+                    style: const TextStyle(color: AppTheme.faint, fontSize: 11),
                   )
                 else
                   Text(
                     l10n.videoOpensYouTube,
-                    style: const TextStyle(color: Colors.white38, fontSize: 11),
+                    style: const TextStyle(color: AppTheme.faint, fontSize: 11),
                   ),
                 const SizedBox(height: 8),
                 TextButton.icon(
@@ -101,7 +101,7 @@ class LessonVideoCard extends StatelessWidget {
                   icon: const Icon(Icons.open_in_new, size: 16),
                   label: Text(l10n.openInYouTube),
                   style: TextButton.styleFrom(
-                    foregroundColor: Colors.redAccent,
+                    foregroundColor: AppTheme.bear,
                     padding: EdgeInsets.zero,
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -111,7 +111,7 @@ class LessonVideoCard extends StatelessWidget {
                 SelectableText(
                   url,
                   style: const TextStyle(
-                    color: Colors.redAccent,
+                    color: AppTheme.bear,
                     fontSize: 12,
                     decoration: TextDecoration.underline,
                   ),
@@ -151,7 +151,7 @@ class _ThumbnailPreview extends StatelessWidget {
               errorBuilder: (_, __, ___) => Container(
                 height: 160,
                 color: Colors.black26,
-                child: const Icon(Icons.play_circle_outline, size: 48, color: Colors.white38),
+                child: const Icon(Icons.play_circle_outline, size: 48, color: AppTheme.faint),
               ),
             ),
             Container(

@@ -292,31 +292,31 @@
     "options": {
       "ru": [
         "Заработать на падении",
-        "Только рост",
-        "Пока держу"
+        "Купить монету за USDT",
+        "Держать без ликвидации"
       ],
       "en": [
-        "Profit from the dump",
-        "Only the rally",
-        "Still holding"
+        "Profit from a dump",
+        "Buy a coin with USDT",
+        "Hold without liquidation"
       ],
       "pt": [
         "Ganhar na queda",
-        "Só a alta",
-        "Ainda estou segurando"
+        "Comprar a moeda com USDT",
+        "Segurar sem liquidação"
       ],
       "es": [
         "Ganar en la caída",
-        "Solo la subida",
-        "Sigo sosteniendo"
+        "Comprar la moneda con USDT",
+        "Mantener sin liquidación"
       ]
     },
-    "correctIndex": 1,
+    "correctIndex": 0,
     "explanation": {
-      "ru": "На спотовом рынке плюс только если цена выросла. Падает — сидишь в минусе. Шортить нельзя. Деньги заняты в монете.",
-      "en": "On spot you are green only if price went up. It falls — you sit in the red. You cannot short. The money is tied up in the coin.",
-      "pt": "No spot o plus só aparece se o preço subiu. Cai — você fica no vermelho. Não dá pra shortar. O dinheiro está preso na moeda.",
-      "es": "En spot el plus solo llega si el precio subió. Cae — te quedas en rojo. No puedes hacer short. El dinero está atado en la moneda."
+      "ru": "Спот не умеет зарабатывать на падении: шорта нет. Плюс только если цена выросла. Падает — сидишь в минусе.",
+      "en": "Spot cannot profit from a dump: there is no short. You are green only if price went up. It falls — you sit in the red.",
+      "pt": "Spot não consegue ganhar na queda: não tem short. O plus só aparece se o preço subiu. Cai — você fica no vermelho.",
+      "es": "Spot no puede ganar en la caída: no hay short. El plus solo llega si el precio subió. Cae — te quedas en rojo."
     }
   },
   {

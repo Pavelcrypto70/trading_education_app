@@ -111,6 +111,10 @@ class LessonCheckpoint extends StatefulWidget {
     return (shuffled, newCorrect < 0 ? 0 : newCorrect);
   }
 
+  /// 2 of 3 for short quizzes; 70% for longer ones.
+  static int requiredCorrect(int total) =>
+      total <= 3 ? (total - 1).clamp(1, total) : (total * 0.7).ceil();
+
   @override
   State<LessonCheckpoint> createState() => _LessonCheckpointState();
 }
@@ -188,7 +192,7 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
         _answered = false;
       });
     } else {
-      final passed = _correct >= (questions.length * 0.7).ceil();
+      final passed = _correct >= LessonCheckpoint.requiredCorrect(questions.length);
       if (passed) {
         widget.onPassed();
       } else {
@@ -211,7 +215,7 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
     final questions = _questions!;
     final q = questions[_qIndex];
     final isLast = _qIndex == questions.length - 1;
-    final passed = _answered && isLast && _correct >= (questions.length * 0.7).ceil();
+    final passed = _answered && isLast && _correct >= LessonCheckpoint.requiredCorrect(questions.length);
 
     return Container(
       width: double.infinity,
@@ -237,8 +241,9 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
                   children: [
                     Text(l10n.checkpointTitle, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
                     Text(
-                      l10n.checkpointProgress(_qIndex + 1, questions.length),
-                      style: const TextStyle(color: Colors.white54, fontSize: 12),
+                      '${l10n.checkpointProgress(_qIndex + 1, questions.length)} · '
+                      'нужно ${LessonCheckpoint.requiredCorrect(questions.length)} верных',
+                      style: const TextStyle(color: AppTheme.muted, fontSize: 12),
                     ),
                   ],
                 ),
@@ -246,34 +251,38 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
             ],
           ),
           const SizedBox(height: 16),
+          Text(q.question, style: const TextStyle(fontWeight: FontWeight.w700, height: 1.4, fontSize: 15)),
+          const SizedBox(height: 12),
           if (q.showChart) ...[
             SizedBox(
-              height: 160,
+              height: 130,
               child: LessonChartWidget(
                 chartType: 'candlestick',
                 lessonId: widget.lesson.id,
                 cardIndex: q.cardIndex,
-                height: 160,
+                height: 130,
               ),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
           ],
-          Text(q.question, style: const TextStyle(fontWeight: FontWeight.w600, height: 1.4)),
-          const SizedBox(height: 14),
           ...List.generate(q.options.length, (i) {
             final isCorrect = i == q.correctIndex;
             Color? border;
             Color? bg;
             if (_answered) {
               if (isCorrect) {
-                border = Colors.green;
-                bg = Colors.green.withValues(alpha: 0.15);
+                border = AppTheme.bull;
+                bg = AppTheme.bull.withValues(alpha: 0.15);
               } else if (_selected == i) {
-                border = Colors.redAccent;
-                bg = Colors.redAccent.withValues(alpha: 0.1);
+                border = AppTheme.bear;
+                bg = AppTheme.bear.withValues(alpha: 0.1);
               }
             }
-            return Padding(
+            return Semantics(
+              button: true,
+              selected: _selected == i,
+              hint: 'Вариант ответа ${i + 1}',
+              child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Material(
                 color: bg ?? AppTheme.surface,
@@ -286,7 +295,7 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: border ?? Colors.white12),
+                      border: Border.all(color: border ?? AppTheme.line),
                     ),
                     child: Row(
                       children: [
@@ -296,10 +305,10 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: (_answered && isCorrect)
-                                ? Colors.green
+                                ? AppTheme.bull
                                 : (_answered && _selected == i)
-                                    ? Colors.redAccent
-                                    : Colors.white12,
+                                    ? AppTheme.bear
+                                    : AppTheme.line,
                           ),
                           child: Center(
                             child: Text(
@@ -315,11 +324,12 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
                   ),
                 ),
               ),
+              ),
             );
           }),
           if (_answered && q.explanation != null && q.explanation!.isNotEmpty) ...[
             const SizedBox(height: 8),
-            Text(q.explanation!, style: const TextStyle(color: Colors.white54, fontSize: 12, height: 1.4)),
+            Text(q.explanation!, style: const TextStyle(color: AppTheme.muted, fontSize: 12, height: 1.4)),
           ],
           if (_answered) ...[
             const SizedBox(height: 8),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../services/account_data_service.dart';
 import '../services/auth_service.dart';
+import '../services/club_service.dart';
 import '../services/entitlement_service.dart';
 import '../services/journal_service.dart';
 import '../services/locale_service.dart';
@@ -54,6 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   bool _fullAccess = false;
 
+  ClubStatus? _club;
+
   @override
 
   void initState() {
@@ -92,7 +95,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final fullAccess = await EntitlementService.hasFullAccess();
 
+    final club = await ClubService.status();
+
     if (!mounted) return;
+
+    _club = club;
 
     setState(() {
 
@@ -267,7 +274,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.pop(ctx, true);
               }
             },
-            child: Text(l10n.deleteAccount, style: const TextStyle(color: Colors.redAccent)),
+            child: Text(l10n.deleteAccount, style: const TextStyle(color: AppTheme.bear)),
           ),
         ],
       ),
@@ -452,9 +459,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   radius: 32,
 
-                  backgroundColor: AppTheme.gold.withValues(alpha: 0.2),
+                  backgroundColor: Colors.white.withValues(alpha: 0.22),
 
-                  child: const Icon(Icons.person, color: AppTheme.gold, size: 32),
+                  child: const Icon(Icons.person_rounded, color: Colors.white, size: 34),
 
                 ),
 
@@ -468,32 +475,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     children: [
 
-                      Text(l10n.trader, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
-                      const SizedBox(height: 4),
+                      Text(
+                        _club?.shownName ?? l10n.trader,
+                        style: AppTheme.display(22, color: Colors.white),
+                      ),
+                      Text(
+                        'ID ${_club?.publicId ?? ''}',
+                        style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 12, fontWeight: FontWeight.w700),
+                      ),
+                      const SizedBox(height: 6),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppTheme.accentDim,
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: AppTheme.accent.withValues(alpha: 0.45)),
                         ),
-                        child: const Text(
-                          'Desk Trader · серия 47 дней',
-                          style: TextStyle(color: AppTheme.accent, fontSize: 11, fontWeight: FontWeight.w700),
+                        child: Text(
+                          _club == null
+                              ? 'Новичок'
+                              : 'Лига «${_club!.league.name}» · ${ClubService.fmt(_club!.points)} очков',
+                          style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w800),
                         ),
                       ),
-
+                      const SizedBox(height: 6),
                       if (_email != null)
-                        Text(_email!, style: const TextStyle(color: Colors.white54, fontSize: 12)),
-                      Text(l10n.goalLabel(_goal), style: const TextStyle(color: Colors.white54, fontSize: 13)),
-                      const SizedBox(height: 8),
-                      const Text('Ключ Tiger.com · активен (реферальная программа)', style: TextStyle(color: Colors.white54, fontSize: 12)),
-                      const Text('Диплом TM-2026-08421', style: TextStyle(color: AppTheme.accent, fontSize: 12, fontWeight: FontWeight.w600)),
+                        Text(_email!, style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 12)),
+                      Text(l10n.goalLabel(_goal), style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 13)),
 
                       if (_isAdmin)
                         Padding(
                           padding: const EdgeInsets.only(top: 6),
-                          child: Text(l10n.adminBadge, style: const TextStyle(color: Colors.orangeAccent, fontSize: 12, fontWeight: FontWeight.w700)),
+                          child: Text(l10n.adminBadge, style: const TextStyle(color: AppTheme.warn, fontSize: 12, fontWeight: FontWeight.w800)),
                         )
                       else if (_fullAccess)
 
@@ -501,7 +513,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           padding: const EdgeInsets.only(top: 6),
 
-                          child: Text(l10n.premiumMember, style: const TextStyle(color: AppTheme.gold, fontSize: 12)),
+                          child: Text(l10n.premiumMember, style: const TextStyle(color: AppTheme.warn, fontSize: 12, fontWeight: FontWeight.w800)),
 
                         ),
 
@@ -523,15 +535,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             children: [
 
-              Expanded(child: _StatCard(label: l10n.lessons, value: '$_completed')),
+              Expanded(child: _StatCard(label: l10n.lessons, value: '$_completed', color: AppTheme.mint, icon: Icons.menu_book_rounded)),
 
               const SizedBox(width: 10),
 
-              Expanded(child: _StatCard(label: l10n.streak, value: '$_streak ${l10n.dayShort}')),
+              Expanded(child: _StatCard(label: l10n.streak, value: '${_club?.streak.days ?? _streak} ${l10n.dayShort}', color: AppTheme.orange, icon: Icons.local_fire_department_rounded)),
 
               const SizedBox(width: 10),
 
-              Expanded(child: _StatCard(label: l10n.cards, value: '$_flashcards')),
+              Expanded(child: _StatCard(label: l10n.cards, value: '$_flashcards', color: AppTheme.violet, icon: Icons.style_rounded)),
 
             ],
 
@@ -551,7 +563,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               decoration: AppTheme.cardDecoration(),
 
-              child: Text(l10n.noQuizzesYet, style: const TextStyle(color: Colors.white54)),
+              child: Text(l10n.noQuizzesYet, style: const TextStyle(color: AppTheme.muted)),
 
             )
 
@@ -647,11 +659,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Text(l10n.referralTitle, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
                 const SizedBox(height: 8),
-                Text(l10n.referralXpInfo, style: const TextStyle(color: Colors.white54, fontSize: 13)),
+                Text(l10n.referralXpInfo, style: const TextStyle(color: AppTheme.muted, fontSize: 13)),
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    Text(l10n.referralYourCode, style: const TextStyle(color: Colors.white54)),
+                    Text(l10n.referralYourCode, style: const TextStyle(color: AppTheme.muted)),
                     const SizedBox(width: 8),
                     Text(_referralCode, style: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w800)),
                     IconButton(
@@ -660,7 +672,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
-                Text(l10n.referralInvites(_inviteCount), style: const TextStyle(color: Colors.white54, fontSize: 13)),
+                Text(l10n.referralInvites(_inviteCount), style: const TextStyle(color: AppTheme.muted, fontSize: 13)),
                 const SizedBox(height: 10),
                 OutlinedButton(onPressed: _redeemReferral, child: Text(l10n.referralEnterCode)),
               ],
@@ -753,7 +765,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             l10n.appDisclaimer,
 
-            style: const TextStyle(color: Colors.white38, fontSize: 12, height: 1.5),
+            style: const TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.5),
 
             textAlign: TextAlign.center,
 
@@ -775,7 +787,16 @@ class _StatCard extends StatelessWidget {
 
   final String value;
 
-  const _StatCard({required this.label, required this.value});
+  final Color color;
+
+  final IconData icon;
+
+  const _StatCard({
+    required this.label,
+    required this.value,
+    required this.color,
+    required this.icon,
+  });
 
   @override
 
@@ -783,17 +804,19 @@ class _StatCard extends StatelessWidget {
 
     return Container(
 
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
 
-      decoration: AppTheme.cardDecoration(),
+      decoration: AppTheme.accentCardDecoration(color, radius: 18),
 
       child: Column(
 
         children: [
 
-          Text(value, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: AppTheme.gold)),
+          Icon(icon, color: color, size: 22),
+          const SizedBox(height: 6),
+          Text(value, style: TextStyle(fontWeight: FontWeight.w800, fontSize: 19, color: color)),
 
-          Text(label, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+          Text(label, style: const TextStyle(color: AppTheme.muted, fontSize: 12, fontWeight: FontWeight.w600)),
 
         ],
 
@@ -831,6 +854,19 @@ class _SettingsTile extends StatelessWidget {
 
   });
 
+  static const _palette = [
+    AppTheme.accent,
+    AppTheme.mint,
+    AppTheme.orange,
+    AppTheme.violet,
+    AppTheme.sky,
+    AppTheme.pink,
+    AppTheme.sun,
+    AppTheme.coral,
+  ];
+
+  Color get _tint => _palette[title.hashCode.abs() % _palette.length];
+
   @override
 
   Widget build(BuildContext context) {
@@ -841,13 +877,13 @@ class _SettingsTile extends StatelessWidget {
 
       child: Material(
 
-        color: AppTheme.card,
+        color: AppTheme.surface,
 
         shape: RoundedRectangleBorder(
 
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(18),
 
-          side: BorderSide(color: Colors.white.withValues(alpha: 0.08)),
+          side: const BorderSide(color: AppTheme.lineSoft),
 
         ),
 
@@ -855,13 +891,21 @@ class _SettingsTile extends StatelessWidget {
 
         child: ListTile(
 
-        leading: Icon(icon, color: destructive ? Colors.redAccent : Colors.white70),
+        leading: Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: (destructive ? AppTheme.bear : _tint).withValues(alpha: 0.16),
+            borderRadius: BorderRadius.circular(11),
+          ),
+          child: Icon(icon, size: 20, color: destructive ? AppTheme.bear : _tint),
+        ),
 
-        title: Text(title, style: TextStyle(color: destructive ? Colors.redAccent : null)),
+        title: Text(title, style: TextStyle(color: destructive ? AppTheme.bear : null)),
 
-        subtitle: subtitle != null ? Text(subtitle!, style: const TextStyle(color: Colors.white38, fontSize: 12)) : null,
+        subtitle: subtitle != null ? Text(subtitle!, style: const TextStyle(color: AppTheme.faint, fontSize: 12)) : null,
 
-        trailing: const Icon(Icons.chevron_right, color: Colors.white38),
+        trailing: const Icon(Icons.chevron_right, color: AppTheme.faint),
 
         onTap: onTap,
 

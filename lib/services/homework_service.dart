@@ -5,11 +5,14 @@ import 'package:flutter/services.dart';
 import '../config/app_config.dart';
 import '../utils/external_link.dart';
 
+import '../services/gamification_service.dart';
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
 
 /// Homework submission: copy a template, open the Desk Club homework topic.
 class HomeworkService {
+  static const minAnswerLength = 20;
+
   static Map<String, dynamic>? _rubrics;
 
   static Future<Map<String, dynamic>> loadRubrics() async {
@@ -110,6 +113,10 @@ class HomeworkService {
     );
     await Clipboard.setData(ClipboardData(text: text));
     await ProgressService.incrementHomeworkSubmit(lessonId);
+    // No reviewer acceptance flow yet: points are granted once per lesson on send.
+    if ((oneSentence ?? '').trim().length >= minAnswerLength) {
+      await GamificationService.award(PointsReason.homework, uniqueKey: 'hw-$lessonId');
+    }
     final base = await chatUrl();
     return openExternalLink(base);
   }

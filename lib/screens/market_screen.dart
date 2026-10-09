@@ -169,7 +169,7 @@ class MarketScreen extends StatelessWidget {
         children: [
           Text(
             l10n.marketConceptsIntro,
-            style: const TextStyle(color: Colors.white70, height: 1.45),
+            style: const TextStyle(color: AppTheme.textSoft, height: 1.45),
           ),
           const SizedBox(height: 16),
           ..._conceptKeys.map((c) {
@@ -197,7 +197,7 @@ class MarketScreen extends StatelessWidget {
                         Text(
                           _t(lang, c.bodyEn, c.bodyRu, c.bodyPt, c.bodyEs),
                           style: const TextStyle(
-                            color: Colors.white60,
+                            color: AppTheme.muted,
                             height: 1.45,
                             fontSize: 13,
                           ),

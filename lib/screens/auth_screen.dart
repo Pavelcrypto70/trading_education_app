@@ -6,6 +6,7 @@ import '../services/analytics_service.dart';
 import '../services/auth_service.dart';
 import '../services/locale_service.dart';
 import '../services/sync_service.dart';
+import '../theme.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -93,15 +94,15 @@ class _AuthScreenState extends State<AuthScreen> {
           children: [
             Text(
               l10n.signInSubtitle,
-              style: const TextStyle(color: Colors.white70, height: 1.5),
+              style: const TextStyle(color: AppTheme.textSoft, height: 1.5),
             ),
             if (BackendConfig.isConfigured) ...[
               const SizedBox(height: 12),
               Row(
                 children: [
-                  const Icon(Icons.cloud_done, color: Colors.greenAccent, size: 18),
+                  const Icon(Icons.cloud_done, color: AppTheme.bull, size: 18),
                   const SizedBox(width: 8),
-                  Text(l10n.syncActive, style: const TextStyle(color: Colors.greenAccent, fontSize: 13)),
+                  Text(l10n.syncActive, style: const TextStyle(color: AppTheme.bull, fontSize: 13)),
                 ],
               ),
             ],

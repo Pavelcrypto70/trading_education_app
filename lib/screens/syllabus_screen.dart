@@ -32,12 +32,12 @@ class SyllabusScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 '${data['totalHours']} h · ${data['totalEcts']} ECTS · ${data['totalLessons']} ${l10n.lessons.toLowerCase()}',
-                style: const TextStyle(color: Colors.white54),
+                style: const TextStyle(color: AppTheme.muted),
               ),
               const SizedBox(height: 8),
               Text(
                 SyllabusRepository.text(data['finalAssessment'] as Map<String, dynamic>?, lang),
-                style: const TextStyle(height: 1.5, color: Colors.white70),
+                style: const TextStyle(height: 1.5, color: AppTheme.textSoft),
               ),
               const SizedBox(height: 20),
               ...modules.map((m) {
@@ -63,7 +63,7 @@ class SyllabusScreen extends StatelessWidget {
                         ...outcomes.map(
                           (o) => Padding(
                             padding: const EdgeInsets.only(bottom: 4),
-                            child: Text('• $o', style: const TextStyle(color: Colors.white70, height: 1.4)),
+                            child: Text('• $o', style: const TextStyle(color: AppTheme.textSoft, height: 1.4)),
                           ),
                         ),
                       ],

@@ -23,17 +23,17 @@ class LessonCaseStudiesCard extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: AppTheme.cardDecoration(
-            color: Colors.orange.withValues(alpha: 0.07),
-            border: Border.all(color: Colors.orange.withValues(alpha: 0.35)),
+            color: AppTheme.orange.withValues(alpha: 0.07),
+            border: Border.all(color: AppTheme.orange.withValues(alpha: 0.35)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  const Icon(Icons.history_edu, color: Colors.orangeAccent, size: 20),
+                  const Icon(Icons.history_edu, color: AppTheme.orange, size: 20),
                   const SizedBox(width: 8),
-                  Text(l10n.caseStudies, style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.orangeAccent)),
+                  Text(l10n.caseStudies, style: const TextStyle(fontWeight: FontWeight.w800, color: AppTheme.orange)),
                 ],
               ),
               const SizedBox(height: 12),
@@ -44,9 +44,9 @@ class LessonCaseStudiesCard extends StatelessWidget {
                       children: [
                         Text(c.title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14)),
                         if (c.date.isNotEmpty)
-                          Text(c.date, style: const TextStyle(color: Colors.white38, fontSize: 11)),
+                          Text(c.date, style: const TextStyle(color: AppTheme.faint, fontSize: 11)),
                         const SizedBox(height: 6),
-                        Text(c.summary, style: const TextStyle(color: Colors.white70, height: 1.5, fontSize: 13)),
+                        Text(c.summary, style: const TextStyle(color: AppTheme.textSoft, height: 1.5, fontSize: 13)),
                         if (c.sourceUrl != null) ...[
                           const SizedBox(height: 8),
                           TextButton.icon(

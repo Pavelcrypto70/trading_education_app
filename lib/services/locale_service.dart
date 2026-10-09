@@ -18,7 +18,7 @@ enum AppLanguage {
   static AppLanguage fromCode(String? code) {
     return AppLanguage.values.firstWhere(
       (l) => l.code == code,
-      orElse: () => AppLanguage.en,
+      orElse: () => AppLanguage.ru,
     );
   }
 }
@@ -29,7 +29,7 @@ class LocaleService extends ChangeNotifier {
 
   static const _prefKey = 'appLanguage';
 
-  AppLanguage _language = AppLanguage.en;
+  AppLanguage _language = AppLanguage.ru;
   AppLanguage get language => _language;
   String get languageCode => _language.code;
   Locale get locale => Locale(_language.code);

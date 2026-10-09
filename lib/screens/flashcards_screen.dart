@@ -170,7 +170,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
 
               l10n.cardProgress(_index + 1, _lessons.length),
 
-              style: const TextStyle(color: Colors.white54),
+              style: const TextStyle(color: AppTheme.muted),
 
             ),
 
@@ -186,7 +186,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
 
                 color: AppTheme.gold,
 
-                backgroundColor: Colors.white12,
+                backgroundColor: AppTheme.line,
 
               ),
 
@@ -256,7 +256,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
 
                           fontSize: 14,
 
-                          color: _showAnswer ? AppTheme.gold : Colors.white54,
+                          color: _showAnswer ? AppTheme.gold : AppTheme.muted,
 
                           fontWeight: FontWeight.w600,
 
@@ -290,7 +290,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen> {
 
                         l10n.tapToReveal,
 
-                        style: const TextStyle(color: Colors.white38, fontSize: 13),
+                        style: const TextStyle(color: AppTheme.faint, fontSize: 13),
 
                       ),
 

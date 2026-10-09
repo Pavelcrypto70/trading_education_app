@@ -19,12 +19,17 @@ class OnboardingScreen extends StatelessWidget {
           Positioned(
             top: -180,
             left: -120,
-            child: _Glow(color: AppTheme.accent.withValues(alpha: 0.16)),
+            child: _Glow(color: AppTheme.accent.withValues(alpha: 0.32)),
+          ),
+          Positioned(
+            top: 120,
+            right: -180,
+            child: _Glow(color: AppTheme.pink.withValues(alpha: 0.18)),
           ),
           Positioned(
             bottom: -220,
             right: -140,
-            child: _Glow(color: AppTheme.bull.withValues(alpha: 0.12)),
+            child: _Glow(color: AppTheme.mint.withValues(alpha: 0.2)),
           ),
           SafeArea(
             child: Padding(
@@ -37,14 +42,20 @@ class OnboardingScreen extends StatelessWidget {
                     width: 64,
                     height: 64,
                     decoration: BoxDecoration(
-                      color: AppTheme.accentDim,
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(color: const Color(0xFF1F5566)),
+                      gradient: AppTheme.brandGradient,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.accent.withValues(alpha: 0.45),
+                          blurRadius: 24,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
                     ),
                     child: const Icon(
                       Icons.show_chart_rounded,
-                      color: AppTheme.accent,
-                      size: 32,
+                      color: Colors.white,
+                      size: 34,
                     ),
                   ),
                   const Spacer(),
@@ -59,16 +70,11 @@ class OnboardingScreen extends StatelessWidget {
                   const SizedBox(height: 14),
                   Text(
                     'Трейдинг с нуля —\nдо реального счёта',
-                    style: textTheme.displaySmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      height: 1.08,
-                      color: AppTheme.text,
-                      fontSize: 36,
-                    ),
+                    style: AppTheme.display(34).copyWith(height: 1.1),
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Короткие уроки на графике, проверка домашек живым ментором и первые 30 дней на реальном счёте — с разбором.',
+                    'Короткие уроки на графике, очки и огоньки за каждый день, ладер и закрытые чаты Desk Club с ментором.',
                     style: textTheme.bodyLarge?.copyWith(
                       color: AppTheme.muted,
                       height: 1.45,
@@ -76,7 +82,7 @@ class OnboardingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
                   Text(
-                    'ЯЗЫК',
+                    'ШАГ 1 ИЗ 2 · ЯЗЫК',
                     style: textTheme.labelLarge?.copyWith(
                       color: AppTheme.faint,
                       letterSpacing: 1.2,
@@ -96,7 +102,7 @@ class OnboardingScreen extends StatelessWidget {
                     height: 52,
                     child: ElevatedButton(
                       onPressed: () => context.go('/onboarding/goal'),
-                      child: const Text('Начать первый урок'),
+                      child: const Text('Дальше'),
                     ),
                   ),
                   const SizedBox(height: 10),

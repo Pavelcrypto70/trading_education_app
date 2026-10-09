@@ -24,20 +24,13 @@ class QuizResultScreen extends StatefulWidget {
 }
 
 class _QuizResultScreenState extends State<QuizResultScreen> {
-  int? _xpGained;
+  PointsAward? _award;
 
   @override
   void initState() {
     super.initState();
-    _awardXp();
-  }
-
-  Future<void> _awardXp() async {
-    final amount = widget.isDailyChallenge
-        ? GamificationService.xpPerDailyChallenge
-        : GamificationService.xpPerQuiz;
-    await GamificationService.addXp(amount);
-    if (mounted) setState(() => _xpGained = amount);
+    _award = GamificationService.lastAward;
+    GamificationService.lastAward = null;
   }
 
   IconData get _icon {
@@ -82,15 +75,18 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
                 '${widget.score} / ${widget.total}',
                 style: const TextStyle(fontSize: 48, fontWeight: FontWeight.w900, color: AppTheme.gold),
               ),
-              Text('$percent%', style: const TextStyle(fontSize: 18, color: Colors.white54)),
-              if (_xpGained != null) ...[
+              Text('$percent%', style: const TextStyle(fontSize: 18, color: AppTheme.muted)),
+              if (_award != null) ...[
                 const SizedBox(height: 8),
-                Text(l10n.xpEarned(_xpGained!), style: const TextStyle(color: AppTheme.accent, fontWeight: FontWeight.w700)),
+                Text(
+                  '+${_award!.awarded} очков · тест модуля засчитан',
+                  style: const TextStyle(color: AppTheme.accentText, fontWeight: FontWeight.w800),
+                ),
               ],
               const SizedBox(height: 16),
-              Text(l10n.scoreResult(widget.score, widget.total), style: const TextStyle(color: Colors.white70, height: 1.5), textAlign: TextAlign.center),
+              Text(l10n.scoreResult(widget.score, widget.total), style: const TextStyle(color: AppTheme.textSoft, height: 1.5), textAlign: TextAlign.center),
               const SizedBox(height: 8),
-              Text(message, style: const TextStyle(color: Colors.white54, height: 1.5), textAlign: TextAlign.center),
+              Text(message, style: const TextStyle(color: AppTheme.muted, height: 1.5), textAlign: TextAlign.center),
               const Spacer(),
               SizedBox(
                 width: double.infinity,

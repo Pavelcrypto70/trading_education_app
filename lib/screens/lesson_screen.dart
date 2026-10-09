@@ -9,13 +9,14 @@ import '../services/gamification_service.dart';
 import '../services/entitlement_service.dart';
 import '../l10n/app_localizations.dart';
 import '../services/locale_service.dart';
+import '../services/club_service.dart';
 import '../services/progress_service.dart';
+import '../services/streak_service.dart';
 import '../widgets/lesson_paywall_sheet.dart';
 import '../theme.dart';
 import '../utils/chart_visual_context.dart';
 import '../utils/crypto_lesson_context.dart';
 import '../widgets/lesson_chart_card.dart';
-import '../widgets/lesson_concept_visual.dart';
 import '../widgets/lesson_rich_text.dart';
 import '../widgets/lesson_checkpoint.dart';
 import '../widgets/lesson_practice_cards.dart';
@@ -40,6 +41,25 @@ class _LessonScreenState extends State<LessonScreen> {
   bool _checkpointPassed = false;
   int _step = 0;
   List<_LessonStep> _steps = [];
+  final Set<int> _answeredChoiceSteps = {};
+
+  bool get _currentRequiresAnswer {
+    if (_step < 0 || _step >= _steps.length) return false;
+    return _steps[_step].requiresAnswer;
+  }
+
+  bool get _canGoNext {
+    if (!_currentRequiresAnswer) return true;
+    return _answeredChoiceSteps.contains(_step);
+  }
+
+  void _leaveLesson() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go('/learning');
+    }
+  }
 
   @override
   void initState() {
@@ -112,7 +132,16 @@ class _LessonScreenState extends State<LessonScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.resumeLessonStep(stepLabel))),
+          SnackBar(
+            content: Text(context.l10n.resumeLessonStep(stepLabel)),
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 2),
+            margin: EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom: MediaQuery.of(context).size.height - 160,
+            ),
+          ),
         );
       });
     }
@@ -144,6 +173,9 @@ class _LessonScreenState extends State<LessonScreen> {
     return 'candlestick';
   }
 
+  static String _norm(String s) =>
+      s.toLowerCase().replaceAll(RegExp(r'[^a-zа-яё0-9]+'), ' ').trim();
+
   List<_LessonStep> _buildSteps(Lesson lesson) {
     final crypto = CryptoLessonContext.forLesson(lesson);
     final primaryChart = crypto.primaryChartType;
@@ -160,6 +192,44 @@ class _LessonScreenState extends State<LessonScreen> {
       ),
     ];
 
+    // A chart is shown only when it differs from the previous one shown.
+    var lastChart = visualType;
+    String? chartIfNew(String t) {
+      if (t == lastChart) return null;
+      lastChart = t;
+      return t;
+    }
+
+    final seenTexts = <String>[_norm(lesson.subtitle)];
+    bool isRepeat(String text) {
+      final n = _norm(text);
+      if (n.length < 12) return false;
+      return seenTexts.any((s) => s == n || (s.length >= 12 && (s.contains(n) || n.contains(s))));
+    }
+
+    void addAnswered(int index) {
+      if (!_answeredChoiceSteps.contains(index)) {
+        setState(() => _answeredChoiceSteps.add(index));
+      }
+    }
+
+    ({String? heading, String question})? pendingCompare;
+    void addCompare(String answer) {
+      final c = pendingCompare!;
+      pendingCompare = null;
+      final stepIndex = steps.length;
+      steps.add(_LessonStep(
+        icon: Icons.compare_arrows_rounded,
+        requiresAnswer: true,
+        builder: (ctx, l10n) => _CompareStep(
+          heading: c.heading,
+          question: c.question,
+          answer: answer,
+          onRevealed: () => addAnswered(stepIndex),
+        ),
+      ));
+    }
+
     String? pendingHeading;
     var fallbackCard = 1;
 
@@ -170,10 +240,20 @@ class _LessonScreenState extends State<LessonScreen> {
           break;
         case 'text':
           final cardIndex = s.cardIndex ?? fallbackCard++;
-          final chartType = s.chartType ?? visualType;
           final heading = pendingHeading;
           pendingHeading = null;
-          final text = s.body ?? '';
+          final text = (s.body ?? '').trim();
+          if (text.isEmpty || isRepeat(text)) break;
+          seenTexts.add(_norm(text));
+          if (text.endsWith('?') && pendingCompare == null) {
+            pendingCompare = (heading: heading, question: text);
+            break;
+          }
+          if (pendingCompare != null) {
+            addCompare(text);
+            break;
+          }
+          final chartType = chartIfNew(s.chartType ?? visualType);
           steps.add(_LessonStep(
             icon: Icons.menu_book_outlined,
             builder: (ctx, l10n) => _TextCardStep(
@@ -183,23 +263,26 @@ class _LessonScreenState extends State<LessonScreen> {
               crypto: crypto,
               chartType: chartType,
               cardIndex: cardIndex,
-              visual: ChartVisualContext.forChartType(chartType, l10n, lessonId: lesson.id),
+              caption: s.caption,
             ),
           ));
           break;
         case 'choice':
+          if (pendingCompare != null) addCompare(lesson.takeaway);
           final cardIndex = s.cardIndex ?? fallbackCard++;
-          final chartType = s.chartType ?? visualType;
+          final chartType = chartIfNew(s.chartType ?? visualType);
           final section = s;
+          final choiceStepIndex = steps.length;
           steps.add(_LessonStep(
             icon: Icons.touch_app_outlined,
+            requiresAnswer: true,
             builder: (ctx, l10n) => _ChoiceCardStep(
               section: section,
               lesson: lesson,
               crypto: crypto,
               chartType: chartType,
               cardIndex: cardIndex,
-              visual: ChartVisualContext.forChartType(chartType, l10n, lessonId: lesson.id),
+              onAnswered: () => addAnswered(choiceStepIndex),
             ),
           ));
           break;
@@ -209,9 +292,10 @@ class _LessonScreenState extends State<LessonScreen> {
         case 'market_note':
         case 'calculator':
         case 'link':
+          if (pendingCompare != null) addCompare(lesson.takeaway);
           final section = s;
           final cardIndex = s.cardIndex ?? fallbackCard++;
-          final chartType = s.chartType ?? visualType;
+          final chartType = chartIfNew(s.chartType ?? visualType);
           steps.add(_LessonStep(
             icon: switch (s.type) {
               'homework' => Icons.assignment_outlined,
@@ -225,11 +309,11 @@ class _LessonScreenState extends State<LessonScreen> {
               crypto: crypto,
               chartType: chartType,
               cardIndex: cardIndex,
-              visual: ChartVisualContext.forChartType(chartType, l10n, lessonId: lesson.id),
             ),
           ));
           break;
         case 'references':
+          if (lesson.references.isEmpty) break;
           steps.add(_LessonStep(
             icon: Icons.menu_book_outlined,
             builder: (ctx, l10n) => _ReferencesStep(lesson: lesson),
@@ -239,6 +323,7 @@ class _LessonScreenState extends State<LessonScreen> {
           break;
       }
     }
+    if (pendingCompare != null) addCompare(lesson.takeaway);
 
     final hasHomework = lesson.sections.any((s) => s.type == 'homework');
     if (!hasHomework) {
@@ -252,7 +337,10 @@ class _LessonScreenState extends State<LessonScreen> {
       icon: Icons.quiz_outlined,
       builder: (ctx, l10n) => LessonCheckpoint(
         lesson: lesson,
-        onPassed: () => setState(() => _checkpointPassed = true),
+        onPassed: () {
+          setState(() => _checkpointPassed = true);
+          GamificationService.award(PointsReason.lessonQuiz, uniqueKey: 'lq-${lesson.id}');
+        },
       ),
     ));
 
@@ -260,6 +348,7 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _nextStep() {
+    if (!_canGoNext) return;
     if (_step < _steps.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 350),
@@ -282,6 +371,23 @@ class _LessonScreenState extends State<LessonScreen> {
     final lesson = _lesson;
     if (lesson == null || _completed) return;
     await ProgressService.saveLessonStep(lesson.id, i);
+    if (i < 3) return;
+    final lit = await StreakService.light();
+    StreakService.takePending();
+    if (lit == null || !mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.local_fire_department_rounded, color: AppTheme.accent),
+            const SizedBox(width: 10),
+            Expanded(child: Text(lit.message)),
+          ],
+        ),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   Future<void> _completeLesson() async {
@@ -289,36 +395,52 @@ class _LessonScreenState extends State<LessonScreen> {
     if (!_checkpointPassed) return;
 
     await ProgressService.markLessonComplete(_lesson!.id);
-    final xp = await GamificationService.addXp(GamificationService.xpPerLesson);
+    final award = await GamificationService.award(PointsReason.lesson, uniqueKey: 'lesson-${_lesson!.id}');
+    final streak = await StreakService.load();
     if (!mounted) return;
 
     setState(() => _completed = true);
-    final l10n = context.l10n;
+    final next = GamificationService.nextLeague(award.total);
+    final mult = award.multiplier;
     await showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
-        backgroundColor: AppTheme.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppTheme.gold.withValues(alpha: 0.15),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.emoji_events, color: AppTheme.gold, size: 48),
+              width: 72,
+              height: 72,
+              decoration: AppTheme.claySquare(AppTheme.accent),
+              child: const Icon(Icons.local_fire_department_rounded, color: Colors.white, size: 40),
             ),
             const SizedBox(height: 16),
-            Text(l10n.lessonComplete, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 8),
-            Text(l10n.xpEarned(GamificationService.xpPerLesson), style: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w700)),
-            Text('Total XP: $xp', style: const TextStyle(color: Colors.white54, fontSize: 13)),
+            Text('Урок пройден', style: AppTheme.display(24)),
+            const SizedBox(height: 10),
+            Text(
+              award.isZero ? 'Очки за этот урок уже начислены' : '+${award.awarded} очков',
+              style: AppTheme.display(30, color: AppTheme.progress),
+            ),
+            if (mult > 1)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  'Серия ${streak.days} дн. · множитель ×${mult.toStringAsFixed(1)}',
+                  style: const TextStyle(color: AppTheme.accentText, fontWeight: FontWeight.w700),
+                ),
+              ),
+            const SizedBox(height: 10),
+            Text(
+              next == null
+                  ? 'Всего ${ClubService.fmt(award.total)} очков · лига «Профи»'
+                  : 'Всего ${ClubService.fmt(award.total)} · до лиги «${next.name}» ${ClubService.fmt(next.minPoints - award.total)}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: AppTheme.muted, fontSize: 13),
+            ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.continueBtn)),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Дальше')),
         ],
       ),
     );
@@ -354,83 +476,59 @@ class _LessonScreenState extends State<LessonScreen> {
     final isLast = _step == _steps.length - 1;
 
     return Scaffold(
+      backgroundColor: AppTheme.bg,
       appBar: AppBar(
+        backgroundColor: AppTheme.bg,
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18),
           tooltip: l10n.backToLearning,
-          onPressed: () {
-            if (context.canPop()) {
-              context.pop();
-            } else {
-              context.go('/learning');
-            }
-          },
+          onPressed: _leaveLesson,
         ),
-        title: Text(l10n.moduleName(lesson.module)),
+        title: Text(
+          '${l10n.lessonNumber(lesson.id)} · ${l10n.stepOf(_step + 1, _steps.length)}',
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppTheme.muted),
+        ),
         actions: [
-          if (_completed)
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Icon(Icons.check_circle, color: AppTheme.gold),
+          if (_crypto != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: AppTheme.surface2,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    _crypto!.pair,
+                    style: const TextStyle(fontSize: 11, color: AppTheme.textSoft, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
             ),
         ],
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppTheme.gold.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Text(
-                        l10n.lessonNumber(lesson.id),
-                        style: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w700, fontSize: 11),
-                      ),
-                    ),
-                    if (_crypto != null) ...[
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.06),
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                        child: Text(
-                          _crypto!.pair,
-                          style: const TextStyle(fontSize: 10, color: Colors.white54, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
-                    const Spacer(),
-                    Text(
-                      l10n.stepOf(_step + 1, _steps.length),
-                      style: const TextStyle(color: Colors.white54, fontSize: 12),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
                 Text(
                   lesson.title,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+                  style: AppTheme.display(22),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(6),
                   child: LinearProgressIndicator(
                     value: (_step + 1) / _steps.length,
-                    minHeight: 4,
-                    backgroundColor: Colors.white12,
-                    color: AppTheme.gold,
+                    minHeight: 8,
+                    backgroundColor: AppTheme.surface2,
+                    color: AppTheme.progress,
                   ),
                 ),
               ],
@@ -487,37 +585,54 @@ class _LessonScreenState extends State<LessonScreen> {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () => context.go('/learning'),
-                      child: Text(l10n.backToLearning),
+                      child: Text('${l10n.backToLearning} · список уроков'),
                     ),
                   ),
-                ] else
-                  Row(
+                ] else if (!isLast || _checkpointPassed)
+                  Column(
                     children: [
-                      if (_step > 0)
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: _prevStep,
-                            child: Text(l10n.back),
+                      if (_currentRequiresAnswer && !_canGoNext)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            'Сначала выбери ответ на вопрос',
+                            style: TextStyle(
+                              color: AppTheme.warn.withValues(alpha: 0.95),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
                           ),
                         ),
-                      if (_step > 0) const SizedBox(width: 12),
-                      if (!isLast)
-                        Expanded(
-                          flex: 2,
-                          child: ElevatedButton(
-                            onPressed: _nextStep,
-                            child: Text(l10n.next),
-                          ),
-                        )
-                      else if (!_checkpointPassed)
-                        Expanded(
-                          flex: 2,
-                          child: OutlinedButton(
-                            onPressed: _prevStep,
-                            child: Text(l10n.back),
-                          ),
-                        ),
+                      Row(
+                        children: [
+                          if (_step > 0)
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: _prevStep,
+                                child: Text(l10n.back),
+                              ),
+                            ),
+                          if (_step > 0) const SizedBox(width: 12),
+                          if (!isLast)
+                            Expanded(
+                              flex: 2,
+                              child: ElevatedButton(
+                                onPressed: _canGoNext ? _nextStep : null,
+                                child: Text(l10n.next),
+                              ),
+                            ),
+                        ],
+                      ),
                     ],
+                  )
+                else
+                  // Checkpoint step: only one back — avoid duplicate «Назад».
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: _prevStep,
+                      child: Text(l10n.back),
+                    ),
                   ),
               ],
             ),
@@ -531,8 +646,13 @@ class _LessonScreenState extends State<LessonScreen> {
 class _LessonStep {
   final IconData icon;
   final Widget Function(BuildContext, AppLocalizations) builder;
+  final bool requiresAnswer;
 
-  const _LessonStep({required this.icon, required this.builder});
+  const _LessonStep({
+    required this.icon,
+    required this.builder,
+    this.requiresAnswer = false,
+  });
 }
 
 class _IntroStep extends StatelessWidget {
@@ -554,30 +674,23 @@ class _IntroStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LessonConceptVisual(
-          type: conceptTypeFromText(lesson.title, lesson.module),
-          height: 110,
-        ),
-        const SizedBox(height: 16),
-        Text(lesson.subtitle, style: const TextStyle(color: Colors.white54, height: 1.5, fontSize: 15)),
+        Text(lesson.subtitle, style: const TextStyle(color: AppTheme.text, height: 1.5, fontSize: 16.5)),
         const SizedBox(height: 16),
         LessonChartCard(
           chartType: chartType,
           visual: ChartVisualContext.forChartType(chartType, l10n, lessonId: lesson.id),
-          title: lesson.title,
-          caption: lesson.title,
           pair: crypto.pair,
           timeframe: crypto.timeframe,
           exchange: crypto.exchange,
           lessonId: lesson.id,
           cardIndex: cardIndex,
-          height: 280,
+          height: 220,
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 16),
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(18),
-          decoration: AppTheme.cardDecoration(color: AppTheme.gold.withValues(alpha: 0.08)),
+          decoration: AppTheme.cardDecoration(color: AppTheme.surface2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -589,7 +702,7 @@ class _IntroStep extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text(lesson.outcome, style: const TextStyle(height: 1.55, color: Colors.white70)),
+              Text(lesson.outcome, style: const TextStyle(height: 1.55, color: AppTheme.textSoft)),
               if (lesson.learningOutcomes.isNotEmpty) ...[
                 const SizedBox(height: 14),
                 ...lesson.learningOutcomes.map(
@@ -600,7 +713,7 @@ class _IntroStep extends StatelessWidget {
                       children: [
                         const Icon(Icons.check_circle_outline, size: 16, color: AppTheme.gold),
                         const SizedBox(width: 8),
-                        Expanded(child: Text(o, style: const TextStyle(height: 1.45, color: Colors.white60, fontSize: 13))),
+                        Expanded(child: Text(o, style: const TextStyle(height: 1.45, color: AppTheme.muted, fontSize: 13))),
                       ],
                     ),
                   ),
@@ -615,8 +728,6 @@ class _IntroStep extends StatelessWidget {
             _chip(Icons.speed, l10n.difficultyName(lesson.difficulty)),
             const SizedBox(width: 8),
             _chip(Icons.timer_outlined, '${lesson.durationMin} ${l10n.min}'),
-            const SizedBox(width: 8),
-            _chip(Icons.currency_bitcoin, crypto.pair),
           ],
         ),
       ],
@@ -629,7 +740,7 @@ class _IntroStep extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.card,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: Colors.white12),
+        border: Border.all(color: AppTheme.line),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -643,14 +754,40 @@ class _IntroStep extends StatelessWidget {
   }
 }
 
+/// Optional chart under the step content; null [chartType] = same chart as before, skip it.
+Widget _stepChart({
+  required BuildContext context,
+  required String? chartType,
+  required Lesson lesson,
+  required CryptoLessonContext crypto,
+  required int cardIndex,
+  String? caption,
+}) {
+  if (chartType == null) return const SizedBox.shrink();
+  return Padding(
+    padding: const EdgeInsets.only(top: 16),
+    child: LessonChartCard(
+      chartType: chartType,
+      visual: ChartVisualContext.forChartType(chartType, context.l10n, lessonId: lesson.id),
+      caption: caption,
+      pair: crypto.pair,
+      timeframe: crypto.timeframe,
+      exchange: crypto.exchange,
+      lessonId: lesson.id,
+      cardIndex: cardIndex,
+      height: 220,
+    ),
+  );
+}
+
 class _TextCardStep extends StatelessWidget {
   final String? heading;
   final String text;
   final Lesson lesson;
   final CryptoLessonContext crypto;
-  final String chartType;
+  final String? chartType;
   final int cardIndex;
-  final ChartVisualContext visual;
+  final String? caption;
 
   const _TextCardStep({
     required this.heading,
@@ -659,47 +796,115 @@ class _TextCardStep extends StatelessWidget {
     required this.crypto,
     required this.chartType,
     required this.cardIndex,
-    required this.visual,
+    this.caption,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final title = heading == null ? null : l10n.translateSectionHeading(heading!);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (heading != null)
+        if (title != null)
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: Text(
-              l10n.translateSectionHeading(heading!),
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-            ),
+            child: Text(title, style: AppTheme.display(21)),
           ),
-        LessonChartCard(
-          chartType: chartType,
-          visual: visual,
-          title: heading ?? lesson.title,
-          caption: heading ?? l10n.visualExampleCaption,
-          pair: crypto.pair,
-          timeframe: crypto.timeframe,
-          exchange: crypto.exchange,
-          lessonId: lesson.id,
-          cardIndex: cardIndex,
-          height: 300,
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(18),
+          decoration: AppTheme.cardDecoration(),
+          child: LessonRichText(text: text),
         ),
-        if (text.isNotEmpty) ...[
-          const SizedBox(height: 14),
-          Container(
+        _stepChart(
+          context: context,
+          chartType: chartType,
+          lesson: lesson,
+          crypto: crypto,
+          cardIndex: cardIndex,
+          caption: caption == title ? null : caption,
+        ),
+      ],
+    );
+  }
+}
+
+class _CompareStep extends StatefulWidget {
+  const _CompareStep({
+    required this.heading,
+    required this.question,
+    required this.answer,
+    required this.onRevealed,
+  });
+
+  final String? heading;
+  final String question;
+  final String answer;
+  final VoidCallback onRevealed;
+
+  @override
+  State<_CompareStep> createState() => _CompareStepState();
+}
+
+class _CompareStepState extends State<_CompareStep> {
+  bool _shown = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.heading == null ? 'Проверь себя' : l10n.translateSectionHeading(widget.heading!),
+          style: AppTheme.display(21),
+        ),
+        const SizedBox(height: 12),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(18),
+          decoration: AppTheme.cardDecoration(),
+          child: Text(widget.question, style: const TextStyle(fontSize: 16, height: 1.5, fontWeight: FontWeight.w700)),
+        ),
+        const SizedBox(height: 12),
+        const Text(
+          'Ответь про себя, потом сверься.',
+          style: TextStyle(color: AppTheme.muted, fontSize: 13),
+        ),
+        const SizedBox(height: 12),
+        AnimatedCrossFade(
+          duration: const Duration(milliseconds: 220),
+          crossFadeState: _shown ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          firstChild: SizedBox(
             width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: AppTheme.cardDecoration(
-              border: Border.all(color: AppTheme.accent.withValues(alpha: 0.2)),
+            child: OutlinedButton.icon(
+              onPressed: () {
+                setState(() => _shown = true);
+                widget.onRevealed();
+              },
+              icon: const Icon(Icons.visibility_rounded, size: 18),
+              label: const Text('Проверить себя'),
             ),
-            child: LessonRichText(text: text),
           ),
-        ],
+          secondChild: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: AppTheme.mint.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.check_circle_rounded, color: AppTheme.mint, size: 20),
+                const SizedBox(width: 10),
+                Expanded(child: LessonRichText(text: widget.answer)),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -709,9 +914,9 @@ class _ChoiceCardStep extends StatefulWidget {
   final LessonSection section;
   final Lesson lesson;
   final CryptoLessonContext crypto;
-  final String chartType;
+  final String? chartType;
   final int cardIndex;
-  final ChartVisualContext visual;
+  final VoidCallback onAnswered;
 
   const _ChoiceCardStep({
     required this.section,
@@ -719,7 +924,7 @@ class _ChoiceCardStep extends StatefulWidget {
     required this.crypto,
     required this.chartType,
     required this.cardIndex,
-    required this.visual,
+    required this.onAnswered,
   });
 
   @override
@@ -729,6 +934,15 @@ class _ChoiceCardStep extends StatefulWidget {
 class _ChoiceCardStepState extends State<_ChoiceCardStep> {
   int? _selected;
   bool _answered = false;
+
+  void _pick(int i) {
+    if (_answered) return;
+    setState(() {
+      _selected = i;
+      _answered = true;
+    });
+    widget.onAnswered();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -741,51 +955,40 @@ class _ChoiceCardStepState extends State<_ChoiceCardStep> {
       children: [
         Text(
           widget.section.title ?? l10n.keyTakeaway,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+          style: AppTheme.display(21),
         ),
         if (widget.section.body != null) ...[
           const SizedBox(height: 8),
-          Text(widget.section.body!, style: const TextStyle(color: Colors.white54, height: 1.45)),
+          Text(
+            widget.section.body!,
+            style: const TextStyle(color: AppTheme.textSoft, height: 1.45, fontSize: 15.5, fontWeight: FontWeight.w700),
+          ),
         ],
         const SizedBox(height: 14),
-        LessonChartCard(
-          chartType: widget.chartType,
-          visual: widget.visual,
-          title: widget.section.title,
-          caption: widget.section.caption ?? widget.section.title ?? l10n.visualExampleCaption,
-          pair: widget.crypto.pair,
-          timeframe: widget.crypto.timeframe,
-          exchange: widget.crypto.exchange,
-          lessonId: widget.lesson.id,
-          cardIndex: widget.cardIndex,
-          height: 260,
-        ),
-        const SizedBox(height: 16),
         ...List.generate(items.length, (i) {
           final selected = _selected == i;
           final showResult = _answered && selected;
           final isCorrect = i == correct;
-          Color border = Colors.white12;
+          Color border = AppTheme.lineSoft;
           Color? bg;
           if (showResult) {
-            border = isCorrect ? Colors.greenAccent : Colors.redAccent;
-            bg = (isCorrect ? Colors.green : Colors.red).withValues(alpha: 0.12);
+            border = isCorrect ? AppTheme.bull : AppTheme.bear;
+            bg = (isCorrect ? AppTheme.bull : AppTheme.bear).withValues(alpha: 0.12);
           } else if (_answered && isCorrect) {
-            border = Colors.greenAccent.withValues(alpha: 0.5);
+            border = AppTheme.bull.withValues(alpha: 0.55);
           }
-          return Padding(
+          return Semantics(
+            button: true,
+            selected: selected,
+            hint: 'Вариант ответа ${i + 1}',
+            child: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Material(
-              color: bg ?? AppTheme.card,
+              color: bg ?? AppTheme.surface2,
               borderRadius: BorderRadius.circular(14),
               child: InkWell(
                 borderRadius: BorderRadius.circular(14),
-                onTap: _answered
-                    ? null
-                    : () => setState(() {
-                          _selected = i;
-                          _answered = true;
-                        }),
+                onTap: _answered ? null : () => _pick(i),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(14),
@@ -793,9 +996,10 @@ class _ChoiceCardStepState extends State<_ChoiceCardStep> {
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(color: border),
                   ),
-                  child: Text(items[i], style: const TextStyle(height: 1.45)),
+                  child: Text(items[i], style: const TextStyle(height: 1.45, color: AppTheme.text)),
                 ),
               ),
+            ),
             ),
           );
         }),
@@ -804,11 +1008,19 @@ class _ChoiceCardStepState extends State<_ChoiceCardStep> {
           Text(
             _selected == correct ? l10n.choiceCorrect : l10n.choiceWrong,
             style: TextStyle(
-              color: _selected == correct ? Colors.greenAccent : Colors.orangeAccent,
+              color: _selected == correct ? AppTheme.bull : AppTheme.warn,
               fontWeight: FontWeight.w700,
             ),
           ),
         ],
+        _stepChart(
+          context: context,
+          chartType: widget.chartType,
+          lesson: widget.lesson,
+          crypto: widget.crypto,
+          cardIndex: widget.cardIndex,
+          caption: widget.section.caption,
+        ),
       ],
     );
   }
@@ -818,9 +1030,8 @@ class _InteractiveWithChartStep extends StatelessWidget {
   final Lesson lesson;
   final LessonSection section;
   final CryptoLessonContext crypto;
-  final String chartType;
+  final String? chartType;
   final int cardIndex;
-  final ChartVisualContext visual;
 
   const _InteractiveWithChartStep({
     required this.lesson,
@@ -828,29 +1039,22 @@ class _InteractiveWithChartStep extends StatelessWidget {
     required this.crypto,
     required this.chartType,
     required this.cardIndex,
-    required this.visual,
   });
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LessonChartCard(
-          chartType: chartType,
-          visual: visual,
-          title: section.title ?? lesson.title,
-          caption: section.caption ?? section.title ?? l10n.visualExampleCaption,
-          pair: crypto.pair,
-          timeframe: crypto.timeframe,
-          exchange: crypto.exchange,
-          lessonId: lesson.id,
-          cardIndex: cardIndex,
-          height: 260,
-        ),
-        const SizedBox(height: 14),
         LessonInteractiveSection(lesson: lesson, section: section),
+        _stepChart(
+          context: context,
+          chartType: chartType,
+          lesson: lesson,
+          crypto: crypto,
+          cardIndex: cardIndex,
+          caption: section.caption,
+        ),
       ],
     );
   }
@@ -914,7 +1118,7 @@ class _ReferencesStep extends StatelessWidget {
                           Text(r.title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
                           Text(
                             '${r.author}${r.year != null ? ', ${r.year}' : ''}',
-                            style: const TextStyle(fontSize: 12, color: Colors.white54),
+                            style: const TextStyle(fontSize: 12, color: AppTheme.muted),
                           ),
                         ],
                       ),

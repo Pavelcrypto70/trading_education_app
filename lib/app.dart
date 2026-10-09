@@ -34,8 +34,43 @@ class TradeMasterApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
+          builder: (context, child) => _PhoneFrame(child: child ?? const SizedBox()),
         );
       },
+    );
+  }
+}
+
+/// On tablets/desktop web the app is a centered phone column, not a stretched layout.
+class _PhoneFrame extends StatelessWidget {
+  const _PhoneFrame({required this.child});
+
+  final Widget child;
+
+  static const double _maxWidth = 480;
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    if (width <= _maxWidth + 40) return child;
+    return ColoredBox(
+      color: const Color(0xFF05070F),
+      child: Center(
+        child: Container(
+          width: _maxWidth,
+          decoration: BoxDecoration(
+            border: Border.symmetric(
+              vertical: BorderSide(color: AppTheme.lineSoft.withValues(alpha: 0.8)),
+            ),
+          ),
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              size: Size(_maxWidth, MediaQuery.sizeOf(context).height),
+            ),
+            child: child,
+          ),
+        ),
+      ),
     );
   }
 }

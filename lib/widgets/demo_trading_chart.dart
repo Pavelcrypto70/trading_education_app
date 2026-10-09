@@ -66,8 +66,8 @@ class _DemoChartPainter extends CustomPainter {
     this.targetPrice,
   });
 
-  static const _bullColor = Color(0xFF26A69A);
-  static const _bearColor = Color(0xFFEF5350);
+  static const _bullColor = AppTheme.bull;
+  static const _bearColor = AppTheme.bear;
   static const _gridColor = Color(0x22FFFFFF);
   static const _padRight = 60.0;
 
@@ -78,7 +78,7 @@ class _DemoChartPainter extends CustomPainter {
 
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, size.height),
-      Paint()..color = const Color(0xFF0D1117),
+      Paint()..color = AppTheme.bg2,
     );
 
     if (candles.isEmpty) return;
@@ -108,7 +108,7 @@ class _DemoChartPainter extends CustomPainter {
       _drawLevel(canvas, chartSize, targetPrice!, lo, hi, AppTheme.gold, 'TP');
     }
     if (entryPrice != null) {
-      _drawLevel(canvas, chartSize, entryPrice!, lo, hi, Colors.white70, 'Entry');
+      _drawLevel(canvas, chartSize, entryPrice!, lo, hi, AppTheme.textSoft, 'Entry');
     }
 
     _drawLevel(
@@ -177,7 +177,7 @@ class _DemoChartPainter extends CustomPainter {
         canvas,
         _fmtPrice(price),
         Offset(size.width + 2, y - 6),
-        Colors.white38,
+        AppTheme.faint,
       );
     }
   }

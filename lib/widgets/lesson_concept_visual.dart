@@ -107,7 +107,7 @@ class _LessonConceptVisualState extends State<LessonConceptVisual>
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            border: Border.all(color: Colors.white12),
+            border: Border.all(color: AppTheme.line),
           ),
           child: CustomPaint(
             painter: _ConceptPainter(type: widget.type, t: _ctrl.value),

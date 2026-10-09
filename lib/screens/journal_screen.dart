@@ -78,12 +78,12 @@ class _JournalScreenState extends State<JournalScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.edit_note, size: 64, color: Colors.white24),
+                        const Icon(Icons.edit_note, size: 64, color: AppTheme.faint),
                         const SizedBox(height: 16),
                         Text(
                           l10n.journalEmpty,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white54),
+                          style: const TextStyle(color: AppTheme.muted),
                         ),
                       ],
                     ),
@@ -109,10 +109,10 @@ class _JournalScreenState extends State<JournalScreen> {
                             '${e.setup}\n${l10n.journalEntryStop}: ${e.stop} · ${l10n.journalEntryTarget}: ${e.target}',
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(height: 1.4, color: Colors.white54),
+                            style: const TextStyle(height: 1.4, color: AppTheme.muted),
                           ),
                         ),
-                        trailing: const Icon(Icons.chevron_right, color: Colors.white38),
+                        trailing: const Icon(Icons.chevron_right, color: AppTheme.faint),
                         onTap: () => _openEditor(e),
                       ),
                     );
@@ -233,7 +233,7 @@ class _JournalEditorSheetState extends State<_JournalEditorSheet> {
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(color: Colors.white54),
+          labelStyle: const TextStyle(color: AppTheme.muted),
           filled: true,
           fillColor: AppTheme.bg,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),

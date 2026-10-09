@@ -64,14 +64,28 @@ class TmScreen extends StatelessWidget {
       appBar: AppBar(
         leading: showBack
             ? IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
                 onPressed: () => context.canPop() ? context.pop() : context.go('/'),
               )
             : null,
         title: stageLabel != null
-            ? Text(stageLabel!, style: TmKit.stageLabel.copyWith(fontSize: 11))
+            ? Text(
+                stageLabel!,
+                style: TmKit.stageLabel.copyWith(
+                  fontSize: 13,
+                  color: AppTheme.accent,
+                  fontWeight: FontWeight.w800,
+                ),
+              )
             : null,
-        centerTitle: true,
+        centerTitle: false,
+        actions: [
+          TextButton.icon(
+            onPressed: () => context.go('/'),
+            icon: const Icon(Icons.route_rounded, size: 18),
+            label: const Text('Путь'),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,101 +1,52 @@
 import 'package:go_router/go_router.dart';
 
-import '../screens/journey/academy_intro_screen.dart';
-import '../screens/journey/homework_review_screen.dart';
-import '../screens/journey/homework_stage1_screen.dart';
-import '../screens/journey/hub_language_screen.dart';
-import '../screens/journey/key_web_screens.dart';
-import '../screens/journey/module_test_result_screens.dart';
-import '../screens/journey/path_stage1_screen.dart';
-import '../screens/journey/placement_exam_intro_screen.dart';
-import '../screens/journey/save_progress_screen.dart';
-import '../screens/journey/stage1_gates_screen.dart';
-import '../screens/journey/subscription_screen.dart';
+import '../screens/journal_screen.dart';
+import '../screens/stage_soon_screen.dart';
 
-/// Trade Master journey screens 03–22 (GoRouter paths).
-List<RouteBase> get journeyRoutes => [
-      GoRoute(
-        path: '/placement',
-        builder: (context, state) => const PlacementExamIntroScreen(),
-      ),
-      GoRoute(
-        path: '/save-progress',
-        builder: (context, state) => const SaveProgressScreen(),
-      ),
-      GoRoute(
-        path: '/path',
-        builder: (context, state) => const PathStage1Screen(),
-      ),
-      GoRoute(
-        path: '/hub-language',
-        builder: (context, state) => const HubLanguageScreen(),
-      ),
-      GoRoute(
-        path: '/module-test',
-        builder: (context, state) => const ModuleTestScreen(),
-      ),
-      GoRoute(
-        path: '/module-test/result',
-        builder: (context, state) => const ModuleTestResultScreen(),
-      ),
-      GoRoute(
-        path: '/gates',
-        builder: (context, state) => const Stage1GatesScreen(),
-      ),
-      GoRoute(
-        path: '/academy',
-        builder: (context, state) => const AcademyJoinScreen(),
-      ),
-      GoRoute(
-        path: '/academy/intro',
-        builder: (context, state) => const AcademyIntroScreen(),
-      ),
-      GoRoute(
-        path: '/homework/s1',
-        builder: (context, state) => const HomeworkStage1Screen(),
-      ),
-      GoRoute(
-        path: '/homework/review',
-        builder: (context, state) => const HomeworkReviewScreen(),
-      ),
-      GoRoute(
-        path: '/subscribe',
-        builder: (context, state) => const SubscriptionScreen(),
-      ),
-      GoRoute(
-        path: '/key',
-        builder: (context, state) => const KeyLandingScreen(),
-      ),
-      GoRoute(
-        path: '/key/register',
-        builder: (context, state) => const KeyRegisterScreen(),
-      ),
-      GoRoute(
-        path: '/key/not-found',
-        builder: (context, state) => const KeyNotFoundScreen(),
-      ),
-      GoRoute(
-        path: '/key/active',
-        builder: (context, state) => const KeyActiveScreen(),
-      ),
-    ];
-
-/// Same paths as a map (name → path) for deep links and tests.
-const Map<String, String> journeyRoutePaths = {
-  'placement': '/placement',
-  'saveProgress': '/save-progress',
-  'path': '/path',
-  'hubLanguage': '/hub-language',
-  'moduleTest': '/module-test',
-  'moduleTestResult': '/module-test/result',
-  'gates': '/gates',
-  'academy': '/academy',
-  'academyIntro': '/academy/intro',
-  'homeworkS1': '/homework/s1',
-  'homeworkReview': '/homework/review',
-  'subscribe': '/subscribe',
-  'key': '/key',
-  'keyRegister': '/key/register',
-  'keyNotFound': '/key/not-found',
-  'keyActive': '/key/active',
+/// Old journey links (Telegram posts, bookmarks) lead to the live screens.
+/// Stages 5–6 have no live flow yet and show an honest "opens after diploma" page.
+const _redirects = <String, String>{
+  '/placement': '/learning',
+  '/save-progress': '/auth',
+  '/path': '/learning',
+  '/path/2': '/learning',
+  '/hub-language': '/glossary',
+  '/module-test': '/module-quiz',
+  '/module-test/result': '/module-quiz',
+  '/gates': '/club?tab=chats',
+  '/academy': '/club?tab=chats',
+  '/academy/intro': '/club?tab=chats',
+  '/hub-admit': '/club?tab=chats',
+  '/homework/s1': '/homework',
+  '/homework/review': '/homework',
+  '/markup': '/homework',
+  '/markup/grade': '/homework',
+  '/subscribe': '/premium',
+  '/key': '/premium',
+  '/key/register': '/premium',
+  '/key/not-found': '/premium',
+  '/key/active': '/premium',
+  '/weekly-report': '/streak',
+  '/practice/gates': '/practice',
+  '/trade/plan': '/practice',
+  '/trade/open': '/practice',
+  '/trade/review': '/practice',
+  '/trade/rejected': '/practice',
+  '/exam': '/certificate',
+  '/exam/result': '/certificate',
+  '/checklist': '/certificate',
+  '/diploma': '/certificate',
 };
+
+const _stage5 = ['/real/lesson', '/real/checklist', '/real/risk', '/real/first-trade'];
+const _stage6 = [
+  '/30/today', '/30/report', '/30/stop', '/30/paper', '/30/chat', '/30/done', '/desk', '/desk/review',
+];
+
+List<RouteBase> get journeyRoutes => [
+      for (final e in _redirects.entries) GoRoute(path: e.key, redirect: (_, __) => e.value),
+      GoRoute(path: '/journal', builder: (_, __) => const JournalScreen()),
+      GoRoute(path: '/stage/:n', builder: (_, state) => StageSoonScreen(stage: int.tryParse(state.pathParameters['n'] ?? '') ?? 5)),
+      for (final p in _stage5) GoRoute(path: p, redirect: (_, __) => '/stage/5'),
+      for (final p in _stage6) GoRoute(path: p, redirect: (_, __) => '/stage/6'),
+    ];

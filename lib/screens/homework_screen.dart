@@ -122,13 +122,13 @@ class _HomeworkScreenState extends State<HomeworkScreen> {
             decoration: AppTheme.cardDecoration(),
             child: Text(
               l10n.homeworkAccepted(AppConfig.homeworkTopicName),
-              style: const TextStyle(color: Colors.white70, height: 1.45),
+              style: const TextStyle(color: AppTheme.textSoft, height: 1.45),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             l10n.homeworkSubmits(submitted),
-            style: const TextStyle(color: Colors.white38, fontSize: 12),
+            style: const TextStyle(color: AppTheme.faint, fontSize: 12),
           ),
           const SizedBox(height: 24),
           Text(
@@ -175,10 +175,26 @@ class _HomeworkScreenState extends State<HomeworkScreen> {
             ),
           ],
           const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: _sending ? null : _submit,
-            icon: const Icon(Icons.send),
-            label: Text(l10n.submitHomework),
+          ListenableBuilder(
+            listenable: _sentence,
+            builder: (context, _) {
+              final short = _sentence.text.trim().length < HomeworkService.minAnswerLength;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _sending || short ? null : _submit,
+                    icon: const Icon(Icons.send),
+                    label: Text(l10n.submitHomework),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    l10n.homeworkPointsNote(HomeworkService.minAnswerLength),
+                    style: const TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.4),
+                  ),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 24),
           Text(
@@ -189,7 +205,7 @@ class _HomeworkScreenState extends State<HomeworkScreen> {
           if (submitted == 0)
             Text(
               l10n.homeworkEmpty,
-              style: const TextStyle(color: Colors.white54),
+              style: const TextStyle(color: AppTheme.muted),
             )
           else
             ..._lessons.where((l) => (_submits[l.id] ?? 0) > 0).map(
@@ -234,7 +250,7 @@ class _HowRow extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(color: Colors.white70, height: 1.45),
+            style: const TextStyle(color: AppTheme.textSoft, height: 1.45),
           ),
         ),
       ],

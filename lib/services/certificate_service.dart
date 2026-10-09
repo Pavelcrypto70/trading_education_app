@@ -119,7 +119,7 @@ class CertificateService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_issuedKey, jsonEncode(cert.toJson()));
     if (existing == null) {
-      await GamificationService.addXp(xpOnIssue);
+      await GamificationService.award(PointsReason.exam, uniqueKey: 'exam-diploma');
     }
     SyncService.schedulePush();
     return cert;

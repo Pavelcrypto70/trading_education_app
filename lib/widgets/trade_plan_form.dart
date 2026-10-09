@@ -160,14 +160,14 @@ class _TradePlanFormState extends State<TradePlanForm> {
           Text(
             l10n.planRR(plan.riskReward.toStringAsFixed(2)),
             style: TextStyle(
-              color: plan.riskReward >= 1.5 ? Colors.greenAccent : Colors.orangeAccent,
+              color: plan.riskReward >= 1.5 ? AppTheme.bull : AppTheme.orange,
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),
           ),
           if (_errorKey != null) ...[
             const SizedBox(height: 6),
-            Text(_errorText()!, style: const TextStyle(color: Colors.redAccent, fontSize: 12)),
+            Text(_errorText()!, style: const TextStyle(color: AppTheme.bear, fontSize: 12)),
           ],
           const SizedBox(height: 12),
           SizedBox(

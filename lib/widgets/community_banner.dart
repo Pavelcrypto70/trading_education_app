@@ -57,12 +57,12 @@ class CommunityBanner extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   l10n.communitySubtitle,
-                  style: const TextStyle(color: Colors.white70, fontSize: 12, height: 1.4),
+                  style: const TextStyle(color: AppTheme.textSoft, fontSize: 12, height: 1.4),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.arrow_forward_ios, color: Colors.white38, size: 16),
+          const Icon(Icons.arrow_forward_ios, color: AppTheme.faint, size: 16),
         ],
       ),
     );

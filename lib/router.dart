@@ -6,7 +6,6 @@ import 'models/quiz_question.dart';
 import 'screens/daily_challenge_screen.dart';
 import 'screens/flashcards_screen.dart';
 import 'screens/path_hub_screen.dart';
-import 'journey/journey_routes_late.dart';
 import 'screens/home_shell.dart';
 import 'screens/journal_screen.dart';
 import 'screens/learning_screen.dart';
@@ -23,7 +22,10 @@ import 'screens/onboarding_screen.dart';
 import 'screens/auth_screen.dart';
 import 'screens/premium_screen.dart';
 import 'screens/club_screen.dart';
+import 'screens/cutoff_screen.dart';
 import 'screens/profile_screen.dart';
+import 'screens/streak_screen.dart';
+import 'services/club_service.dart';
 import 'screens/quiz_play_screen.dart';
 import 'screens/quiz_result_screen.dart';
 import 'screens/quiz_screen.dart';
@@ -58,6 +60,12 @@ final GoRouter router = GoRouter(
           ),
         ),
         GoRoute(
+          path: '/learning',
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: LearningScreen(),
+          ),
+        ),
+        GoRoute(
           path: '/practice',
           pageBuilder: (context, state) => const NoTransitionPage(
             child: TradingScreen(),
@@ -65,8 +73,11 @@ final GoRouter router = GoRouter(
         ),
         GoRoute(
           path: '/club',
-          pageBuilder: (context, state) => const NoTransitionPage(
-            child: ClubScreen(),
+          pageBuilder: (context, state) => NoTransitionPage(
+            child: ClubScreen(
+              key: ValueKey('club-${state.uri.queryParameters['tab']}'),
+              initialTab: state.uri.queryParameters['tab'] == 'chats' ? 1 : 0,
+            ),
           ),
         ),
         GoRoute(
@@ -76,10 +87,6 @@ final GoRouter router = GoRouter(
           ),
         ),
       ],
-    ),
-    GoRoute(
-      path: '/learning',
-      builder: (context, state) => const LearningScreen(),
     ),
     GoRoute(
       path: '/quiz',
@@ -125,11 +132,22 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const FlashcardsScreen(),
     ),
     GoRoute(
+      path: '/streak',
+      builder: (context, state) => const StreakScreen(),
+    ),
+    GoRoute(
+      path: '/cutoff/:chat',
+      builder: (context, state) => CutoffScreen(
+        chat: state.pathParameters['chat'] == 'pro' ? ClubChat.pro : ClubChat.students,
+      ),
+    ),
+    GoRoute(
       path: '/daily-challenge',
       builder: (context, state) => const DailyChallengeScreen(),
     ),
     GoRoute(
       path: '/quiz-play',
+      redirect: (_, state) => state.extra == null ? '/quiz' : null,
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>;
         return QuizPlayScreen(
@@ -168,9 +186,9 @@ final GoRouter router = GoRouter(
         return HomeworkScreen(initialLessonId: lessonId);
       },
     ),
-    ...journeyLateRoutes,
     GoRoute(
       path: '/quiz-result',
+      redirect: (_, state) => state.extra == null ? '/quiz' : null,
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>;
         return QuizResultScreen(

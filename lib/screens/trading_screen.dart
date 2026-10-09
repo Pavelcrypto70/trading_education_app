@@ -239,22 +239,33 @@ class _TradingScreenState extends State<TradingScreen> {
         notes: 'Paper $side @ ${_fmtMoney(entry)} → ${_fmtMoney(exit)}',
         result: '\$${pnl.toStringAsFixed(2)}',
       ),
+      awardPoints: false,
     );
     await TradePlanService.clear();
+
+    final byPlan = plan != null && plan.stop > 0 && plan.target > 0;
+    final award = byPlan
+        ? await GamificationService.award(PointsReason.paperTrade,
+            uniqueKey: 'trade-${DateTime.now().millisecondsSinceEpoch}')
+        : null;
+    final pointsMsg = award == null
+        ? ' · без плана очки не начисляются'
+        : award.isZero
+            ? ' · дневной лимит очков исчерпан'
+            : ' · +${award.awarded} очков за сделку по плану';
 
     final practiceAfter = _practice;
     if (practiceAfter != null) {
       await LessonPracticeService.markDone(practiceAfter.lessonId);
-      final xp = await GamificationService.addXp(GamificationService.xpPerCheckpoint);
       if (mounted) {
-        _showMsg('$completeMsg +$xp XP');
+        _showMsg('$completeMsg$pointsMsg');
         setState(() {
           _practice = null;
           _plan = null;
         });
       }
     } else if (mounted) {
-      _showMsg('$closedMsg P&L: \$${pnl.toStringAsFixed(2)}');
+      _showMsg('$closedMsg P&L: \$${pnl.toStringAsFixed(2)}$pointsMsg');
     }
 
     await _save();
@@ -341,24 +352,24 @@ class _TradingScreenState extends State<TradingScreen> {
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.only(bottom: 16),
               decoration: AppTheme.cardDecoration(
-                color: Colors.green.withValues(alpha: 0.1),
-                border: Border.all(color: Colors.greenAccent.withValues(alpha: 0.4)),
+                color: AppTheme.bull.withValues(alpha: 0.1),
+                border: Border.all(color: AppTheme.bull.withValues(alpha: 0.4)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.school, color: Colors.greenAccent, size: 20),
+                      const Icon(Icons.school, color: AppTheme.bull, size: 20),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           l10n.practiceLessonBanner(_practice!.lessonId, _practice!.lessonTitle),
-                          style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.greenAccent),
+                          style: const TextStyle(fontWeight: FontWeight.w700, color: AppTheme.bull),
                         ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.close, size: 18, color: Colors.white38),
+                        icon: const Icon(Icons.close, size: 18, color: AppTheme.faint),
                         onPressed: () async {
                           await LessonPracticeService.clearActive();
                           setState(() => _practice = null);
@@ -367,7 +378,7 @@ class _TradingScreenState extends State<TradingScreen> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Text(_practice!.scenario, style: const TextStyle(color: Colors.white70, height: 1.45)),
+                  Text(_practice!.scenario, style: const TextStyle(color: AppTheme.textSoft, height: 1.45)),
                   Text(
                     _practice!.symbol,
                     style: const TextStyle(color: AppTheme.gold, fontSize: 12, fontWeight: FontWeight.w600),
@@ -395,36 +406,34 @@ class _TradingScreenState extends State<TradingScreen> {
             ),
           ],
 
-          TradePlanForm(
-            currentPrice: _currentPrice,
-            required: _planRequired,
-            onPlanChanged: (p) => setState(() => _plan = p),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l10n.portfolioEquity, style: const TextStyle(color: AppTheme.muted, fontSize: 12.5)),
+                    Text(_fmtMoney(_equity), style: AppTheme.display(24)),
+                  ],
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('Свободно ${_fmtMoney(_balance)}', style: const TextStyle(color: AppTheme.muted, fontSize: 12.5)),
+                  Text(
+                    'P&L ${_unrealizedPnl >= 0 ? '+' : ''}\$${_unrealizedPnl.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: _unrealizedPnl >= 0 ? AppTheme.bull : AppTheme.bear,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
 
-          const SizedBox(height: 16),
-
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: AppTheme.heroGradient(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l10n.portfolioEquity, style: const TextStyle(color: Colors.white70)),
-                const SizedBox(height: 6),
-                Text(
-                  _fmtMoney(_equity),
-                  style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w900, color: AppTheme.gold),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Cash: ${_fmtMoney(_balance)} · P&L: \$${_unrealizedPnl.toStringAsFixed(2)}',
-                  style: const TextStyle(color: Colors.white54, fontSize: 13),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
           Container(
             padding: const EdgeInsets.all(16),
@@ -439,9 +448,9 @@ class _TradingScreenState extends State<TradingScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: Colors.greenAccent.withValues(alpha: 0.15),
+                        color: AppTheme.bull.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: Colors.greenAccent.withValues(alpha: 0.4)),
+                        border: Border.all(color: AppTheme.bull.withValues(alpha: 0.4)),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -450,7 +459,7 @@ class _TradingScreenState extends State<TradingScreen> {
                             width: 6,
                             height: 6,
                             decoration: const BoxDecoration(
-                              color: Colors.greenAccent,
+                              color: AppTheme.bull,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -458,7 +467,7 @@ class _TradingScreenState extends State<TradingScreen> {
                           Text(
                             l10n.live,
                             style: const TextStyle(
-                              color: Colors.greenAccent,
+                              color: AppTheme.bull,
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
                             ),
@@ -475,14 +484,14 @@ class _TradingScreenState extends State<TradingScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 18,
-                            color: isUp ? Colors.greenAccent : Colors.redAccent,
+                            color: isUp ? AppTheme.bull : AppTheme.bear,
                           ),
                         ),
                         Text(
                           '${isUp ? '+' : ''}${change.toStringAsFixed(2)}%',
                           style: TextStyle(
                             fontSize: 12,
-                            color: isUp ? Colors.greenAccent : Colors.redAccent,
+                            color: isUp ? AppTheme.bull : AppTheme.bear,
                           ),
                         ),
                       ],
@@ -492,7 +501,7 @@ class _TradingScreenState extends State<TradingScreen> {
                 const SizedBox(height: 4),
                 Text(
                   '1m · ${l10n.demoMarketNote}',
-                  style: const TextStyle(color: Colors.white38, fontSize: 11),
+                  style: const TextStyle(color: AppTheme.faint, fontSize: 11),
                 ),
                 const SizedBox(height: 12),
                 DemoTradingChart(
@@ -501,10 +510,18 @@ class _TradingScreenState extends State<TradingScreen> {
                   entryPrice: _position != null ? _entryPrice : null,
                   stopPrice: _plan?.stop,
                   targetPrice: _plan?.target,
-                  height: 300,
+                  height: 240,
                 ),
               ],
             ),
+          ),
+
+          const SizedBox(height: 16),
+
+          TradePlanForm(
+            currentPrice: _currentPrice,
+            required: _planRequired,
+            onPlanChanged: (p) => setState(() => _plan = p),
           ),
 
           const SizedBox(height: 16),
@@ -529,13 +546,13 @@ class _TradingScreenState extends State<TradingScreen> {
                           style: const TextStyle(fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          'Entry: ${_fmtMoney(_entryPrice)}',
-                          style: const TextStyle(color: Colors.white54, fontSize: 13),
+                          'Вход: ${_fmtMoney(_entryPrice)}',
+                          style: const TextStyle(color: AppTheme.muted, fontSize: 13),
                         ),
                         Text(
                           'P&L: \$${_unrealizedPnl.toStringAsFixed(2)}',
                           style: TextStyle(
-                            color: _unrealizedPnl >= 0 ? Colors.greenAccent : Colors.redAccent,
+                            color: _unrealizedPnl >= 0 ? AppTheme.bull : AppTheme.bear,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
@@ -552,7 +569,7 @@ class _TradingScreenState extends State<TradingScreen> {
             const SizedBox(height: 4),
             Row(
               children: [
-                Text(l10n.positionSize, style: const TextStyle(color: Colors.white70, fontSize: 13)),
+                Text(l10n.positionSize, style: const TextStyle(color: AppTheme.textSoft, fontSize: 13)),
                 const Spacer(),
                 Text(
                   '${_orderSize.toStringAsFixed(2)} $_asset',
@@ -570,7 +587,7 @@ class _TradingScreenState extends State<TradingScreen> {
             ),
             Text(
               '${l10n.marginRequired}: ${_fmtMoney(_currentPrice * _orderSize * 0.1)} (10×)',
-              style: const TextStyle(color: Colors.white38, fontSize: 12),
+              style: const TextStyle(color: AppTheme.faint, fontSize: 12),
             ),
             const SizedBox(height: 12),
           ],
@@ -581,7 +598,8 @@ class _TradingScreenState extends State<TradingScreen> {
                 child: ElevatedButton(
                   onPressed: _buy,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade700,
+                    backgroundColor: AppTheme.bull,
+                    foregroundColor: AppTheme.onPastel,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                   child: Text(l10n.buy),
@@ -592,7 +610,8 @@ class _TradingScreenState extends State<TradingScreen> {
                 child: ElevatedButton(
                   onPressed: _sell,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red.shade700,
+                    backgroundColor: AppTheme.bear,
+                    foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                   child: Text(l10n.sell),
@@ -613,7 +632,7 @@ class _TradingScreenState extends State<TradingScreen> {
                 const SizedBox(height: 8),
                 Text(
                   l10n.tradingHowItWorks,
-                  style: const TextStyle(color: Colors.white54, height: 1.5, fontSize: 13),
+                  style: const TextStyle(color: AppTheme.muted, height: 1.5, fontSize: 13),
                 ),
               ],
             ),

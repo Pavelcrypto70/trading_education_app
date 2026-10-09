@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,7 +41,7 @@ class AccountDataService {
   /// Deletes cloud auth user (cascades DB rows) and wipes local prefs.
   static Future<AccountDeleteResult> deleteAccountAndWipeLocal() async {
     if (!BackendService.isAvailable || !AuthService.isSignedIn) {
-      await ProgressService.resetAll();
+      await ProgressService.resetAll(wipeIdentity: true);
       await PremiumService.clear();
       return AccountDeleteResult.localOnly;
     }
@@ -58,7 +58,7 @@ class AccountDataService {
     }
 
     await AuthService.signOut();
-    await ProgressService.resetAll();
+    await ProgressService.resetAll(wipeIdentity: true);
     await PremiumService.clear();
     return AccountDeleteResult.deleted;
   }

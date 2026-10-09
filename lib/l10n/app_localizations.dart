@@ -549,10 +549,10 @@ class AppLocalizations {
         '¡Lección completa!',
       );
   String xpEarned(int xp) => _t(
-        '+$xp XP earned',
-        '+$xp XP',
-        '+$xp XP',
-        '+$xp XP ganada',
+        '+$xp points',
+        '+$xp очков',
+        '+$xp pontos',
+        '+$xp puntos',
       );
   String get startPractice => _t(
         'Practice now',
@@ -681,10 +681,10 @@ class AppLocalizations {
         '$n amigos se unieron',
       );
   String get referralXpInfo => _t(
-        '+500 XP per friend · +100 XP when you join',
-        '+500 XP за друга · +100 XP при вводе кода',
-        '+500 XP por amigo · +100 XP ao entrar',
-        '+500 XP por amigo · +100 XP cuando te unes',
+        'Learn together — points are earned only by studying',
+        'Учитесь вместе — очки даются только за обучение',
+        'Aprendam juntos — pontos só por estudar',
+        'Aprended juntos — puntos solo por estudiar',
       );
   String get referralErrorEmpty => _t(
         'Enter a code',
@@ -711,10 +711,10 @@ class AppLocalizations {
         'código no válido',
       );
   String get referralSuccess => _t(
-        'Code applied! +100 XP',
-        'Код принят! +100 XP',
-        'Código aplicado! +100 XP',
-        '¡Código aplicado! +100 EXP',
+        'Code applied!',
+        'Код принят!',
+        'Código aplicado!',
+        '¡Código aplicado!',
       );
   String practiceLessonSetup(int id) => _t(
         'Practice lesson $id setup',
@@ -741,22 +741,22 @@ class AppLocalizations {
         '¡Práctica de la lección $id terminada!',
       );
   String get level => _t(
-        'Level',
-        'Уровень',
+        'League',
+        'Лига',
         'Nível',
         'Nivel',
       );
   String get xp => _t(
-        'XP',
-        'XP',
-        'XP',
-        'experiencia',
+        'Points',
+        'Очки',
+        'Pontos',
+        'Puntos',
       );
   String levelProgress(int current, int needed) => _t(
-        '$current / $needed XP',
-        '$current / $needed XP',
-        '$current / $needed XP',
-        '$current / $needed XP',
+        '$current / $needed',
+        '$current / $needed',
+        '$current / $needed',
+        '$current / $needed',
       );
   String get practiceAfterLesson => _t(
         'Apply in Paper Trading',
@@ -1014,11 +1014,17 @@ class AppLocalizations {
         'Mercado demo ao vivo com candlesticks. O gráfico atualiza sozinho — abra long/short, defina o tamanho e acompanhe o P&L. Sem dinheiro real.',
         'Mercado de demostración en vivo con velas japonesas. Los gráficos se actualizan automáticamente: abra en largo o en corto, establezca el tamaño y realice un seguimiento de las pérdidas y ganancias. Sin dinero real.',
       );
+  String homeworkPointsNote(int min) => _t(
+        '+100 points for the first send per lesson (answer from $min characters). The grade comes from the mentor in Telegram.',
+        '+100 очков за первую отправку по уроку (ответ от $min символов). Оценку ставит ментор в Telegram.',
+        '+100 pontos pelo primeiro envio por aula (resposta a partir de $min caracteres). A nota vem do mentor no Telegram.',
+        '+100 puntos por el primer envío por lección (respuesta desde $min caracteres). La nota la pone el mentor en Telegram.',
+      );
   String get live => _t(
-        'LIVE',
-        'LIVE',
-        'AO VIVO',
-        'VIVIR',
+        'DEMO',
+        'ДЕМО',
+        'DEMO',
+        'DEMO',
       );
   String get demoMarketNote => _t(
         'simulated data',
@@ -1185,10 +1191,10 @@ class AppLocalizations {
         '¿Restablecer todo el progreso?',
       );
   String get resetProgressBody => _t(
-        'This will clear lessons, quizzes, trading balance, and streaks.',
-        'Это удалит прогресс уроков, тестов, баланс торговли и серии.',
-        'Isso apagará aulas, quizzes, saldo de trading e sequências.',
-        'Esto borrará lecciones, cuestionarios, saldo comercial y rachas.',
+        'This clears lessons, tests, points, flames and the demo balance. Your club ID, name and passed cutoffs stay.',
+        'Удалятся уроки, тесты, очки, огоньки и демо-баланс. ID в клубе, имя и пройденные отсечки останутся.',
+        'Apaga aulas, testes, pontos, chamas e saldo demo. Seu ID do clube, nome e cortes alcançados ficam.',
+        'Borra lecciones, pruebas, puntos, llamas y saldo demo. Tu ID del club, nombre y cortes superados se quedan.',
       );
   String get progressReset => _t(
         'Progress reset',
@@ -2017,22 +2023,22 @@ class AppLocalizations {
         'Esta lección está en el curso completo.',
       );
   String paywallLessonBody(int n) => _t(
-        'You have $n free trial lessons. Unlock all 58 lessons with a one-time purchase.',
-        'У вас $n бесплатных урока. Откройте все 58 уроков разовой покупкой.',
-        'Você tem $n aulas experimentais gratuitas. Desbloqueie todas as 58 aulas com uma compra única.',
-        'Tienes $n lecciones de prueba gratuitas. Desbloquea las 58 lecciones con una compra única.',
+        'Lessons 1–$n are free. Unlock all 58 lessons with a one-time purchase.',
+        'Уроки 1–$n бесплатны. Все 58 уроков открываются разовой покупкой.',
+        'As aulas 1–$n são gratuitas. Desbloqueie todas as 58 aulas com uma compra única.',
+        'Las lecciones 1–$n son gratuitas. Desbloquea las 58 lecciones con una compra única.',
       );
   String paywallLessonBodyCommunity(int n) => _t(
-        'You have $n free trial lessons. Join the community to get the full course and chat with traders.',
-        'У вас $n бесплатных урока. Вступите в сообщество — полный курс и чат с трейдерами.',
-        'Você tem $n aulas experimentais gratuitas. Junte-se à comunidade para obter o curso completo e conversar com traders.',
-        'Tienes $n lecciones de prueba gratuitas. Únase a la comunidad para obtener el curso completo y chatear con comerciantes.',
+        'Lessons 1–$n are free. Join the community to get the full course and chat with traders.',
+        'Уроки 1–$n бесплатны. Вступи в сообщество — полный курс и чат с трейдерами.',
+        'As aulas 1–$n são gratuitas. Junte-se à comunidade para obter o curso completo e conversar com traders.',
+        'Las lecciones 1–$n son gratuitas. Únete a la comunidad para obtener el curso completo y chatear con traders.',
       );
   String get paywallTrialLessons => _t(
-        'Trial: Intro 1–2, Amplitude, Beginner mistakes, Impulse strategy',
-        'Триал: Ввод 1–2, Амплитуда, Ошибки новичков, Стратегия импульсов',
-        'Trial: Intro 1–2, Amplitude, Erros, Estratégia de impulso',
-        'Prueba: Introducción 1–2, Amplitud, Errores de principiante, Estrategia de impulso',
+        'Free: stage 1 — spot, futures, chart and candles',
+        'Бесплатно: ступень 1 — спот, фьючерс, график и свечи',
+        'Grátis: etapa 1 — spot, futuros, gráfico e velas',
+        'Gratis: etapa 1 — spot, futuros, gráfico y velas',
       );
   String get unlockFullCourse => _t(
         'Unlock full course',

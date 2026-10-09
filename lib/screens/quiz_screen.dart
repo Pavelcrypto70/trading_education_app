@@ -154,7 +154,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
                       '${UnifiedQuizBank.allQuestions.length} questions',
 
-                      style: const TextStyle(color: Colors.white70),
+                      style: const TextStyle(color: AppTheme.textSoft),
 
                     ),
 
@@ -310,7 +310,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
                             '${l10n.categoryName(q.category)} · ${l10n.difficultyName(q.difficulty)}',
 
-                            style: const TextStyle(color: Colors.white54, fontSize: 12),
+                            style: const TextStyle(color: AppTheme.muted, fontSize: 12),
 
                           ),
 

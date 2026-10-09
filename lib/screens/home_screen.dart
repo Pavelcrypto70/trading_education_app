@@ -260,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             _goalLabel(_goal),
 
-                            style: const TextStyle(color: Colors.white54, fontSize: 13),
+                            style: const TextStyle(color: AppTheme.muted, fontSize: 13),
 
                           ),
 
@@ -367,7 +367,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         l10n.lessonsCompleted(_completed, _totalLessons),
 
-                        style: const TextStyle(color: Colors.white70),
+                        style: const TextStyle(color: AppTheme.textSoft),
 
                       ),
 
@@ -383,7 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           minHeight: 8,
 
-                          backgroundColor: Colors.white12,
+                          backgroundColor: AppTheme.line,
 
                           color: AppTheme.gold,
 
@@ -586,7 +586,7 @@ class _StatTile extends StatelessWidget {
 
               Text(value, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
 
-              Text(label, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+              Text(label, style: const TextStyle(color: AppTheme.muted, fontSize: 12)),
 
             ],
 
@@ -677,7 +677,7 @@ class _ContinueCard extends StatelessWidget {
 
                   Text(lesson.title, style: const TextStyle(fontWeight: FontWeight.w700)),
 
-                  Text(l10n.moduleName(lesson.module), style: const TextStyle(color: Colors.white54, fontSize: 13)),
+                  Text(l10n.moduleName(lesson.module), style: const TextStyle(color: AppTheme.muted, fontSize: 13)),
 
                 ],
 
@@ -831,7 +831,7 @@ class _ActionCard extends StatelessWidget {
 
               subtitle,
 
-              style: const TextStyle(color: Colors.white54, fontSize: 12, height: 1.3),
+              style: const TextStyle(color: AppTheme.muted, fontSize: 12, height: 1.3),
 
               maxLines: 2,
 
@@ -887,7 +887,7 @@ class _ActivityChartState extends State<_ActivityChart> {
         children: [
           Text(l10n.learningActivity, style: const TextStyle(fontWeight: FontWeight.w700)),
           const SizedBox(height: 4),
-          Text(l10n.weeklyMomentum, style: const TextStyle(color: Colors.white54, fontSize: 13)),
+          Text(l10n.weeklyMomentum, style: const TextStyle(color: AppTheme.muted, fontSize: 13)),
           const SizedBox(height: 16),
           SizedBox(
             height: 100,
@@ -951,8 +951,8 @@ class _ProgramDayCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: AppTheme.accentCardDecoration(
-        onTrack ? AppTheme.accentLessons : Colors.orangeAccent,
-        color: onTrack ? Colors.greenAccent.withValues(alpha: 0.06) : Colors.orangeAccent.withValues(alpha: 0.06),
+        onTrack ? AppTheme.accentLessons : AppTheme.orange,
+        color: onTrack ? AppTheme.bull.withValues(alpha: 0.06) : AppTheme.orange.withValues(alpha: 0.06),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -960,7 +960,7 @@ class _ProgramDayCard extends StatelessWidget {
           Row(
             children: [
               Icon(onTrack ? Icons.flag : Icons.flag_outlined,
-                  color: onTrack ? Colors.greenAccent : Colors.orangeAccent, size: 22),
+                  color: onTrack ? AppTheme.bull : AppTheme.orange, size: 22),
               const SizedBox(width: 8),
               Text(l10n.programDayTitle(day, ProgramService.programDays),
                   style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15)),
@@ -969,7 +969,7 @@ class _ProgramDayCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             l10n.programDaySubtitle(completed, expected, total),
-            style: const TextStyle(color: Colors.white54, fontSize: 13, height: 1.4),
+            style: const TextStyle(color: AppTheme.muted, fontSize: 13, height: 1.4),
           ),
         ],
       ),
@@ -1006,10 +1006,10 @@ class _XpCard extends StatelessWidget {
           const SizedBox(height: 6),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(value: needed == 0 ? 0 : progress / needed, minHeight: 6, backgroundColor: Colors.white12, color: AppTheme.gold),
+            child: LinearProgressIndicator(value: needed == 0 ? 0 : progress / needed, minHeight: 6, backgroundColor: AppTheme.line, color: AppTheme.gold),
           ),
           const SizedBox(height: 4),
-          Text(l10n.levelProgress(progress, needed), style: const TextStyle(color: Colors.white38, fontSize: 11)),
+          Text(l10n.levelProgress(progress, needed), style: const TextStyle(color: AppTheme.faint, fontSize: 11)),
         ])),
       ]),
     );
@@ -1040,9 +1040,9 @@ class _ShareCard extends StatelessWidget {
             const SizedBox(width: 14),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(l10n.shareApp, style: const TextStyle(fontWeight: FontWeight.w700)),
-              Text(l10n.shareMessage, style: const TextStyle(color: Colors.white54, fontSize: 12), maxLines: 2, overflow: TextOverflow.ellipsis),
+              Text(l10n.shareMessage, style: const TextStyle(color: AppTheme.muted, fontSize: 12), maxLines: 2, overflow: TextOverflow.ellipsis),
             ])),
-            const Icon(Icons.copy, color: Colors.white38, size: 18),
+            const Icon(Icons.copy, color: AppTheme.faint, size: 18),
           ]),
         ),
       ),

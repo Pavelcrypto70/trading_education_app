@@ -22,7 +22,7 @@ class LessonChartPlaceholderCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
-      decoration: AppTheme.cardDecoration(color: const Color(0xFF131722)),
+      decoration: AppTheme.cardDecoration(color: AppTheme.surface),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,7 +35,7 @@ class LessonChartPlaceholderCard extends StatelessWidget {
           ),
           if (section.body != null) ...[
             const SizedBox(height: 10),
-            Text(section.body!, style: const TextStyle(color: Colors.white70, height: 1.5, fontSize: 13)),
+            Text(section.body!, style: const TextStyle(color: AppTheme.textSoft, height: 1.5, fontSize: 13)),
           ],
         ],
       ),
@@ -145,7 +145,7 @@ class LessonTradingViewCard extends StatelessWidget {
           ],
           if (section.body != null) ...[
             const SizedBox(height: 10),
-            Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+            Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
           ],
           const SizedBox(height: 14),
           SizedBox(
@@ -206,27 +206,27 @@ class LessonPracticeCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: AppTheme.cardDecoration(
-        color: Colors.green.withValues(alpha: 0.08),
-        border: Border.all(color: Colors.green.withValues(alpha: 0.35)),
+        color: AppTheme.bull.withValues(alpha: 0.08),
+        border: Border.all(color: AppTheme.bull.withValues(alpha: 0.35)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.fitness_center, color: Colors.greenAccent, size: 18),
+              const Icon(Icons.fitness_center, color: AppTheme.bull, size: 18),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   section.title ?? l10n.sectionPractice,
-                  style: const TextStyle(fontWeight: FontWeight.w800, color: Colors.greenAccent),
+                  style: const TextStyle(fontWeight: FontWeight.w800, color: AppTheme.bull),
                 ),
               ),
             ],
           ),
           if (section.body != null) ...[
             const SizedBox(height: 10),
-            Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+            Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
           ],
           const SizedBox(height: 14),
           SizedBox(
@@ -236,15 +236,15 @@ class LessonPracticeCard extends StatelessWidget {
               icon: const Icon(Icons.candlestick_chart_outlined),
               label: Text(l10n.practiceLessonSetup(lesson.id)),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.greenAccent.withValues(alpha: 0.2),
-                foregroundColor: Colors.greenAccent,
+                backgroundColor: AppTheme.bull.withValues(alpha: 0.2),
+                foregroundColor: AppTheme.bull,
               ),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             l10n.backToLesson(lesson.id),
-            style: const TextStyle(color: Colors.white38, fontSize: 12),
+            style: const TextStyle(color: AppTheme.faint, fontSize: 12),
           ),
         ],
       ),
@@ -301,7 +301,7 @@ class LessonMarketNoteCard extends StatelessWidget {
           ],
           if (section.body != null) ...[
             const SizedBox(height: 8),
-            Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+            Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
           ],
         ],
       ),
@@ -373,7 +373,7 @@ class LessonExternalLinkCard extends StatelessWidget {
           ),
           if (section.body != null) ...[
             const SizedBox(height: 10),
-            Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+            Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
           ],
           if (section.url != null) ...[
             const SizedBox(height: 14),
@@ -413,7 +413,7 @@ class LessonHomeworkCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(18),
       decoration: AppTheme.cardDecoration(
-        color: Colors.blue.withValues(alpha: 0.08),
+        color: AppTheme.info.withValues(alpha: 0.08),
         border: Border.all(color: Colors.lightBlueAccent.withValues(alpha: 0.35)),
       ),
       child: Column(
@@ -434,7 +434,7 @@ class LessonHomeworkCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             section?.body ?? l10n.homeworkBody,
-            style: const TextStyle(height: 1.6, color: Colors.white70),
+            style: const TextStyle(height: 1.6, color: AppTheme.textSoft),
           ),
           if (section?.items != null) ...[
             const SizedBox(height: 12),
@@ -445,7 +445,7 @@ class LessonHomeworkCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('• ', style: TextStyle(color: AppTheme.gold)),
-                    Expanded(child: Text(item, style: const TextStyle(color: Colors.white60, height: 1.45))),
+                    Expanded(child: Text(item, style: const TextStyle(color: AppTheme.muted, height: 1.45))),
                   ],
                 ),
               ),
@@ -506,7 +506,7 @@ class LessonJournalCard extends StatelessWidget {
           ),
           if (section.body != null) ...[
             const SizedBox(height: 10),
-            Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+            Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
           ],
           if (section.items != null) ...[
             const SizedBox(height: 10),
@@ -516,9 +516,9 @@ class LessonJournalCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.check_box_outline_blank, size: 16, color: Colors.white38),
+                    const Icon(Icons.check_box_outline_blank, size: 16, color: AppTheme.faint),
                     const SizedBox(width: 8),
-                    Expanded(child: Text(item, style: const TextStyle(color: Colors.white60, height: 1.45))),
+                    Expanded(child: Text(item, style: const TextStyle(color: AppTheme.muted, height: 1.45))),
                   ],
                 ),
               ),

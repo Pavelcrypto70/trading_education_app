@@ -242,18 +242,18 @@ class _CertificateScreenState extends State<CertificateScreen> {
           const SizedBox(height: 8),
           Text(
             l10n.partnerOffersSubtitle,
-            style: const TextStyle(color: Colors.white70, height: 1.45),
+            style: const TextStyle(color: AppTheme.textSoft, height: 1.45),
           ),
           const SizedBox(height: 12),
           Text(
             l10n.partnerDisclosure,
-            style: const TextStyle(color: Colors.white38, fontSize: 12, height: 1.4),
+            style: const TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.4),
           ),
           if (partners.isEmpty) ...[
             const SizedBox(height: 16),
             Text(
               l10n.partnerLinksEmpty,
-              style: const TextStyle(color: Colors.white54),
+              style: const TextStyle(color: AppTheme.muted),
             ),
           ] else ...[
             if (exchanges.isNotEmpty) ...[
@@ -327,7 +327,7 @@ class _ProgressHero extends StatelessWidget {
           ),
           Text(
             l10n.certificateLocked,
-            style: const TextStyle(color: Colors.white70),
+            style: const TextStyle(color: AppTheme.textSoft),
             textAlign: TextAlign.center,
           ),
         ],
@@ -387,24 +387,24 @@ class _DiplomaCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             course,
-            style: const TextStyle(color: Colors.white70, height: 1.4),
+            style: const TextStyle(color: AppTheme.textSoft, height: 1.4),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
           Text(
             l10n.certificateIssuedOn(cert.issuedAt),
-            style: const TextStyle(color: Colors.white54, fontSize: 13),
+            style: const TextStyle(color: AppTheme.muted, fontSize: 13),
           ),
           const SizedBox(height: 4),
           Text(
             l10n.completedCount(cert.completedLessons, cert.totalLessons),
-            style: const TextStyle(color: Colors.white54, fontSize: 13),
+            style: const TextStyle(color: AppTheme.muted, fontSize: 13),
           ),
           const SizedBox(height: 12),
           Text(
             '${l10n.certificateHash}: TM-${cert.hash}',
             style: const TextStyle(
-              color: Colors.white38,
+              color: AppTheme.faint,
               fontSize: 11,
               fontFamily: 'monospace',
             ),
@@ -430,14 +430,14 @@ class _RequirementRow extends StatelessWidget {
         children: [
           Icon(
             done ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: done ? Colors.greenAccent : Colors.white38,
+            color: done ? AppTheme.bull : AppTheme.faint,
             size: 22,
           ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               label,
-              style: TextStyle(color: done ? Colors.white : Colors.white54),
+              style: TextStyle(color: done ? Colors.white : AppTheme.muted),
             ),
           ),
         ],
@@ -471,7 +471,7 @@ class _PartnerCard extends StatelessWidget {
         children: [
           Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
           const SizedBox(height: 6),
-          Text(blurb, style: const TextStyle(color: Colors.white60, height: 1.4, fontSize: 13)),
+          Text(blurb, style: const TextStyle(color: AppTheme.muted, height: 1.4, fontSize: 13)),
           const SizedBox(height: 12),
           Align(
             alignment: Alignment.centerRight,

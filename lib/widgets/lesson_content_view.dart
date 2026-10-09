@@ -75,7 +75,7 @@ class LessonContentView extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 13,
                     height: 1.5,
-                    color: Colors.white54,
+                    color: AppTheme.muted,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -107,7 +107,7 @@ class LessonContentView extends StatelessWidget {
               ),
               if (section.body != null) ...[
                 const SizedBox(height: 10),
-                Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+                Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
               ],
             ],
           ),
@@ -132,7 +132,7 @@ class LessonContentView extends StatelessWidget {
               ),
               if (section.body != null) ...[
                 const SizedBox(height: 10),
-                Text(section.body!, style: const TextStyle(height: 1.6, color: Colors.white70)),
+                Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
               ],
             ],
           ),
@@ -160,7 +160,7 @@ class LessonContentView extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: Text(item, style: const TextStyle(height: 1.55, color: Colors.white70)),
+                      child: Text(item, style: const TextStyle(height: 1.55, color: AppTheme.textSoft)),
                     ),
                   ],
                 ),
@@ -171,7 +171,7 @@ class LessonContentView extends StatelessWidget {
       default:
         return Text(
           section.body ?? '',
-          style: const TextStyle(height: 1.65, color: Colors.white70, fontSize: 15),
+          style: const TextStyle(height: 1.65, color: AppTheme.textSoft, fontSize: 15),
         );
     }
   }

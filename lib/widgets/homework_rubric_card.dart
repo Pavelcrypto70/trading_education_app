@@ -57,7 +57,7 @@ class _HomeworkRubricCardState extends State<HomeworkRubricCard> {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       margin: const EdgeInsets.only(bottom: 12),
-      decoration: AppTheme.cardDecoration(color: Colors.blue.withValues(alpha: 0.06)),
+      decoration: AppTheme.cardDecoration(color: AppTheme.info.withValues(alpha: 0.06)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,16 +72,16 @@ class _HomeworkRubricCardState extends State<HomeworkRubricCard> {
                 ),
                 Text(
                   l10n.homeworkSubmits(_submitCount),
-                  style: const TextStyle(color: Colors.white38, fontSize: 11),
+                  style: const TextStyle(color: AppTheme.faint, fontSize: 11),
                 ),
-                Icon(_expanded ? Icons.expand_less : Icons.expand_more, color: Colors.white38),
+                Icon(_expanded ? Icons.expand_less : Icons.expand_more, color: AppTheme.faint),
               ],
             ),
           ),
           if (_expanded) ...[
             const SizedBox(height: 10),
             if (_instructions != null)
-              Text(_instructions!, style: const TextStyle(color: Colors.white54, fontSize: 12, height: 1.45)),
+              Text(_instructions!, style: const TextStyle(color: AppTheme.muted, fontSize: 12, height: 1.45)),
             const SizedBox(height: 10),
             ..._criteria!.map(
               (c) => Padding(
@@ -91,12 +91,12 @@ class _HomeworkRubricCardState extends State<HomeworkRubricCard> {
                   children: [
                     Text('+${c['weight']}', style: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w700, fontSize: 12)),
                     const SizedBox(width: 8),
-                    Expanded(child: Text(c['text'] as String, style: const TextStyle(color: Colors.white70, fontSize: 12, height: 1.4))),
+                    Expanded(child: Text(c['text'] as String, style: const TextStyle(color: AppTheme.textSoft, fontSize: 12, height: 1.4))),
                   ],
                 ),
               ),
             ),
-            Text(l10n.homeworkPassScore(_passScore), style: const TextStyle(color: Colors.white38, fontSize: 11)),
+            Text(l10n.homeworkPassScore(_passScore), style: const TextStyle(color: AppTheme.faint, fontSize: 11)),
           ],
         ],
       ),

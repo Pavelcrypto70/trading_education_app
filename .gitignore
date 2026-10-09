@@ -63,3 +63,7 @@ app.*.map.json
 tools/.latam_l10n_cache.json
 tools/.translation_cache.json
 tools/.block_translation_cache.json
+
+# Deploy script working copies
+_gh_pages/
+_pages_deploy/

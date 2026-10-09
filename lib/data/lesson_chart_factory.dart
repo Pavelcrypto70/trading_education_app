@@ -11,10 +11,10 @@ import 'chart_sequence_builder.dart';
 class LessonChartFactory {
   LessonChartFactory._();
 
-  static const _bull = Color(0xFF26A69A);
-  static const _bear = Color(0xFFEF5350);
-  static const _gold = Color(0xFFD4AF37);
-  static const _purple = Color(0xFF6C5CE7);
+  static const _bull = Color(0xFF2AD49A);
+  static const _bear = Color(0xFFFF5566);
+  static const _gold = Color(0xFF5AE2FF);
+  static const _purple = Color(0xFF7DD3FC);
 
   static ChartSetup forCard({
     required int lessonId,
@@ -141,23 +141,33 @@ class LessonChartFactory {
     switch (stage) {
       case _Stage.spot:
         annotations.add(ChartAnnotation(
-          text: cardIndex == 0 ? 'Спот: монета твоя' : 'Спот · карточка ${cardIndex + 1}',
-          x: 0.04,
-          y: 0.1,
+          text: 'Спот · монета твоя',
+          x: 0.03,
+          y: 0.06,
           color: _bull,
         ));
         if (shape == _Shape.dump || shape == _Shape.down) {
-          levels.add(ChartLevel(price: support, label: 'Цена упала — монета на месте', color: _purple));
-          annotations.add(const ChartAnnotation(text: 'Нет ликвидации на споте', x: 0.45, y: 0.88, color: _gold));
+          levels.add(ChartLevel(price: support, label: 'Монета на месте', color: _purple));
+          annotations.add(const ChartAnnotation(
+            text: 'Без ликвидации',
+            x: 0.62,
+            y: 0.88,
+            color: _gold,
+          ));
         } else {
-          levels.add(ChartLevel(price: mid, label: 'Купил и держишь', color: _bull, dashed: true));
+          // Level without long text — marker carries the meaning.
+          levels.add(ChartLevel(price: mid, label: 'Удержание', color: _bull, dashed: true));
         }
-        markers.add(ChartMarker(candleIndex: entryIdx, label: 'Купил', kind: ChartMarkerKind.buy));
+        markers.add(ChartMarker(
+          candleIndex: entryIdx,
+          label: shape == _Shape.dump || shape == _Shape.down ? 'Купил' : 'Вход',
+          kind: ChartMarkerKind.buy,
+        ));
         break;
 
       case _Stage.futures:
         annotations.add(ChartAnnotation(
-          text: cardIndex.isEven ? 'Фьючерс = пари' : 'Плечо · карточка ${cardIndex + 1}',
+          text: cardIndex.isEven ? 'Фьючерс = пари' : 'Плечо = риск ×',
           x: 0.04,
           y: 0.1,
           color: _gold,
@@ -174,7 +184,7 @@ class LessonChartFactory {
 
       case _Stage.chart:
         annotations.add(ChartAnnotation(
-          text: 'Свечи · шаг ${cardIndex + 1}',
+          text: 'Свечи',
           x: 0.04,
           y: 0.08,
         ));
@@ -202,7 +212,7 @@ class LessonChartFactory {
       case _Stage.patterns:
         levels.add(ChartLevel(price: resist, label: 'Крыша паттерна', color: _bear, dashed: true));
         levels.add(ChartLevel(price: support, label: 'Пол паттерна', color: _purple, dashed: true));
-        annotations.add(ChartAnnotation(text: 'Паттерн · карта ${cardIndex + 1}', x: 0.05, y: 0.1, color: _gold));
+        annotations.add(const ChartAnnotation(text: 'Паттерн', x: 0.05, y: 0.1, color: _gold));
         markers.add(ChartMarker(candleIndex: entryIdx, label: 'Фокус', kind: ChartMarkerKind.note));
         break;
 
@@ -224,7 +234,7 @@ class LessonChartFactory {
         break;
 
       case _Stage.market:
-        annotations.add(ChartAnnotation(text: 'Контекст рынка · ${cardIndex + 1}', x: 0.04, y: 0.1));
+        annotations.add(const ChartAnnotation(text: 'Контекст рынка', x: 0.04, y: 0.1));
         levels.add(ChartLevel(price: mid, label: 'Справедливая зона', color: _gold, dashed: true));
         if (shape == _Shape.dump) {
           annotations.add(const ChartAnnotation(text: 'Пролив / новость', x: 0.55, y: 0.85, color: _bear));

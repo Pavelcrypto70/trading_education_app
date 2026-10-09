@@ -94,13 +94,13 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
                     : Colors.white.withValues(alpha: 0.08),
                 child: Icon(
                   passed ? Icons.verified : Icons.quiz_outlined,
-                  color: passed ? AppTheme.gold : Colors.white54,
+                  color: passed ? AppTheme.gold : AppTheme.muted,
                 ),
               ),
               title: Text(m.title, style: const TextStyle(fontWeight: FontWeight.w700)),
               subtitle: Text(
                 l10n.moduleTestMeta(m.questionCount, m.timeMin, m.lessonIds.length),
-                style: const TextStyle(color: Colors.white54, fontSize: 12),
+                style: const TextStyle(color: AppTheme.muted, fontSize: 12),
               ),
               trailing: passed
                   ? Text('$score/${m.questionCount}', style: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w700))

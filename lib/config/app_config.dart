@@ -4,9 +4,9 @@
 class AppConfig {
   AppConfig._();
 
-  /// Five trial lessons for the new linear start:
-  /// 1–3 spot, 7 spot vs futures, 10 green/red candles.
-  static const trialLessonIds = {1, 2, 3, 7, 10};
+  /// Stage 1 is free and needs no account: lessons 1–14. The students chat
+  /// cutoff requires all of them, so they must stay open to everyone.
+  static const trialLessonIds = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
   /// Full admin access — all lessons, premium features, no paywall.
   /// Override via `--dart-define=ADMIN_EMAILS=a@x.com,b@y.com`.

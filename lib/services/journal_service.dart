@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'gamification_service.dart';
 import 'sync_service.dart';
 
 import '../models/journal_entry.dart';
@@ -18,13 +19,14 @@ class JournalService {
       ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
-  static Future<void> saveEntry(JournalEntry entry) async {
+  static Future<void> saveEntry(JournalEntry entry, {bool awardPoints = true}) async {
     final prefs = await SharedPreferences.getInstance();
     final entries = await getEntries();
     entries.removeWhere((e) => e.id == entry.id);
     entries.insert(0, entry);
     final encoded = entries.map((e) => jsonEncode(e.toJson())).toList();
     await prefs.setStringList(_entriesKey, encoded);
+    if (awardPoints) await GamificationService.award(PointsReason.journal);
     SyncService.schedulePush();
   }
 

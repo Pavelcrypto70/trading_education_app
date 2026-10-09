@@ -105,7 +105,7 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
                           const SizedBox(height: 4),
                           Text(
                             l10n.moduleProgress(doneInModule, lessonIds.length),
-                            style: const TextStyle(color: Colors.white70, fontSize: 12),
+                            style: const TextStyle(color: AppTheme.textSoft, fontSize: 12),
                           ),
                         ],
                       ),
@@ -159,7 +159,7 @@ class _LearningPathScreenState extends State<LearningPathScreen> {
                     width: 2,
                     height: 24,
                     margin: const EdgeInsets.symmetric(vertical: 8),
-                    color: Colors.white12,
+                    color: AppTheme.line,
                   ),
                 ),
             ],
@@ -188,7 +188,7 @@ class _PathNode extends StatelessWidget {
     final color = done
         ? AppTheme.gold
         : locked
-            ? Colors.white24
+            ? AppTheme.faint
             : AppTheme.accent;
     return Material(
       color: done ? AppTheme.gold.withValues(alpha: 0.1) : AppTheme.card,
@@ -213,7 +213,7 @@ class _PathNode extends StatelessWidget {
                 ),
                 child: Center(
                   child: locked
-                      ? const Icon(Icons.lock, size: 18, color: Colors.white38)
+                      ? const Icon(Icons.lock, size: 18, color: AppTheme.faint)
                       : done
                           ? const Icon(Icons.check, color: AppTheme.gold, size: 20)
                           : Text('${lesson.id}', style: TextStyle(fontWeight: FontWeight.w800, color: color)),
@@ -229,19 +229,19 @@ class _PathNode extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 13,
-                        color: locked ? Colors.white38 : Colors.white,
+                        color: locked ? AppTheme.faint : Colors.white,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       '${lesson.durationMin} min',
-                      style: const TextStyle(color: Colors.white38, fontSize: 11),
+                      style: const TextStyle(color: AppTheme.faint, fontSize: 11),
                     ),
                   ],
                 ),
               ),
-              if (!locked) const Icon(Icons.chevron_right, color: Colors.white24, size: 18),
+              if (!locked) const Icon(Icons.chevron_right, color: AppTheme.faint, size: 18),
             ],
           ),
         ),

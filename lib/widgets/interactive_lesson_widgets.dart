@@ -59,7 +59,7 @@ class _AnimatedChartCardState extends State<AnimatedChartCard>
           decoration: AppTheme.cardDecoration(
             color: AppTheme.surface,
             border: Border.all(
-              color: _explored ? AppTheme.gold.withValues(alpha: 0.4) : Colors.white12,
+              color: _explored ? AppTheme.gold.withValues(alpha: 0.4) : AppTheme.line,
             ),
           ),
           child: Column(
@@ -129,7 +129,7 @@ class _AnimatedChartCardState extends State<AnimatedChartCard>
                     style: TextStyle(
                       fontSize: 13,
                       height: 1.5,
-                      color: _explored ? Colors.white70 : Colors.white38,
+                      color: _explored ? AppTheme.textSoft : AppTheme.faint,
                       fontStyle: FontStyle.italic,
                     ),
                   ),
@@ -164,7 +164,7 @@ class _InteractiveBulletListState extends State<InteractiveBulletList> {
       children: [
         Text(l10n.sectionKeyPoints, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
         const SizedBox(height: 4),
-        Text(l10n.tapEachPoint, style: const TextStyle(color: Colors.white38, fontSize: 12)),
+        Text(l10n.tapEachPoint, style: const TextStyle(color: AppTheme.faint, fontSize: 12)),
         const SizedBox(height: 12),
         ...List.generate(widget.items.length, (i) {
           final revealed = _revealed.contains(i);
@@ -182,7 +182,7 @@ class _InteractiveBulletListState extends State<InteractiveBulletList> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: revealed ? AppTheme.gold.withValues(alpha: 0.3) : Colors.white10,
+                      color: revealed ? AppTheme.gold.withValues(alpha: 0.3) : AppTheme.lineSoft,
                     ),
                   ),
                   child: Row(
@@ -191,7 +191,7 @@ class _InteractiveBulletListState extends State<InteractiveBulletList> {
                       Icon(
                         revealed ? Icons.check_circle : Icons.radio_button_unchecked,
                         size: 18,
-                        color: revealed ? AppTheme.gold : Colors.white38,
+                        color: revealed ? AppTheme.gold : AppTheme.faint,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -199,7 +199,7 @@ class _InteractiveBulletListState extends State<InteractiveBulletList> {
                           revealed ? widget.items[i] : '• • • • •',
                           style: TextStyle(
                             height: 1.4,
-                            color: revealed ? Colors.white70 : Colors.white30,
+                            color: revealed ? AppTheme.textSoft : AppTheme.faint,
                             fontSize: 14,
                           ),
                         ),
@@ -235,9 +235,9 @@ class _PriceSliderDemoState extends State<PriceSliderDemo> {
   }
 
   Color _zoneColor() {
-    if (_price <= _support + 1) return const Color(0xFF26A69A);
-    if (_price >= _resistance - 1) return const Color(0xFFEF5350);
-    return Colors.white54;
+    if (_price <= _support + 1) return AppTheme.bull;
+    if (_price >= _resistance - 1) return AppTheme.bear;
+    return AppTheme.muted;
   }
 
   @override
@@ -269,9 +269,9 @@ class _PriceSliderDemoState extends State<PriceSliderDemo> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      const Color(0xFFEF5350).withValues(alpha: 0.15),
+                      AppTheme.bear.withValues(alpha: 0.15),
                       Colors.transparent,
-                      const Color(0xFF26A69A).withValues(alpha: 0.15),
+                      AppTheme.bull.withValues(alpha: 0.15),
                     ],
                   ),
                 ),
@@ -279,12 +279,12 @@ class _PriceSliderDemoState extends State<PriceSliderDemo> {
               Positioned(
                 top: 8,
                 left: 12,
-                child: Text('R ${_resistance.toStringAsFixed(0)}', style: const TextStyle(color: Color(0xFFEF5350), fontSize: 11)),
+                child: Text('R ${_resistance.toStringAsFixed(0)}', style: const TextStyle(color: AppTheme.bear, fontSize: 11)),
               ),
               Positioned(
                 bottom: 8,
                 left: 12,
-                child: Text('S ${_support.toStringAsFixed(0)}', style: const TextStyle(color: Color(0xFF26A69A), fontSize: 11)),
+                child: Text('S ${_support.toStringAsFixed(0)}', style: const TextStyle(color: AppTheme.bull, fontSize: 11)),
               ),
               Text(
                 '\$${_price.toStringAsFixed(1)}',

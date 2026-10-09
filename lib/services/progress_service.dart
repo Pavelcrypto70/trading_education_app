@@ -4,12 +4,14 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'analytics_service.dart';
+import 'club_service.dart';
+import 'gamification_service.dart';
+import 'streak_service.dart';
 import 'sync_service.dart';
 
 class ProgressService {
   static const _completedLessonsKey = 'completedLessons';
   static const _quizHistoryKey = 'quizHistory';
-  static const _streakKey = 'streak';
   static const _lastActiveKey = 'lastActive';
   static const _balanceKey = 'virtualBalance';
   static const _positionKey = 'position';
@@ -45,27 +47,13 @@ class ProgressService {
 
   static Future<void> recordActivity() async {
     final prefs = await _prefs();
-    final today = _todayKey();
-    final lastActive = prefs.getString(_lastActiveKey);
-
-    if (lastActive == today) return;
-
-    var streak = prefs.getInt(_streakKey) ?? 0;
-    if (lastActive == _yesterdayKey()) {
-      streak += 1;
-    } else if (lastActive != today) {
-      streak = 1;
-    }
-
-    await prefs.setInt(_streakKey, streak);
-    await prefs.setString(_lastActiveKey, today);
+    if (prefs.getString(_lastActiveKey) == _todayKey()) return;
+    await StreakService.light();
     SyncService.schedulePush();
   }
 
-  static Future<int> getStreak() async {
-    final prefs = await _prefs();
-    return prefs.getInt(_streakKey) ?? 0;
-  }
+  /// Live streak: 0 once a missed day was not covered by a freeze.
+  static Future<int> getStreak() => StreakService.currentDays();
 
   static Future<Set<int>> getCompletedLessons() async {
     final prefs = await _prefs();
@@ -224,7 +212,7 @@ class ProgressService {
     final prefs = await _prefs();
     final count = prefs.getInt(_flashcardsReviewedKey) ?? 0;
     await prefs.setInt(_flashcardsReviewedKey, count + 1);
-    await recordActivity();
+    await GamificationService.award(PointsReason.flashcard);
     SyncService.schedulePush();
   }
 
@@ -343,18 +331,45 @@ class ProgressService {
     return map.values.where((v) => v > 0).length;
   }
 
-  static Future<void> resetAll() async {
+  /// Who the person is and what they've already earned in the club outlive a
+  /// progress reset: ladder ID, name, passed cutoffs, referral code, language.
+  static const _keepOnReset = [
+    ...ClubService.identityKeys,
+    ClubService.studentsAtKey,
+    ClubService.proAtKey,
+    ClubService.studentsSeenKey,
+    ClubService.proSeenKey,
+    'referralMyCode',
+    'referralRedeemedCode',
+    'appLanguage',
+    'serverPremium',
+    'serverPremiumCachedAt',
+  ];
+
+  /// [wipeIdentity] is for account deletion: nothing is kept.
+  static Future<void> resetAll({bool wipeIdentity = false}) async {
     final prefs = await _prefs();
+    final keep = <String, Object>{};
+    if (!wipeIdentity) {
+      for (final k in _keepOnReset) {
+        final v = prefs.get(k);
+        if (v != null) keep[k] = v;
+      }
+    }
     await prefs.clear();
+    for (final e in keep.entries) {
+      final v = e.value;
+      if (v is String) await prefs.setString(e.key, v);
+      if (v is bool) await prefs.setBool(e.key, v);
+      if (v is int) await prefs.setInt(e.key, v);
+      if (v is double) await prefs.setDouble(e.key, v);
+      if (v is List<String>) await prefs.setStringList(e.key, v);
+    }
+    if (!wipeIdentity) await SyncService.pushNow();
   }
 
   static String _todayKey() {
     final now = DateTime.now();
     return '${now.year}-${now.month}-${now.day}';
-  }
-
-  static String _yesterdayKey() {
-    final yesterday = DateTime.now().subtract(const Duration(days: 1));
-    return '${yesterday.year}-${yesterday.month}-${yesterday.day}';
   }
 }

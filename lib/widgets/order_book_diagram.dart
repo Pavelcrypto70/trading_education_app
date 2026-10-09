@@ -254,7 +254,7 @@ class _SpreadRow extends StatelessWidget {
           Text(
             'Spread ${book.spread.toStringAsFixed(1)} USDT  (${book.spreadPct.toStringAsFixed(3)}%)',
             style: TextStyle(
-              color: highlight ? AppTheme.gold : Colors.white54,
+              color: highlight ? AppTheme.gold : AppTheme.muted,
               fontSize: 11,
               fontWeight: FontWeight.w600,
             ),
@@ -341,7 +341,7 @@ class _LevelRow extends StatelessWidget {
                   level.size.toStringAsFixed(3),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
-                    color: Colors.white70,
+                    color: AppTheme.textSoft,
                     fontSize: 12,
                     fontFamily: 'monospace',
                   ),
@@ -352,7 +352,7 @@ class _LevelRow extends StatelessWidget {
                   level.total.toStringAsFixed(3),
                   textAlign: TextAlign.right,
                   style: const TextStyle(
-                    color: Colors.white54,
+                    color: AppTheme.muted,
                     fontSize: 12,
                     fontFamily: 'monospace',
                   ),
@@ -382,7 +382,7 @@ class _Callout extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white70, fontSize: 12, height: 1.35),
+        style: const TextStyle(color: AppTheme.textSoft, fontSize: 12, height: 1.35),
       ),
     );
   }

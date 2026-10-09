@@ -146,7 +146,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
 
                     l10n.dailyChallengeNew,
 
-                    style: const TextStyle(color: Colors.white70),
+                    style: const TextStyle(color: AppTheme.textSoft),
 
                     textAlign: TextAlign.center,
 
@@ -192,7 +192,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
 
               l10n.dailyChallengeDesc,
 
-              style: const TextStyle(color: Colors.white54, height: 1.5),
+              style: const TextStyle(color: AppTheme.muted, height: 1.5),
 
               textAlign: TextAlign.center,
 

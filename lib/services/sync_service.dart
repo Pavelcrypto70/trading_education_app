@@ -33,6 +33,17 @@ class SyncService {
     'certificateIssued',
     'totalXp',
     'userLevel',
+    'pointsTotal',
+    'pointsAwardedKeys',
+    'planTradesCount',
+    'bestStreak',
+    'streakFreezes',
+    'streakLitDays',
+    'clubDisplayName',
+    'clubPublicId',
+    'clubSecret',
+    'cutoffStudentsAt',
+    'cutoffProAt',
     'tradeJournalEntries',
     'spacedReviewQueue',
     'referralMyCode',
@@ -137,6 +148,25 @@ class SyncService {
       await prefs.setInt('totalXp', remoteXp);
       await prefs.setInt('userLevel', remote['userLevel'] as int? ?? 1);
     }
+
+    // Points, plan trades, best streak, freezes: max
+    for (final key in const ['pointsTotal', 'planTradesCount', 'bestStreak', 'streakFreezes']) {
+      final r = remote[key];
+      if (r is int && r > (prefs.getInt(key) ?? 0)) await prefs.setInt(key, r);
+    }
+    for (final key in const ['pointsAwardedKeys', 'streakLitDays']) {
+      final merged = {...(prefs.getStringList(key) ?? const <String>[]), ..._asStringList(remote[key])};
+      if (merged.isNotEmpty) await prefs.setStringList(key, merged.toList());
+    }
+    await _mergeString(prefs, 'clubDisplayName', remote['clubDisplayName']);
+    // The account's ladder identity wins as a pair, so one person is one row.
+    final rId = remote['clubPublicId'], rSecret = remote['clubSecret'];
+    if (rId is String && rSecret is String && rId.isNotEmpty && rSecret.isNotEmpty) {
+      await prefs.setString('clubPublicId', rId);
+      await prefs.setString('clubSecret', rSecret);
+    }
+    await _mergeString(prefs, 'cutoffStudentsAt', remote['cutoffStudentsAt']);
+    await _mergeString(prefs, 'cutoffProAt', remote['cutoffProAt']);
 
     // Quiz history: keep longer list
     final remoteHistory = _asStringList(remote['quizHistory']);

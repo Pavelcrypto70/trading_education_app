@@ -65,7 +65,7 @@ class _GlossaryScreenState extends State<GlossaryScreen> {
                           children: [
                             Text(e.term, style: const TextStyle(fontWeight: FontWeight.w800, color: AppTheme.gold)),
                             const SizedBox(height: 6),
-                            Text(e.definition, style: const TextStyle(height: 1.5, color: Colors.white70)),
+                            Text(e.definition, style: const TextStyle(height: 1.5, color: AppTheme.textSoft)),
                           ],
                         ),
                       ),

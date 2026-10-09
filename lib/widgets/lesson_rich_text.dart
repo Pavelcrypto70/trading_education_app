@@ -45,7 +45,7 @@ class _BlockView extends StatelessWidget {
       case LessonTextBlockKind.warning:
         return _CalloutCard(
           icon: Icons.warning_amber_rounded,
-          color: Colors.orangeAccent,
+          color: AppTheme.orange,
           label: l10n.textBlockWarning,
           text: block.body ?? '',
         );
@@ -58,7 +58,7 @@ class _BlockView extends StatelessWidget {
       case LessonTextBlockKind.paragraph:
         return Text(
           block.body ?? '',
-          style: const TextStyle(height: 1.65, color: Colors.white70, fontSize: 15),
+          style: const TextStyle(height: 1.65, color: AppTheme.textSoft, fontSize: 15),
         );
     }
   }
@@ -123,7 +123,7 @@ class _CalloutCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text(text, style: const TextStyle(height: 1.6, color: Colors.white70, fontSize: 14)),
+          Text(text, style: const TextStyle(height: 1.6, color: AppTheme.textSoft, fontSize: 14)),
         ],
       ),
     );
@@ -140,26 +140,26 @@ class _MythCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: AppTheme.cardDecoration(color: Colors.redAccent.withValues(alpha: 0.06)),
+      decoration: AppTheme.cardDecoration(color: AppTheme.bear.withValues(alpha: 0.06)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: Colors.redAccent.withValues(alpha: 0.15),
+              color: AppTheme.bear.withValues(alpha: 0.15),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.close, color: Colors.redAccent, size: 14),
+            child: const Icon(Icons.close, color: AppTheme.bear, size: 14),
           ),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12, color: Colors.redAccent)),
+                Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12, color: AppTheme.bear)),
                 const SizedBox(height: 4),
-                Text(text, style: const TextStyle(height: 1.5, color: Colors.white70, fontSize: 13)),
+                Text(text, style: const TextStyle(height: 1.5, color: AppTheme.textSoft, fontSize: 13)),
               ],
             ),
           ),
@@ -180,7 +180,7 @@ class _CompareCard extends StatelessWidget {
     final parts = text.split(RegExp(r'\.\s+'));
     return Container(
       padding: const EdgeInsets.all(14),
-      decoration: AppTheme.cardDecoration(color: Colors.blue.withValues(alpha: 0.06)),
+      decoration: AppTheme.cardDecoration(color: AppTheme.info.withValues(alpha: 0.06)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -199,7 +199,7 @@ class _CompareCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text('• ', style: TextStyle(color: Colors.lightBlueAccent, fontWeight: FontWeight.w700)),
-                      Expanded(child: Text(p.trim(), style: const TextStyle(height: 1.5, color: Colors.white70, fontSize: 13))),
+                      Expanded(child: Text(p.trim(), style: const TextStyle(height: 1.5, color: AppTheme.textSoft, fontSize: 13))),
                     ],
                   ),
                 ),
@@ -243,7 +243,7 @@ class _StepsCard extends StatelessWidget {
                         child: Text('${e.key + 1}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppTheme.accent)),
                       ),
                       const SizedBox(width: 10),
-                      Expanded(child: Text(e.value, style: const TextStyle(height: 1.45, color: Colors.white70, fontSize: 13))),
+                      Expanded(child: Text(e.value, style: const TextStyle(height: 1.45, color: AppTheme.textSoft, fontSize: 13))),
                     ],
                   ),
                 ),

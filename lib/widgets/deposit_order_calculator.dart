@@ -81,7 +81,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
           ),
           if (widget.body != null) ...[
             const SizedBox(height: 10),
-            Text(widget.body!, style: const TextStyle(height: 1.55, color: Colors.white70)),
+            Text(widget.body!, style: const TextStyle(height: 1.55, color: AppTheme.textSoft)),
           ],
           const SizedBox(height: 16),
           TextField(
@@ -93,7 +93,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white),
             decoration: InputDecoration(
               labelText: 'Депозит, USDT',
-              labelStyle: const TextStyle(color: Colors.white54),
+              labelStyle: const TextStyle(color: AppTheme.muted),
               prefixIcon: const Icon(Icons.account_balance_wallet_outlined, color: AppTheme.gold),
               filled: true,
               fillColor: Colors.black26,
@@ -112,7 +112,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
           const SizedBox(height: 18),
           Text(
             'Доля одного ордера: ${_sliderPercent.toStringAsFixed(0)}%',
-            style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w600),
+            style: const TextStyle(color: AppTheme.textSoft, fontWeight: FontWeight.w600),
           ),
           Slider(
             value: _sliderPercent,
@@ -144,7 +144,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
                 children: [
                   const Text(
                     'Рабочий ордер',
-                    style: TextStyle(color: Colors.white54, fontSize: 12),
+                    style: TextStyle(color: AppTheme.muted, fontSize: 12),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -160,7 +160,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
                     Text(
                       'Диапазон ${widget.minPercent.toStringAsFixed(0)}–${widget.maxPercent.toStringAsFixed(0)}%: '
                       '${minOrder.toStringAsFixed(0)} – ${maxOrder.toStringAsFixed(0)} USDT',
-                      style: const TextStyle(color: Colors.white60, height: 1.4, fontSize: 13),
+                      style: const TextStyle(color: AppTheme.muted, height: 1.4, fontSize: 13),
                     ),
                   ],
                 ],
