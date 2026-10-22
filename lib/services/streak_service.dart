@@ -1,5 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/num_format.dart';
+import 'locale_service.dart';
+
 class StreakState {
   const StreakState({
     required this.days,
@@ -30,19 +33,13 @@ class StreakEvent {
   final int freezesUsed;
 
   String get message {
-    final parts = ['Огонёк зажжён · $days ${_word(days)} подряд'];
-    if (freezesUsed > 0) parts.add('заморозка спасла серию');
-    if (freezeEarned) parts.add('+1 заморозка');
+    final l10n = LocaleService.instance.strings;
+    final parts = <String>[l10n.streakLitEvent(days)];
+    if (freezesUsed > 0) parts.add(l10n.streakFreezeUsedPart);
+    if (freezeEarned) parts.add(l10n.streakFreezeEarnedPart);
     final m = StreakService.multiplierFor(days);
-    if (m > 1) parts.add('очки ×${m.toStringAsFixed(1)}');
+    if (m > 1) parts.add(l10n.streakPointsMultPart(fmtNum(m, 1)));
     return parts.join(' · ');
-  }
-
-  static String _word(int n) {
-    final m10 = n % 10, m100 = n % 100;
-    if (m10 == 1 && m100 != 11) return 'день';
-    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'дня';
-    return 'дней';
   }
 }
 

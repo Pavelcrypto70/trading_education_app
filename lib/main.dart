@@ -8,7 +8,6 @@ import 'services/analytics_service.dart';
 import 'services/backend_service.dart';
 import 'services/fresh_start.dart';
 import 'services/locale_service.dart';
-import 'services/purchase_service.dart';
 import 'services/sync_service.dart';
 import 'services/auth_service.dart';
 import 'services/premium_service.dart';
@@ -47,12 +46,6 @@ Future<void> main() async {
     await BackendService.initialize().timeout(const Duration(seconds: 5));
   } catch (e, st) {
     debugPrint('BackendService failed: $e\n$st');
-  }
-
-  try {
-    await PurchaseService.initialize();
-  } catch (e, st) {
-    debugPrint('PurchaseService failed: $e\n$st');
   }
 
   // Never await network sync before first paint — DNS/auth refresh can hang web.

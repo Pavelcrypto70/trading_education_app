@@ -270,14 +270,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     ),
 
-                    IconButton(
-
-                      onPressed: () => context.push('/premium'),
-
-                      icon: const Icon(Icons.workspace_premium_outlined, color: AppTheme.gold),
-
-                    ),
-
                   ],
 
                 ),

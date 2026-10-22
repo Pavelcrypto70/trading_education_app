@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-
 import '../services/locale_service.dart';
+import 'localized_asset.dart';
 
 class GlossaryEntry {
   final String term;
@@ -25,7 +24,7 @@ class GlossaryRepository {
 
   static Future<List<GlossaryEntry>> load() async {
     if (_cache != null) return _cache!;
-    final raw = await rootBundle.loadString('assets/data/glossary.json');
+    final raw = await loadLocalizedAsset('glossary');
     final list = jsonDecode(raw) as List;
     final lang = LocaleService.instance.languageCode;
     _cache = list

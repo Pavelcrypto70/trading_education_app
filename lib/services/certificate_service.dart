@@ -41,13 +41,16 @@ class CertificateService {
     final homeworkLessons = await ProgressService.getHomeworkLessonsSubmitted();
 
     var totalModules = 0;
+    var modulesPassed = modules.length;
     try {
-      totalModules = (await ModuleQuizRepository.loadModules()).length;
+      final current = await ModuleQuizRepository.loadModules();
+      totalModules = current.length;
+      // Only tests of the current course count (old module ids are ignored).
+      modulesPassed = current.where((m) => modules.containsKey(m.moduleId)).length;
     } catch (_) {}
 
     final lessonPct =
         totalLessons == 0 ? 0 : (completed.length / totalLessons * 100).round();
-    final modulesPassed = modules.length;
 
     return CertificateStatus(
       completedLessons: completed.length,

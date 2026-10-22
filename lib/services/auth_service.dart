@@ -3,7 +3,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../config/app_config.dart';
 import '../config/backend_config.dart';
+import '../config/desk_key_config.dart';
 import 'backend_service.dart';
+import 'premium_service.dart';
 
 enum AuthResult {
   success,
@@ -53,10 +55,12 @@ class AuthService {
   }
 
   static Future<bool> isAdmin() async {
-    if (!BackendService.isAvailable || currentUser == null) return false;
+    // Hardcoded allow-list: owner emails always unlock the full course
+    // (Supabase session or local owner session).
+    if (_isAdminEmail(currentUser?.email)) return true;
+    if (_isAdminEmail(await getEmail())) return true;
 
-    // Hardcoded allow-list (always unlock full course for owner accounts).
-    if (_isAdminEmail(currentUser!.email)) return true;
+    if (!BackendService.isAvailable || currentUser == null) return false;
 
     try {
       final row = await BackendService.client
@@ -68,6 +72,22 @@ class AuthService {
     } catch (_) {
       return false;
     }
+  }
+
+  /// Local owner unlock when OTP/backend is unavailable (allow-listed emails only).
+  /// Web QA only — disabled in Play/Galaxy so reviewers cannot bypass IAP.
+  static Future<AuthResult> signInLocalOwner(String rawEmail) async {
+    if (!DeskKeyConfig.ownerUnlockEnabled) return AuthResult.error;
+    final email = rawEmail.trim().toLowerCase();
+    if (email.isEmpty || !email.contains('@')) return AuthResult.invalidEmail;
+    if (!_isAdminEmail(email)) return AuthResult.error;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_legacyEmailKey, email);
+    await prefs.setString(_legacyDisplayNameKey, email.split('@').first);
+    await prefs.setString(_legacyProviderKey, 'owner_local');
+    // Belt-and-suspenders: also flip the local premium cache so every gate opens.
+    await PremiumService.applyServerPremium(true);
+    return AuthResult.success;
   }
 
   /// Sends a one-time code to email (magic link / OTP).

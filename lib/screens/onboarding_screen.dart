@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../config/desk_key_config.dart';
 import '../services/locale_service.dart';
+import '../services/onboarding_service.dart';
 import '../theme.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -69,12 +71,12 @@ class OnboardingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    'Трейдинг с нуля —\nдо реального счёта',
+                    l10n.onboardingHeroTitle,
                     style: AppTheme.display(34).copyWith(height: 1.1),
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Короткие уроки на графике, очки и огоньки за каждый день, ладер и закрытые чаты Desk Club с ментором.',
+                    l10n.onboardingHeroSubtitle,
                     style: textTheme.bodyLarge?.copyWith(
                       color: AppTheme.muted,
                       height: 1.45,
@@ -82,7 +84,7 @@ class OnboardingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 28),
                   Text(
-                    'ШАГ 1 ИЗ 2 · ЯЗЫК',
+                    l10n.onboardingStep1Language,
                     style: textTheme.labelLarge?.copyWith(
                       color: AppTheme.faint,
                       letterSpacing: 1.2,
@@ -102,13 +104,16 @@ class OnboardingScreen extends StatelessWidget {
                     height: 52,
                     child: ElevatedButton(
                       onPressed: () => context.go('/onboarding/goal'),
-                      child: const Text('Дальше'),
+                      child: Text(l10n.next),
                     ),
                   ),
                   const SizedBox(height: 10),
                   Center(
                     child: Text(
-                      'Без регистрации · 14 уроков бесплатно',
+                      DeskKeyConfig.enabled
+                          ? l10n.onboardingNoSignupAllFreeDesk
+                          : l10n.onboardingNoSignupAllFree,
+                      textAlign: TextAlign.center,
                       style: textTheme.bodySmall?.copyWith(
                         color: AppTheme.faint,
                       ),
@@ -119,17 +124,23 @@ class OnboardingScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 48,
                     child: OutlinedButton(
-                      onPressed: () => context.go('/auth'),
-                      child: const Text('У меня уже есть аккаунт'),
+                      onPressed: () async {
+                        final ok = await context.push<bool>('/auth');
+                        if (ok != true) return;
+                        await OnboardingService.markCompleted();
+                        if (context.mounted) context.go('/learning');
+                      },
+                      child: Text(l10n.onboardingAlreadyLearning),
                     ),
                   ),
                   const SizedBox(height: 12),
                   Center(
                     child: Text(
-                      'Обучение, не финансовый совет. 18+',
+                      l10n.onboardingRiskNote,
+                      textAlign: TextAlign.center,
                       style: textTheme.bodySmall?.copyWith(
-                        color: AppTheme.faint,
-                        fontSize: 11,
+                        color: AppTheme.muted,
+                        fontSize: 12.5,
                       ),
                     ),
                   ),

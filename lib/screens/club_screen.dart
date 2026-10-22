@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../l10n/app_localizations.dart';
 import '../services/club_service.dart';
 import '../services/gamification_service.dart';
+import '../services/locale_service.dart';
 import '../theme.dart';
 import '../widgets/club_apply.dart';
+import '../utils/num_format.dart';
 
 class ClubScreen extends StatefulWidget {
   const ClubScreen({super.key, this.initialTab = 0});
@@ -51,31 +53,32 @@ class _ClubScreenState extends State<ClubScreen> {
   Future<void> _open(String url) => launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 
   Future<void> _editName() async {
+    final l10n = context.l10n;
     final ctrl = TextEditingController(text: _status?.displayName ?? '');
     final name = await showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Имя в ладере'),
+        title: Text(l10n.clubNameDialogTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Его увидят ребята в рейтинге и в чатах. ID не меняется.',
-              style: TextStyle(color: AppTheme.muted, fontSize: 13),
+            Text(
+              l10n.clubNameDialogBody,
+              style: const TextStyle(color: AppTheme.muted, fontSize: 13),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: ctrl,
               autofocus: true,
               maxLength: 24,
-              decoration: const InputDecoration(hintText: 'Например, Павел'),
+              decoration: InputDecoration(hintText: l10n.clubNameHint),
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Отмена')),
-          ElevatedButton(onPressed: () => Navigator.pop(ctx, ctrl.text), child: const Text('Сохранить')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
+          ElevatedButton(onPressed: () => Navigator.pop(ctx, ctrl.text), child: Text(l10n.saveBtn)),
         ],
       ),
     );
@@ -86,6 +89,7 @@ class _ClubScreenState extends State<ClubScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final s = _status;
     return Scaffold(
       body: SafeArea(
@@ -99,18 +103,18 @@ class _ClubScreenState extends State<ClubScreen> {
                   children: [
                     Text('Desk Club', style: AppTheme.display(28)),
                     const SizedBox(height: 4),
-                    const Text(
-                      'Очки за обучение → ладер → закрытые чаты',
-                      style: TextStyle(color: AppTheme.muted, fontWeight: FontWeight.w600),
+                    Text(
+                      l10n.clubSubtitle,
+                      style: const TextStyle(color: AppTheme.muted, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 16),
                     _Segmented(
-                      labels: const ['Ладер', 'Чаты'],
+                      labels: [l10n.clubTabLadder, l10n.clubTabChats],
                       index: _tab,
                       onChanged: (i) => setState(() => _tab = i),
                     ),
                     const SizedBox(height: 16),
-                    if (_tab == 0) ..._ladderTab(s) else ..._chatsTab(s),
+                    if (_tab == 0) ..._ladderTab(s, l10n) else ..._chatsTab(s, l10n),
                   ],
                 ),
               ),
@@ -118,15 +122,19 @@ class _ClubScreenState extends State<ClubScreen> {
     );
   }
 
-  List<Widget> _ladderTab(ClubStatus s) {
+  List<Widget> _ladderTab(ClubStatus s, AppLocalizations l10n) {
     final l = _ladder;
     final next = GamificationService.nextLeague(s.points);
+    final nextLeague = next == null ? '' : l10n.leagueName(next.name);
+    final unlock = next == null ? '' : l10n.leagueUnlock(next.unlocks);
     return [
       _MeCard(status: s, rank: l?.myRank, onEditName: _editName),
       const SizedBox(height: 12),
       if (next != null)
         _ProgressCard(
-          title: next.unlocks != null ? '${next.unlocks} · лига «${next.name}»' : 'Лига «${next.name}»',
+          title: next.unlocks != null
+              ? l10n.unlockAndLeague(unlock, nextLeague)
+              : '${l10n.leagueLabel} «$nextLeague»',
           from: GamificationService.leagueFor(s.points).minPoints,
           to: next.minPoints,
           value: s.points,
@@ -135,17 +143,25 @@ class _ClubScreenState extends State<ClubScreen> {
       const SizedBox(height: 20),
       Row(
         children: [
-          Text('Рейтинг', style: AppTheme.display(20)),
+          Text(l10n.clubTabLadder, style: AppTheme.display(20)),
           const Spacer(),
-          _Chip(label: 'Неделя', selected: _week, onTap: () {
-            setState(() => _week = true);
-            _load();
-          }),
+          _Chip(
+            label: l10n.clubWeek,
+            selected: _week,
+            onTap: () {
+              setState(() => _week = true);
+              _load();
+            },
+          ),
           const SizedBox(width: 6),
-          _Chip(label: 'Всё время', selected: !_week, onTap: () {
-            setState(() => _week = false);
-            _load();
-          }),
+          _Chip(
+            label: l10n.clubAllTime,
+            selected: !_week,
+            onTap: () {
+              setState(() => _week = false);
+              _load();
+            },
+          ),
         ],
       ),
       const SizedBox(height: 12),
@@ -155,32 +171,31 @@ class _ClubScreenState extends State<ClubScreen> {
           child: Center(child: CircularProgressIndicator()),
         )
       else
-        ..._ladderRows(l),
+        ..._ladderRows(l, l10n),
       if (l != null && !l.live && l.note != null) _Note(l.note!),
       if (l != null && l.live && l.serverPoints != null && l.serverPoints! < s.points)
         _Note(
-          'В рейтинге засчитано ${ClubService.fmt(l.serverPoints!)} из ${ClubService.fmt(s.points)}: '
-          'сервер принимает до 800 очков в день, остальное подтянется в следующие дни.',
+          l10n.ladderServerCap(ClubService.fmt(l.serverPoints!), ClubService.fmt(s.points)),
         ),
       const SizedBox(height: 16),
-      const Text(
-        'Очки дают только уроки, квизы, тесты, домашки, сделки по плану и журнал. За прибыль, объём или депозит очков нет.',
-        style: TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.45),
+      Text(
+        l10n.clubPointsRules,
+        style: const TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.45),
       ),
     ];
   }
 
-  List<Widget> _ladderRows(LadderResult l) {
+  List<Widget> _ladderRows(LadderResult l, AppLocalizations l10n) {
     final out = <Widget>[];
     var proLine = false, studentsLine = false;
     for (final r in l.rows) {
       if (!_week && !proLine && r.points < GamificationService.cutoffPro) {
         proLine = true;
-        out.add(const _CutLine(label: 'отсечка · чат профи · 6 900'));
+        out.add(_CutLine(label: l10n.cutoffProLine));
       }
       if (!_week && !studentsLine && r.points < GamificationService.cutoffStudents) {
         studentsLine = true;
-        out.add(const _CutLine(label: 'отсечка · чат учеников · 1 400'));
+        out.add(_CutLine(label: l10n.cutoffStudentsLine));
       }
       out.add(_LadderTile(row: r));
     }
@@ -202,16 +217,16 @@ class _ClubScreenState extends State<ClubScreen> {
         ));
     }
     if (l.live && l.rows.isEmpty) {
-      out.add(const _Note('В рейтинге пока никого за этот период. Пройди шаг урока — и ты первый.'));
+      out.add(_Note(l10n.ladderEmptyNote));
     }
     return out;
   }
 
-  List<Widget> _chatsTab(ClubStatus s) {
+  List<Widget> _chatsTab(ClubStatus s, AppLocalizations l10n) {
     return [
       _ChatCard(
-        title: 'Чат учеников',
-        subtitle: 'Ступень 1 · вопросы, домашки, разборы',
+        title: l10n.studentsChatTitle,
+        subtitle: l10n.studentsChatSub,
         color: AppTheme.mint,
         open: s.students,
         checks: s.studentsChecks,
@@ -220,8 +235,8 @@ class _ClubScreenState extends State<ClubScreen> {
       ),
       const SizedBox(height: 12),
       _ChatCard(
-        title: 'Чат профи',
-        subtitle: 'Диплом · сделки по плану · серия 30 дней',
+        title: l10n.proChatTitle,
+        subtitle: l10n.proChatSub,
         color: AppTheme.lavender,
         open: s.pro,
         checks: s.proChecks,
@@ -235,10 +250,10 @@ class _ClubScreenState extends State<ClubScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Открытый канал', style: AppTheme.display(20, color: Colors.white)),
+            Text(l10n.openChannelTitle, style: AppTheme.display(20, color: Colors.white)),
             const SizedBox(height: 6),
             Text(
-              'Новости клуба, эфиры и расписание. Доступен всем, без отсечки.',
+              l10n.openChannelBody,
               style: TextStyle(color: Colors.white.withValues(alpha: 0.9), height: 1.4),
             ),
             const SizedBox(height: 14),
@@ -249,28 +264,28 @@ class _ClubScreenState extends State<ClubScreen> {
               ),
               onPressed: () => _open(_publicUrl),
               icon: const Icon(Icons.send_rounded, size: 18),
-              label: const Text('Открыть канал'),
+              label: Text(l10n.openChannelBtn),
             ),
           ],
         ),
       ),
       const SizedBox(height: 20),
-      Text('Неделя в клубе', style: AppTheme.display(20)),
+      Text(l10n.weekInClub, style: AppTheme.display(20)),
       const SizedBox(height: 10),
       const _WeekSchedule(),
       const SizedBox(height: 16),
       Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(color: AppTheme.warnSoft, borderRadius: BorderRadius.circular(16)),
-        child: const Row(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(Icons.shield_rounded, color: AppTheme.warn, size: 22),
-            SizedBox(width: 12),
+            const Icon(Icons.shield_rounded, color: AppTheme.warn, size: 22),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
-                'Админы никогда не пишут первыми и не просят деньги. Ссылки на биржу — только в закреплённых сообщениях клуба.',
-                style: TextStyle(color: AppTheme.textSoft, fontSize: 13, height: 1.45),
+                l10n.clubSafetyNote,
+                style: const TextStyle(color: AppTheme.textSoft, fontSize: 13, height: 1.45),
               ),
             ),
           ],
@@ -376,7 +391,10 @@ class _MeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final s = status;
+    final leagueLabel = l10n.leagueName(s.league.name);
+    final mult = s.streak.multiplier.toStringAsFixed(1).replaceAll('.', ',');
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: AppTheme.cardDecoration(),
@@ -418,7 +436,7 @@ class _MeCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'ID ${s.publicId} · лига «${s.league.name}»',
+                      'ID ${s.publicId} · ${l10n.leagueWithId(leagueLabel)}',
                       style: const TextStyle(color: AppTheme.muted, fontSize: 12.5),
                     ),
                   ],
@@ -431,11 +449,14 @@ class _MeCard extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              _Stat(value: ClubService.fmt(s.points), label: 'очков всего'),
-              _Stat(value: ClubService.fmt(s.weekPoints), label: 'за неделю'),
+              _Stat(
+                value: ClubService.fmt(s.points),
+                label: l10n.pointsTotalLabel(pointsWord(s.points)),
+              ),
+              _Stat(value: ClubService.fmt(s.weekPoints), label: l10n.perWeekLabel),
               _Stat(
                 value: '${s.streak.days}',
-                label: s.streak.multiplier > 1 ? 'дн. · ×${s.streak.multiplier.toStringAsFixed(1)}' : 'дн. серия',
+                label: s.streak.multiplier > 1 ? l10n.daysInARowMult(mult) : l10n.daysInARow,
                 color: AppTheme.accentText,
               ),
             ],
@@ -445,7 +466,7 @@ class _MeCard extends StatelessWidget {
             TextButton.icon(
               onPressed: onEditName,
               icon: const Icon(Icons.person_add_alt_1_rounded, size: 18),
-              label: const Text('Укажи имя для рейтинга'),
+              label: Text(l10n.setNameForLadder),
             ),
           ],
         ],
@@ -492,7 +513,9 @@ class _ProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final p = ((value - from) / (to - from)).clamp(0.0, 1.0);
+    final left = to - value;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: AppTheme.cardDecoration(color: AppTheme.surface2),
@@ -512,7 +535,12 @@ class _ProgressCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Осталось ${ClubService.fmt(to - value)} очков · ${ClubService.fmt(value)} из ${ClubService.fmt(to)}',
+            l10n.remainingOf(
+              ClubService.fmt(left),
+              pointsWord(left),
+              ClubService.fmt(value),
+              ClubService.fmt(to),
+            ),
             style: const TextStyle(color: AppTheme.muted, fontSize: 12.5),
           ),
         ],
@@ -554,6 +582,7 @@ class _LadderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final r = row;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -577,7 +606,7 @@ class _LadderTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  r.isMe ? '${r.name} · ты' : r.name,
+                  r.isMe ? '${r.name} · ${l10n.youSuffix}' : r.name,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.w800),
                 ),
@@ -613,6 +642,7 @@ class _ChatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: AppTheme.cardDecoration(color: open ? AppTheme.surface : AppTheme.surfaceLocked),
@@ -645,13 +675,13 @@ class _ChatCard extends StatelessWidget {
           const SizedBox(height: 14),
           if (open) ...[
             if (members.isNotEmpty) ...[
-              Text('В чате ${members.length}', style: const TextStyle(color: AppTheme.muted, fontSize: 12.5)),
+              Text(l10n.inChatCount(members.length), style: const TextStyle(color: AppTheme.muted, fontSize: 12.5)),
               const SizedBox(height: 6),
               for (final m in members.take(5))
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4),
                   child: Text(
-                    '${m.name} · ${m.publicId}${m.isMe ? ' · ты' : ''}',
+                    '${m.name} · ${m.publicId}${m.isMe ? ' · ${l10n.youSuffix}' : ''}',
                     style: const TextStyle(color: AppTheme.textSoft, fontSize: 13),
                   ),
                 ),
@@ -662,7 +692,7 @@ class _ChatCard extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: onOpen,
                 icon: const Icon(Icons.send_rounded, size: 18),
-                label: const Text('Подать заявку в чат'),
+                label: Text(l10n.applyToChatBtn),
               ),
             ),
           ] else
@@ -676,25 +706,25 @@ class _ChatCard extends StatelessWidget {
 class _WeekSchedule extends StatelessWidget {
   const _WeekSchedule();
 
-  static const _week = [
-    ('Пн', 'План недели от ментора'),
-    ('Вт', 'Урок недели в прямом эфире'),
-    ('Ср', 'Разбор домашек'),
-    ('Чт', 'Вопросы и ответы: счёт и верификация'),
-    ('Пт', 'Свободная практика'),
-    ('Сб', 'Выходной'),
-    ('Вс', 'Разбор первых 30 дней'),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final week = [
+      (l10n.weekdayMon, l10n.weekMonPlan),
+      (l10n.weekdayTue, l10n.weekTueLive),
+      (l10n.weekdayWed, l10n.weekWedHw),
+      (l10n.weekdayThu, l10n.weekThuQa),
+      (l10n.weekdayFri, l10n.weekFriPractice),
+      (l10n.weekdaySat, l10n.weekSatOff),
+      (l10n.weekdaySun, l10n.weekSunReview),
+    ];
     final today = DateTime.now().weekday - 1;
     return Container(
       decoration: AppTheme.cardDecoration(),
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
         children: [
-          for (var i = 0; i < _week.length; i++)
+          for (var i = 0; i < week.length; i++)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
               child: Row(
@@ -708,7 +738,7 @@ class _WeekSchedule extends StatelessWidget {
                       borderRadius: BorderRadius.circular(9),
                     ),
                     child: Text(
-                      _week[i].$1,
+                      week[i].$1,
                       style: TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 12.5,
@@ -719,7 +749,7 @@ class _WeekSchedule extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      _week[i].$2,
+                      week[i].$2,
                       style: TextStyle(
                         color: i == today ? AppTheme.text : AppTheme.textSoft,
                         fontWeight: i == today ? FontWeight.w800 : FontWeight.w600,
@@ -727,9 +757,9 @@ class _WeekSchedule extends StatelessWidget {
                     ),
                   ),
                   if (i == today)
-                    const Text(
-                      'Сегодня',
-                      style: TextStyle(color: AppTheme.accentText, fontSize: 12, fontWeight: FontWeight.w800),
+                    Text(
+                      l10n.todayLabel,
+                      style: const TextStyle(color: AppTheme.accentText, fontSize: 12, fontWeight: FontWeight.w800),
                     ),
                 ],
               ),

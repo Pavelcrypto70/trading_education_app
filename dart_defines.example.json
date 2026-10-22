@@ -2,11 +2,17 @@
   "SUPABASE_URL": "https://YOUR_PROJECT.supabase.co",
   "SUPABASE_ANON_KEY": "YOUR_ANON_KEY",
   "ADMIN_EMAILS": "pavelcryptoclub@gmail.com",
+  "COURSE_FREE": "true",
+  "ENABLE_BILLING": "true",
   "PARTNER_BINANCE_URL": "",
   "PARTNER_BYBIT_URL": "",
   "PARTNER_BITSO_URL": "",
   "PARTNER_MERCADO_BITCOIN_URL": "",
   "PARTNER_TIGER_URL": "",
   "PARTNER_VATAGA_URL": "",
-  "HW_TOPIC_ID": ""
+  "HW_TOPIC_ID": "",
+  "TIGER_REF_LINK": "",
+  "TIGER_REF_CODE": "",
+  "KEY_REVIEW_TG_URL": "",
+  "KEY_SALT": ""
 }

@@ -87,4 +87,15 @@ class AnalyticsService {
   static void paywallView(int lessonId) => track('paywall_view', {'lesson_id': lessonId});
   static void purchaseStart() => track('purchase_start');
   static void purchaseSuccess(String platform) => track('purchase_success', {'platform': platform});
+
+  /// Soft Tiger recommend (web): shown after stage 1 — lessons stay free either way.
+  static void refRecommendShown({String surface = 'soft_ref'}) =>
+      track('ref_recommend_shown', {'surface': surface});
+  static void refCtaClick({String surface = 'soft_ref'}) =>
+      track('ref_cta_click', {'surface': surface});
+  static void continueWithoutRef({String surface = 'soft_ref'}) =>
+      track('continue_without_ref', {'surface': surface});
+  static void refVerified() => track('ref_verified');
+  static void proChatEnterDenied({String reason = 'no_ref'}) =>
+      track('pro_chat_enter_denied', {'reason': reason});
 }

@@ -39,8 +39,8 @@ android {
         versionName = flutter.versionName
     }
 
-    // play  = Google Play / full (billing permission + ENABLE_BILLING=true)
-    // galaxy = Samsung Galaxy Store free community build (no billing permission)
+    // play  = Google Play (course free, no billing)
+    // galaxy = Samsung Galaxy Store free community build
     flavorDimensions += "store"
     productFlavors {
         create("play") {

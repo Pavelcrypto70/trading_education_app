@@ -9,6 +9,7 @@ import '../data/unified_quiz_bank.dart';
 import '../models/quiz_question.dart';
 
 import '../services/locale_service.dart';
+import '../services/quiz_session.dart';
 import '../services/spaced_repetition_service.dart';
 
 import '../theme.dart';
@@ -64,19 +65,9 @@ class _QuizScreenState extends State<QuizScreen> {
 
 
   void _startQuiz(String title, List<QuizQuestion> questions) {
-
     if (questions.isEmpty) return;
-
-    context.push('/quiz-play', extra: {
-
-      'title': title,
-
-      'questions': questions,
-
-      'isDailyChallenge': false,
-
-    });
-
+    QuizSession.set(title: title, questions: questions);
+    context.push('/quiz-play');
   }
 
 

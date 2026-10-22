@@ -15,6 +15,13 @@ class Lesson {
   final List<String> learningOutcomes;
   final List<LessonReference> references;
   final List<LessonSection> sections;
+  /// Words this lesson explains for the first time (rebuilt course).
+  final List<LessonTerm> newTerms;
+  /// Trading pair used in every chart of the lesson.
+  final String? pair;
+
+  /// Rebuilt RU course format: explicit steps/charts, no runtime-generated content.
+  bool get isCourseV2 => sections.any((s) => s.type == 'step');
 
   Lesson({
     required this.id,
@@ -30,6 +37,8 @@ class Lesson {
     this.learningOutcomes = const [],
     this.references = const [],
     this.sections = const [],
+    this.newTerms = const [],
+    this.pair,
   });
 
   bool get hasRichContent => sections.isNotEmpty;
@@ -62,6 +71,11 @@ class Lesson {
               .map((s) => LessonSection.fromJson(Map<String, dynamic>.from(s)))
               .toList()
           : const [],
+      newTerms: (json['newTerms'] as List?)
+              ?.map((t) => LessonTerm.fromJson(Map<String, dynamic>.from(t as Map)))
+              .toList() ??
+          const [],
+      pair: json['pair'] as String?,
     );
   }
 
@@ -86,6 +100,18 @@ class Lesson {
             'type': r.type,
           }).toList(),
       'sections': sections.map((s) => s.toJson()).toList(),
+      if (newTerms.isNotEmpty) 'newTerms': newTerms.map((t) => {'term': t.term, 'def': t.def}).toList(),
+      if (pair != null) 'pair': pair,
     };
   }
+}
+
+class LessonTerm {
+  final String term;
+  final String def;
+
+  const LessonTerm({required this.term, required this.def});
+
+  factory LessonTerm.fromJson(Map<String, dynamic> json) =>
+      LessonTerm(term: json['term'] as String? ?? '', def: json['def'] as String? ?? '');
 }

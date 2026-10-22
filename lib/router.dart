@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'config/desk_key_config.dart';
 import 'models/lesson.dart';
 import 'models/quiz_question.dart';
 import 'screens/daily_challenge_screen.dart';
+import 'screens/desk_key_screen.dart';
 import 'screens/flashcards_screen.dart';
 import 'screens/path_hub_screen.dart';
 import 'screens/home_shell.dart';
@@ -20,7 +22,9 @@ import 'screens/syllabus_screen.dart';
 import 'screens/onboarding_goal_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/auth_screen.dart';
-import 'screens/premium_screen.dart';
+import 'screens/owner_unlock_screen.dart';
+import 'screens/placement_screen.dart';
+import 'screens/soft_ref_screen.dart';
 import 'screens/club_screen.dart';
 import 'screens/cutoff_screen.dart';
 import 'screens/profile_screen.dart';
@@ -31,6 +35,7 @@ import 'screens/quiz_result_screen.dart';
 import 'screens/quiz_screen.dart';
 import 'screens/trading_screen.dart';
 import 'services/onboarding_service.dart';
+import 'services/quiz_session.dart';
 import 'journey/journey_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -48,6 +53,15 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/onboarding/goal',
       builder: (context, state) => const OnboardingGoalScreen(),
+    ),
+    GoRoute(
+      path: '/placement',
+      builder: (context, state) => const PlacementScreen(),
+    ),
+    GoRoute(
+      path: '/owner-unlock',
+      redirect: (_, __) => DeskKeyConfig.ownerUnlockEnabled ? null : '/',
+      builder: (context, state) => const OwnerUnlockScreen(),
     ),
     ...journeyRoutes,
     ShellRoute(
@@ -123,9 +137,21 @@ final GoRouter router = GoRouter(
       path: '/auth',
       builder: (context, state) => const AuthScreen(),
     ),
+    // Legacy paywall URL — course is free; soft ref on web only.
     GoRoute(
       path: '/premium',
-      builder: (context, state) => const PremiumScreen(),
+      redirect: (_, __) => DeskKeyConfig.enabled ? '/soft-ref' : '/learning',
+    ),
+    GoRoute(
+      path: '/soft-ref',
+      redirect: (_, __) => DeskKeyConfig.enabled ? null : '/learning',
+      builder: (context, state) => const SoftRefScreen(),
+    ),
+    GoRoute(
+      path: '/key',
+      // Web: Tiger soft path. Store: no broker — stay on learning (course is free).
+      redirect: (_, __) => DeskKeyConfig.enabled ? null : '/learning',
+      builder: (context, state) => const DeskKeyScreen(),
     ),
     GoRoute(
       path: '/flashcards',
@@ -147,15 +173,35 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/quiz-play',
-      redirect: (_, state) => state.extra == null ? '/quiz' : null,
+      redirect: (_, state) {
+        final extra = state.extra;
+        if (extra is Map<String, dynamic> && extra['questions'] != null) return null;
+        if (QuizSession.hasSession) return null;
+        return '/quiz';
+      },
       builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>;
+        final extra = state.extra is Map<String, dynamic>
+            ? state.extra as Map<String, dynamic>
+            : null;
+        if (extra != null && extra['questions'] != null) {
+          return QuizPlayScreen(
+            title: extra['title'] as String,
+            questions: extra['questions'] as List<QuizQuestion>,
+            isDailyChallenge: extra['isDailyChallenge'] as bool? ?? false,
+            moduleId: extra['moduleId'] as String?,
+            passPercent: extra['passPercent'] as int?,
+            isPlacement: extra['isPlacement'] as bool? ?? false,
+            placementLessonIds: List<int>.from(extra['placementLessonIds'] as List? ?? const []),
+          );
+        }
         return QuizPlayScreen(
-          title: extra['title'] as String,
-          questions: extra['questions'] as List<QuizQuestion>,
-          isDailyChallenge: extra['isDailyChallenge'] as bool? ?? false,
-          moduleId: extra['moduleId'] as String?,
-          passPercent: extra['passPercent'] as int?,
+          title: QuizSession.title!,
+          questions: QuizSession.questions!,
+          isDailyChallenge: QuizSession.isDailyChallenge,
+          moduleId: QuizSession.moduleId,
+          passPercent: QuizSession.passPercent,
+          isPlacement: QuizSession.isPlacement,
+          placementLessonIds: QuizSession.placementLessonIds,
         );
       },
     ),
@@ -196,6 +242,11 @@ final GoRouter router = GoRouter(
           total: extra['total'] as int,
           title: extra['title'] as String,
           isDailyChallenge: extra['isDailyChallenge'] as bool? ?? false,
+          isPlacement: extra['isPlacement'] as bool? ?? false,
+          reviewLessons: List<Map<String, dynamic>>.from(
+            (extra['reviewLessons'] as List?)?.map((e) => Map<String, dynamic>.from(e as Map)) ??
+                const [],
+          ),
         );
       },
     ),
@@ -207,6 +258,8 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   final location = state.matchedLocation;
   final onOnboarding = location.startsWith('/onboarding');
 
+  // Sign-in is reachable from the first screen («У меня уже есть аккаунт»).
+  if (!completed && location == '/auth') return null;
   if (!completed && !onOnboarding) {
     return '/onboarding';
   }

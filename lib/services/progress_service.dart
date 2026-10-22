@@ -76,6 +76,25 @@ class ProgressService {
     SyncService.schedulePush();
   }
 
+  /// Marks several lessons complete without per-lesson analytics spam (placement skip).
+  static Future<void> markLessonsComplete(Iterable<int> lessonIds) async {
+    final ids = lessonIds.toSet();
+    if (ids.isEmpty) return;
+    final prefs = await _prefs();
+    final completed = await getCompletedLessons();
+    completed.addAll(ids);
+    await prefs.setStringList(
+      _completedLessonsKey,
+      completed.map((e) => e.toString()).toList(),
+    );
+    for (final id in ids) {
+      await prefs.remove('$_lessonStepPrefix$id');
+    }
+    await recordActivity();
+    await recordDailyActivity();
+    SyncService.schedulePush();
+  }
+
   static Future<bool> isLessonComplete(int lessonId) async {
     final completed = await getCompletedLessons();
     return completed.contains(lessonId);

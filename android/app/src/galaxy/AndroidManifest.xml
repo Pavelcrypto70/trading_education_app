@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Galaxy Store free build: strip Play Billing even if IAP plugin merges it -->
+<!-- Galaxy: strip BILLING if any dependency tries to merge it -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../services/club_service.dart';
+import '../services/locale_service.dart';
 import '../theme.dart';
 import '../widgets/club_apply.dart';
 
@@ -31,22 +32,23 @@ class _StageSoonScreenState extends State<StageSoonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final s = _status;
-    final title = _five ? 'Реальный счёт' : 'Desk Trader';
+    final title = _five ? l10n.stage5Title : l10n.stageGraduateClubTitle;
     final points = _five
-        ? const [
-            'Урок риск-менеджера и лимиты на день',
-            'Открытие счёта: биржа, верификация, защита',
-            'Первая сделка маленьким объёмом по полному плану',
-            '30 дней с отчётом каждый день',
+        ? [
+            l10n.stage5Point1,
+            l10n.stage5Point2,
+            l10n.stage5Point3,
+            l10n.stage5Point4,
           ]
-        : const [
-            'Выпуск после 30 дней дисциплины',
-            'Проверка домашек новичков',
-            'Разборы сделок для ступеней 1–3',
+        : [
+            l10n.stage6Point1,
+            l10n.stage6Point2,
+            l10n.stage6Point3,
           ];
     return Scaffold(
-      appBar: AppBar(title: Text('Ступень ${widget.stage}')),
+      appBar: AppBar(title: Text(l10n.stageNumberTitle(widget.stage))),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
         children: [
@@ -59,14 +61,14 @@ class _StageSoonScreenState extends State<StageSoonScreen> {
                 Text(title, style: AppTheme.display(26, color: Colors.white)),
                 const SizedBox(height: 6),
                 Text(
-                  'Эту ступень проходят с ментором в чате профи. В приложении она откроется после диплома.',
+                  _five ? l10n.stage5HeroBody : l10n.stage6HeroBody,
                   style: TextStyle(color: Colors.white.withValues(alpha: 0.92), height: 1.45),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 18),
-          Text('Что внутри', style: AppTheme.display(20)),
+          Text(l10n.whatsInside, style: AppTheme.display(20)),
           const SizedBox(height: 10),
           for (final p in points)
             Padding(
@@ -81,7 +83,7 @@ class _StageSoonScreenState extends State<StageSoonScreen> {
               ),
             ),
           const SizedBox(height: 14),
-          Text('Как попасть', style: AppTheme.display(20)),
+          Text(l10n.howToJoin, style: AppTheme.display(20)),
           const SizedBox(height: 10),
           if (s == null)
             const Center(child: CircularProgressIndicator())
@@ -90,12 +92,12 @@ class _StageSoonScreenState extends State<StageSoonScreen> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () => context.go('/club?tab=chats'),
-            child: const Text('Чат профи и условия'),
+            child: Text(l10n.proChatAndTerms),
           ),
           const SizedBox(height: 8),
           TextButton(
             onPressed: () => context.go('/learning'),
-            child: const Text('Вернуться к урокам'),
+            child: Text(l10n.backToLessons),
           ),
         ],
       ),

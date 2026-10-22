@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../services/club_service.dart';
+import '../services/locale_service.dart';
 import '../theme.dart';
 
 /// One cutoff condition; an open one leads to where it can be closed.
@@ -48,13 +49,14 @@ class CheckRow extends StatelessWidget {
 
 /// Copies the application text and explains the next step before opening the club.
 Future<void> applyToClubChat(BuildContext context, ClubStatus s, ClubChat chat) async {
+  final l10n = context.l10n;
   final text = ClubService.application(s, chat);
   await Clipboard.setData(ClipboardData(text: text));
   if (!context.mounted) return;
   final open = await showDialog<bool>(
     context: context,
     builder: (ctx) => AlertDialog(
-      title: const Text('Заявка скопирована'),
+      title: Text(l10n.applyCopiedTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,15 +68,15 @@ Future<void> applyToClubChat(BuildContext context, ClubStatus s, ClubChat chat) 
             child: SelectableText(text, style: const TextStyle(fontSize: 13, height: 1.4)),
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Открой клуб и вставь текст сообщением. Админ сверит твой ID с ладером и пришлёт приглашение в закрытый чат.',
-            style: TextStyle(color: AppTheme.textSoft, height: 1.45),
+          Text(
+            l10n.applyCopiedBody,
+            style: const TextStyle(color: AppTheme.textSoft, height: 1.45),
           ),
         ],
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Позже')),
-        ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Открыть клуб')),
+        TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.laterBtn)),
+        ElevatedButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.openClubBtn)),
       ],
     ),
   );

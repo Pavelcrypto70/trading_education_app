@@ -22,6 +22,8 @@ class HomeworkScreen extends StatefulWidget {
 
 class _HomeworkScreenState extends State<HomeworkScreen> {
   final _sentence = TextEditingController();
+  final _result = TextEditingController();
+  final _unclear = TextEditingController();
   List<Lesson> _lessons = [];
   Map<int, int> _submits = {};
   int? _selectedId;
@@ -37,6 +39,8 @@ class _HomeworkScreenState extends State<HomeworkScreen> {
   @override
   void dispose() {
     _sentence.dispose();
+    _result.dispose();
+    _unclear.dispose();
     super.dispose();
   }
 
@@ -74,6 +78,8 @@ class _HomeworkScreenState extends State<HomeworkScreen> {
       lessonId: lesson.id,
       lessonTitle: lesson.title,
       oneSentence: _sentence.text,
+      result: _result.text,
+      unclear: _unclear.text,
     );
     if (!mounted) return;
     setState(() => _sending = false);
@@ -158,14 +164,24 @@ class _HomeworkScreenState extends State<HomeworkScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          TextField(
-            controller: _sentence,
-            minLines: 2,
-            maxLines: 4,
-            textInputAction: TextInputAction.done,
-            decoration: InputDecoration(
-              hintText: l10n.homeworkOneSentenceHint,
-            ),
+          _AnswerField(controller: _sentence, label: l10n.homeworkOneSentenceHint, minLines: 2),
+          const SizedBox(height: 12),
+          _AnswerField(controller: _result, label: l10n.homeworkResultHint, minLines: 4),
+          const SizedBox(height: 12),
+          _AnswerField(controller: _unclear, label: l10n.homeworkUnclearHint, minLines: 2),
+          const SizedBox(height: 8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.attach_file_rounded, size: 18, color: AppTheme.muted),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  l10n.homeworkScreenshotNote,
+                  style: const TextStyle(color: AppTheme.muted, fontSize: 13, height: 1.4),
+                ),
+              ),
+            ],
           ),
           if (_selected != null) ...[
             const SizedBox(height: 16),
@@ -221,6 +237,29 @@ class _HomeworkScreenState extends State<HomeworkScreen> {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _AnswerField extends StatelessWidget {
+  final TextEditingController controller;
+  final String label;
+  final int minLines;
+
+  const _AnswerField({required this.controller, required this.label, required this.minLines});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      minLines: minLines,
+      maxLines: minLines + 4,
+      style: const TextStyle(fontSize: 15, height: 1.4),
+      decoration: InputDecoration(
+        labelText: label,
+        alignLabelWithHint: true,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
     );
   }

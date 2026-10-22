@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../theme.dart';
+import 'locale_service.dart';
 import 'streak_service.dart';
 import 'sync_service.dart';
 
@@ -31,7 +32,7 @@ class League {
 
 /// Points for learning and discipline only — never for profit, volume or deposit.
 /// Thresholds equal the mandatory blocks of each stage without multiplier
-/// (see Trade-Master-итог/3-Механика-огоньки-ладер-чаты.md, §2).
+/// (see Trade-Master-itog/3 mechanics doc, §2).
 class GamificationService {
   static const _totalKey = 'pointsTotal';
   static const _weekPrefix = 'pointsWeek_';
@@ -59,12 +60,13 @@ class GamificationService {
   static const cutoffStudents = 1400;
   static const cutoffPro = 6900;
 
+  /// [League.name] / [League.unlocks] are stable ids — localize via AppLocalizations.leagueName / leagueUnlock.
   static const leagues = [
-    League('Новичок', 0, AppTheme.muted),
-    League('Ученик', cutoffStudents, AppTheme.mint, unlocks: 'Чат учеников'),
-    League('Практик', 3600, AppTheme.sky),
-    League('Трейдер', 5500, AppTheme.peach),
-    League('Профи', cutoffPro, AppTheme.lavender, unlocks: 'Чат профи'),
+    League('novice', 0, AppTheme.muted),
+    League('student', cutoffStudents, AppTheme.mint, unlocks: 'students_chat'),
+    League('practitioner', 3600, AppTheme.sky),
+    League('trader', 5500, AppTheme.peach),
+    League('pro', cutoffPro, AppTheme.lavender, unlocks: 'pro_chat'),
   ];
 
   static League leagueFor(int points) {
@@ -177,16 +179,19 @@ class GamificationService {
     }).toList();
   }
 
-  static String reasonLabel(PointsReason r) => switch (r) {
-        PointsReason.lesson => 'Урок пройден',
-        PointsReason.lessonQuiz => 'Квиз урока',
-        PointsReason.moduleTest => 'Тест модуля',
-        PointsReason.homework => 'Домашка',
-        PointsReason.paperTrade => 'Сделка по плану',
-        PointsReason.exam => 'Диплом',
-        PointsReason.journal => 'Запись в журнале',
-        PointsReason.flashcard => 'Карточки',
-      };
+  static String reasonLabel(PointsReason r) {
+    final l10n = LocaleService.instance.strings;
+    return switch (r) {
+      PointsReason.lesson => l10n.pointsReasonLesson,
+      PointsReason.lessonQuiz => l10n.pointsReasonLessonQuiz,
+      PointsReason.moduleTest => l10n.pointsReasonModuleTest,
+      PointsReason.homework => l10n.pointsReasonHomework,
+      PointsReason.paperTrade => l10n.pointsReasonPaperTrade,
+      PointsReason.exam => l10n.pointsReasonExam,
+      PointsReason.journal => l10n.pointsReasonJournal,
+      PointsReason.flashcard => l10n.pointsReasonFlashcard,
+    };
+  }
 
   // ---- Legacy API kept for older screens (home_screen etc.) ----
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../services/club_service.dart';
+import '../services/locale_service.dart';
 import '../services/onboarding_service.dart';
 import '../theme.dart';
 
@@ -17,24 +18,6 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
   int _minutes = 30;
   bool _loading = false;
 
-  static const _goals = [
-    (
-      'from_zero',
-      'С нуля',
-      'Никогда не торговал, хочу понять основы',
-    ),
-    (
-      'lost_before',
-      'Пробовал и слил',
-      'Хочу систему и правила риска',
-    ),
-    (
-      'already_trading',
-      'Уже торгую',
-      'Хочу проверить себя тестами модулей',
-    ),
-  ];
-
   static const _times = [15, 30, 45];
 
   /// About 10 minutes per lesson; cutoffs also need a 7- and 30-day streak.
@@ -46,15 +29,26 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
     await OnboardingService.saveGoal(_goal);
     await OnboardingService.markCompleted();
     if (!mounted) return;
-    context.go(_goal == 'already_trading' ? '/module-quiz' : '/lesson/1');
+    context.go(switch (_goal) {
+      'already_trading' => '/module-quiz',
+      'lost_before' => '/placement',
+      _ => '/lesson/1',
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final perDay = (_minutes / _minutesPerLesson).clamp(1, 10);
     final studentsDays = (ClubService.stage1Lessons / perDay).ceil().clamp(ClubService.studentsStreak, 365);
     final proDays = (_courseLessons / perDay).ceil().clamp(ClubService.proStreak, 365);
     final proWeeks = (proDays / 7).ceil();
+
+    final goals = [
+      ('from_zero', l10n.goalFromZeroTitle, l10n.goalFromZeroSub),
+      ('lost_before', l10n.goalLostBeforeTitle, l10n.goalLostBeforeSub),
+      ('already_trading', l10n.goalAlreadyTradingTitle, l10n.goalAlreadyTradingSub),
+    ];
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
@@ -67,13 +61,13 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
               Row(
                 children: [
                   IconButton(
-                    tooltip: 'Назад',
+                    tooltip: l10n.back,
                     onPressed: () => context.go('/onboarding'),
                     icon: const Icon(Icons.arrow_back_rounded),
                   ),
-                  const Text(
-                    'Шаг 2 из 2',
-                    style: TextStyle(color: AppTheme.faint, fontWeight: FontWeight.w700),
+                  Text(
+                    l10n.onboardingStep2of2,
+                    style: const TextStyle(color: AppTheme.faint, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -83,9 +77,9 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 8),
-                    Text('С чего ты начинаешь?', style: AppTheme.display(28)),
+                    Text(l10n.onboardingWhereStart, style: AppTheme.display(28)),
                     const SizedBox(height: 20),
-                    for (final (id, title, sub) in _goals) ...[
+                    for (final (id, title, sub) in goals) ...[
                       _GoalOption(
                         title: title,
                         subtitle: sub,
@@ -95,9 +89,9 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
                       const SizedBox(height: 10),
                     ],
                     const SizedBox(height: 12),
-                    const Text(
-                      'СКОЛЬКО ВРЕМЕНИ В ДЕНЬ',
-                      style: TextStyle(color: AppTheme.faint, fontWeight: FontWeight.w700, fontSize: 13),
+                    Text(
+                      l10n.timePerDayLabel,
+                      style: const TextStyle(color: AppTheme.faint, fontWeight: FontWeight.w700, fontSize: 13),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -105,7 +99,7 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
                         for (final m in _times) ...[
                           Expanded(
                             child: _TimeChip(
-                              label: '$m мин',
+                              label: l10n.minutesLabel(m),
                               selected: _minutes == m,
                               onTap: () => setState(() => _minutes = m),
                             ),
@@ -124,9 +118,7 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
                         border: Border.all(color: AppTheme.accent.withValues(alpha: 0.45)),
                       ),
                       child: Text(
-                        'При $_minutes мин в день: чат учеников — примерно через $studentsDays дн., '
-                        'диплом и чат профи — примерно через $proWeeks нед. '
-                        'Быстрее не выйдет: для чатов нужна серия 7 и 30 дней.',
+                        l10n.goalEtaHint(_minutes, studentsDays, proWeeks),
                         style: const TextStyle(color: AppTheme.text, height: 1.4),
                       ),
                     ),
@@ -147,7 +139,11 @@ class _OnboardingGoalScreenState extends State<OnboardingGoalScreen> {
                             height: 22,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : Text(_goal == 'already_trading' ? 'К тестам модулей' : 'Начать урок 1'),
+                        : Text(switch (_goal) {
+                            'already_trading' => l10n.ctaToModuleTests,
+                            'lost_before' => l10n.ctaToModule1Test,
+                            _ => l10n.ctaStartLesson1,
+                          }),
                   ),
                 ),
               ),

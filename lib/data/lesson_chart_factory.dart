@@ -1,8 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
-
 import '../models/chart_setup.dart';
+import '../services/locale_service.dart';
 import '../theme.dart';
 import '../widgets/lesson_charts.dart';
 import 'chart_sequence_builder.dart';
@@ -131,6 +130,7 @@ class LessonChartFactory {
     required List<ChartAnnotation> annotations,
     required math.Random rng,
   }) {
+    final l10n = LocaleService.instance.strings;
     final lows = candles.map((c) => c.low).reduce(math.min);
     final highs = candles.map((c) => c.high).reduce(math.max);
     final mid = (lows + highs) / 2;
@@ -142,116 +142,143 @@ class LessonChartFactory {
     switch (stage) {
       case _Stage.spot:
         annotations.add(ChartAnnotation(
-          text: 'Спот · монета твоя',
+          text: l10n.chartAnnSpotYours,
           x: 0.03,
           y: 0.06,
           color: _bull,
         ));
         if (shape == _Shape.dump || shape == _Shape.down) {
-          levels.add(ChartLevel(price: support, label: 'Монета на месте', color: _purple));
-          annotations.add(const ChartAnnotation(
-            text: 'Без ликвидации',
+          levels.add(ChartLevel(price: support, label: l10n.chartAnnCoinStays, color: _purple));
+          annotations.add(ChartAnnotation(
+            text: l10n.chartAnnNoLiq,
             x: 0.62,
             y: 0.88,
             color: _gold,
           ));
         } else {
-          // Level without long text — marker carries the meaning.
-          levels.add(ChartLevel(price: mid, label: 'Удержание', color: _bull, dashed: true));
+          levels.add(ChartLevel(price: mid, label: l10n.chartAnnHold, color: _bull, dashed: true));
         }
         markers.add(ChartMarker(
           candleIndex: entryIdx,
-          label: shape == _Shape.dump || shape == _Shape.down ? 'Купил' : 'Вход',
+          label: shape == _Shape.dump || shape == _Shape.down ? l10n.chartAnnBought : l10n.chartLabelEntry,
           kind: ChartMarkerKind.buy,
         ));
         break;
 
       case _Stage.futures:
         annotations.add(ChartAnnotation(
-          text: cardIndex.isEven ? 'Фьючерс = пари' : 'Плечо = риск ×',
-          x: 0.04,
-          y: 0.1,
+          text: cardIndex.isEven ? l10n.chartAnnFuturesContract : l10n.chartAnnLeverageRisk,
+          x: 0.03,
+          y: 0.05,
           color: _gold,
         ));
         if (cardIndex >= 2 || shape == _Shape.dump) {
-          zones.add(ChartZone(top: support, bottom: support - 6, color: _bear.withValues(alpha: 0.18), label: 'Зона ликвидации'));
-          annotations.add(const ChartAnnotation(text: 'Стоп до ликвидации', x: 0.5, y: 0.9, color: _bear));
-          levels.add(ChartLevel(price: support + 1.5, label: 'Стоп', color: _bear));
+          final liqTop = support;
+          final liqBottom = support - (highs - lows) * 0.22;
+          zones.add(ChartZone(
+            top: liqTop,
+            bottom: liqBottom,
+            color: _bear.withValues(alpha: 0.28),
+            label: l10n.chartAnnLiqZone,
+          ));
+          levels.add(ChartLevel(
+            price: support + (highs - lows) * 0.06,
+            label: l10n.chartAnnStopBeforeLiq,
+            color: _bear,
+          ));
         } else {
-          levels.add(ChartLevel(price: mid, label: 'Позиция (не монета)', color: _gold, dashed: true));
+          levels.add(ChartLevel(
+            price: mid,
+            label: l10n.chartAnnContractOnly,
+            color: _gold,
+            dashed: true,
+          ));
         }
-        markers.add(ChartMarker(candleIndex: entryIdx, label: 'Открыл', kind: ChartMarkerKind.entry));
+        markers.add(ChartMarker(
+          candleIndex: entryIdx,
+          label: l10n.chartAnnOpenedPosition,
+          kind: ChartMarkerKind.entry,
+        ));
         break;
 
       case _Stage.chart:
         annotations.add(ChartAnnotation(
-          text: 'Свечи',
+          text: l10n.chartAnnCandles,
           x: 0.04,
           y: 0.08,
         ));
         if (cardIndex % 3 == 0) {
-          markers.add(ChartMarker(candleIndex: entryIdx, label: 'Зелёная', kind: ChartMarkerKind.buy));
+          markers.add(ChartMarker(candleIndex: entryIdx, label: l10n.chartAnnGreen, kind: ChartMarkerKind.buy));
         } else if (cardIndex % 3 == 1) {
-          markers.add(ChartMarker(candleIndex: entryIdx + 1, label: 'Красная', kind: ChartMarkerKind.sell));
+          markers.add(ChartMarker(candleIndex: entryIdx + 1, label: l10n.chartAnnRed, kind: ChartMarkerKind.sell));
         } else {
-          annotations.add(const ChartAnnotation(text: 'Тело + хвосты', x: 0.55, y: 0.2, color: _gold));
+          annotations.add(ChartAnnotation(text: l10n.chartAnnBodyWicks, x: 0.55, y: 0.2, color: _gold));
         }
         break;
 
       case _Stage.levels:
-        levels.add(ChartLevel(price: support, label: 'Поддержка', color: _purple));
-        levels.add(ChartLevel(price: resist, label: 'Сопротивление', color: _bear));
+        levels.add(ChartLevel(price: support, label: l10n.patternLabelSupport, color: _purple));
+        levels.add(ChartLevel(price: resist, label: l10n.patternLabelResistance, color: _bear));
         if (cardIndex.isOdd) {
-          annotations.add(const ChartAnnotation(text: 'Зона, не линия', x: 0.55, y: 0.15, color: _gold));
+          annotations.add(ChartAnnotation(text: l10n.chartAnnZoneNotLine, x: 0.55, y: 0.15, color: _gold));
           zones.add(ChartZone(top: support + 2, bottom: support - 2, color: _purple.withValues(alpha: 0.15)));
         }
         if (shape == _Shape.breakout) {
-          markers.add(ChartMarker(candleIndex: n - 4, label: 'Пробой', kind: ChartMarkerKind.note));
+          markers.add(ChartMarker(candleIndex: n - 4, label: l10n.chartAnnBreakout, kind: ChartMarkerKind.note));
         }
         break;
 
       case _Stage.patterns:
-        levels.add(ChartLevel(price: resist, label: 'Крыша паттерна', color: _bear, dashed: true));
-        levels.add(ChartLevel(price: support, label: 'Пол паттерна', color: _purple, dashed: true));
-        annotations.add(const ChartAnnotation(text: 'Паттерн', x: 0.05, y: 0.1, color: _gold));
-        markers.add(ChartMarker(candleIndex: entryIdx, label: 'Фокус', kind: ChartMarkerKind.note));
+        levels.add(ChartLevel(price: resist, label: l10n.chartAnnPatternTop, color: _bear, dashed: true));
+        levels.add(ChartLevel(price: support, label: l10n.chartAnnPatternBottom, color: _purple, dashed: true));
+        annotations.add(ChartAnnotation(text: l10n.chartAnnPatternOnChart, x: 0.05, y: 0.1, color: _gold));
+        markers.add(ChartMarker(candleIndex: entryIdx, label: l10n.chartAnnLookHere, kind: ChartMarkerKind.note));
         break;
 
       case _Stage.trade:
         final stop = support - 1;
         final take = resist + 1;
-        levels.add(ChartLevel(price: mid, label: 'Вход', color: _gold));
-        levels.add(ChartLevel(price: stop, label: 'Стоп', color: _bear));
-        levels.add(ChartLevel(price: take, label: 'Тейк', color: _bull));
+        levels.add(ChartLevel(price: mid, label: l10n.chartLabelEntry, color: _gold));
+        levels.add(ChartLevel(price: stop, label: l10n.chartLabelStop, color: _bear));
+        levels.add(ChartLevel(price: take, label: l10n.chartLabelTake, color: _bull));
         annotations.add(ChartAnnotation(
-          text: cardIndex.isEven ? 'R:R смотри до клика' : 'Стоп и тейк на бирже',
+          text: cardIndex.isEven ? l10n.chartAnnCheckRr : l10n.chartAnnStopTakeOnExchange,
           x: 0.05,
           y: 0.08,
           color: _gold,
         ));
-        markers.add(ChartMarker(candleIndex: entryIdx, label: 'Вход', kind: ChartMarkerKind.entry));
-        markers.add(ChartMarker(candleIndex: entryIdx, label: 'Стоп', kind: ChartMarkerKind.stop));
-        markers.add(ChartMarker(candleIndex: (entryIdx + 4).clamp(0, n - 1), label: 'Тейк', kind: ChartMarkerKind.target));
+        markers.add(ChartMarker(candleIndex: entryIdx, label: l10n.chartLabelEntry, kind: ChartMarkerKind.entry));
+        markers.add(ChartMarker(candleIndex: entryIdx, label: l10n.chartLabelStop, kind: ChartMarkerKind.stop));
+        markers.add(ChartMarker(
+          candleIndex: (entryIdx + 4).clamp(0, n - 1),
+          label: l10n.chartLabelTake,
+          kind: ChartMarkerKind.target,
+        ));
         break;
 
       case _Stage.market:
-        annotations.add(const ChartAnnotation(text: 'Контекст рынка', x: 0.04, y: 0.1));
-        levels.add(ChartLevel(price: mid, label: 'Справедливая зона', color: _gold, dashed: true));
+        annotations.add(ChartAnnotation(text: l10n.chartAnnMarketNow, x: 0.04, y: 0.1));
+        levels.add(ChartLevel(price: mid, label: l10n.chartAnnAvgPrice, color: _gold, dashed: true));
         if (shape == _Shape.dump) {
-          annotations.add(const ChartAnnotation(text: 'Пролив / новость', x: 0.55, y: 0.85, color: _bear));
+          annotations.add(ChartAnnotation(text: l10n.chartAnnSharpDrop, x: 0.55, y: 0.85, color: _bear));
         }
         break;
 
       case _Stage.risk:
-        levels.add(ChartLevel(price: support, label: 'Инвалидация', color: _bear));
+        levels.add(ChartLevel(price: support, label: l10n.chartAnnPlanCancelled, color: _bear));
         annotations.add(ChartAnnotation(
-          text: cardIndex.isEven ? 'Риск сначала' : 'Журнал после сделки',
+          text: cardIndex.isEven ? l10n.chartAnnRiskFirst : l10n.chartAnnJournalAfter,
           x: 0.04,
           y: 0.1,
           color: _gold,
         ));
         if (cardIndex >= 1) {
-          zones.add(ChartZone(top: support, bottom: support - 5, color: _bear.withValues(alpha: 0.12), label: 'Не сюда'));
+          zones.add(ChartZone(
+            top: support,
+            bottom: support - 5,
+            color: _bear.withValues(alpha: 0.12),
+            label: l10n.chartAnnNotHere,
+          ));
         }
         break;
     }

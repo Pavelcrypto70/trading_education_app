@@ -1,9 +1,23 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'router.dart';
 import 'services/locale_service.dart';
 import 'theme.dart';
+
+/// Web/desktop: allow mouse + trackpad to drag horizontal chip rows, etc.
+class AppScrollBehavior extends MaterialScrollBehavior {
+  const AppScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+        PointerDeviceKind.stylus,
+      };
+}
 
 class TradeMasterApp extends StatelessWidget {
   const TradeMasterApp({super.key});
@@ -22,6 +36,7 @@ class TradeMasterApp extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: ThemeMode.dark,
+          scrollBehavior: const AppScrollBehavior(),
           locale: localeService.locale,
           supportedLocales: const [
             Locale('en'),

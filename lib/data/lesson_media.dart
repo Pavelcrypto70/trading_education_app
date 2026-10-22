@@ -182,7 +182,7 @@ class LessonMedia {
       thumbnail: 'https://img.youtube.com/vi/jBy-ilJ5840/hqdefault.jpg',
     ),
     18: LessonMediaEntry(
-      titleRu: 'Риск на депозит: 0.5–1% на сделку',
+      titleRu: 'Риск на сделку: 0,5–1% от счёта',
       titleEn: 'Deposit risk: 0.5–1% per transaction',
       titlePt: 'Risco de depósito: 0,5–1% por transação',
       titleEs: 'Riesgo de depósito: 0,5–1% por transacción',
@@ -206,7 +206,7 @@ class LessonMedia {
       thumbnail: 'https://img.youtube.com/vi/sTSMRvji9gc/hqdefault.jpg',
     ),
     21: LessonMediaEntry(
-      titleRu: 'Удержание до цели: дисциплина тейк-профита',
+      titleRu: 'Держать сделку до тейка (цели)',
       titleEn: 'Holding to the goal: take profit discipline',
       titlePt: 'Mantendo-se fiel ao objetivo: disciplina de obtenção de lucro',
       titleEs: 'Aferrarse al objetivo: disciplina de obtención de beneficios',
@@ -222,7 +222,7 @@ class LessonMedia {
       thumbnail: 'https://img.youtube.com/vi/Ay8uPZi4MtI/hqdefault.jpg',
     ),
     23: LessonMediaEntry(
-      titleRu: 'План входа и выхода: R:R минимум 1:2',
+      titleRu: 'План входа и выхода: риск к прибыли не хуже 1 к 2',
       titleEn: 'Entry and exit plan: R:R minimum 1:2',
       titlePt: 'Plano de entrada e saída: R:R mínimo 1:2',
       titleEs: 'Plan de entrada y salida: R:R mínimo 1:2',
@@ -286,7 +286,7 @@ class LessonMedia {
       thumbnail: 'https://img.youtube.com/vi/fZxYYxdQt7Q/hqdefault.jpg',
     ),
     31: LessonMediaEntry(
-      titleRu: 'Усреднение: опасность для депозита',
+      titleRu: 'Усреднение: чем оно опасно для счёта',
       titleEn: 'Averaging: danger for the deposit',
       titlePt: 'Média: perigo para o depósito',
       titleEs: 'Promediación: peligro para el depósito',

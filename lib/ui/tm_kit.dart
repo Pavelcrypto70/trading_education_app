@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../services/locale_service.dart';
 import '../theme.dart';
 
 enum TmBannerTone { bull, warn, bear }
@@ -81,7 +82,7 @@ class TmScreen extends StatelessWidget {
           TextButton.icon(
             onPressed: () => context.go('/'),
             icon: const Icon(Icons.route_rounded, size: 18),
-            label: const Text('Путь'),
+            label: Text(context.l10n.navPath),
           ),
         ],
       ),

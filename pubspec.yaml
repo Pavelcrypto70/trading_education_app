@@ -21,9 +21,6 @@ dependencies:
   crypto: ^3.0.6
   http: ^1.2.2
   supabase_flutter: ^2.9.0
-  in_app_purchase: ^3.2.1
-  in_app_purchase_android: ^0.4.0
-  in_app_purchase_storekit: ^0.4.0
 
 dev_dependencies:
   flutter_test:
@@ -55,8 +52,10 @@ flutter:
     - assets/branding/
     - assets/data/case_studies.json
     - assets/data/glossary.json
+    - assets/data/glossary_ru.json
     - assets/data/homework_rubrics.json
     - assets/data/lesson_quizzes.json
+    - assets/data/lesson_quizzes_ru.json
     - assets/data/lessons_en.json
     - assets/data/lessons_es.json
     - assets/data/lessons_pt.json

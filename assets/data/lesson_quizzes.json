@@ -51,7 +51,7 @@
     },
     "options": {
       "ru": [
-        "Только пари",
+        "Только контракт",
         "Монета моя",
         "Ещё не купил"
       ],
@@ -92,7 +92,7 @@
     "options": {
       "ru": [
         "Спот — это когда ставишь плечо на рост.",
-        "Ловушка: путать спот с пари. Спотовый рынок — покупка, не ставка.",
+        "Ловушка: путать спот с фьючерсом. Спотовый рынок — покупка монеты, не контракт на разницу.",
         "На спотовом рынке монета не твоя, биржа просто рисует цифру."
       ],
       "en": [
@@ -113,7 +113,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Ловушка: путать спот с пари. Спотовый рынок — покупка, не ставка.",
+      "ru": "Ловушка: путать спот с фьючерсом. Спотовый рынок — покупка монеты, не контракт на разницу.",
       "en": "Trap: mixing spot with a bet. Spot is a purchase, not a wager.",
       "pt": "Armadilha: misturar spot com aposta. Spot é compra, não aposta.",
       "es": "Trampa: mezclar spot con una apuesta. Spot es compra, no apuesta."
@@ -131,7 +131,7 @@
     },
     "options": {
       "ru": [
-        "На спотовом рынке нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
+        "На спотовом рынке нет ликвидации. Просадка по графику неприятна, но биржа не закрывает тебя сама.",
         "На спотовом рынке нельзя потерять, цена всегда вернётся.",
         "Ликвидация на спотовом рынке такая же, как на фьючерсе."
       ],
@@ -153,7 +153,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "На спотовом рынке нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
+      "ru": "На спотовом рынке нет ликвидации. Просадка по графику неприятна, но биржа не закрывает тебя сама.",
       "en": "On spot there is no liquidation. The dump hurts, but the exchange does not close you out.",
       "pt": "No spot não tem liquidação. O tombo dói, mas a corretora não te fecha sozinha.",
       "es": "En spot no hay liquidación. El bajón duele, pero el exchange no te cierra solo."
@@ -171,7 +171,7 @@
     },
     "options": {
       "ru": [
-        "Ещё в яме",
+        "Ещё в просадке",
         "Счёт жив",
         "Счёт сняли"
       ],
@@ -193,7 +193,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "На спотовом рынке нет ликвидации. Яма неприятна, но биржа не закрывает тебя сама.",
+      "ru": "На спотовом рынке нет ликвидации. Просадка по графику неприятна, но биржа не закрывает тебя сама.",
       "en": "On spot there is no liquidation. The dump hurts, but the exchange does not close you out.",
       "pt": "No spot não tem liquidação. O tombo dói, mas a corretora não te fecha sozinha.",
       "es": "En spot no hay liquidación. El bajón duele, pero el exchange no te cierra solo."
@@ -372,7 +372,7 @@
     "options": {
       "ru": [
         "Фьючерс — это тот же спот, только быстрее.",
-        "Фьючерс — пари на цену. Монету ты не покупаешь. Выиграл или проиграл на разнице.",
+        "Фьючерс — контракт на разницу цены. Монету ты не покупаешь: плюс или минус зависит от того, куда ушла цена.",
         "На фьючерсе монета лежит у тебя в кошельке, как на споте."
       ],
       "en": [
@@ -393,7 +393,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Фьючерс — пари на цену. Монету ты не покупаешь. Выиграл или проиграл на разнице.",
+      "ru": "Фьючерс — контракт на разницу цены. Монету ты не покупаешь: плюс или минус зависит от того, куда ушла цена.",
       "en": "Futures is a bet on price. You do not buy the coin. You win or lose on the difference.",
       "pt": "Futuros é uma aposta no preço. Você não compra a moeda. Ganha ou perde na diferença.",
       "es": "Futuros es una apuesta al precio. No compras la moneda. Ganas o pierdes en la diferencia."
@@ -413,7 +413,7 @@
       "ru": [
         "Ещё думаю",
         "Купил монету",
-        "Пари на цену"
+        "Контракт на цену"
       ],
       "en": [
         "Still thinking",
@@ -433,7 +433,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Фьючерс — пари на цену. Монету ты не покупаешь. Выиграл или проиграл на разнице.",
+      "ru": "Фьючерс — контракт на разницу цены. Монету ты не покупаешь: плюс или минус зависит от того, куда ушла цена.",
       "en": "Futures is a bet on price. You do not buy the coin. You win or lose on the difference.",
       "pt": "Futuros é uma aposta no preço. Você não compra a moeda. Ganha ou perde na diferença.",
       "es": "Futuros es una apuesta al precio. No compras la moneda. Ganas o pierdes en la diferencia."
@@ -452,7 +452,7 @@
     "options": {
       "ru": [
         "На фьючерсе монета лежит у тебя в кошельке, как на споте.",
-        "Пока не скажешь «это пари, не монета» — не включай плечо.",
+        "Пока не скажешь «это контракт, не монета» — не включай плечо.",
         "Фьючерс — это тот же спот, только быстрее."
       ],
       "en": [
@@ -473,7 +473,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Пока не скажешь «это пари, не монета» — не включай плечо.",
+      "ru": "Пока не скажешь «это контракт, не монета» — не включай плечо.",
       "en": "Until you can say “this is a bet, not a coin” — do not turn on leverage.",
       "pt": "Enquanto não souber dizer “isso é aposta, não moeda” — não liga alavancagem.",
       "es": "Hasta que no puedas decir “esto es apuesta, no moneda” — no enciendas apalancamiento."
@@ -572,7 +572,7 @@
     "options": {
       "ru": [
         "Плечо — бесплатный подарок биржи без обратной стороны.",
-        "Ловушка: брать плюсы и не видеть, что они ускоряют яму.",
+        "Ловушка: брать плюсы и не видеть, что они ускоряют просадку.",
         "Плюс фьючерса в том, что проиграть почти нельзя."
       ],
       "en": [
@@ -593,7 +593,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Ловушка: брать плюсы и не видеть, что они ускоряют яму.",
+      "ru": "Ловушка: брать плюсы и не видеть, что они ускоряют просадку.",
       "en": "Trap: taking the pluses and not seeing they also speed up the hole.",
       "pt": "Armadilha: pegar os prós e não ver que eles também aceleram o buraco.",
       "es": "Trampa: tomar las ventajas y no ver que también aceleran el hoyo."
@@ -611,7 +611,7 @@
     },
     "options": {
       "ru": [
-        "Плечо ускоряет и плюс, и яму. Если запаса не хватило — биржа закрывает сделку сама. Это ликвидация.",
+        "Плечо ускоряет и плюс, и просадку. Если запаса не хватило — биржа закрывает сделку сама. Это ликвидация.",
         "Ликвидация — биржа ворует деньги.",
         "Большое плечо безопасно, если стоп короткий."
       ],
@@ -633,7 +633,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "Плечо ускоряет и плюс, и яму. Если запаса не хватило — биржа закрывает сделку сама. Это ликвидация.",
+      "ru": "Плечо ускоряет и плюс, и просадку. Если запаса не хватило — биржа закрывает сделку сама. Это ликвидация.",
       "en": "Leverage speeds up the green and the hole. If the cushion runs out — the exchange closes the trade for you. That is liquidation.",
       "pt": "Alavancagem acelera o plus e o buraco. Se a folga não deu — a corretora fecha a operação sozinha. Isso é liquidação.",
       "es": "El apalancamiento acelera el plus y el hoyo. Si no alcanzó el colchón — el exchange cierra la operación solo. Eso es liquidación."
@@ -651,9 +651,9 @@
     },
     "options": {
       "ru": [
-        "Яма всегда терпима",
+        "Просадка всегда терпима",
         "Ещё считаю запас",
-        "Яма может закрыть"
+        "Просадка может закрыть"
       ],
       "en": [
         "The dump is always bearable",
@@ -673,7 +673,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Плечо ускоряет и плюс, и яму. Если запаса не хватило — биржа закрывает сделку сама. Это ликвидация.",
+      "ru": "Плечо ускоряет и плюс, и просадку. Если запаса не хватило — биржа закрывает сделку сама. Это ликвидация.",
       "en": "Leverage speeds up the green and the hole. If the cushion runs out — the exchange closes the trade for you. That is liquidation.",
       "pt": "Alavancagem acelera o plus e o buraco. Se a folga não deu — a corretora fecha a operação sozinha. Isso é liquidação.",
       "es": "El apalancamiento acelera el plus y el hoyo. Si no alcanzó el colchón — el exchange cierra la operación solo. Eso es liquidación."
@@ -732,7 +732,7 @@
     "options": {
       "ru": [
         "Фьючерс безопаснее спота, потому что можно шортить.",
-        "Спот — монета твоя, яму переживаешь. Фьючерс — пари, яма может закрыть сделку. Новичку сначала спот.",
+        "Спот — монета твоя, просадку переживаешь. Фьючерс — контракт: просадка может закрыть сделку. Новичку сначала спот.",
         "Разницы нет: график один, риск один."
       ],
       "en": [
@@ -753,7 +753,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Спот — монета твоя, яму переживаешь. Фьючерс — пари, яма может закрыть сделку. Новичку сначала спот.",
+      "ru": "Спот — монета твоя, просадку переживаешь. Фьючерс — контракт: просадка может закрыть сделку. Новичку сначала спот.",
       "en": "Spot — the coin is yours, you survive the dump. Futures — a bet, the dump can close the trade. Beginners start on spot.",
       "pt": "Spot — a moeda é sua, você aguenta o tombo. Futuros — aposta, o tombo pode fechar a operação. Iniciante começa no spot.",
       "es": "Spot — la moneda es tuya, aguantas el bajón. Futuros — apuesta, el bajón puede cerrar la operación. El principiante empieza en spot."
@@ -793,7 +793,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Спот — монета твоя, яму переживаешь. Фьючерс — пари, яма может закрыть сделку. Новичку сначала спот.",
+      "ru": "Спот — монета твоя, просадку переживаешь. Фьючерс — контракт: просадка может закрыть сделку. Новичку сначала спот.",
       "en": "Spot — the coin is yours, you survive the dump. Futures — a bet, the dump can close the trade. Beginners start on spot.",
       "pt": "Spot — a moeda é sua, você aguenta o tombo. Futuros — aposta, o tombo pode fechar a operação. Iniciante começa no spot.",
       "es": "Spot — la moneda es tuya, aguantas el bajón. Futuros — apuesta, el bajón puede cerrar la operación. El principiante empieza en spot."
@@ -1573,7 +1573,7 @@
       "ru": [
         "Шорт можно открыть на споте, если нажать Sell.",
         "Шорт безопаснее лонга, потому что падать быстрее.",
-        "Шорт — пари, что цена упадёт. На спотовом рынке шорта нет. Это фьючерс."
+        "Шорт — контракт на падение цены. На спотовом рынке шорта нет. Это фьючерс."
       ],
       "en": [
         "You can open a short on spot if you hit Sell.",
@@ -1593,7 +1593,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Шорт — пари, что цена упадёт. На спотовом рынке шорта нет. Это фьючерс.",
+      "ru": "Шорт — контракт на падение цены. На спотовом рынке шорта нет. Это фьючерс.",
       "en": "Short — a bet that price will fall. There is no short on spot. That is futures.",
       "pt": "Short — aposta de que o preço vai cair. No spot não tem short. Isso é futuros.",
       "es": "Short — apuesta a que el precio va a caer. En spot no hay short. Eso es futuros."
@@ -1612,7 +1612,7 @@
     "options": {
       "ru": [
         "Покупка монеты",
-        "Пари на падение",
+        "Контракт на падение",
         "Сначала спот"
       ],
       "en": [
@@ -1633,7 +1633,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Шорт — пари, что цена упадёт. На спотовом рынке шорта нет. Это фьючерс.",
+      "ru": "Шорт — контракт на падение цены. На спотовом рынке шорта нет. Это фьючерс.",
       "en": "Short — a bet that price will fall. There is no short on spot. That is futures.",
       "pt": "Short — aposta de que o preço vai cair. No spot não tem short. Isso é futuros.",
       "es": "Short — apuesta a que el precio va a caer. En spot no hay short. Eso es futuros."
@@ -2413,7 +2413,7 @@
       "ru": [
         "Любой отскок вверх — уже тренд.",
         "Тренд жив, пока цена выше какой-нибудь средней.",
-        "Вверх идём, пока каждая новая яма выше старой."
+        "Вверх идём, пока каждый новый минимум выше старого."
       ],
       "en": [
         "Any bounce up is already a trend.",
@@ -2433,7 +2433,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Вверх идём, пока каждая новая яма выше старой.",
+      "ru": "Вверх идём, пока каждый новый минимум выше старого.",
       "en": "We go up while each new dip is higher than the last.",
       "pt": "A gente sobe enquanto cada cova nova fica acima da anterior.",
       "es": "Subimos mientras cada hoyo nuevo queda más alto que el anterior."
@@ -2452,7 +2452,7 @@
     "options": {
       "ru": [
         "Рано",
-        "Яма ниже",
+        "Минимум ниже",
         "Тренд жив"
       ],
       "en": [
@@ -2473,7 +2473,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Вверх идём, пока каждая новая яма выше старой.",
+      "ru": "Вверх идём, пока каждый новый минимум выше старого.",
       "en": "We go up while each new dip is higher than the last.",
       "pt": "A gente sobe enquanto cada cova nova fica acima da anterior.",
       "es": "Subimos mientras cada hoyo nuevo queda más alto que el anterior."
@@ -2493,7 +2493,7 @@
       "ru": [
         "Тренд жив, пока цена выше какой-нибудь средней.",
         "Любой отскок вверх — уже тренд.",
-        "Ловушка: новая яма ниже старой, а мы ещё «в лонге навсегда»."
+        "Ловушка: новый минимум ниже старого, а мы ещё «в покупке «навсегда»»."
       ],
       "en": [
         "The trend is alive as long as price is above some moving average.",
@@ -2513,7 +2513,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Ловушка: новая яма ниже старой, а мы ещё «в лонге навсегда».",
+      "ru": "Ловушка: новый минимум ниже старого, а мы ещё «в покупке «навсегда»».",
       "en": "Trap: a new dip lower than the old one, and we are still “long forever”.",
       "pt": "Armadilha: cova nova abaixo da antiga, e a gente ainda “long pra sempre”.",
       "es": "Trampa: un hoyo nuevo más bajo que el viejo, y seguimos “long para siempre”."
@@ -3372,7 +3372,7 @@
     "options": {
       "ru": [
         "Растущий рынок всегда восходящий треугольник.",
-        "Сверху крыша плоская. Снизу ямы всё выше. Давят вверх.",
+        "Сверху крыша плоская. Снизу минимумы всё выше. Давят вверх.",
         "Пробой крыши тенью уже вход."
       ],
       "en": [
@@ -3393,7 +3393,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Сверху крыша плоская. Снизу ямы всё выше. Давят вверх.",
+      "ru": "Сверху крыша плоская. Снизу минимумы всё выше. Давят вверх.",
       "en": "Flat roof on top. Dips coming in higher underneath. They are pressing up.",
       "pt": "Em cima o teto plano. Embaixo as covas cada vez mais altas. Estão pressionando pra cima.",
       "es": "Arriba el techo plano. Abajo los hoyos cada vez más altos. Están presionando hacia arriba."
@@ -3433,7 +3433,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Сверху крыша плоская. Снизу ямы всё выше. Давят вверх.",
+      "ru": "Сверху крыша плоская. Снизу минимумы всё выше. Давят вверх.",
       "en": "Flat roof on top. Dips coming in higher underneath. They are pressing up.",
       "pt": "Em cima o teto plano. Embaixo as covas cada vez mais altas. Estão pressionando pra cima.",
       "es": "Arriba el techo plano. Abajo los hoyos cada vez más altos. Están presionando hacia arriba."
@@ -5533,7 +5533,7 @@
       "ru": [
         "Стена в стакане — не закон. Её могут убрать за секунду. Смотри цену, не гипноз цифр.",
         "Большая стена = цена там остановится навсегда.",
-        "Пустой стакан = сразу шорт всем депо."
+        "Пустой стакан = сразу шорт всеми деньгами."
       ],
       "en": [
         "A wall in the book is not a law. They can pull it in a second. Watch price, not the hypnosis of numbers.",
@@ -5613,7 +5613,7 @@
       "ru": [
         "Большая стена = цена там остановится навсегда.",
         "Ловушка: купить «потому что стена защитит».",
-        "Пустой стакан = сразу шорт всем депо."
+        "Пустой стакан = сразу шорт всеми деньгами."
       ],
       "en": [
         "A big wall means price will stop there forever.",
@@ -5891,9 +5891,9 @@
     },
     "options": {
       "ru": [
-        "Сначала комната цикла и биткоин. Альткоин читают рядом с биткоином. Если биткоин льёт — альткоин обычно льёт сильнее.",
+        "Сначала комната цикла и биткоин. Другую монету читают рядом с биткоином. Если биткоин льёт — другая монета обычно падает сильнее.",
         "Альткоины всегда сильнее биткоина.",
-        "В проливе биткоина альткоины откупают первыми — надо лонг."
+        "В проливе биткоина другие монеты покупают первыми — надо лонг."
       ],
       "en": [
         "First the room of the cycle and BTC. You read an alt next to BTC. If BTC is dumping — the alt usually dumps harder.",
@@ -5913,7 +5913,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "Сначала комната цикла и биткоин. Альткоин читают рядом с биткоином. Если биткоин льёт — альткоин обычно льёт сильнее.",
+      "ru": "Сначала комната цикла и биткоин. Другую монету читают рядом с биткоином. Если биткоин льёт — другая монета обычно падает сильнее.",
       "en": "First the room of the cycle and BTC. You read an alt next to BTC. If BTC is dumping — the alt usually dumps harder.",
       "pt": "Primeiro a sala do ciclo e o BTC. O alt se lê ao lado do BTC. Se o BTC está derramando — o alt geralmente derrama mais.",
       "es": "Primero el cuarto del ciclo y BTC. El alt se lee al lado de BTC. Si BTC está derramando — el alt suele derramar más."
@@ -5924,14 +5924,14 @@
     "id": "L50-Q2",
     "difficulty": "Advanced",
     "question": {
-      "ru": "Как решать по альту?",
+      "ru": "Как решать по другой монете (не биткоин)?",
       "en": "How do you decide on an alt?",
       "pt": "Como decidir no alt?",
       "es": "¿Cómo se decide un alt?"
     },
     "options": {
       "ru": [
-        "Ловить альт в проливе",
+        "Покупать мелкую монету, пока биткоин падает",
         "Сначала BTC",
         "Не понял фазу"
       ],
@@ -5953,7 +5953,7 @@
     },
     "correctIndex": 1,
     "explanation": {
-      "ru": "Сначала комната цикла и биткоин. Альткоин читают рядом с биткоином. Если биткоин льёт — альткоин обычно льёт сильнее.",
+      "ru": "Сначала комната цикла и биткоин. Другую монету читают рядом с биткоином. Если биткоин льёт — другая монета обычно падает сильнее.",
       "en": "First the room of the cycle and BTC. You read an alt next to BTC. If BTC is dumping — the alt usually dumps harder.",
       "pt": "Primeiro a sala do ciclo e o BTC. O alt se lê ao lado do BTC. Se o BTC está derramando — o alt geralmente derrama mais.",
       "es": "Primero el cuarto del ciclo y BTC. El alt se lee al lado de BTC. Si BTC está derramando — el alt suele derramar más."
@@ -5971,8 +5971,8 @@
     },
     "options": {
       "ru": [
-        "Сначала биткоин успокоился. Потом альткоин. Размер меньше.",
-        "В проливе биткоина альткоины откупают первыми — надо лонг.",
+        "Сначала биткоин успокоился. Потом другую монету. Размер меньше.",
+        "В проливе биткоина другие монеты покупают первыми — надо лонг.",
         "Альткоины всегда сильнее биткоина."
       ],
       "en": [
@@ -5993,7 +5993,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "Сначала биткоин успокоился. Потом альткоин. Размер меньше.",
+      "ru": "Сначала биткоин успокоился. Потом другую монету. Размер меньше.",
       "en": "First BTC calmed down. Then the alt. Smaller size.",
       "pt": "Primeiro o BTC sossegou. Depois o alt. Tamanho menor.",
       "es": "Primero BTC se calmó. Luego el alt. Tamaño más chico."
@@ -6131,7 +6131,7 @@
     },
     "options": {
       "ru": [
-        "Если уже читаешь график и идёшь на фьючерс: isolated и размер из риска 0.5–1%. Большое плечо углубляет яму.",
+        "Если уже читаешь график и идёшь на фьючерс: isolated и размер из риска 0.5–1%. Большое плечо углубляет просадку.",
         "Плечо 50x при маленьком стопе — норма.",
         "Кросс безопаснее, биржа сама разберётся."
       ],
@@ -6153,7 +6153,7 @@
     },
     "correctIndex": 0,
     "explanation": {
-      "ru": "Если уже читаешь график и идёшь на фьючерс: isolated и размер из риска 0.5–1%. Большое плечо углубляет яму.",
+      "ru": "Если уже читаешь график и идёшь на фьючерс: isolated и размер из риска 0.5–1%. Большое плечо углубляет просадку.",
       "en": "If you already read the chart and you go to futures: isolated and size from 0.5–1% risk. Fat leverage deepens the hole.",
       "pt": "Se você já lê o gráfico e vai pro futuros: isolated e tamanho a partir de 0,5–1% de risco. Alavancagem gorda aprofunda o buraco.",
       "es": "Si ya lees el gráfico y vas a futuros: isolated y tamaño desde 0,5–1% de riesgo. El apalancamiento gordo profundiza el hoyo."
@@ -6193,7 +6193,7 @@
     },
     "correctIndex": 2,
     "explanation": {
-      "ru": "Если уже читаешь график и идёшь на фьючерс: isolated и размер из риска 0.5–1%. Большое плечо углубляет яму.",
+      "ru": "Если уже читаешь график и идёшь на фьючерс: isolated и размер из риска 0.5–1%. Большое плечо углубляет просадку.",
       "en": "If you already read the chart and you go to futures: isolated and size from 0.5–1% risk. Fat leverage deepens the hole.",
       "pt": "Se você já lê o gráfico e vai pro futuros: isolated e tamanho a partir de 0,5–1% de risco. Alavancagem gorda aprofunda o buraco.",
       "es": "Si ya lees el gráfico y vas a futuros: isolated y tamaño desde 0,5–1% de riesgo. El apalancamiento gordo profundiza el hoyo."

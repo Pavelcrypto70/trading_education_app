@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../services/locale_service.dart';
 import '../theme.dart';
 
 class HomeShell extends StatelessWidget {
@@ -8,18 +9,18 @@ class HomeShell extends StatelessWidget {
 
   const HomeShell({super.key, required this.child});
 
-  static const _tabs = [
-    _Tab('/', 'Путь', Icons.route_outlined, Icons.route, AppTheme.accent),
-    _Tab('/learning', 'Уроки', Icons.menu_book_outlined, Icons.menu_book, AppTheme.mint),
-    _Tab('/practice', 'Практика', Icons.candlestick_chart_outlined, Icons.candlestick_chart, AppTheme.orange),
-    _Tab('/club', 'Клуб', Icons.forum_outlined, Icons.forum, AppTheme.sky),
-    _Tab('/profile', 'Профиль', Icons.person_outline, Icons.person, AppTheme.pink),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final location = GoRouterState.of(context).uri.toString();
     final index = _indexFromLocation(location);
+    final tabs = [
+      _Tab('/', l10n.navPath, Icons.route_outlined, Icons.route, AppTheme.accent),
+      _Tab('/learning', l10n.navLessons, Icons.menu_book_outlined, Icons.menu_book, AppTheme.mint),
+      _Tab('/practice', l10n.navPractice, Icons.candlestick_chart_outlined, Icons.candlestick_chart, AppTheme.orange),
+      _Tab('/club', l10n.navClub, Icons.forum_outlined, Icons.forum, AppTheme.sky),
+      _Tab('/profile', l10n.navProfile, Icons.person_outline, Icons.person, AppTheme.pink),
+    ];
 
     return Scaffold(
       body: child,
@@ -41,11 +42,11 @@ class HomeShell extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
             child: Row(
               children: [
-                for (var i = 0; i < _tabs.length; i++)
+                for (var i = 0; i < tabs.length; i++)
                   _NavItem(
-                    tab: _tabs[i],
+                    tab: tabs[i],
                     selected: index == i,
-                    onTap: () => context.go(_tabs[i].route),
+                    onTap: () => context.go(tabs[i].route),
                   ),
               ],
             ),

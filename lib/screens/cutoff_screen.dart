@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../config/desk_key_config.dart';
+import '../services/analytics_service.dart';
 import '../services/club_service.dart';
+import '../services/entitlement_service.dart';
+import '../services/locale_service.dart';
 import '../theme.dart';
 import '../widgets/club_apply.dart';
 
@@ -44,6 +48,7 @@ class _CutoffScreenState extends State<CutoffScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final s = _status;
     final checks = s == null ? const <CutoffCheck>[] : (_pro ? s.proChecks : s.studentsChecks);
     final color = _pro ? AppTheme.lavender : AppTheme.mint;
@@ -66,15 +71,21 @@ class _CutoffScreenState extends State<CutoffScreen> {
             ),
             const SizedBox(height: 20),
             Text(
-              'Отсечка пройдена',
+              l10n.cutoffPassedTitle,
               textAlign: TextAlign.center,
               style: AppTheme.display(30),
             ),
             const SizedBox(height: 8),
             Text(
-              _pro ? 'Можно подать заявку в чат профи' : 'Можно подать заявку в чат учеников',
+              _pro ? l10n.cutoffCanApplyPro : l10n.cutoffCanApplyStudents,
               textAlign: TextAlign.center,
               style: const TextStyle(color: AppTheme.accentText, fontWeight: FontWeight.w800, fontSize: 16),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              l10n.cutoffPassedBody,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: AppTheme.muted, fontSize: 13, height: 1.4),
             ),
             const SizedBox(height: 22),
             Container(
@@ -106,14 +117,14 @@ class _CutoffScreenState extends State<CutoffScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Как тебя видят в чате · ID ${s.publicId}',
+                      l10n.cutoffSeenAs(s.publicId),
                       style: const TextStyle(color: AppTheme.muted, fontSize: 12.5),
                     ),
                     const SizedBox(height: 8),
                     TextField(
                       controller: _name,
                       maxLength: 24,
-                      decoration: const InputDecoration(hintText: 'Твоё имя', counterText: ''),
+                      decoration: InputDecoration(hintText: l10n.yourNameHint, counterText: ''),
                       onSubmitted: (v) => ClubService.setDisplayName(v),
                     ),
                   ],
@@ -124,11 +135,21 @@ class _CutoffScreenState extends State<CutoffScreen> {
             ElevatedButton.icon(
               onPressed: () async {
                 await _saveName();
+                // Pro chat: require Desk Club ref on web (lessons stay free either way).
+                if (_pro && DeskKeyConfig.enabled) {
+                  final refOk = await EntitlementService.hasRefAccess();
+                  if (!refOk) {
+                    AnalyticsService.proChatEnterDenied(reason: 'no_ref');
+                    if (!context.mounted) return;
+                    await context.push('/soft-ref');
+                    return;
+                  }
+                }
                 final fresh = await ClubService.status();
                 if (context.mounted) await applyToClubChat(context, fresh, widget.chat);
               },
               icon: const Icon(Icons.send_rounded, size: 18),
-              label: const Text('Подать заявку в чат'),
+              label: Text(_pro ? l10n.applyToProChatBtn : l10n.applyToChatBtn),
             ),
             const SizedBox(height: 10),
             TextButton(
@@ -136,7 +157,7 @@ class _CutoffScreenState extends State<CutoffScreen> {
                 await _saveName();
                 if (context.mounted) context.go('/club');
               },
-              child: const Text('Позже · открыть ладер'),
+              child: Text(l10n.laterOpenLadder),
             ),
           ],
         ),

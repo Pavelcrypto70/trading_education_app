@@ -5,7 +5,7 @@
     {
       "id": "one_sentence",
       "weight": 4,
-      "ru": "Одной фразой: суть урока своими словами",
+      "ru": "Одной фразой: о чём был урок, своими словами",
       "en": "In one sentence: the lesson in your own words",
       "pt": "Em uma frase: a aula com suas palavras",
       "es": "En una frase: la lección con tus palabras"
@@ -13,7 +13,7 @@
     {
       "id": "do",
       "weight": 4,
-      "ru": "Ответ на «сделай» с графика — живой / сломан / рано",
+      "ru": "Задание выполнено, результат записан: цифры, если в задании был расчёт",
       "en": "The Do answer from the chart — live / broken / too soon",
       "pt": "A resposta do Faça no gráfico — vivo / quebrado / cedo demais",
       "es": "La respuesta de Hazlo en el gráfico — vivo / roto / demasiado pronto"
@@ -21,7 +21,7 @@
     {
       "id": "honesty",
       "weight": 2,
-      "ru": "Честно: что осталось непонятным (можно «пока ничего»)",
+      "ru": "Честно: что осталось непонятным (можно „пока всё понятно“)",
       "en": "Honestly: what is still unclear (or 'nothing yet')",
       "pt": "Com honestidade: o que ainda não ficou claro (ou 'nada ainda')",
       "es": "Con honestidad: lo que aún no está claro (o 'nada todavía')"
@@ -35,7 +35,7 @@
     "handle": "@Desk_Club",
     "tag": "#hw-submitted",
     "instructions": {
-      "ru": "Кнопка копирует текст домашки и открывает Desk Club. Вставь сообщение в топик homework / Домашки. Тег: #hw-submitted.",
+      "ru": "Кнопка копирует твой ответ и открывает чат Desk Club в Telegram. Вставь текст в раздел «Домашние задания» и отправь.",
       "en": "The button copies your homework and opens Desk Club. Paste it in the homework topic. Tag: #hw-submitted.",
       "pt": "O botão copia a tarefa e abre o Desk Club. Cole no tópico homework. Tag: #hw-submitted.",
       "es": "El botón copia la tarea y abre Desk Club. Pégala en el tema homework. Tag: #hw-submitted."

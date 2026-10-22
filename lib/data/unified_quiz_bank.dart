@@ -1,22 +1,33 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/services.dart';
-
 import '../models/quiz_question.dart';
 import '../services/locale_service.dart';
+import 'localized_asset.dart';
 import 'quiz_bank.dart';
 
 /// Quiz Arena + module tests: only questions from the current 58-lesson course.
 class UnifiedQuizBank {
   static List<QuizQuestion>? _cache;
-  static bool _loading = false;
+  static Future<void>? _loading;
 
   static Future<void> ensureLoaded() async {
-    if (_cache != null || _loading) return;
-    _loading = true;
+    if (_cache != null) return;
+    if (_loading != null) {
+      await _loading;
+      return;
+    }
+    _loading = _load();
     try {
-      final raw = await rootBundle.loadString('assets/data/lesson_quizzes.json');
+      await _loading;
+    } finally {
+      _loading = null;
+    }
+  }
+
+  static Future<void> _load() async {
+    try {
+      final raw = await loadLocalizedAsset('lesson_quizzes');
       final list = jsonDecode(raw) as List;
       final lang = LocaleService.instance.languageCode;
       final fromLessons = <QuizQuestion>[];
@@ -29,7 +40,8 @@ class UnifiedQuizBank {
         final difficulty = _mapDifficulty(m['difficulty'] as String? ?? 'Beginner');
         final category = _categoryForLesson(lessonId);
         final id = m['id'] as String? ?? 'L$lessonId';
-        final showChart = id.endsWith('Q1');
+        // The rebuilt RU course has no generic «guess the chart» pictures in tests.
+        final showChart = lang != 'ru' && id.endsWith('Q1');
         fromLessons.add(
           QuizQuestion(
             category: category,
@@ -47,8 +59,6 @@ class UnifiedQuizBank {
       _cache = fromLessons;
     } catch (_) {
       _cache = QuizBank.allQuestions;
-    } finally {
-      _loading = false;
     }
   }
 
@@ -91,12 +101,13 @@ class UnifiedQuizBank {
   }
 
   static String _categoryForLesson(int lessonId) {
-    if (lessonId <= 7) return 'Basics';
-    if (lessonId <= 14) return 'Chart';
-    if (lessonId <= 27) return 'Levels';
+    // Mirrors tools/course/build.py MODULES.
+    if (lessonId <= 8) return 'Basics';
+    if (lessonId <= 14) return 'Strategy';
+    if (lessonId <= 28) return 'Levels';
     if (lessonId <= 36) return 'Patterns';
     if (lessonId <= 46) return 'Strategy';
-    if (lessonId <= 51) return 'Market';
-    return 'Risk';
+    if (lessonId <= 51) return 'Risk';
+    return 'Market';
   }
 }

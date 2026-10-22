@@ -234,28 +234,23 @@ class _CertificateScreenState extends State<CertificateScreen> {
             icon: const Icon(Icons.copy),
             label: Text(l10n.shareCertificate),
           ),
-          const SizedBox(height: 28),
-          Text(
-            l10n.partnerOffersTitle,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            l10n.partnerOffersSubtitle,
-            style: const TextStyle(color: AppTheme.textSoft, height: 1.45),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            l10n.partnerDisclosure,
-            style: const TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.4),
-          ),
-          if (partners.isEmpty) ...[
-            const SizedBox(height: 16),
+          // Partner / broker links: web only (PartnerLinks.configured is empty on store).
+          if (partners.isNotEmpty) ...[
+            const SizedBox(height: 28),
             Text(
-              l10n.partnerLinksEmpty,
-              style: const TextStyle(color: AppTheme.muted),
+              l10n.partnerOffersTitle,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
             ),
-          ] else ...[
+            const SizedBox(height: 8),
+            Text(
+              l10n.partnerOffersSubtitle,
+              style: const TextStyle(color: AppTheme.textSoft, height: 1.45),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              l10n.partnerDisclosure,
+              style: const TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.4),
+            ),
             if (exchanges.isNotEmpty) ...[
               const SizedBox(height: 20),
               Text(

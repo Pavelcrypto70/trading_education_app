@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../data/lesson_quiz_repository.dart';
@@ -11,8 +13,10 @@ import 'lesson_charts.dart';
 class LessonCheckpoint extends StatefulWidget {
   final Lesson lesson;
   final VoidCallback onPassed;
+  /// Back to the lesson pages to reread before the next try.
+  final VoidCallback? onReview;
 
-  const LessonCheckpoint({super.key, required this.lesson, required this.onPassed});
+  const LessonCheckpoint({super.key, required this.lesson, required this.onPassed, this.onReview});
 
   static Future<List<CheckpointQuestion>> generate(Lesson lesson, AppLocalizations l10n) async {
     final bank = await LessonQuizRepository.forLesson(lesson.id);
@@ -25,7 +29,8 @@ class LessonCheckpoint extends StatefulWidget {
               options: q.options,
               correctIndex: q.correctIndex,
               explanation: q.explanation,
-              showChart: q.id.endsWith('Q1'),
+              // Rebuilt course questions are text-only: a random chart would not match them.
+              showChart: !lesson.isCourseV2 && q.id.endsWith('Q1'),
               cardIndex: _lastCardIndex(lesson),
             ),
           )
@@ -40,43 +45,32 @@ class LessonCheckpoint extends StatefulWidget {
     }
 
     if (bullets.length >= 3) {
-      final a = _shuffleOptions([bullets[0], bullets[1], bullets[2]], 0, lesson.id * 41);
-      final b = _shuffleOptions(
-        [lesson.takeaway, bullets.last, bullets.length > 1 ? bullets[1] : bullets[0]],
-        0,
-        lesson.id * 43,
-      );
       return [
         CheckpointQuestion(
           question: l10n.checkpointQuestion1,
-          options: a.$1,
-          correctIndex: a.$2,
+          options: [bullets[0], bullets[1], bullets[2]],
+          correctIndex: 0,
           cardIndex: _lastCardIndex(lesson),
         ),
         CheckpointQuestion(
           question: l10n.checkpointQuestion2(lesson.title),
-          options: b.$1,
-          correctIndex: b.$2,
+          options: [lesson.takeaway, bullets.last, bullets.length > 1 ? bullets[1] : bullets[0]],
+          correctIndex: 0,
           cardIndex: _lastCardIndex(lesson),
           showChart: true,
         ),
       ];
     }
 
-    final fallback = _shuffleOptions(
-      [
-        lesson.takeaway,
-        lesson.subtitle,
-        lesson.outcome.length > 60 ? lesson.outcome.substring(0, 60) : lesson.outcome,
-      ],
-      0,
-      lesson.id * 47,
-    );
     return [
       CheckpointQuestion(
         question: l10n.checkpointQuestion2(lesson.title),
-        options: fallback.$1,
-        correctIndex: fallback.$2,
+        options: [
+          lesson.takeaway,
+          lesson.subtitle,
+          lesson.outcome.length > 60 ? lesson.outcome.substring(0, 60) : lesson.outcome,
+        ],
+        correctIndex: 0,
         cardIndex: _lastCardIndex(lesson),
         showChart: true,
       ),
@@ -92,28 +86,8 @@ class LessonCheckpoint extends StatefulWidget {
     return max;
   }
 
-  static (List<String>, int) _shuffleOptions(List<String> options, int correctIndex, int seed) {
-    final indexed = List.generate(options.length, (i) => i);
-    // Deterministic Fisher–Yates
-    var state = seed & 0x7fffffff;
-    int next() {
-      state = (1103515245 * state + 12345) & 0x7fffffff;
-      return state;
-    }
-    for (var i = indexed.length - 1; i > 0; i--) {
-      final j = next() % (i + 1);
-      final tmp = indexed[i];
-      indexed[i] = indexed[j];
-      indexed[j] = tmp;
-    }
-    final shuffled = indexed.map((i) => options[i]).toList();
-    final newCorrect = indexed.indexOf(correctIndex.clamp(0, options.length - 1));
-    return (shuffled, newCorrect < 0 ? 0 : newCorrect);
-  }
-
-  /// 2 of 3 for short quizzes; 70% for longer ones.
-  static int requiredCorrect(int total) =>
-      total <= 3 ? (total - 1).clamp(1, total) : (total * 0.7).ceil();
+  /// Every answer must be right: the test is short and checks the main ideas only.
+  static int requiredCorrect(int total) => total;
 
   @override
   State<LessonCheckpoint> createState() => _LessonCheckpointState();
@@ -135,15 +109,32 @@ class CheckpointQuestion {
     this.showChart = false,
     this.cardIndex = 0,
   });
+
+  /// Same question with options in a new random order.
+  CheckpointQuestion shuffled(math.Random rnd) {
+    final order = List.generate(options.length, (i) => i)..shuffle(rnd);
+    return CheckpointQuestion(
+      question: question,
+      options: [for (final i in order) options[i]],
+      correctIndex: order.indexOf(correctIndex),
+      explanation: explanation,
+      showChart: showChart,
+      cardIndex: cardIndex,
+    );
+  }
 }
 
 class _LessonCheckpointState extends State<LessonCheckpoint> {
+    final _rnd = math.Random();
+  List<CheckpointQuestion> _source = const [];
   List<CheckpointQuestion>? _questions;
   int _qIndex = 0;
   int? _selected;
-  bool _answered = false;
-  int _correct = 0;
+  final List<bool> _results = [];
+  bool _finished = false;
   bool _loading = true;
+  /// Failed tries in a row; the wrong questions are named only from the second one, so the test can't be passed by guessing.
+  int _fails = 0;
 
   @override
   void initState() {
@@ -154,55 +145,56 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
   Future<void> _load() async {
     final qs = await LessonCheckpoint.generate(widget.lesson, context.l10n);
     if (!mounted) return;
+    _source = qs;
     setState(() {
-      _questions = qs;
+      _start();
       _loading = false;
     });
   }
 
-  void _select(int index) {
-    if (_answered || _questions == null) return;
-    final q = _questions![_qIndex];
-    setState(() {
-      _selected = index;
-      _answered = true;
-      if (index == q.correctIndex) {
-        _correct++;
-      } else {
-        SpacedRepetitionService.recordWrong(
-          questionId: 'lesson-${widget.lesson.id}-$_qIndex',
-          question: q.question,
-          options: q.options,
-          correctIndex: q.correctIndex,
-          explanation: q.explanation ?? '',
-          category: 'Lesson',
-          difficulty: 'Easy',
-          lessonId: widget.lesson.id,
-        );
-      }
-    });
+  void _start() {
+    _questions = [for (final q in _source) q.shuffled(_rnd)];
+    _qIndex = 0;
+    _selected = null;
+    _results.clear();
+    _finished = false;
   }
 
-  void _next() {
-    final questions = _questions!;
-    if (_qIndex < questions.length - 1) {
-      setState(() {
+  int get _correct => _results.where((r) => r).length;
+
+  void _confirm() {
+    final questions = _questions;
+    final sel = _selected;
+    if (questions == null || sel == null) return;
+    final q = questions[_qIndex];
+    final ok = sel == q.correctIndex;
+    if (!ok) {
+      SpacedRepetitionService.recordWrong(
+        questionId: 'lesson-${widget.lesson.id}-${_source.indexWhere((s) => s.question == q.question)}',
+        question: q.question,
+        options: q.options,
+        correctIndex: q.correctIndex,
+        explanation: q.explanation ?? '',
+        category: 'Lesson',
+        difficulty: 'Easy',
+        lessonId: widget.lesson.id,
+      );
+    }
+    setState(() {
+      _results.add(ok);
+      if (_qIndex < questions.length - 1) {
         _qIndex++;
         _selected = null;
-        _answered = false;
-      });
-    } else {
-      final passed = _correct >= LessonCheckpoint.requiredCorrect(questions.length);
-      if (passed) {
-        widget.onPassed();
       } else {
-        setState(() {
-          _qIndex = 0;
-          _selected = null;
-          _answered = false;
-          _correct = 0;
-        });
+        _finished = true;
       }
+    });
+    if (!_finished) return;
+    if (_correct >= LessonCheckpoint.requiredCorrect(questions.length)) {
+      _fails = 0;
+      widget.onPassed();
+    } else {
+      _fails++;
     }
   }
 
@@ -213,9 +205,7 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
       return const Center(child: Padding(padding: EdgeInsets.all(24), child: CircularProgressIndicator()));
     }
     final questions = _questions!;
-    final q = questions[_qIndex];
-    final isLast = _qIndex == questions.length - 1;
-    final passed = _answered && isLast && _correct >= LessonCheckpoint.requiredCorrect(questions.length);
+    final need = LessonCheckpoint.requiredCorrect(questions.length);
 
     return Container(
       width: double.infinity,
@@ -241,9 +231,10 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
                   children: [
                     Text(l10n.checkpointTitle, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
                     Text(
-                      '${l10n.checkpointProgress(_qIndex + 1, questions.length)} · '
-                      'нужно ${LessonCheckpoint.requiredCorrect(questions.length)} верных',
-                      style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+                      _finished
+                          ? l10n.correctOfTotal(_correct, questions.length)
+                          : '${l10n.checkpointProgress(_qIndex + 1, questions.length)} · ${l10n.needAllCorrectHint}',
+                      style: const TextStyle(color: AppTheme.textSoft, fontSize: 13.5, height: 1.35),
                     ),
                   ],
                 ),
@@ -251,51 +242,49 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
             ],
           ),
           const SizedBox(height: 16),
-          Text(q.question, style: const TextStyle(fontWeight: FontWeight.w700, height: 1.4, fontSize: 15)),
-          const SizedBox(height: 12),
-          if (q.showChart) ...[
-            SizedBox(
+          if (_finished) _summary(questions, need) else ..._question(questions[_qIndex]),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _question(CheckpointQuestion q) {
+    final l10n = context.l10n;
+    return [
+        Text(q.question, style: const TextStyle(fontWeight: FontWeight.w700, height: 1.4, fontSize: 15)),
+        const SizedBox(height: 12),
+        if (q.showChart) ...[
+          SizedBox(
+            height: 130,
+            child: LessonChartWidget(
+              chartType: 'candlestick',
+              lessonId: widget.lesson.id,
+              cardIndex: q.cardIndex,
               height: 130,
-              child: LessonChartWidget(
-                chartType: 'candlestick',
-                lessonId: widget.lesson.id,
-                cardIndex: q.cardIndex,
-                height: 130,
-              ),
             ),
-            const SizedBox(height: 12),
-          ],
-          ...List.generate(q.options.length, (i) {
-            final isCorrect = i == q.correctIndex;
-            Color? border;
-            Color? bg;
-            if (_answered) {
-              if (isCorrect) {
-                border = AppTheme.bull;
-                bg = AppTheme.bull.withValues(alpha: 0.15);
-              } else if (_selected == i) {
-                border = AppTheme.bear;
-                bg = AppTheme.bear.withValues(alpha: 0.1);
-              }
-            }
-            return Semantics(
-              button: true,
-              selected: _selected == i,
-              hint: 'Вариант ответа ${i + 1}',
-              child: Padding(
+          ),
+          const SizedBox(height: 12),
+        ],
+        ...List.generate(q.options.length, (i) {
+          final selected = _selected == i;
+          return Semantics(
+            button: true,
+            selected: selected,
+            hint: l10n.answerOptionHint(l10n.answerLetter(i)),
+            child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Material(
-                color: bg ?? AppTheme.surface,
+                color: selected ? AppTheme.lavender.withValues(alpha: 0.16) : AppTheme.surface,
                 borderRadius: BorderRadius.circular(14),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(14),
-                  onTap: () => _select(i),
+                  onTap: () => setState(() => _selected = i),
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: border ?? AppTheme.line),
+                      border: Border.all(color: selected ? AppTheme.lavender : AppTheme.line),
                     ),
                     child: Row(
                       children: [
@@ -304,49 +293,125 @@ class _LessonCheckpointState extends State<LessonCheckpoint> {
                           height: 28,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: (_answered && isCorrect)
-                                ? AppTheme.bull
-                                : (_answered && _selected == i)
-                                    ? AppTheme.bear
-                                    : AppTheme.line,
+                            color: selected ? AppTheme.lavender : AppTheme.line,
                           ),
                           child: Center(
                             child: Text(
-                              String.fromCharCode(65 + i),
-                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                              l10n.answerLetter(i),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 13,
+                                color: selected ? AppTheme.onPastel : AppTheme.text,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Expanded(child: Text(q.options[i], style: const TextStyle(height: 1.3, fontSize: 13))),
+                        Expanded(child: Text(q.options[i], style: const TextStyle(height: 1.35, fontSize: 14))),
                       ],
                     ),
                   ),
                 ),
               ),
-              ),
-            );
-          }),
-          if (_answered && q.explanation != null && q.explanation!.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(q.explanation!, style: const TextStyle(color: AppTheme.muted, fontSize: 12, height: 1.4)),
-          ],
-          if (_answered) ...[
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _next,
-                child: Text(
-                  isLast
-                      ? (passed ? l10n.checkpointComplete : l10n.checkpointRetry)
-                      : l10n.continueBtn,
-                ),
+            ),
+          );
+        }),
+        const SizedBox(height: 4),
+        Text(
+          l10n.seeResultAtEnd,
+          style: const TextStyle(color: AppTheme.muted, fontSize: 13.5, height: 1.35),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: _selected == null ? null : _confirm,
+            child: Text(_qIndex < (_questions!.length - 1) ? l10n.answerAndNext : l10n.answerAndSeeResult),
+          ),
+        ),
+      ];
+  }
+
+  Widget _summary(List<CheckpointQuestion> questions, int need) {
+    final l10n = context.l10n;
+    final passed = _correct >= need;
+    if (passed) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.allCorrectLessonPassed,
+              style: const TextStyle(color: AppTheme.bull, fontWeight: FontWeight.w800, fontSize: 15)),
+          const SizedBox(height: 12),
+          for (var i = 0; i < questions.length; i++) _reviewRow(questions[i], true, showAnswer: true),
+        ],
+      );
+    }
+    final wrong = [for (var i = 0; i < questions.length; i++) if (!_results[i]) i + 1];
+    final named = _fails >= 2;
+    final failMsg = !named
+        ? l10n.failAnonymous
+        : (wrong.length == 1
+            ? l10n.failNamedOne(wrong.first)
+            : l10n.failNamedMany(l10n.andJoin(wrong.sublist(0, wrong.length - 1).join(', '), '${wrong.last}')));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          failMsg,
+          style: const TextStyle(color: AppTheme.warn, fontWeight: FontWeight.w700, height: 1.4),
+        ),
+        const SizedBox(height: 12),
+        if (named)
+          for (var i = 0; i < questions.length; i++) _reviewRow(questions[i], _results[i], showAnswer: false),
+        const SizedBox(height: 8),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () => setState(_start),
+            child: Text(l10n.retakeCheckpoint),
+          ),
+        ),
+        if (widget.onReview != null) ...[
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () {
+                setState(_start);
+                widget.onReview!();
+              },
+              child: Text(l10n.returnToLesson),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _reviewRow(CheckpointQuestion q, bool ok, {required bool showAnswer}) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(ok ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                size: 18, color: ok ? AppTheme.bull : AppTheme.bear),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(q.question, style: const TextStyle(fontWeight: FontWeight.w700, height: 1.35)),
+                  if (showAnswer) ...[
+                    const SizedBox(height: 2),
+                    Text(q.options[q.correctIndex],
+                        style: const TextStyle(color: AppTheme.bull, fontSize: 13, height: 1.35)),
+                    if ((q.explanation ?? '').isNotEmpty)
+                      Text(q.explanation!, style: const TextStyle(color: AppTheme.muted, fontSize: 14, height: 1.4)),
+                  ],
+                ],
               ),
             ),
           ],
-        ],
-      ),
-    );
-  }
+        ),
+      );
 }

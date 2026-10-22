@@ -9,6 +9,8 @@ import 'gamification_service.dart';
 import 'progress_service.dart';
 import 'streak_service.dart';
 import 'sync_service.dart';
+import '../utils/num_format.dart';
+import 'locale_service.dart';
 
 enum ClubChat { students, pro }
 
@@ -47,7 +49,9 @@ class ClubStatus {
   final List<CutoffCheck> proChecks;
 
   League get league => GamificationService.leagueFor(points);
-  String get shownName => (displayName == null || displayName!.isEmpty) ? 'Ученик $publicId' : displayName!;
+  String get shownName => (displayName == null || displayName!.isEmpty)
+      ? LocaleService.instance.strings.studentDefaultName(publicId)
+      : displayName!;
 }
 
 class LadderRow {
@@ -73,7 +77,7 @@ class LadderRow {
         rank: (m['rank'] as num?)?.toInt() ?? 0,
         name: (m['display_name'] as String?)?.trim().isNotEmpty == true
             ? m['display_name'] as String
-            : 'Ученик ${m['public_id']}',
+            : LocaleService.instance.strings.studentDefaultName(m['public_id'] as String? ?? ''),
         publicId: m['public_id'] as String? ?? '',
         points: (m['points'] as num?)?.toInt() ?? 0,
         telegram: m['telegram'] as String?,
@@ -170,25 +174,31 @@ class ClubService {
 
     final s1Done = List.generate(stage1Lessons, (i) => i + 1).where(completed.contains).toList();
     final s1Missing = List.generate(stage1Lessons, (i) => i + 1).where((n) => !completed.contains(n));
-    final s1Tests = ['spotfut', 'chart'].where(modules.containsKey).length;
+    // New module ids first; old ids (before the course rebuild) still count.
+    final s1Tests = const [['basics', 'spotfut'], ['first_trade', 'chart']]
+        .where((ids) => ids.any(modules.containsKey))
+        .length;
     final stage1 = s1Missing.isEmpty && s1Tests == 2;
     final stage1Route = s1Missing.isNotEmpty ? '/lesson/${s1Missing.first}' : '/module-quiz';
 
+    final l10n = LocaleService.instance.strings;
     final studentsChecks = [
-      CutoffCheck('${_fmt(GamificationService.cutoffStudents)} очков',
-          points >= GamificationService.cutoffStudents, 'у тебя ${_fmt(points)}', '/streak'),
-      CutoffCheck('Ступень 1 пройдена', stage1, 'уроки ${s1Done.length}/$stage1Lessons · тесты $s1Tests/2',
-          stage1Route),
-      CutoffCheck('Серия от $studentsStreak дней', streak.days >= studentsStreak, 'сейчас ${streak.days}',
-          '/streak'),
+      CutoffCheck(l10n.checkPointsLabel(_fmt(GamificationService.cutoffStudents)),
+          points >= GamificationService.cutoffStudents, l10n.checkYouHave(_fmt(points)), '/streak'),
+      CutoffCheck(l10n.checkStage1Done, stage1,
+          l10n.checkLessonsTests(s1Done.length, stage1Lessons, s1Tests), stage1Route),
+      CutoffCheck(l10n.checkStreakDays(studentsStreak), streak.days >= studentsStreak,
+          l10n.checkNowDays(streak.days), '/streak'),
     ];
     final proChecks = [
-      CutoffCheck('${_fmt(GamificationService.cutoffPro)} очков',
-          points >= GamificationService.cutoffPro, 'у тебя ${_fmt(points)}', '/streak'),
-      CutoffCheck('Диплом · ступень 4', cert != null, cert != null ? 'есть' : 'ещё нет', '/certificate'),
-      CutoffCheck('$proPlanTrades сделок по плану', planTrades >= proPlanTrades, '$planTrades из $proPlanTrades',
-          '/practice'),
-      CutoffCheck('Серия $proStreak дней', streak.days >= proStreak, 'сейчас ${streak.days}', '/streak'),
+      CutoffCheck(l10n.checkPointsLabel(_fmt(GamificationService.cutoffPro)),
+          points >= GamificationService.cutoffPro, l10n.checkYouHave(_fmt(points)), '/streak'),
+      CutoffCheck(l10n.checkDiplomaStage4, cert != null,
+          cert != null ? l10n.checkHave : l10n.checkNotYet, '/certificate'),
+      CutoffCheck(l10n.checkPlanTrades(proPlanTrades), planTrades >= proPlanTrades,
+          l10n.checkOf(planTrades, proPlanTrades), '/practice'),
+      CutoffCheck(l10n.checkStreakDays(proStreak), streak.days >= proStreak,
+          l10n.checkNowDays(streak.days), '/streak'),
     ];
 
     var studentsAt = prefs.getString(studentsAtKey);
@@ -235,9 +245,16 @@ class ClubService {
 
   /// Text the user sends to the club admin to get into a closed chat.
   static String application(ClubStatus s, ClubChat chat) {
-    final name = chat == ClubChat.pro ? 'Чат профи' : 'Чат учеников';
-    return 'Заявка в «$name» · ${s.shownName} · ${s.publicId} · ${_fmt(s.points)} очков · '
-        'серия ${s.streak.days} дн. Проверь меня в ладере Trade Master.';
+    final l10n = LocaleService.instance.strings;
+    final name = chat == ClubChat.pro ? l10n.proChatTitle : l10n.studentsChatTitle;
+    return l10n.applicationText(
+      name,
+      s.shownName,
+      s.publicId,
+      _fmt(s.points),
+      pointsWord(s.points),
+      s.streak.days,
+    );
   }
 
   static Future<Map<String, dynamic>?> _upsert(ClubStatus s) async {
@@ -270,15 +287,15 @@ class ClubService {
           points: week ? st.weekPoints : st.points,
           isMe: true,
         );
-    const keep = 'Твои очки считаются на устройстве и не пропадут.';
+    final keep = LocaleService.instance.strings.ladderKeepLocal;
     if (!isLive) {
-      return LadderResult(rows: [me(s)], live: false, note: 'Общий рейтинг недоступен в этой сборке. $keep');
+      return LadderResult(rows: [me(s)], live: false, note: '${LocaleService.instance.strings.ladderUnavailableBuild} $keep');
     }
     try {
       final before = s.publicId;
       final up = await _upsert(s).timeout(_timeout);
       if (up == null || up['status'] != 'ok') {
-        return LadderResult(rows: [me(s)], live: false, note: 'Сервер рейтинга не принял запись. $keep');
+        return LadderResult(rows: [me(s)], live: false, note: '${LocaleService.instance.strings.ladderUpsertFailed} $keep');
       }
       if (await publicId() != before) s = await status();
       final rows = await BackendService.client.rpc('ladder_top', params: {
@@ -301,14 +318,14 @@ class ClubService {
         rows: [me(s)],
         live: false,
         note: missing
-            ? 'Общий рейтинг включается — скоро тут появятся все ученики. $keep'
-            : 'Общий рейтинг сейчас не загрузился — потяни экран вниз. $keep',
+            ? '${LocaleService.instance.strings.ladderComingSoon} $keep'
+            : '${LocaleService.instance.strings.ladderLoadFailed} $keep',
       );
     } catch (_) {
       return LadderResult(
         rows: [me(s)],
         live: false,
-        note: 'Общий рейтинг сейчас недоступен — загляни позже или потяни экран вниз. $keep',
+        note: '${LocaleService.instance.strings.ladderTemporarilyDown} $keep',
       );
     }
   }

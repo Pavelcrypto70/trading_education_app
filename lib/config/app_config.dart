@@ -1,21 +1,29 @@
-/// Global product configuration: trial, admin, community, pricing.
+/// Global product configuration: trial badges, admin, community.
 ///
-/// Store variants: see [BuildFlags] (`play` with billing vs `galaxy` free).
+/// Course is free. Store variants: see [BuildFlags].
 class AppConfig {
   AppConfig._();
 
-  /// Stage 1 is free and needs no account: lessons 1–14. The students chat
-  /// cutoff requires all of them, so they must stay open to everyone.
+  /// Legacy trial set (UI badges). With COURSE_FREE all lessons are open.
   static const trialLessonIds = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
-  /// Full admin access — all lessons, premium features, no paywall.
+  /// Full admin access — all lessons / club tools.
   /// Override via `--dart-define=ADMIN_EMAILS=a@x.com,b@y.com`.
+  /// Empty define (common in dart_defines.json) must not wipe the owner account.
+  static const _defaultAdminEmails = 'pavelcryptoclub@gmail.com';
+
   static Set<String> get adminEmails {
     const raw = String.fromEnvironment(
       'ADMIN_EMAILS',
-      defaultValue: 'pavelcryptoclub@gmail.com',
+      defaultValue: _defaultAdminEmails,
     );
-    return raw
+    final parsed = raw
+        .split(',')
+        .map((e) => e.trim().toLowerCase())
+        .where((e) => e.isNotEmpty)
+        .toSet();
+    if (parsed.isNotEmpty) return parsed;
+    return _defaultAdminEmails
         .split(',')
         .map((e) => e.trim().toLowerCase())
         .where((e) => e.isNotEmpty)
@@ -38,19 +46,5 @@ class AppConfig {
     return '$communityTelegramUrl/$id';
   }
 
-  // ── Lifetime pricing: entry ~$10 for LATAM + global ──
-  static const marketPriceUsd = 14.99;
-  static const lifetimePriceUsd = 9.99;
-  static const marketPriceRub = 1190;
-  static const lifetimePriceRub = 790;
-  static const marketPriceBrl = 39.90;
-  static const lifetimePriceBrl = 29.90;
-  /// Soft MXN labels for LATAM (IAP still resolves local currency in store).
-  static const marketPriceMxn = 249.0;
-  static const lifetimePriceMxn = 179.0;
-
-  static const lifetimeProductId = 'trade_master_lifetime_full';
-
-  static double get discountPercent =>
-      ((marketPriceUsd - lifetimePriceUsd) / marketPriceUsd * 100).roundToDouble();
+  // Course is free — no IAP product / price list in the app.
 }

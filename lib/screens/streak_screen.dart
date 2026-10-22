@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 
 import '../services/club_service.dart';
 import '../services/gamification_service.dart';
+import '../services/locale_service.dart';
 import '../services/streak_service.dart';
 import '../theme.dart';
+import '../utils/num_format.dart';
 
 /// Daily flame: what it is, what it gives, how to light it today.
 class StreakScreen extends StatefulWidget {
@@ -39,9 +41,10 @@ class _StreakScreenState extends State<StreakScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final s = _streak;
     return Scaffold(
-      appBar: AppBar(title: const Text('Огоньки')),
+      appBar: AppBar(title: Text(l10n.flamesTitle)),
       body: s == null
           ? const Center(child: CircularProgressIndicator())
           : ListView(
@@ -55,14 +58,12 @@ class _StreakScreenState extends State<StreakScreen> {
                       const Icon(Icons.local_fire_department_rounded, color: Colors.white, size: 44),
                       Text('${s.days}', style: AppTheme.display(64, color: Colors.white)),
                       Text(
-                        _daysWord(s.days),
+                        l10n.daysInARowWord(s.days),
                         style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        s.litToday
-                            ? 'Сегодня огонёк горит'
-                            : 'Сегодня ещё не зажжён — пройди 3 шага урока или любое дело ниже',
+                        s.litToday ? l10n.streakLitToday : l10n.streakNotLitToday,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white.withValues(alpha: 0.9)),
                       ),
@@ -74,37 +75,44 @@ class _StreakScreenState extends State<StreakScreen> {
                 const SizedBox(height: 14),
                 Row(
                   children: [
-                    _Tile(value: '×${s.multiplier.toStringAsFixed(1)}', label: 'множитель очков', color: AppTheme.progress),
+                    _Tile(
+                      value: '× ${fmtNum(s.multiplier, 1)}',
+                      label: l10n.streakMultLabel,
+                      color: AppTheme.progress,
+                    ),
                     const SizedBox(width: 10),
-                    _Tile(value: '${s.freezes}', label: 'заморозки', color: AppTheme.sky),
+                    _Tile(value: '${s.freezes}', label: l10n.freezesLabel, color: AppTheme.sky),
                     const SizedBox(width: 10),
-                    _Tile(value: '${s.best}', label: 'рекорд', color: AppTheme.mint),
+                    _Tile(value: '${s.best}', label: l10n.recordLabel, color: AppTheme.mint),
                   ],
                 ),
                 const SizedBox(height: 22),
-                Text('Зачем огоньки', style: AppTheme.display(20)),
+                Text(l10n.whyFlamesTitle, style: AppTheme.display(20)),
                 const SizedBox(height: 10),
-                const _Rule(icon: Icons.bolt_rounded, text: '3 дня подряд — очки ×1.2, 7 дней — ×1.5, 30 дней — ×2.'),
-                const _Rule(icon: Icons.groups_rounded, text: 'Серия 7 дней — условие входа в чат учеников, 30 дней — в чат профи.'),
-                const _Rule(icon: Icons.ac_unit_rounded, text: 'Каждые 7 дней — заморозка (до 2). Она сама закроет пропущенный день.'),
+                _Rule(icon: Icons.bolt_rounded, text: l10n.whyFlamesRule1),
+                _Rule(icon: Icons.groups_rounded, text: l10n.whyFlamesRule2),
+                _Rule(icon: Icons.ac_unit_rounded, text: l10n.whyFlamesRule3),
                 const SizedBox(height: 18),
-                Text('Как зажечь сегодня', style: AppTheme.display(20)),
+                Text(l10n.howLightTodayTitle, style: AppTheme.display(20)),
                 const SizedBox(height: 10),
-                _Action(label: '3 шага урока или тест модуля', onTap: () => context.go('/learning')),
-                _Action(label: 'Сделка по плану в симуляторе', onTap: () => context.go('/practice')),
-                _Action(label: 'Запись в журнале', onTap: () => context.push('/journal')),
-                _Action(label: 'Карточки на повторение', onTap: () => context.push('/flashcards')),
+                _Action(label: l10n.streakActionLesson, onTap: () => context.go('/learning')),
+                _Action(label: l10n.streakActionPaper, onTap: () => context.go('/practice')),
+                _Action(label: l10n.streakActionJournal, onTap: () => context.push('/journal')),
+                _Action(label: l10n.streakActionFlashcards, onTap: () => context.push('/flashcards')),
                 const SizedBox(height: 18),
                 Row(
                   children: [
-                    Text('Последние очки', style: AppTheme.display(20)),
+                    Text(l10n.recentPointsTitle, style: AppTheme.display(20)),
                     const Spacer(),
-                    Text('${ClubService.fmt(_points)} всего', style: const TextStyle(color: AppTheme.muted)),
+                    Text(
+                      l10n.pointsTotalLabel(ClubService.fmt(_points)),
+                      style: const TextStyle(color: AppTheme.muted),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 if (_ledger.isEmpty)
-                  const Text('Пока пусто — первые очки дадут за первый урок.', style: TextStyle(color: AppTheme.muted))
+                  Text(l10n.streakLedgerEmpty, style: const TextStyle(color: AppTheme.muted))
                 else
                   for (final e in _ledger)
                     Padding(
@@ -125,13 +133,6 @@ class _StreakScreenState extends State<StreakScreen> {
             ),
     );
   }
-
-  static String _daysWord(int n) {
-    final m10 = n % 10, m100 = n % 100;
-    if (m10 == 1 && m100 != 11) return 'день подряд';
-    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'дня подряд';
-    return 'дней подряд';
-  }
 }
 
 class _WeekRow extends StatelessWidget {
@@ -139,10 +140,18 @@ class _WeekRow extends StatelessWidget {
 
   final List<bool> week;
 
-  static const _names = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final names = [
+      l10n.weekdayMon,
+      l10n.weekdayTue,
+      l10n.weekdayWed,
+      l10n.weekdayThu,
+      l10n.weekdayFri,
+      l10n.weekdaySat,
+      l10n.weekdaySun,
+    ];
     final today = DateTime.now();
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
@@ -160,7 +169,7 @@ class _WeekRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _names[today.subtract(Duration(days: 6 - i)).weekday - 1],
+                  names[today.subtract(Duration(days: 6 - i)).weekday - 1],
                   style: TextStyle(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w800,

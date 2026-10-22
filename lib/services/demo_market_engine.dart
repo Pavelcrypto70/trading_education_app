@@ -14,12 +14,13 @@ class DemoMarketEngine {
   static const symbol = 'SOL';
   static const pair = 'SOL/USDT';
   static const defaultPrice = 168.42;
-  static const marketVersion = 3;
+  static const marketVersion = 4;
 
   static const _versionKey = 'demoMarketVersion';
   static const _candlesKey = 'demoMarketCandles';
   static const _priceKey = 'demoMarketPrice';
-  static const maxCandles = 80;
+  /// Enough history for the «крупные свечи» view: 4 small candles make one big.
+  static const maxCandles = 320;
   /// 1m timeframe — each candle closes after this many ticks (not a smaller TF).
   static const ticksPerCandle = 10;
   static const tickMs = 420;
@@ -28,8 +29,12 @@ class DemoMarketEngine {
   final List<DemoCandle> candles = [];
   Timer? _timer;
 
+  static const _openedKey = 'demoMarketOpened';
+
   double _price = defaultPrice;
   int _tickInCandle = 0;
+  /// Serial number of candles ever opened; fixes the borders of big candles.
+  int _opened = 0;
   double _drift = 0;
   int _burstTicks = 0;
 
@@ -57,6 +62,7 @@ class DemoMarketEngine {
         candles.add(DemoCandle.fromJson(Map<String, dynamic>.from(item as Map)));
       }
     }
+    _opened = prefs.getInt(_openedKey) ?? candles.length;
     if (candles.isEmpty) {
       _seedHistory(_price);
     } else {
@@ -68,7 +74,7 @@ class DemoMarketEngine {
   void _seedHistory(double endPrice) {
     var p = endPrice * 0.965;
     final now = DateTime.now();
-    for (var i = 59; i >= 0; i--) {
+    for (var i = maxCandles - 20; i >= 0; i--) {
       final o = p;
       final bias = _random.nextDouble() < 0.5 ? 1.0 : -1.0;
       final move = bias * _random.nextDouble() * endPrice * 0.0075;
@@ -83,6 +89,7 @@ class DemoMarketEngine {
         close: p,
         time: now.subtract(Duration(minutes: i)),
       ));
+      _opened++;
     }
     _price = candles.last.close;
   }
@@ -95,10 +102,38 @@ class DemoMarketEngine {
       close: _price,
       time: DateTime.now(),
     ));
+    _opened++;
     if (candles.length > maxCandles) {
       candles.removeAt(0);
     }
     _tickInCandle = 0;
+  }
+
+  /// Candles merged by [n]. Group borders are fixed by the candle's serial number,
+  /// so a closed big candle never changes shape; the last group is the live one.
+  List<DemoCandle> grouped(int n) {
+    if (n <= 1) return List.of(candles);
+    final out = <DemoCandle>[];
+    final firstSerial = _opened - candles.length;
+    var start = 0;
+    while (start < candles.length) {
+      var end = start + 1;
+      while (end < candles.length && (firstSerial + end) % n != 0) {
+        end++;
+      }
+      final part = candles.sublist(start, end);
+      if (start > 0 || part.length == n || end == candles.length) {
+        out.add(DemoCandle(
+          open: part.first.open,
+          high: part.map((c) => c.high).reduce(math.max),
+          low: part.map((c) => c.low).reduce(math.min),
+          close: part.last.close,
+          time: part.first.time,
+        ));
+      }
+      start = end;
+    }
+    return out;
   }
 
   void start() {
@@ -178,6 +213,7 @@ class DemoMarketEngine {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_versionKey, marketVersion);
     await prefs.setDouble(_priceKey, _price);
+    await prefs.setInt(_openedKey, _opened);
     final slice = candles.length > maxCandles ? candles.sublist(candles.length - maxCandles) : candles;
     await prefs.setString(
       _candlesKey,
@@ -190,11 +226,13 @@ class DemoMarketEngine {
     _drift = 0;
     _burstTicks = 0;
     candles.clear();
+    _opened = 0;
     _seedHistory(startPrice);
     _openNewCandle();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_versionKey, marketVersion);
     await prefs.remove(_candlesKey);
+    await prefs.remove(_openedKey);
     await prefs.setDouble(_priceKey, _price);
     onUpdate?.call();
   }

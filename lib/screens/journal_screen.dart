@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/journal_entry.dart';
+import '../services/demo_market_engine.dart';
 import '../services/journal_service.dart';
 import '../services/locale_service.dart';
 import '../theme.dart';
@@ -146,7 +147,7 @@ class _JournalEditorSheetState extends State<_JournalEditorSheet> {
   void initState() {
     super.initState();
     final e = widget.entry;
-    _pair = TextEditingController(text: e?.pair ?? 'BTC/USDT');
+    _pair = TextEditingController(text: e?.pair ?? DemoMarketEngine.pair);
     _setup = TextEditingController(
       text: e?.setup ?? (widget.lessonTitle != null ? 'Lesson: ${widget.lessonTitle}' : ''),
     );
@@ -183,6 +184,8 @@ class _JournalEditorSheetState extends State<_JournalEditorSheet> {
       target: _target.text.trim(),
       emotion: _emotion.text.trim(),
       notes: _notes.text.trim(),
+      result: widget.entry?.result,
+      closeReason: widget.entry?.closeReason,
     ));
     if (mounted) Navigator.pop(context, true);
   }

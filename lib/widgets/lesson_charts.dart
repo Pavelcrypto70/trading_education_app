@@ -6,6 +6,7 @@ import '../data/lesson_chart_setups.dart';
 import '../models/chart_setup.dart';
 import 'order_book_diagram.dart';
 import 'pattern_diagram_widget.dart';
+import '../services/locale_service.dart';
 import '../theme.dart';
 
 class CandleData {
@@ -116,28 +117,42 @@ class _SetupChartPainter extends CustomPainter {
     final lo = bounds.$1;
     final hi = bounds.$2;
 
-    _drawPriceScale(canvas, chartSize, lo, hi);
+    // Leave headroom so liquidation / stop labels are not crushed into candles.
+    final hasLiqZone = setup.zones.any((z) {
+      final l = (z.label ?? '').toLowerCase();
+      return l.contains('ликвидац') || l.contains('liquidat') || l.contains('liquida');
+    });
+    final loPad = hasLiqZone ? (hi - lo) * 0.08 : 0.0;
+    final lo2 = lo - loPad;
+    final hi2 = hi;
 
+    _drawPriceScale(canvas, chartSize, lo2, hi2);
+
+    // Fill zones under candles; labels/borders drawn after candles (readable).
     for (final zone in setup.zones) {
-      _drawZone(canvas, chartSize, zone, lo, hi);
-    }
-
-    for (final level in setup.levels) {
-      _drawLevel(canvas, chartSize, level, lo, hi);
+      _drawZoneFill(canvas, chartSize, zone, lo2, hi2);
     }
 
     for (final line in setup.lines) {
       _drawTrendLine(canvas, chartSize, line);
     }
 
-    _drawCandles(canvas, chartSize, setup.candles, lo, hi);
+    _drawCandles(canvas, chartSize, setup.candles, lo2, hi2);
+
+    for (final level in setup.levels) {
+      _drawLevel(canvas, chartSize, level, lo2, hi2);
+    }
+
+    for (final zone in setup.zones) {
+      _drawZoneLabel(canvas, chartSize, zone, lo2, hi2);
+    }
 
     for (final marker in setup.markers) {
-      _drawMarker(canvas, chartSize, marker, setup.candles, lo, hi);
+      _drawMarker(canvas, chartSize, marker, setup.candles, lo2, hi2);
     }
 
     for (final ann in setup.annotations) {
-      _drawAnnotation(canvas, size, ann);
+      _drawAnnotation(canvas, chartSize, ann);
     }
 
     if (setup.showVolume && setup.volumes != null) {
@@ -251,22 +266,41 @@ class _SetupChartPainter extends CustomPainter {
     _drawLabel(canvas, size, level.label, Offset(8, y - 22), level.color);
   }
 
-  void _drawZone(Canvas canvas, Size size, ChartZone zone, double lo, double hi) {
+  void _drawZoneFill(Canvas canvas, Size size, ChartZone zone, double lo, double hi) {
     final top = _y(size, zone.top, lo, hi);
     final bottom = _y(size, zone.bottom, lo, hi);
-    canvas.drawRect(
-      Rect.fromLTRB(0, top, size.width, bottom),
-      Paint()..color = zone.color,
-    );
-    if (zone.label != null) {
-      _drawLabel(
-        canvas,
-        size,
-        zone.label!,
-        Offset(10, (top + bottom) / 2 - 10),
-        AppTheme.text,
-      );
+    final rect = Rect.fromLTRB(0, math.min(top, bottom), size.width, math.max(top, bottom));
+    canvas.drawRect(rect, Paint()..color = zone.color);
+    // Hatch so «зона» reads even under candles.
+    final hatch = Paint()
+      ..color = AppTheme.bear.withValues(alpha: 0.35)
+      ..strokeWidth = 1.2;
+    for (var x = rect.left - rect.height; x < rect.right; x += 10) {
+      canvas.drawLine(Offset(x, rect.bottom), Offset(x + rect.height, rect.top), hatch);
     }
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..color = AppTheme.bear.withValues(alpha: 0.85)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.6,
+    );
+  }
+
+  void _drawZoneLabel(Canvas canvas, Size size, ChartZone zone, double lo, double hi) {
+    if (zone.label == null) return;
+    final top = _y(size, zone.top, lo, hi);
+    final bottom = _y(size, zone.bottom, lo, hi);
+    final bandTop = math.min(top, bottom);
+    final bandH = (top - bottom).abs();
+    // Label sits inside the band on the right — level labels own the left edge.
+    _drawLabel(
+      canvas,
+      size,
+      zone.label!,
+      Offset(size.width * 0.42, bandTop + math.max(4.0, bandH / 2 - 14)),
+      AppTheme.bear,
+    );
   }
 
   void _drawTrendLine(Canvas canvas, Size size, ChartLine line) {
@@ -314,15 +348,27 @@ class _SetupChartPainter extends CustomPainter {
     };
 
     final tip = Offset(x, tipY + 10);
-    canvas.drawCircle(tip, 6, Paint()..color = AppTheme.bg);
-    canvas.drawCircle(tip, 5, Paint()..color = color);
-    canvas.drawCircle(tip, 5, Paint()
-      ..color = Colors.white.withValues(alpha: 0.35)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1);
+    // Stem from candle tip to marker so «где купил» is obvious.
+    canvas.drawLine(
+      Offset(x, tipY + 22),
+      Offset(x, _y(size, c.high, lo, hi)),
+      Paint()
+        ..color = color.withValues(alpha: 0.7)
+        ..strokeWidth = 1.4,
+    );
+    canvas.drawCircle(tip, 9, Paint()..color = AppTheme.bg);
+    canvas.drawCircle(tip, 7, Paint()..color = color);
+    canvas.drawCircle(
+      tip,
+      7,
+      Paint()
+        ..color = Colors.white.withValues(alpha: 0.55)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5,
+    );
 
-    final labelX = (x + 10).clamp(8.0, size.width - 120);
-    _drawLabel(canvas, size, marker.label, Offset(labelX, tipY - 4), color);
+    final labelX = (x + 12).clamp(8.0, size.width - 140);
+    _drawLabel(canvas, size, marker.label, Offset(labelX, tipY - 8), color);
   }
 
   void _drawAnnotation(Canvas canvas, Size size, ChartAnnotation ann) {
@@ -351,7 +397,7 @@ class _SetupChartPainter extends CustomPainter {
     _drawLabel(
       canvas,
       Size(size.width, size.height),
-      'Объём',
+      LocaleService.instance.strings.volumeLabel,
       Offset(8, chartH + 4),
       AppTheme.textSoft,
     );

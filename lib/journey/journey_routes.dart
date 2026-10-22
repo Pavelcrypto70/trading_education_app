@@ -6,7 +6,7 @@ import '../screens/stage_soon_screen.dart';
 /// Old journey links (Telegram posts, bookmarks) lead to the live screens.
 /// Stages 5–6 have no live flow yet and show an honest "opens after diploma" page.
 const _redirects = <String, String>{
-  '/placement': '/learning',
+  // /placement is a real screen (module-1 diagnostic for «пробовал и потерял»).
   '/save-progress': '/auth',
   '/path': '/learning',
   '/path/2': '/learning',
@@ -21,11 +21,11 @@ const _redirects = <String, String>{
   '/homework/review': '/homework',
   '/markup': '/homework',
   '/markup/grade': '/homework',
-  '/subscribe': '/premium',
-  '/key': '/premium',
-  '/key/register': '/premium',
-  '/key/not-found': '/premium',
-  '/key/active': '/premium',
+  '/subscribe': '/learning',
+  // /key is DeskKeyScreen on web (soft Tiger path), not a paywall.
+  '/key/register': '/key',
+  '/key/not-found': '/key',
+  '/key/active': '/key',
   '/weekly-report': '/streak',
   '/practice/gates': '/practice',
   '/trade/plan': '/practice',

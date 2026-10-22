@@ -28,7 +28,11 @@ jobs:
             --tree-shake-icons \
             --wasm \
             --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
-            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }} \
+            --dart-define=TIGER_REF_LINK=${{ secrets.TIGER_REF_LINK }} \
+            --dart-define=TIGER_REF_CODE=${{ secrets.TIGER_REF_CODE }} \
+            --dart-define=KEY_REVIEW_TG_URL=${{ secrets.KEY_REVIEW_TG_URL }} \
+            --dart-define=KEY_SALT=${{ secrets.KEY_SALT }}
 
       - name: Upload web artifact
         uses: actions/upload-artifact@v4

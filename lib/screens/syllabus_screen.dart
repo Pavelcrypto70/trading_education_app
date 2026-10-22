@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/syllabus_repository.dart';
 import '../services/locale_service.dart';
 import '../theme.dart';
+import '../utils/num_format.dart';
 
 class SyllabusScreen extends StatelessWidget {
   const SyllabusScreen({super.key});
@@ -31,7 +32,7 @@ class SyllabusScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '${data['totalHours']} h · ${data['totalEcts']} ECTS · ${data['totalLessons']} ${l10n.lessons.toLowerCase()}',
+                l10n.syllabusHoursLessons(data['totalHours'] as num, data['totalLessons'] as int),
                 style: const TextStyle(color: AppTheme.muted),
               ),
               const SizedBox(height: 8),
@@ -56,7 +57,11 @@ class SyllabusScreen extends StatelessWidget {
                           style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
                         ),
                         Text(
-                          '${mod['hours']} h · ${mod['ects']} ECTS · ${(mod['lessonIds'] as List).length} ${l10n.lessons.toLowerCase()}',
+                          l10n.syllabusModuleMeta(
+                            fmtNum((mod['hours'] as num).toDouble(), 1),
+                            (mod['lessonIds'] as List).first,
+                            (mod['lessonIds'] as List).last,
+                          ),
                           style: const TextStyle(color: AppTheme.gold, fontSize: 12),
                         ),
                         const SizedBox(height: 8),

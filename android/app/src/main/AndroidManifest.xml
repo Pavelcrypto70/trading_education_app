@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- BILLING only in play flavor — see src/play/AndroidManifest.xml -->
+    <!-- No Play Billing — course is free -->
     <application
         android:label="Trade Master"
         android:name="${applicationName}"

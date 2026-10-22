@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../services/locale_service.dart';
 import '../theme.dart';
 
 /// Interactive deposit → working order size (percent range from lesson JSON items).
@@ -52,6 +53,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final deposit = _deposit;
     final order = deposit != null ? deposit * _sliderPercent / 100 : null;
     final minOrder = deposit != null ? deposit * widget.minPercent / 100 : null;
@@ -72,7 +74,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  widget.title ?? 'Калькулятор рабочего ордера',
+                  widget.title ?? l10n.depositCalcDefaultTitle,
                   style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                 ),
               ),
@@ -91,7 +93,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
             ],
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white),
             decoration: InputDecoration(
-              labelText: 'Депозит, USDT',
+              labelText: l10n.depositCalcBalanceLabel,
               labelStyle: const TextStyle(color: AppTheme.muted),
               prefixIcon: const Icon(Icons.account_balance_wallet_outlined, color: AppTheme.gold),
               filled: true,
@@ -110,7 +112,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
           ),
           const SizedBox(height: 18),
           Text(
-            'Доля одного ордера: ${_sliderPercent.toStringAsFixed(0)}%',
+            l10n.depositCalcShareLabel(_sliderPercent.toStringAsFixed(0)),
             style: const TextStyle(color: AppTheme.textSoft, fontWeight: FontWeight.w600),
           ),
           Slider(
@@ -119,7 +121,7 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
             max: widget.maxPercent,
             divisions: ((widget.maxPercent - widget.minPercent) * 2).round().clamp(1, 20),
             activeColor: AppTheme.gold,
-            label: '${_sliderPercent.toStringAsFixed(1)}%',
+            label: '${_sliderPercent.toStringAsFixed(1).replaceAll('.', ',')}%',
             onChanged: (v) => setState(() => _sliderPercent = v),
           ),
           const SizedBox(height: 8),
@@ -141,13 +143,13 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Рабочий ордер',
-                    style: TextStyle(color: AppTheme.muted, fontSize: 12),
+                  Text(
+                    l10n.depositCalcOrderSum,
+                    style: const TextStyle(color: AppTheme.muted, fontSize: 12),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    order != null ? '${order.toStringAsFixed(2)} USDT' : '—',
+                    order != null ? '${order.toStringAsFixed(2).replaceAll('.', ',')} USDT' : '—',
                     style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w800,
@@ -157,8 +159,12 @@ class _DepositOrderCalculatorCardState extends State<DepositOrderCalculatorCard>
                   if (minOrder != null && maxOrder != null) ...[
                     const SizedBox(height: 8),
                     Text(
-                      'Диапазон ${widget.minPercent.toStringAsFixed(0)}–${widget.maxPercent.toStringAsFixed(0)}%: '
-                      '${minOrder.toStringAsFixed(0)} – ${maxOrder.toStringAsFixed(0)} USDT',
+                      l10n.depositCalcRange(
+                        widget.minPercent.toStringAsFixed(0),
+                        widget.maxPercent.toStringAsFixed(0),
+                        minOrder.toStringAsFixed(0),
+                        maxOrder.toStringAsFixed(0),
+                      ),
                       style: const TextStyle(color: AppTheme.muted, height: 1.4, fontSize: 13),
                     ),
                   ],

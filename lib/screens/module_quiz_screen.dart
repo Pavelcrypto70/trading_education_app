@@ -6,6 +6,7 @@ import '../data/unified_quiz_bank.dart';
 import '../services/entitlement_service.dart';
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
+import '../services/quiz_session.dart';
 import '../theme.dart';
 
 class ModuleQuizScreen extends StatefulWidget {
@@ -55,13 +56,13 @@ class _ModuleQuizScreenState extends State<ModuleQuizScreen> {
     }
     final questions = await ModuleQuizRepository.questionsForModule(module);
     if (!mounted || questions.isEmpty) return;
-    await context.push('/quiz-play', extra: {
-      'title': module.title,
-      'questions': questions,
-      'isDailyChallenge': false,
-      'moduleId': module.moduleId,
-      'passPercent': module.passPercent,
-    });
+    QuizSession.set(
+      title: module.title,
+      questions: questions,
+      moduleId: module.moduleId,
+      passPercent: module.passPercent,
+    );
+    await context.push('/quiz-play');
     _load();
   }
 

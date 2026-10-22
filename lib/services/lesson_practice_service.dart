@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'demo_market_engine.dart';
+
 class LessonPracticeContext {
   final int lessonId;
   final String lessonTitle;
@@ -24,17 +26,14 @@ class LessonPracticeService {
   static Future<void> startPractice({
     required int lessonId,
     required String lessonTitle,
-    String symbol = 'BTC/USDT',
+    String symbol = DemoMarketEngine.pair,
     String? scenario,
   }) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_lessonIdKey, lessonId);
     await prefs.setString(_lessonTitleKey, lessonTitle);
     await prefs.setString(_symbolKey, symbol);
-    await prefs.setString(
-      _scenarioKey,
-      scenario ?? 'Apply the lesson setup on paper. Plan entry, stop and target before clicking.',
-    );
+    await prefs.setString(_scenarioKey, scenario ?? '');
   }
 
   static Future<LessonPracticeContext?> getActive() async {
@@ -43,8 +42,8 @@ class LessonPracticeService {
     if (id == null) return null;
     return LessonPracticeContext(
       lessonId: id,
-      lessonTitle: prefs.getString(_lessonTitleKey) ?? 'Lesson $id',
-      symbol: prefs.getString(_symbolKey) ?? 'BTC/USDT',
+      lessonTitle: prefs.getString(_lessonTitleKey) ?? '#$id',
+      symbol: prefs.getString(_symbolKey) ?? DemoMarketEngine.pair,
       scenario: prefs.getString(_scenarioKey) ?? '',
     );
   }

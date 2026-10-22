@@ -1,7 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/app_config.dart';
+import '../config/build_flags.dart';
 import '../data/lessons_repository.dart';
 import '../models/lesson.dart';
 import '../services/entitlement_service.dart';
@@ -34,7 +37,8 @@ class _LearningScreenState extends State<LearningScreen> {
 
   Future<List<Lesson>> _load() async {
     _completed = await ProgressService.getCompletedLessons();
-    _fullAccess = await EntitlementService.hasFullAccess();
+    // Lessons free for all when COURSE_FREE; otherwise legacy full-access / trial.
+    _fullAccess = BuildFlags.courseFree || await EntitlementService.hasFullAccess();
     return _repository.loadLessons();
   }
 
@@ -44,29 +48,43 @@ class _LearningScreenState extends State<LearningScreen> {
   }
 
   Future<void> _openLesson(Lesson lesson) async {
-    final unlocked = _fullAccess || AppConfig.trialLessonIds.contains(lesson.id);
+    final unlocked = await EntitlementService.isLessonUnlocked(lesson.id);
     if (!unlocked) {
       await showLessonPaywallIfNeeded(context, lesson.id);
       return;
     }
-    if (!_fullAccess) {
+    // Prerequisites only when course is gated (legacy). Free course: open any lesson.
+    if (!BuildFlags.courseFree && !_fullAccess) {
       final missing = lesson.prerequisites.where((id) => !_completed.contains(id)).toList();
       if (missing.isNotEmpty) {
         if (!mounted) return;
-        await showDialog<void>(
+        final first = missing.reduce(math.min);
+        final openFirst = await showDialog<bool>(
           context: context,
-          builder: (ctx) => AlertDialog(
-            backgroundColor: AppTheme.surface,
-            title: Text(context.l10n.syllabusTitle),
-            content: Text(context.l10n.prerequisitesRequired(missing.join(', '))),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: Text(context.l10n.continueBtn),
-              ),
-            ],
-          ),
+          builder: (ctx) {
+            final d = context.l10n;
+            return AlertDialog(
+              backgroundColor: AppTheme.surface,
+              title: Text(d.lessonStillLocked),
+              content: Text(d.prerequisitesRequired(missing.join(', '))),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: Text(d.gotIt),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, true),
+                  child: Text(d.openLessonN(first)),
+                ),
+              ],
+            );
+          },
         );
+        if (openFirst != true || !mounted) return;
+        final firstLesson = await LessonsRepository().getLessonById(first);
+        if (firstLesson == null || !mounted) return;
+        await context.push('/lesson/$first', extra: firstLesson);
+        _refresh();
         return;
       }
     }
@@ -94,9 +112,9 @@ class _LearningScreenState extends State<LearningScreen> {
                 color: AppTheme.text,
               ),
             ),
-            const Text(
-              'Академия · нумерованный список',
-              style: TextStyle(fontSize: 11, color: AppTheme.faint, fontWeight: FontWeight.w500),
+            Text(
+              l10n.lessonsInOrder(58),
+              style: const TextStyle(fontSize: 11, color: AppTheme.faint, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -105,9 +123,9 @@ class _LearningScreenState extends State<LearningScreen> {
           TextButton.icon(
             onPressed: () => context.go('/'),
             icon: const Icon(Icons.home_outlined, size: 18, color: AppTheme.accent),
-            label: const Text(
-              'Путь',
-              style: TextStyle(fontWeight: FontWeight.w700, color: AppTheme.accent),
+            label: Text(
+              l10n.navPath,
+              style: const TextStyle(fontWeight: FontWeight.w700, color: AppTheme.accent),
             ),
           ),
         ],
@@ -143,7 +161,11 @@ class _LearningScreenState extends State<LearningScreen> {
               .map((l) => l.id)
               .cast<int?>()
               .firstWhere(
-                (id) => id != null && (_fullAccess || AppConfig.trialLessonIds.contains(id)),
+                (id) =>
+                    id != null &&
+                    (_fullAccess ||
+                        BuildFlags.courseFree ||
+                        AppConfig.trialLessonIds.contains(id)),
                 orElse: () => null,
               );
 
@@ -179,29 +201,34 @@ class _LearningScreenState extends State<LearningScreen> {
                           ),
                         ),
                         const SizedBox(height: 12),
-                        SizedBox(
-                          height: 42,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: modules.length,
-                            separatorBuilder: (_, __) => const SizedBox(width: 8),
-                            itemBuilder: (context, index) {
-                              final module = modules[index];
-                              final selected = _selectedModule == module;
-                              final label = module == 'All' ? l10n.all : l10n.moduleName(module);
-                              return FilterChip(
-                                label: Text(label),
-                                selected: selected,
-                                showCheckmark: false,
-                                onSelected: (_) => setState(() => _selectedModule = module),
-                              );
-                            },
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics(),
+                          ),
+                          child: Row(
+                            children: [
+                              for (var i = 0; i < modules.length; i++) ...[
+                                if (i > 0) const SizedBox(width: 8),
+                                FilterChip(
+                                  label: Text(
+                                    modules[i] == 'All'
+                                        ? l10n.all
+                                        : l10n.moduleName(modules[i]),
+                                  ),
+                                  selected: _selectedModule == modules[i],
+                                  showCheckmark: false,
+                                  onSelected: (_) =>
+                                      setState(() => _selectedModule = modules[i]),
+                                ),
+                              ],
+                            ],
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Уроки',
-                          style: TextStyle(
+                          l10n.navLessons,
+                          style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: AppTheme.muted,
@@ -225,10 +252,12 @@ class _LearningScreenState extends State<LearningScreen> {
                         final lesson = filtered[index];
                         final number = courseIndex[lesson.id] ?? lesson.id;
                         final done = _completed.contains(lesson.id);
-                        final unlocked =
-                            _fullAccess || AppConfig.trialLessonIds.contains(lesson.id);
-                        final isTrial =
-                            !_fullAccess && AppConfig.trialLessonIds.contains(lesson.id);
+                        final unlocked = _fullAccess ||
+                            BuildFlags.courseFree ||
+                            AppConfig.trialLessonIds.contains(lesson.id);
+                        final isTrial = !BuildFlags.courseFree &&
+                            !_fullAccess &&
+                            AppConfig.trialLessonIds.contains(lesson.id);
                         final isCurrent = lesson.id == currentId;
                         final moduleIdx = (modules.indexOf(lesson.module) - 1).clamp(0, 99);
                         final moduleColor =
@@ -314,7 +343,7 @@ class _ProgressHero extends StatelessWidget {
                 Text(
                   emptyFiltered
                       ? l10n.noLessonsFound
-                      : 'В фильтре: ${l10n.completedCount(filteredDone, filteredTotal)}',
+                      : l10n.inFilterProgress(l10n.completedCount(filteredDone, filteredTotal)),
                   style: TextStyle(color: Colors.white.withValues(alpha: 0.82), fontSize: 13, height: 1.35),
                 ),
               ],
@@ -369,45 +398,47 @@ class _ToolsStrip extends StatelessWidget {
       (Icons.style_rounded, l10n.flashcards, '/flashcards', AppTheme.pink),
     ];
 
-    return SizedBox(
-      height: 44,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: items.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
-        itemBuilder: (context, i) {
-          final item = items[i];
-          return Material(
-            color: item.$4.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(12),
-            child: InkWell(
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      child: Row(
+        children: [
+          for (var i = 0; i < items.length; i++) ...[
+            if (i > 0) const SizedBox(width: 8),
+            Material(
+              color: items[i].$4.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(12),
-              onTap: () => context.push(item.$3),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: item.$4.withValues(alpha: 0.4)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(item.$1, size: 18, color: item.$4),
-                    const SizedBox(width: 8),
-                    Text(
-                      item.$2,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.text,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => context.push(items[i].$3),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: items[i].$4.withValues(alpha: 0.4)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(items[i].$1, size: 18, color: items[i].$4),
+                      const SizedBox(width: 8),
+                      Text(
+                        items[i].$2,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.text,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          );
-        },
+          ],
+        ],
       ),
     );
   }
@@ -503,9 +534,9 @@ class _LessonCard extends StatelessWidget {
                               color: color,
                               borderRadius: BorderRadius.circular(999),
                             ),
-                            child: const Text(
-                              'Сейчас',
-                              style: TextStyle(
+                            child: Text(
+                              context.l10n.badgeNow,
+                              style: const TextStyle(
                                 color: AppTheme.bg,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 11,
@@ -606,7 +637,7 @@ class _NumberBadge extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            'урок',
+            context.l10n.lessonWordShort,
             style: TextStyle(
               fontSize: 9,
               fontWeight: FontWeight.w600,

@@ -1,5 +1,8 @@
 # Google Play — listing texts (RU / PT-BR / ES-MX / EN)
 
+> Store build rules: **no broker names, no Tiger referral, no external payment.**  
+> Free tier = lessons **1–14**. Full course = one-time IAP `trade_master_lifetime_full`.
+
 ## Название
 Trade Master — обучение трейдингу
 
@@ -8,20 +11,19 @@ Trade Master — обучение трейдингу
 
 ## Полное описание
 
-**Trade Master** — полный курс криптотрейдинга с нуля до уверенной paper-торговли.
+**Trade Master** — образовательный курс криптотрейдинга с нуля до дисциплинированной paper-торговли.
 
 Что внутри:
 • 58 структурированных уроков на русском, английском, португальском и испанском
-• Paper trading на реальных графиках (SOL/USDT)
+• Paper trading на учебных графиках (без реальных денег в приложении)
 • Журнал сделок и торговый план
 • Квизы, flashcards, ежедневный челлендж
-• 30-дневная программа обучения
-• Сертификат после прохождения курса
-• Telegram-сообщество трейдеров
+• Программа обучения и сертификат после прохождения
+• Ссылки на образовательное сообщество в Telegram
 
-5 уроков бесплатно. Полный доступ — разовая покупка без подписки.
+**14 уроков ступени 1 бесплатно** (без регистрации). Полный доступ — **разовая покупка через Google Play**, без подписки.
 
-⚠️ Образовательный продукт. Не является финансовой рекомендацией.
+⚠️ Образовательный продукт. Не является финансовой рекомендацией. Не брокер и не биржа. Торговля связана с риском потери средств.
 
 ## Category
 Education
@@ -36,10 +38,13 @@ https://pavelcrypto70.github.io/privacy.html
 https://pavelcrypto70.github.io/terms.html
 
 ## Product ID (IAP)
-`trade_master_lifetime_full`
+`trade_master_lifetime_full` (one-time / managed product, **not** subscription)
 
 ## Package name
 `com.trademaster.education`
+
+## Free content (must match app)
+Lessons **1–14** (stage 1). Lessons 15–58 require IAP or a signed-in account that already has premium from a prior Play purchase (Restore).
 
 ---
 
@@ -52,20 +57,19 @@ Trade Master — Aprenda Trading
 58 aulas de cripto trading, paper trading, quizzes e diário de trades
 
 ### Descrição completa
-**Trade Master** é um curso completo de cripto trading — do zero até paper trading com disciplina.
+**Trade Master** é um curso educacional de cripto trading — do zero até paper trading com disciplina.
 
 O que tem dentro:
 • 58 aulas estruturadas (português, inglês, espanhol e russo)
-• Trading simulado com gráficos realistas
+• Trading simulado com gráficos educativos (sem dinheiro real no app)
 • Diário de trades e plano de operação
 • Quizzes, flashcards e desafio diário
-• Trilha de 30 dias
-• Certificado ao concluir
-• Comunidade no Telegram
+• Trilha de aprendizado e certificado
+• Links para comunidade educacional no Telegram
 
-5 aulas grátis. Acesso completo — compra única, sem assinatura.
+**14 aulas da etapa 1 grátis.** Acesso completo — **compra única pelo Google Play**, sem assinatura.
 
-Conteúdo educacional. Não é recomendação financeira.
+Conteúdo educacional. Não é recomendação financeira. Não é corretora.
 
 ---
 
@@ -78,20 +82,19 @@ Trade Master — Aprende Trading
 58 clases de cripto trading, paper trading, quizzes y diario de trades
 
 ### Descripción completa
-**Trade Master** es un curso completo de cripto trading — de cero a paper trading con disciplina.
+**Trade Master** es un curso educativo de cripto trading — de cero a paper trading con disciplina.
 
 Qué incluye:
 • 58 clases estructuradas (español, portugués, inglés y ruso)
-• Trading simulado con gráficos realistas
+• Trading simulado con gráficos educativos (sin dinero real en la app)
 • Diario de trades y plan de operación
 • Quizzes, flashcards y desafío diario
-• Ruta de 30 días
-• Certificado al completar
-• Comunidad en Telegram
+• Ruta de aprendizaje y certificado
+• Enlaces a comunidad educativa en Telegram
 
-5 clases gratis. Acceso completo — compra única, sin suscripción.
+**14 lecciones de la etapa 1 gratis.** Acceso completo — **compra única en Google Play**, sin suscripción.
 
-Contenido educativo. No es asesoría financiera.
+Contenido educativo. No es asesoría financiera. No es un bróker.
 
 ---
 
@@ -104,17 +107,16 @@ Trade Master — Learn Trading
 58 crypto trading lessons, paper trading, quizzes & trade journal
 
 ### Full description
-**Trade Master** is a complete crypto trading course — from zero to disciplined paper trading.
+**Trade Master** is an educational crypto trading course — from zero to disciplined paper trading.
 
 Inside:
 • 58 structured lessons (English, Spanish, Portuguese, Russian)
-• Paper trading on realistic charts
+• Paper trading on educational charts (no real money inside the app)
 • Trade journal and trade plan
 • Quizzes, flashcards, daily challenge
-• 30-day learning path
-• Certificate on completion
-• Telegram trader community
+• Learning path and certificate on completion
+• Links to an educational Telegram community
 
-5 free lessons. Full access — one-time purchase, no subscription.
+**14 stage-1 lessons free.** Full access — **one-time purchase via Google Play**, no subscription.
 
-Educational product. Not financial advice.
+Educational product. Not financial advice. Not a broker or exchange. Trading involves risk of loss.

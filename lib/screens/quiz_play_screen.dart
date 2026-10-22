@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
+import '../data/lessons_repository.dart';
 import '../models/quiz_question.dart';
 import '../services/gamification_service.dart';
 import '../services/locale_service.dart';
 import '../services/progress_service.dart';
+import '../services/quiz_session.dart';
 import '../services/spaced_repetition_service.dart';
 import '../widgets/lesson_charts.dart';
 import '../theme.dart';
@@ -16,6 +18,8 @@ class QuizPlayScreen extends StatefulWidget {
   final bool isDailyChallenge;
   final String? moduleId;
   final int? passPercent;
+  final bool isPlacement;
+  final List<int> placementLessonIds;
 
   const QuizPlayScreen({
     super.key,
@@ -24,6 +28,8 @@ class QuizPlayScreen extends StatefulWidget {
     this.isDailyChallenge = false,
     this.moduleId,
     this.passPercent,
+    this.isPlacement = false,
+    this.placementLessonIds = const [],
   });
 
   @override
@@ -35,6 +41,7 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
   int? selectedAnswerIndex;
   int score = 0;
   bool answered = false;
+  final Set<int> _wrongLessonIds = {};
 
   void _selectAnswer(int index) {
     if (answered) return;
@@ -47,23 +54,28 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
         if (q.sourceId != null) {
           SpacedRepetitionService.recordCorrect(q.sourceId!);
         }
-      } else if (q.sourceId != null) {
-        SpacedRepetitionService.recordWrong(
-          questionId: q.sourceId!,
-          question: q.question,
-          options: q.options,
-          correctIndex: q.correctIndex,
-          explanation: q.explanation,
-          category: q.category,
-          difficulty: q.difficulty,
-          lessonId: q.lessonId,
-        );
+      } else {
+        if (q.lessonId != null) _wrongLessonIds.add(q.lessonId!);
+        if (q.sourceId != null) {
+          SpacedRepetitionService.recordWrong(
+            questionId: q.sourceId!,
+            question: q.question,
+            options: q.options,
+            correctIndex: q.correctIndex,
+            explanation: q.explanation,
+            category: q.category,
+            difficulty: q.difficulty,
+            lessonId: q.lessonId,
+          );
+        }
       }
     });
   }
 
   Future<void> _finish() async {
     GamificationService.lastAward = null;
+    final reviewLessons = <Map<String, dynamic>>[];
+
     if (widget.isDailyChallenge) {
       await ProgressService.completeDailyChallenge(score, widget.questions.length);
     } else {
@@ -72,7 +84,28 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
         score: score,
         total: widget.questions.length,
       );
-      if (widget.moduleId != null) {
+      if (widget.isPlacement && widget.placementLessonIds.isNotEmpty) {
+        final weak = _wrongLessonIds.intersection(widget.placementLessonIds.toSet());
+        final strong = widget.placementLessonIds.where((id) => !weak.contains(id));
+        await ProgressService.markLessonsComplete(strong);
+        final lessons = await LessonsRepository.instance.loadLessons();
+        final byId = {for (final l in lessons) l.id: l};
+        final orderedWeak = widget.placementLessonIds.where(weak.contains);
+        for (final id in orderedWeak) {
+          final lesson = byId[id];
+          reviewLessons.add({
+            'id': id,
+            'title': lesson?.title ?? LocaleService.instance.strings.lessonFallback(id),
+          });
+        }
+        if (widget.moduleId != null) {
+          final pass = widget.passPercent ?? 70;
+          if (score >= (widget.questions.length * pass / 100).ceil()) {
+            await ProgressService.markModulePassed(widget.moduleId!, score, widget.questions.length);
+            await GamificationService.award(PointsReason.moduleTest, uniqueKey: 'mt-${widget.moduleId}');
+          }
+        }
+      } else if (widget.moduleId != null) {
         final pass = widget.passPercent ?? 70;
         if (score >= (widget.questions.length * pass / 100).ceil()) {
           await ProgressService.markModulePassed(widget.moduleId!, score, widget.questions.length);
@@ -81,12 +114,15 @@ class _QuizPlayScreenState extends State<QuizPlayScreen> {
       }
     }
     await ProgressService.recordDailyActivity();
+    QuizSession.clear();
     if (!mounted) return;
     context.go('/quiz-result', extra: {
       'score': score,
       'total': widget.questions.length,
       'title': widget.title,
       'isDailyChallenge': widget.isDailyChallenge,
+      'isPlacement': widget.isPlacement,
+      'reviewLessons': reviewLessons,
     });
   }
 

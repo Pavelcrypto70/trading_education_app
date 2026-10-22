@@ -1,16 +1,15 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
-
 import '../models/lesson_quiz_question.dart';
 import '../services/locale_service.dart';
+import 'localized_asset.dart';
 
 class LessonQuizRepository {
   static List<LessonQuizQuestion>? _cache;
 
   static Future<List<LessonQuizQuestion>> loadAll() async {
     if (_cache != null) return _cache!;
-    final raw = await rootBundle.loadString('assets/data/lesson_quizzes.json');
+    final raw = await loadLocalizedAsset('lesson_quizzes');
     final list = jsonDecode(raw) as List;
     final lang = LocaleService.instance.languageCode;
     _cache = list

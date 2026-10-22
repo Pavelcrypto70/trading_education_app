@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../services/locale_service.dart';
 import '../theme.dart';
 
 /// Clear schematic pattern diagrams — animated line drawing for lesson cards.
@@ -47,6 +48,7 @@ class _PatternDiagramWidgetState extends State<PatternDiagramWidget>
           painter: _PatternPainter(
             patternType: widget.patternType,
             progress: Curves.easeOutCubic.transform(_ctrl.value),
+            l10n: LocaleService.instance.strings,
           ),
         ),
       ),
@@ -57,8 +59,9 @@ class _PatternDiagramWidgetState extends State<PatternDiagramWidget>
 class _PatternPainter extends CustomPainter {
   final String patternType;
   final double progress;
+  final dynamic l10n;
 
-  _PatternPainter({required this.patternType, required this.progress});
+  _PatternPainter({required this.patternType, required this.progress, required this.l10n});
 
   static const _bull = AppTheme.bull;
   static const _bear = AppTheme.bear;
@@ -206,7 +209,7 @@ class _PatternPainter extends CustomPainter {
       Offset(w * 0.92, h * 0.18),
     ];
     _drawPolyline(canvas, price, _bull, width: 3);
-    _drawHLine(canvas, size, resY, _bear, label: 'Сопротивление');
+    _drawHLine(canvas, size, resY, _bear, label: l10n.patternLabelResistance);
     _drawPolyline(
       canvas,
       [Offset(w * 0.08, h * 0.72), Offset(w * 0.78, h * 0.42)],
@@ -215,7 +218,7 @@ class _PatternPainter extends CustomPainter {
       dashed: true,
     );
     if (progress > 0.85) {
-      _label(canvas, size, 'Восходящий треугольник', h * 0.10);
+      _label(canvas, size, l10n.patternAscTriangle, h * 0.10);
     }
   }
 
@@ -235,7 +238,7 @@ class _PatternPainter extends CustomPainter {
       Offset(w * 0.92, h * 0.86),
     ];
     _drawPolyline(canvas, price, _bear, width: 3);
-    _drawHLine(canvas, size, supY, _bull, label: 'Поддержка');
+    _drawHLine(canvas, size, supY, _bull, label: l10n.patternLabelSupport);
     _drawPolyline(
       canvas,
       [Offset(w * 0.08, h * 0.26), Offset(w * 0.78, h * 0.50)],
@@ -243,7 +246,7 @@ class _PatternPainter extends CustomPainter {
       width: 2,
       dashed: true,
     );
-    if (progress > 0.85) _label(canvas, size, 'Нисходящий треугольник', h * 0.10);
+    if (progress > 0.85) _label(canvas, size, l10n.patternDescTriangle, h * 0.10);
   }
 
   void _symTriangle(Canvas canvas, Size size) {
@@ -274,7 +277,7 @@ class _PatternPainter extends CustomPainter {
       width: 2,
       dashed: true,
     );
-    if (progress > 0.85) _label(canvas, size, 'Симметричный треугольник', h * 0.10);
+    if (progress > 0.85) _label(canvas, size, l10n.patternSymTriangle, h * 0.10);
   }
 
   void _headShoulders(Canvas canvas, Size size, {required bool inverse}) {
@@ -303,12 +306,12 @@ class _PatternPainter extends CustomPainter {
           ];
     _drawPolyline(canvas, pts, inverse ? _bull : _bear, width: 3);
     final neckY = inverse ? 0.39 : 0.51;
-    _drawHLine(canvas, size, neckY, _gold, label: 'Линия шеи');
+    _drawHLine(canvas, size, neckY, _gold, label: l10n.patternNeckline);
     if (progress > 0.85) {
       _label(
         canvas,
         size,
-        inverse ? 'Перевёрнутая голова и плечи' : 'Голова и плечи',
+        inverse ? l10n.patternInvHeadShoulders : l10n.patternHeadShoulders,
         h * 0.08,
       );
     }
@@ -328,7 +331,7 @@ class _PatternPainter extends CustomPainter {
     _drawPolyline(canvas, price, _bull, width: 3);
     _drawPolyline(canvas, [Offset(w * 0.08, h * 0.72), Offset(w * 0.92, h * 0.48)], _gold, width: 2, dashed: true);
     _drawPolyline(canvas, [Offset(w * 0.08, h * 0.55), Offset(w * 0.92, h * 0.32)], _gold, width: 2, dashed: true);
-    if (progress > 0.85) _label(canvas, size, 'Ценовой канал', h * 0.12);
+    if (progress > 0.85) _label(canvas, size, l10n.patternChannel, h * 0.12);
   }
 
   void _wedge(Canvas canvas, Size size, {required bool up}) {
@@ -345,7 +348,7 @@ class _PatternPainter extends CustomPainter {
       _drawPolyline(canvas, price, _bull, width: 3);
       _drawPolyline(canvas, [Offset(w * 0.08, h * 0.78), Offset(w * 0.92, h * 0.35)], _bear, width: 2, dashed: true);
       _drawPolyline(canvas, [Offset(w * 0.08, h * 0.65), Offset(w * 0.92, h * 0.48)], _gold, width: 2, dashed: true);
-      if (progress > 0.85) _label(canvas, size, 'Восходящий клин', h * 0.12);
+      if (progress > 0.85) _label(canvas, size, l10n.patternRisingWedge, h * 0.12);
     } else {
       final price = [
         Offset(w * 0.08, h * 0.22),
@@ -357,7 +360,7 @@ class _PatternPainter extends CustomPainter {
       _drawPolyline(canvas, price, _bear, width: 3);
       _drawPolyline(canvas, [Offset(w * 0.08, h * 0.22), Offset(w * 0.92, h * 0.65)], _bull, width: 2, dashed: true);
       _drawPolyline(canvas, [Offset(w * 0.08, h * 0.35), Offset(w * 0.92, h * 0.52)], _gold, width: 2, dashed: true);
-      if (progress > 0.85) _label(canvas, size, 'Нисходящий клин', h * 0.12);
+      if (progress > 0.85) _label(canvas, size, l10n.patternFallingWedge, h * 0.12);
     }
   }
 
@@ -380,7 +383,7 @@ class _PatternPainter extends CustomPainter {
       }
     }
     if (progress > 0.9) {
-      _label(canvas, size, 'Коррекция по Фибоначчи', h * 0.10);
+      _label(canvas, size, l10n.patternFibRetracement, h * 0.10);
       final tp = TextPainter(
         text: const TextSpan(text: '61.8%', style: TextStyle(color: _gold, fontSize: 9)),
         textDirection: TextDirection.ltr,
@@ -401,8 +404,8 @@ class _PatternPainter extends CustomPainter {
       Offset(w * 0.92, h * 0.72),
     ];
     _drawPolyline(canvas, pts, _bear, width: 3);
-    _drawHLine(canvas, size, 0.48, _gold, label: 'Шея');
-    if (progress > 0.85) _label(canvas, size, 'Двойная вершина', h * 0.12);
+    _drawHLine(canvas, size, 0.48, _gold, label: l10n.patternNeck);
+    if (progress > 0.85) _label(canvas, size, l10n.patternDoubleTop, h * 0.12);
   }
 
   void _doubleBottom(Canvas canvas, Size size) {
@@ -417,8 +420,8 @@ class _PatternPainter extends CustomPainter {
       Offset(w * 0.92, h * 0.28),
     ];
     _drawPolyline(canvas, pts, _bull, width: 3);
-    _drawHLine(canvas, size, 0.52, _gold, label: 'Шея');
-    if (progress > 0.85) _label(canvas, size, 'Двойное дно', h * 0.12);
+    _drawHLine(canvas, size, 0.52, _gold, label: l10n.patternNeck);
+    if (progress > 0.85) _label(canvas, size, l10n.patternDoubleBottom, h * 0.12);
   }
 
   void _label(Canvas canvas, Size size, String text, double y) {

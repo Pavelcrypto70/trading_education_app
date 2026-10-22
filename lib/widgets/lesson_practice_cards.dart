@@ -8,6 +8,7 @@ import '../models/lesson_section.dart';
 import '../widgets/homework_rubric_card.dart';
 import '../services/lesson_practice_service.dart';
 import '../services/locale_service.dart';
+import '../services/practice_brief_service.dart';
 import '../theme.dart';
 import 'deposit_order_calculator.dart';
 import 'lesson_charts.dart';
@@ -175,18 +176,23 @@ class LessonPracticeCard extends StatelessWidget {
     required this.symbol,
   });
 
+  PracticeBrief get _brief =>
+      PracticeBriefService.fromLesson(lesson) ??
+      PracticeBriefService.forLesson(
+        lessonId: lesson.id,
+        lessonTitle: lesson.title,
+        takeaway: lesson.takeaway,
+        sectionBody: section.body,
+      );
+
   Future<void> _startPaper(BuildContext context) async {
     final l10n = context.l10n;
-    final scenario = section.body?.trim().isNotEmpty == true
-        ? section.body!
-        : (lesson.id <= 36
-            ? lesson.takeaway
-            : 'Plan entry, stop and take-profit before clicking. Lesson ${lesson.id}: ${lesson.takeaway}');
+    final brief = _brief;
     await LessonPracticeService.startPractice(
       lessonId: lesson.id,
       lessonTitle: lesson.title,
       symbol: symbol.contains('/') ? symbol : symbol.replaceAll('USDT', '/USDT'),
-      scenario: scenario,
+      scenario: brief.idea,
     );
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -199,6 +205,7 @@ class LessonPracticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final brief = _brief;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
@@ -221,9 +228,35 @@ class LessonPracticeCard extends StatelessWidget {
               ),
             ],
           ),
-          if (section.body != null) ...[
-            const SizedBox(height: 10),
-            Text(section.body!, style: const TextStyle(height: 1.6, color: AppTheme.textSoft)),
+          const SizedBox(height: 12),
+          Text(brief.ideaTitle, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15)),
+          const SizedBox(height: 6),
+          Text(brief.idea, style: const TextStyle(height: 1.55, color: AppTheme.textSoft)),
+          const SizedBox(height: 12),
+          Text(l10n.practiceWhatToDo, style: const TextStyle(fontWeight: FontWeight.w700)),
+          const SizedBox(height: 6),
+          ...brief.steps.asMap().entries.map(
+            (e) => Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${e.key + 1}.', style: const TextStyle(color: AppTheme.gold, fontWeight: FontWeight.w800)),
+                  const SizedBox(width: 8),
+                  Expanded(child: Text(e.value, style: const TextStyle(height: 1.4, fontSize: 13))),
+                ],
+              ),
+            ),
+          ),
+          if (brief.terms.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(l10n.practiceTermsTitle, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
+            const SizedBox(height: 6),
+            for (final t in brief.terms)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text('${t.$1} — ${t.$2}', style: const TextStyle(fontSize: 12.5, height: 1.4, color: AppTheme.muted)),
+              ),
           ],
           const SizedBox(height: 14),
           SizedBox(
@@ -240,8 +273,8 @@ class LessonPracticeCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            l10n.backToLesson(lesson.id),
-            style: const TextStyle(color: AppTheme.faint, fontSize: 12),
+            brief.howToFinish,
+            style: const TextStyle(color: AppTheme.faint, fontSize: 12, height: 1.4),
           ),
         ],
       ),
@@ -361,7 +394,7 @@ class LessonExternalLinkCard extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  section.title ?? 'Ссылка',
+                  section.title ?? context.l10n.linkLabel,
                   style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                 ),
               ),
@@ -378,7 +411,7 @@ class LessonExternalLinkCard extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: () => _open(context),
                 icon: const Icon(Icons.open_in_new, size: 18),
-                label: const Text('Открыть'),
+                label: Text(context.l10n.openBtn),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.accent.withValues(alpha: 0.25),
                   foregroundColor: AppTheme.accent,

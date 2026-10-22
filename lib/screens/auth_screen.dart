@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../config/backend_config.dart';
 import '../services/analytics_service.dart';
 import '../services/auth_service.dart';
+import '../services/entitlement_service.dart';
 import '../services/locale_service.dart';
 import '../services/sync_service.dart';
 import '../theme.dart';
@@ -29,12 +30,47 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
+  Future<void> _finishSignedIn() async {
+    AnalyticsService.signUp();
+    try {
+      await SyncService.pullAndMerge();
+    } catch (_) {
+      // Local owner session has no Supabase user — sync may fail; access still granted.
+    }
+    await EntitlementService.refresh();
+    final admin = await AuthService.isAdmin();
+    final full = await EntitlementService.hasFullAccess();
+    if (!mounted) return;
+    if (admin || full) {
+      _showSnack(context.l10n.adminAccessGranted);
+    }
+    if (!mounted) return;
+    if (context.canPop()) {
+      context.pop(true);
+    } else {
+      context.go('/learning');
+    }
+  }
+
   Future<void> _sendOtp() async {
+    final email = _emailController.text.trim().toLowerCase();
+    setState(() => _loading = true);
+
+    // Owner allow-list: unlock all lessons even if Supabase OTP is down.
+    final ownerLocal = await AuthService.signInLocalOwner(email);
+    if (ownerLocal == AuthResult.success) {
+      if (!mounted) return;
+      setState(() => _loading = false);
+      await _finishSignedIn();
+      return;
+    }
+
     if (!BackendConfig.isConfigured) {
+      if (!mounted) return;
+      setState(() => _loading = false);
       _showSnack(context.l10n.backendNotConfigured);
       return;
     }
-    setState(() => _loading = true);
     final result = await AuthService.sendEmailOtp(_emailController.text);
     if (!mounted) return;
     setState(() => _loading = false);
@@ -43,7 +79,7 @@ class _AuthScreenState extends State<AuthScreen> {
       case AuthResult.otpSent:
         setState(() {
           _otpSent = true;
-          _pendingEmail = _emailController.text.trim().toLowerCase();
+          _pendingEmail = email;
         });
         _showSnack(context.l10n.otpSent);
       case AuthResult.invalidEmail:
@@ -65,14 +101,7 @@ class _AuthScreenState extends State<AuthScreen> {
     setState(() => _loading = false);
 
     if (result == AuthResult.success) {
-      AnalyticsService.signUp();
-      await SyncService.pullAndMerge();
-      if (await AuthService.isAdmin()) {
-        if (!mounted) return;
-        _showSnack(context.l10n.adminAccessGranted);
-      }
-      if (!mounted) return;
-      context.pop(true);
+      await _finishSignedIn();
       return;
     }
     _showSnack(context.l10n.authError);

@@ -16,6 +16,7 @@ import '../services/referral_service.dart';
 import '../theme.dart';
 import '../utils/legal_links.dart';
 import '../widgets/community_banner.dart';
+import '../utils/num_format.dart';
 
 class ProfileScreen extends StatefulWidget {
 
@@ -419,24 +420,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         title: Text(l10n.profile),
 
-        actions: [
-
-          IconButton(
-
-            onPressed: () => context.push('/premium'),
-
-            icon: Icon(
-
-              _premium ? Icons.workspace_premium : Icons.workspace_premium_outlined,
-
-              color: AppTheme.gold,
-
-            ),
-
-          ),
-
-        ],
-
       ),
 
       body: ListView(
@@ -492,8 +475,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         child: Text(
                           _club == null
-                              ? 'Новичок'
-                              : 'Лига «${_club!.league.name}» · ${ClubService.fmt(_club!.points)} очков',
+                              ? l10n.leagueName('novice')
+                              : l10n.leagueWithPoints(
+                                  l10n.leagueName(_club!.league.name),
+                                  ClubService.fmt(_club!.points),
+                                  pointsWord(_club!.points),
+                                ),
                           style: const TextStyle(color: Colors.white, fontSize: 11.5, fontWeight: FontWeight.w800),
                         ),
                       ),
@@ -719,16 +706,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: l10n.language,
             subtitle: '${currentLang.flag} ${currentLang.label}',
             onTap: _showLanguagePicker,
-          ),
-
-          _SettingsTile(
-
-            icon: Icons.workspace_premium_outlined,
-
-            title: l10n.upgradePremium,
-
-            onTap: () => context.push('/premium'),
-
           ),
 
           _SettingsTile(

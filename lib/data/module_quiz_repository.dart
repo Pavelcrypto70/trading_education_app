@@ -61,6 +61,27 @@ class ModuleQuizRepository {
     return shuffled.take(module.questionCount).toList();
   }
 
+  /// One question per lesson when possible, so a wrong answer maps to a concrete lesson.
+  static Future<List<QuizQuestion>> questionsForPlacement(ModuleQuizMeta module) async {
+    await UnifiedQuizBank.ensureLoaded();
+    final byLesson = <int, List<QuizQuestion>>{};
+    for (final q in UnifiedQuizBank.allQuestions) {
+      final id = q.lessonId;
+      if (id == null || !module.lessonIds.contains(id)) continue;
+      (byLesson[id] ??= []).add(q);
+    }
+    final rng = Random();
+    final picked = <QuizQuestion>[];
+    for (final lessonId in module.lessonIds) {
+      final pool = byLesson[lessonId];
+      if (pool == null || pool.isEmpty) continue;
+      picked.add(pool[rng.nextInt(pool.length)]);
+    }
+    if (picked.isEmpty) return questionsForModule(module);
+    picked.shuffle(rng);
+    return picked;
+  }
+
   static Future<bool> isModulePassed(String moduleId) async {
     return ProgressService.isModulePassed(moduleId);
   }

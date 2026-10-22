@@ -38,47 +38,26 @@ class HomeworkService {
     required int lessonId,
     required String lessonTitle,
     String? oneSentence,
+    String? result,
+    String? unclear,
   }) {
-    final lang = LocaleService.instance.languageCode;
-    final labels = switch (lang) {
-      'ru' => (
-          'Урок',
-          'Одной фразой',
-          'Что сделал',
-          'Что ещё не ясно',
-          'Топик',
-        ),
-      'pt' => (
-          'Aula',
-          'Em uma frase',
-          'O que fiz',
-          'O que ainda não ficou claro',
-          'Tópico',
-        ),
-      'es' => (
-          'Lección',
-          'En una frase',
-          'Qué hice',
-          'Qué aún no está claro',
-          'Tema',
-        ),
-      _ => (
-          'Lesson',
-          'In one sentence',
-          'What I did',
-          'Still unclear',
-          'Topic',
-        ),
-    };
-    final one = (oneSentence ?? '').trim();
+    final l10n = LocaleService.instance.strings;
+    final labels = (
+      l10n.hwLabelLesson,
+      l10n.hwLabelAbout,
+      l10n.hwLabelResult,
+      l10n.hwLabelUnclear,
+      l10n.hwLabelTopic,
+    );
+    String v(String? s) => (s ?? '').trim().isEmpty ? '—' : s!.trim();
     return '${labels.$1} $lessonId: $lessonTitle\n'
         '${labels.$5}: ${AppConfig.homeworkTopicName} · ${AppConfig.communityTelegramHandle}\n\n'
         '${labels.$2}:\n'
-        '${one.isEmpty ? '—' : one}\n\n'
+        '${v(oneSentence)}\n\n'
         '${labels.$3}:\n'
-        '• \n\n'
+        '${v(result)}\n\n'
         '${labels.$4}:\n'
-        '• \n\n'
+        '${v(unclear)}\n\n'
         '#hw-submitted #TradeMasterHW';
   }
 
@@ -105,11 +84,15 @@ class HomeworkService {
     required int lessonId,
     required String lessonTitle,
     String? oneSentence,
+    String? result,
+    String? unclear,
   }) async {
     final text = buildTemplate(
       lessonId: lessonId,
       lessonTitle: lessonTitle,
       oneSentence: oneSentence,
+      result: result,
+      unclear: unclear,
     );
     await Clipboard.setData(ClipboardData(text: text));
     await ProgressService.incrementHomeworkSubmit(lessonId);

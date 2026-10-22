@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
+
 /// Partner / affiliate offers unlocked after certificate.
 ///
 /// Set URLs via dart-define (see dart_defines.example.json) or edit defaults.
 /// Empty url = hidden in UI.
+/// Play/Galaxy builds never show broker/exchange partner cards (Payments / financial policy).
 class PartnerOffer {
   final String id;
   final PartnerCategory category;
@@ -72,8 +75,11 @@ class PartnerLinks {
     ),
   ];
 
-  static List<PartnerOffer> get configured =>
-      offers.where((o) => o.isConfigured).toList(growable: false);
+  /// Web-only: store APKs must not deep-link to exchanges/brokers after certificate.
+  static List<PartnerOffer> get configured {
+    if (!kIsWeb) return const [];
+    return offers.where((o) => o.isConfigured).toList(growable: false);
+  }
 
   static List<PartnerOffer> get exchanges => configured
       .where((o) => o.category == PartnerCategory.exchange)

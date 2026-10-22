@@ -11,6 +11,7 @@ import '../l10n/app_localizations.dart';
 import '../services/locale_service.dart';
 import '../services/club_service.dart';
 import '../services/progress_service.dart';
+import '../services/sim_mode.dart';
 import '../services/streak_service.dart';
 import '../widgets/lesson_paywall_sheet.dart';
 import '../theme.dart';
@@ -20,6 +21,8 @@ import '../widgets/lesson_chart_card.dart';
 import '../widgets/lesson_rich_text.dart';
 import '../widgets/lesson_checkpoint.dart';
 import '../widgets/lesson_practice_cards.dart';
+import '../widgets/course_lesson_steps.dart';
+import '../utils/num_format.dart';
 
 class LessonScreen extends StatefulWidget {
   final Lesson? lesson;
@@ -80,6 +83,7 @@ class _LessonScreenState extends State<LessonScreen> {
         _completed = false;
         _checkpointPassed = false;
         _loading = true;
+        _answeredChoiceSteps.clear();
       });
       _init();
     }
@@ -99,11 +103,10 @@ class _LessonScreenState extends State<LessonScreen> {
     if (lesson != null) {
       final unlocked = await EntitlementService.isLessonUnlocked(lesson.id);
       if (!unlocked && mounted) {
-        final ok = await showLessonPaywallIfNeeded(context, lesson.id);
-        if (!ok && mounted) {
-          context.pop();
-          return;
-        }
+        final ok = await showLessonPaywallIfNeeded(context, lesson.id, leave: () {
+          if (mounted) _leaveLesson();
+        });
+        if (!ok) return;
       }
     }
     final completed = lesson != null
@@ -116,6 +119,10 @@ class _LessonScreenState extends State<LessonScreen> {
     if (!mounted) return;
     final steps = lesson != null ? _buildSteps(lesson) : <_LessonStep>[];
     if (resumeStep >= steps.length) resumeStep = 0;
+    // Questions before the saved step were answered last time.
+    for (var i = 0; i < resumeStep; i++) {
+      if (steps[i].requiresAnswer) _answeredChoiceSteps.add(i);
+    }
     _pageController.dispose();
     _pageController = PageController(initialPage: resumeStep);
     setState(() {
@@ -176,7 +183,72 @@ class _LessonScreenState extends State<LessonScreen> {
   static String _norm(String s) =>
       s.toLowerCase().replaceAll(RegExp(r'[^a-zа-яё0-9]+'), ' ').trim();
 
+  /// Rebuilt course: pages exactly as authored, in order, no generated filler.
+  List<_LessonStep> _buildCourseSteps(Lesson lesson) {
+    void answered(int index) {
+      if (!_answeredChoiceSteps.contains(index)) {
+        setState(() => _answeredChoiceSteps.add(index));
+      }
+    }
+
+    final steps = <_LessonStep>[
+      _LessonStep(icon: Icons.flag_outlined, builder: (ctx, l10n) => CourseIntroStep(lesson: lesson)),
+    ];
+    var rememberAdded = false;
+    void addRemember() {
+      if (rememberAdded || lesson.takeaway.trim().isEmpty) return;
+      rememberAdded = true;
+      steps.add(_LessonStep(
+        icon: Icons.lightbulb_outline,
+        builder: (ctx, l10n) => CourseRememberStep(lesson: lesson),
+      ));
+    }
+
+    for (final s in lesson.sections) {
+      switch (s.type) {
+        case 'step':
+          steps.add(_LessonStep(icon: Icons.menu_book_outlined, builder: (ctx, l10n) => CourseTextStep(section: s)));
+        case 'choice':
+          final index = steps.length;
+          steps.add(_LessonStep(
+            icon: Icons.touch_app_outlined,
+            requiresAnswer: true,
+            builder: (ctx, l10n) => CourseChoiceStep(section: s, onAnswered: () => answered(index)),
+          ));
+        case 'practice':
+          addRemember();
+          steps.add(_LessonStep(
+            icon: Icons.candlestick_chart_outlined,
+            builder: (ctx, l10n) => CoursePracticeStep(lesson: lesson, section: s),
+          ));
+        case 'homework':
+          addRemember();
+          steps.add(_LessonStep(
+            icon: Icons.assignment_outlined,
+            builder: (ctx, l10n) => LessonHomeworkCard(lesson: lesson, section: s),
+          ));
+        default:
+          break;
+      }
+    }
+    addRemember();
+    steps.add(_LessonStep(
+      icon: Icons.quiz_outlined,
+      builder: (ctx, l10n) => LessonCheckpoint(
+        lesson: lesson,
+        onPassed: () async {
+          setState(() => _checkpointPassed = true);
+          await GamificationService.award(PointsReason.lessonQuiz, uniqueKey: 'lq-${lesson.id}');
+          await _completeLesson();
+        },
+        onReview: () => _pageController.jumpToPage(lesson.sections.isEmpty ? 0 : 1),
+      ),
+    ));
+    return steps;
+  }
+
   List<_LessonStep> _buildSteps(Lesson lesson) {
+    if (lesson.isCourseV2) return _buildCourseSteps(lesson);
     final crypto = CryptoLessonContext.forLesson(lesson);
     final primaryChart = crypto.primaryChartType;
     final visualType = _bestVisualChartType(lesson, primaryChart);
@@ -192,13 +264,9 @@ class _LessonScreenState extends State<LessonScreen> {
       ),
     ];
 
-    // A chart is shown only when it differs from the previous one shown.
-    var lastChart = visualType;
-    String? chartIfNew(String t) {
-      if (t == lastChart) return null;
-      lastChart = t;
-      return t;
-    }
+    // Always show the step chart. cardIndex picks a different setup per step —
+    // skipping «same chartType» left most lesson pages blank after the intro.
+    String? chartIfNew(String t) => t;
 
     final seenTexts = <String>[_norm(lesson.subtitle)];
     bool isRepeat(String text) {
@@ -337,10 +405,12 @@ class _LessonScreenState extends State<LessonScreen> {
       icon: Icons.quiz_outlined,
       builder: (ctx, l10n) => LessonCheckpoint(
         lesson: lesson,
-        onPassed: () {
+        onPassed: () async {
           setState(() => _checkpointPassed = true);
-          GamificationService.award(PointsReason.lessonQuiz, uniqueKey: 'lq-${lesson.id}');
+          await GamificationService.award(PointsReason.lessonQuiz, uniqueKey: 'lq-${lesson.id}');
+          await _completeLesson();
         },
+        onReview: () => _pageController.jumpToPage(0),
       ),
     ));
 
@@ -371,23 +441,6 @@ class _LessonScreenState extends State<LessonScreen> {
     final lesson = _lesson;
     if (lesson == null || _completed) return;
     await ProgressService.saveLessonStep(lesson.id, i);
-    if (i < 3) return;
-    final lit = await StreakService.light();
-    StreakService.takePending();
-    if (lit == null || !mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            const Icon(Icons.local_fire_department_rounded, color: AppTheme.accent),
-            const SizedBox(width: 10),
-            Expanded(child: Text(lit.message)),
-          ],
-        ),
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 3),
-      ),
-    );
   }
 
   Future<void> _completeLesson() async {
@@ -395,6 +448,8 @@ class _LessonScreenState extends State<LessonScreen> {
     if (!_checkpointPassed) return;
 
     await ProgressService.markLessonComplete(_lesson!.id);
+    final lit = await StreakService.light();
+    StreakService.takePending();
     final award = await GamificationService.award(PointsReason.lesson, uniqueKey: 'lesson-${_lesson!.id}');
     final streak = await StreakService.load();
     if (!mounted) return;
@@ -402,6 +457,10 @@ class _LessonScreenState extends State<LessonScreen> {
     setState(() => _completed = true);
     final next = GamificationService.nextLeague(award.total);
     final mult = award.multiplier;
+    final l10n = context.l10n;
+    final multStr = LocaleService.instance.language == AppLanguage.ru
+        ? mult.toStringAsFixed(1).replaceAll('.', ',')
+        : mult.toStringAsFixed(1);
     await showDialog<void>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -415,32 +474,49 @@ class _LessonScreenState extends State<LessonScreen> {
               child: const Icon(Icons.local_fire_department_rounded, color: Colors.white, size: 40),
             ),
             const SizedBox(height: 16),
-            Text('Урок пройден', style: AppTheme.display(24)),
+            Text(l10n.lessonPassedShort, style: AppTheme.display(24)),
             const SizedBox(height: 10),
             Text(
-              award.isZero ? 'Очки за этот урок уже начислены' : '+${award.awarded} очков',
+              award.isZero
+                  ? l10n.pointsAlreadyAwarded
+                  : '+${award.awarded} ${pointsWord(award.awarded)}',
               style: AppTheme.display(30, color: AppTheme.progress),
             ),
-            if (mult > 1)
+            if (lit != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Text(lit.message,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: AppTheme.accentText, fontWeight: FontWeight.w700)),
+              )
+            else if (mult > 1)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Серия ${streak.days} дн. · множитель ×${mult.toStringAsFixed(1)}',
+                  l10n.streakPointsMult(streak.days, multStr),
                   style: const TextStyle(color: AppTheme.accentText, fontWeight: FontWeight.w700),
                 ),
               ),
             const SizedBox(height: 10),
             Text(
               next == null
-                  ? 'Всего ${ClubService.fmt(award.total)} очков · лига «Профи»'
-                  : 'Всего ${ClubService.fmt(award.total)} · до лиги «${next.name}» ${ClubService.fmt(next.minPoints - award.total)}',
+                  ? l10n.totalPointsProLeague(
+                      ClubService.fmt(award.total),
+                      pointsWord(award.total),
+                    )
+                  : l10n.totalPointsToLeague(
+                      ClubService.fmt(award.total),
+                      pointsWord(award.total),
+                      l10n.leagueName(next.name),
+                      ClubService.fmt(next.minPoints - award.total),
+                    ),
               textAlign: TextAlign.center,
               style: const TextStyle(color: AppTheme.muted, fontSize: 13),
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Дальше')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.next)),
         ],
       ),
     );
@@ -489,7 +565,8 @@ class _LessonScreenState extends State<LessonScreen> {
           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppTheme.muted),
         ),
         actions: [
-          if (_crypto != null)
+          // «Торговая пара» is explained in lesson 2.
+          if (_crypto != null && lesson.id >= 2)
             Padding(
               padding: const EdgeInsets.only(right: 16),
               child: Center(
@@ -500,7 +577,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
-                    _crypto!.pair,
+                    lesson.pair ?? _crypto!.pair,
                     style: const TextStyle(fontSize: 11, color: AppTheme.textSoft, fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -572,20 +649,22 @@ class _LessonScreenState extends State<LessonScreen> {
                       child: Text(l10n.nextLesson),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: () => context.go('/practice?returnLesson=${lesson.id}'),
-                      child: Text(l10n.practiceAfterLesson),
+                  if (lesson.id >= SimMode.firstOpenLesson) ...[
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        onPressed: () => context.go('/practice?returnLesson=${lesson.id}'),
+                        child: Text(l10n.practiceAfterLesson),
+                      ),
                     ),
-                  ),
+                  ],
                   const SizedBox(height: 8),
                   SizedBox(
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () => context.go('/learning'),
-                      child: Text('${l10n.backToLearning} · список уроков'),
+                      child: Text(l10n.backToLearningLessonsList),
                     ),
                   ),
                 ] else if (!isLast || _checkpointPassed)
@@ -595,7 +674,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: Text(
-                            'Сначала выбери ответ на вопрос',
+                            l10n.findCorrectToContinue,
                             style: TextStyle(
                               color: AppTheme.warn.withValues(alpha: 0.95),
                               fontWeight: FontWeight.w600,
@@ -858,7 +937,7 @@ class _CompareStepState extends State<_CompareStep> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.heading == null ? 'Проверь себя' : l10n.translateSectionHeading(widget.heading!),
+          widget.heading == null ? l10n.checkYourself : l10n.translateSectionHeading(widget.heading!),
           style: AppTheme.display(21),
         ),
         const SizedBox(height: 12),
@@ -869,9 +948,9 @@ class _CompareStepState extends State<_CompareStep> {
           child: Text(widget.question, style: const TextStyle(fontSize: 16, height: 1.5, fontWeight: FontWeight.w700)),
         ),
         const SizedBox(height: 12),
-        const Text(
-          'Ответь про себя, потом сверься.',
-          style: TextStyle(color: AppTheme.muted, fontSize: 13),
+        Text(
+          l10n.answerThenReveal,
+          style: const TextStyle(color: AppTheme.muted, fontSize: 13),
         ),
         const SizedBox(height: 12),
         AnimatedCrossFade(
@@ -885,7 +964,7 @@ class _CompareStepState extends State<_CompareStep> {
                 widget.onRevealed();
               },
               icon: const Icon(Icons.visibility_rounded, size: 18),
-              label: const Text('Проверить себя'),
+              label: Text(l10n.showAnswer),
             ),
           ),
           secondChild: Container(
@@ -980,7 +1059,7 @@ class _ChoiceCardStepState extends State<_ChoiceCardStep> {
           return Semantics(
             button: true,
             selected: selected,
-            hint: 'Вариант ответа ${i + 1}',
+            hint: l10n.answerOptionHint(i + 1),
             child: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: Material(

@@ -7,9 +7,8 @@ import 'package:go_router/go_router.dart';
 import '../data/unified_quiz_bank.dart';
 
 import '../services/locale_service.dart';
-
 import '../services/progress_service.dart';
-
+import '../services/quiz_session.dart';
 import '../theme.dart';
 
 
@@ -77,11 +76,12 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     await UnifiedQuizBank.ensureLoaded();
     final daily = UnifiedQuizBank.dailyChallenge(count: 5);
     if (!mounted) return;
-    context.push('/quiz-play', extra: {
-      'title': l10n.dailyChallenge,
-      'questions': daily,
-      'isDailyChallenge': true,
-    });
+    QuizSession.set(
+      title: l10n.dailyChallenge,
+      questions: daily,
+      isDailyChallenge: true,
+    );
+    context.push('/quiz-play');
   }
 
 
